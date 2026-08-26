@@ -1,0 +1,1024 @@
+<title>שכר ותעסוקה בגליל המזרחי</title>
+<meta name="description" content="דשבורד שכר, שכירים וחודשי עבודה לפי רשויות וענפי כלכלה — נפות צפת וגולן">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =============================================================
+   מרכז הידע האזורי גליל מזרחי | מערבי — דשבורד שכר ותעסוקה
+   ערכת העיצוב נגזרת מ-design/template/brand.css (RTL, ערכת "civic")
+   ============================================================= */
+:root{
+  /* הדשבורד מחויב לערכת הנייר הבהירה של המותג (design/template/brand.css);
+     color-scheme מבטיח שגם פקדי הדפדפן יישארו בהירים אצל משתמשי מצב כהה. */
+  color-scheme: light;
+
+  /* מותג — נדגם מהלוגו */
+  --c-cyan:#1CA8C4; --c-sky:#54C4E0; --c-blue:#1C70A8;
+  --c-bluedeep:#1C548C; --c-navy:#14273F; --c-gold:#C4A870;
+
+  --paper:#F1F5F8; --paper-2:#E6EEF3; --card:#FFFFFF;
+  --ink:#14273F; --ink-2:#41566B; --ink-3:#74879A;
+  --line:#DBE4EB; --line-2:#C3D2DC;
+  --accent:#1C70A8; --accent-2:#1CA8C4; --accent-soft:#DBEEF4;
+
+  /* צבעי סדרות — עברו אימות נגישות (CVD ΔE 15.6 · ניגודיות ≥3:1) */
+  --s-tzfat:#1C548C;   /* נפת צפת  */
+  --s-golan:#0E8AA3;   /* נפת גולן */
+  --s-bar:#1C70A8;     /* סדרה יחידה — ענפים */
+  --s-ref:#8496A6;     /* קו ייחוס — נייטרלי, אינו צבע נתונים */
+
+  --font-head:'Rubik',system-ui,sans-serif;
+  --font-body:'Assistant',system-ui,sans-serif;
+  --r-sm:6px; --r-md:10px; --r-lg:14px;
+  --sh-1:0 1px 2px rgba(20,39,63,.05), 0 1px 1px rgba(20,39,63,.04);
+  --sh-2:0 8px 26px -12px rgba(20,39,63,.22);
+  --sh-3:0 20px 50px -20px rgba(20,39,63,.42);
+  --gutter:clamp(16px,3.4vw,40px);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink)}
+.page{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.page ::selection{background:var(--accent-soft);color:var(--ink)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;line-height:1.15;letter-spacing:-.015em;margin:0}
+
+/* ---------- סרגל עליון ---------- */
+.topbar{
+  background:var(--card); border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:50;
+}
+.topbar .wrap{display:flex;align-items:center;gap:18px;min-height:76px;padding-block:10px;flex-wrap:wrap}
+.topbar img{height:52px;width:auto;display:block}
+.topbar .tb-meta{
+  margin-inline-start:auto;font-size:13px;color:var(--ink-3);
+  text-align:end;line-height:1.5;
+}
+.topbar .tb-meta b{color:var(--ink-2);font-weight:600}
+
+/* ---------- כותרת ---------- */
+.head{padding:clamp(26px,4vw,44px) 0 6px}
+.head .kicker{
+  font-family:var(--font-head);font-size:13px;font-weight:600;letter-spacing:.03em;
+  color:var(--accent);display:inline-flex;align-items:center;gap:9px;margin-bottom:12px;
+}
+.head .kicker .mk{display:inline-grid;grid-template-columns:repeat(2,5px);gap:2px}
+.head .kicker .mk i{width:5px;height:5px;display:block;background:var(--accent-2)}
+.head .kicker .mk i:nth-child(1){background:var(--c-bluedeep)}
+.head .kicker .mk i:nth-child(4){background:var(--c-gold)}
+.head h1{font-size:clamp(27px,4.2vw,42px);font-weight:800;letter-spacing:-.025em}
+.head p.lede{margin:12px 0 0;max-width:70ch;font-size:clamp(16px,1.7vw,19px);color:var(--ink-2);line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{
+  font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--card);
+  border:1px solid var(--line);border-radius:100px;padding:4px 12px;
+}
+.chip b{color:var(--ink);font-weight:700}
+
+/* ---------- סרגל מדד גלובלי ---------- */
+.metricbar{
+  position:sticky;top:76px;z-index:40;background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:22px;
+}
+.metricbar .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px}
+.metricbar .lab{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--ink-3)}
+
+/* ---------- פקדים ---------- */
+.seg{display:inline-flex;max-width:100%;background:var(--paper-2);border:1px solid var(--line);border-radius:100px;padding:3px;gap:2px}
+.seg button{
+  font-family:var(--font-body);font-size:14px;font-weight:700;border:0;background:transparent;
+  color:var(--ink-3);padding:7px 18px;border-radius:100px;cursor:pointer;
+  transition:background .18s,color .18s;white-space:nowrap;
+}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff;box-shadow:var(--sh-1)}
+.seg.sm button{font-size:13px;padding:5px 14px}
+.seg:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.seg button:focus-visible{outline:none}
+
+.pill{
+  font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--line-2);background:var(--card);color:var(--ink-2);
+  border-radius:100px;padding:5px 14px;transition:all .16s;
+}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+select.ctl,input.ctl{
+  font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);
+  background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-md);
+  padding:7px 12px;cursor:pointer;outline:none;
+}
+select.ctl:focus,input.ctl:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+input.ctl{cursor:text;font-weight:500}
+.ctl-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:14px}
+.ctl-group{display:inline-flex;align-items:center;gap:8px}
+.ctl-group>label{font-family:var(--font-head);font-size:12.5px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.ctl-row .spacer{flex:1 1 auto}
+
+/* ---------- כרטיסי מדדים ---------- */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 4px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:470px){.kpis{grid-template-columns:1fr}}
+.kpi{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:18px 20px;box-shadow:var(--sh-1);position:relative;overflow:hidden;
+}
+.kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--s-tzfat)}
+.kpi:nth-child(2)::after{background:var(--s-golan)}
+.kpi:nth-child(3)::after{background:var(--c-gold)}
+.kpi:nth-child(4)::after{background:var(--ink-3)}
+.kpi .lab{font-size:13.5px;font-weight:600;color:var(--ink-3)}
+.kpi .num{
+  font-family:var(--font-head);font-weight:700;font-size:clamp(25px,3vw,33px);
+  line-height:1.15;margin-top:5px;letter-spacing:-.02em;
+}
+.kpi .num .u{font-size:.55em;color:var(--ink-3);font-weight:600;margin-inline-start:3px}
+.kpi .note{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+
+/* ---------- מקטע + כרטיס גרף ---------- */
+section.block{padding:clamp(28px,4vw,46px) 0 4px}
+.block-head{margin-bottom:16px}
+.block-head h2{font-size:clamp(21px,2.6vw,28px);font-weight:700}
+.block-head p{margin:6px 0 0;color:var(--ink-2);font-size:15px;max-width:80ch}
+.figure{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);padding:20px 22px 16px}
+.fig-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.fig-title{font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--ink)}
+.fig-sub{font-size:13px;color:var(--ink-3);margin-top:3px}
+.fig-note{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.55}
+.chart{width:100%;overflow-x:auto;overflow-y:hidden;margin-top:10px}
+.chart svg{display:block;height:auto}
+.empty{padding:44px 10px;text-align:center;color:var(--ink-3);font-size:15px}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;align-items:center}
+.legend .item{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
+.legend .sw.ref{width:16px;height:0;border-top:2px dashed var(--s-ref);border-radius:0}
+
+/* ---------- טבלה ---------- */
+.tbl-scroll{overflow-x:auto;margin-top:10px;max-height:560px;overflow-y:auto}
+table.data{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.data th{
+  position:sticky;top:0;background:var(--card);z-index:1;
+  text-align:start;font-family:var(--font-head);font-size:12.5px;color:var(--ink-3);
+  font-weight:600;padding:8px 12px;border-bottom:2px solid var(--line-2);white-space:nowrap;
+}
+table.data td{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+table.data td.nm{color:var(--ink);font-weight:600;white-space:normal;min-width:180px}
+table.data td.n{text-align:start;direction:ltr;unicode-bidi:plaintext}
+table.data tr:hover td{background:var(--paper-2)}
+table.data td.dim{color:var(--ink-3)}
+
+/* ---------- לוח בחירת ענפים ---------- */
+.panel{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;margin-bottom:14px}
+.panel .p-lab{font-family:var(--font-head);font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:9px}
+.cluster-list{display:flex;flex-wrap:wrap;gap:7px}
+.pick-box{max-height:220px;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:6px 4px;margin-top:9px}
+.pick-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px 10px}
+.pick{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2);padding:4px 8px;border-radius:var(--r-sm);cursor:pointer}
+.pick:hover{background:var(--paper-2)}
+.pick input{accent-color:var(--accent);width:15px;height:15px;flex:none;cursor:pointer}
+.pick span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panel-foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:9px;font-size:12.5px;color:var(--ink-3)}
+.linkbtn{background:none;border:0;color:var(--accent);font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;padding:2px 0;text-decoration:underline}
+.linkbtn:hover{color:var(--c-bluedeep)}
+
+/* ---------- טולטיפ ---------- */
+.tip{
+  position:fixed;z-index:200;pointer-events:none;background:var(--c-navy);color:#fff;
+  border-radius:var(--r-md);padding:9px 13px;font-size:13px;line-height:1.5;box-shadow:var(--sh-3);
+  opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;
+  max-width:280px;font-family:var(--font-body);
+}
+.tip.show{opacity:1;transform:none}
+.tip .t-key{font-family:var(--font-head);font-size:12.5px;font-weight:700;color:var(--c-sky);display:block;margin-bottom:4px}
+.tip .t-sub{font-size:11.5px;color:#A9C4D4;display:block;margin-bottom:6px}
+.tip .t-row{display:flex;justify-content:space-between;gap:20px}
+.tip .t-row span:last-child{font-weight:700;direction:ltr;unicode-bidi:plaintext}
+
+/* ---------- כותרת תחתונה ---------- */
+footer.foot{background:var(--c-navy);color:#D9E7EF;margin-top:44px;padding:40px 0 46px}
+footer.foot h3{font-size:16px;color:#fff;margin-bottom:10px;font-weight:600}
+footer.foot .cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:30px}
+@media(max-width:820px){footer.foot .cols{grid-template-columns:1fr}}
+footer.foot p,footer.foot li{font-size:13.5px;line-height:1.7;color:#B8CEDC;margin:0 0 8px}
+footer.foot ul{margin:0;padding-inline-start:18px}
+footer.foot b{color:#fff;font-weight:600}
+footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:12.5px;color:#93AFC1}
+
+/* מסכים צרים: פקדי המקטעים נשברים לשורות במקום לדחוף את העמוד לרוחב */
+@media(max-width:640px){
+  .seg{flex-wrap:wrap;border-radius:var(--r-md)}
+  .seg button{font-size:13px;padding:6px 12px}
+  .seg.sm button{font-size:12.5px;padding:5px 11px}
+  .ctl-row .spacer{flex-basis:100%}
+  .topbar .tb-meta{margin-inline-start:0;text-align:start;flex-basis:100%}
+}
+
+/* מיקוד מקלדת — נראה בכל פקד */
+.page :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-sm)}
+.seg button:focus-visible{outline:none}
+
+@media(prefers-reduced-motion:reduce){
+  .page *,.page *::before,.page *::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media print{.metricbar,.topbar{position:static}.chart{overflow:visible}}
+</style>
+
+<div class="page" dir="rtl" lang="he">
+
+  <div class="topbar">
+    <div class="wrap">
+      <img src="data:image/png;base64,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" alt="מרכז ידע אזורי גליל מזרחי | מערבי">
+      <div class="tb-meta">
+        מקור: <b>הלשכה המרכזית לסטטיסטיקה</b><br>
+        עיבוד: <b>מרכז הידע האזורי גליל מזרחי | מערבי</b>
+      </div>
+    </div>
+  </div>
+
+  <header class="head">
+    <div class="wrap">
+      <div class="kicker"><span class="mk"><i></i><i></i><i></i><i></i></span>שכר ותעסוקה · שנת 2024</div>
+      <h1>שכר, שכירים וחודשי עבודה<br>בנפות צפת וגולן</h1>
+      <p class="lede">
+        השוואה בין 18 הרשויות המקומיות בנפות צפת וגולן, ובין 51 קבוצות של ענפי כלכלה —
+        באזור ובכלל הארץ. בחרו מדד בסרגל שלהלן; כל הגרפים והמדדים מתעדכנים יחד.
+      </p>
+      <div class="chips">
+        <span class="chip">שנת נתונים <b>2024</b></span>
+        <span class="chip">רשויות <b>18</b></span>
+        <span class="chip">קבוצות ענפים <b>51</b></span>
+        <span class="chip">שכירים באזור <b id="chipWorkers">—</b></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="metricbar">
+    <div class="wrap">
+      <span class="lab" id="metricLab">מדד להצגה</span>
+      <div class="seg" id="metricSeg" role="group" aria-labelledby="metricLab"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="kpis" id="kpis"></div>
+  </div>
+
+  <!-- ============ לפי רשויות ============ -->
+  <section class="block" id="sec-auth">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>השוואה בין הרשויות</h2>
+        <p>כל עמודה היא רשות מקומית אחת, צבועה לפי הנפה שאליה היא משתייכת. הקו המקווקו הוא ממוצע האזור.</p>
+      </div>
+
+      <div class="ctl-row" role="group" aria-label="פקדי גרף הרשויות">
+        <div class="ctl-group">
+          <label id="authNafaLab">נפה</label>
+          <div class="seg sm" id="authNafa" role="group" aria-labelledby="authNafaLab"></div>
+        </div>
+        <div class="ctl-group">
+          <label for="authSort">סדר</label>
+          <select class="ctl" id="authSort">
+            <option value="desc">מהגבוה לנמוך</option>
+            <option value="asc">מהנמוך לגבוה</option>
+            <option value="name">לפי שם הרשות</option>
+            <option value="nafa">לפי נפה</option>
+          </select>
+        </div>
+        <div class="spacer"></div>
+        <div class="ctl-group">
+          <label id="authViewLab" class="sr-only">תצוגה</label>
+          <div class="seg sm" id="authView" role="group" aria-labelledby="authViewLab"></div>
+        </div>
+      </div>
+
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="authTitle">—</div>
+            <div class="fig-sub" id="authSub">—</div>
+          </div>
+        </div>
+        <div id="authBody"></div>
+        <div class="fig-note">
+          מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (2024) · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ לפי ענף כלכלי ============ -->
+  <section class="block" id="sec-anaf">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>השוואה בין ענפי כלכלה</h2>
+        <p>
+          הנתונים מסווגים ל-51 קבוצות של ענפי כלכלה (ברמת שתי ספרות, בקיבוץ של מזמין העיבוד).
+          מכיוון שזו רשימה ארוכה, צמצמו אותה באחת משלוש הדרכים: טווח, קיבוץ ענפים דומים, או בחירה ידנית.
+        </p>
+      </div>
+
+      <div class="ctl-row" role="group" aria-label="פקדי גרף הענפים">
+        <div class="ctl-group">
+          <label id="anafScopeLab">אזור</label>
+          <div class="seg sm" id="anafScope" role="group" aria-labelledby="anafScopeLab"></div>
+        </div>
+        <div class="ctl-group">
+          <label id="anafModeLab">צמצום הרשימה</label>
+          <div class="seg sm" id="anafMode" role="group" aria-labelledby="anafModeLab"></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="ctl-group">
+          <label id="anafViewLab" class="sr-only">תצוגה</label>
+          <div class="seg sm" id="anafView" role="group" aria-labelledby="anafViewLab"></div>
+        </div>
+      </div>
+
+      <div id="anafPanel"></div>
+
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="anafTitle">—</div>
+            <div class="fig-sub" id="anafSub">—</div>
+          </div>
+        </div>
+        <div id="anafBody"></div>
+        <div class="fig-note" id="anafNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h3>מקור הנתונים</h3>
+          <p>
+            <b>הלשכה המרכזית לסטטיסטיקה</b> — עיבוד מיוחד מורכב, אגף מיקרו כלכלה,
+            מתוך קובצי הכנסה מנהליים לשנת <b>2024</b>.
+          </p>
+          <p><b>עיבוד והצגה:</b> מרכז הידע האזורי גליל מזרחי | מערבי.</p>
+          <p>מילון ענפי הכלכלה: מילון ענפי כלכלה 4 ספרות (למ"ס).</p>
+        </div>
+        <div>
+          <h3>הגדרות</h3>
+          <ul>
+            <li><b>שכיר</b> — כל בעל הכנסה משכר במהלך השנה, גם אם הייתה לו גם הכנסה עסקית.</li>
+            <li><b>שכר חודשי ממוצע</b> — השכר השנתי חלקי מספר חודשי העבודה; הכנסה משכר בלבד.</li>
+            <li><b>ענף כלכלי</b> — ענף המשרה שהניבה יותר במהלך השנה, ברמת שתי ספרות.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>הערות והסתייגויות</h3>
+          <ul id="footNotes"></ul>
+        </div>
+      </div>
+      <div class="sig">מרכז הידע האזורי גליל מזרחי | מערבי · דשבורד שכר ותעסוקה · נתוני 2024</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const DATA = {"meta":{"year":"2024","source":"הלשכה המרכזית לסטטיסטיקה — עיבוד מיוחד מתוך קובצי הכנסה מנהליים","processing":"עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי"},"metrics":[{"id":"salary","label":"שכר חודשי ממוצע","short":"שכר","unit":"₪","dec":0},{"id":"workers","label":"מספר שכירים","short":"שכירים","unit":"","dec":0},{"id":"months","label":"ממוצע חודשי עבודה","short":"חודשי עבודה","unit":"חודשים","dec":2}],"authorities":{"items":[{"name":"ראש פינה","nafa":"נפת צפת","workers":1576,"months":9.6396,"salary":12807.0874},{"name":"יסוד המעלה","nafa":"נפת צפת","workers":865,"months":9.7191,"salary":13567.9167},{"name":"מטולה","nafa":"נפת צפת","workers":1131,"months":9.0371,"salary":10879.8482},{"name":"ג'ש (גוש חלב)","nafa":"נפת צפת","workers":1680,"months":10.1155,"salary":11911.3955},{"name":"טובא-זנגרייה","nafa":"נפת צפת","workers":3457,"months":9.5725,"salary":8641.8395},{"name":"חצור הגלילית","nafa":"נפת צפת","workers":4747,"months":9.8664,"salary":9934.5861},{"name":"קריית שמונה","nafa":"נפת צפת","workers":10907,"months":9.2862,"salary":10218.781},{"name":"הגליל העליון","nafa":"נפת צפת","workers":8429,"months":9.6378,"salary":13507.1778},{"name":"מרום הגליל","nafa":"נפת צפת","workers":6875,"months":9.6561,"salary":11145.6948},{"name":"מבואות החרמון","nafa":"נפת צפת","workers":4363,"months":9.702,"salary":12284.5057},{"name":"צפת","nafa":"נפת צפת","workers":13746,"months":9.463,"salary":8442.4882},{"name":"בוקעאתא","nafa":"נפת גולן","workers":3111,"months":9.4892,"salary":8227.6884},{"name":"קצרין","nafa":"נפת גולן","workers":4190,"months":9.5883,"salary":9642.5781},{"name":"מג'דל שמס","nafa":"נפת גולן","workers":4908,"months":9.3708,"salary":8102.4747},{"name":"מסעדה","nafa":"נפת גולן","workers":1783,"months":9.484,"salary":7690.716},{"name":"ע'ג'ר","nafa":"נפת גולן","workers":1118,"months":9.6664,"salary":10116.5692},{"name":"עין קנייא","nafa":"נפת גולן","workers":1047,"months":9.2674,"salary":8294.0636},{"name":"גולן","nafa":"נפת גולן","workers":9841,"months":9.485,"salary":12399.4624}],"nafot":[{"name":"נפת צפת","workers":57776,"months":9.5552,"salary":10607.405},{"name":"נפת גולן","workers":25998,"months":9.4796,"salary":10058.2949}],"region":{"name":"נפות צפת וגולן","workers":83774,"salary":10437.0,"months":9.532},"national":{"name":"ממוצע ארצי","workers":4418600,"months":9.9809,"salary":12975.83}},"anafim":[{"code":"1","label":"גידולים צמחיים","seder":"חקלאות, ייעור ודיג","parts":["גידולים צמחיים"],"nat":{"workers":48460,"months":8.9183,"salary":8514.2127},"reg":{"workers":4603,"months":8.64,"salary":8268.1058}},{"code":"2+3+4","label":"בעלי חיים, דיג וייעור","seder":"חקלאות, ייעור ודיג","parts":["ייעור וכריתת עצים","דיג וחקלאות מים","גידול בעלי חיים, ציד ופעילויות נלוות"],"nat":{"workers":7794,"months":9.8341,"salary":13491.9436},"reg":{"workers":727,"months":9.7249,"salary":11140.1932}},{"code":"5+6+7+8","label":"כרייה וחציבה","seder":"כרייה וחציבה","parts":["כריית פחם ופחם חום","הפקת נפט גולמי וגז טבעי","כריית עפרות מתכת","סוגים אחרים של כרייה וחציבה"],"nat":{"workers":4601,"months":8.6133,"salary":28798.8813},"reg":{"workers":136,"months":11.4559,"salary":20525.8849}},{"code":"10","label":"ייצור מוצרי מזון","seder":"תעשייה","parts":["ייצור מוצרי מזון"],"nat":{"workers":70086,"months":9.7851,"salary":10603.5013},"reg":{"workers":1887,"months":9.4838,"salary":10705.0419}},{"code":"11+12","label":"ייצור משקאות וטבק","seder":"תעשייה","parts":["ייצור משקאות","ייצור מוצרי טבק"],"nat":{"workers":8521,"months":10.2057,"salary":14655.8304},"reg":{"workers":755,"months":9.7444,"salary":12676.5862}},{"code":"13+14+15","label":"טקסטיל, הלבשה ועור","seder":"תעשייה","parts":["ייצור טקסטיל","ייצור מוצרי הלבשה","ייצור ועיבוד של מוצרי עור ושל אביזרים נלווים"],"nat":{"workers":8207,"months":10.3373,"salary":11017.5564},"reg":{"workers":410,"months":10.1634,"salary":12632.7295}},{"code":"16+17+18","label":"עץ, נייר ודפוס","seder":"תעשייה","parts":["ייצור מוצרי עץ ומוצרי עץ ושעם, פרט לרהיטים; ייצור מוצרי קש ומוצרים מחומרי קליעה","ייצור נייר ומוצריו","הדפסה ושכפול של חומר תקשורתי מוקלט"],"nat":{"workers":16647,"months":10.6202,"salary":12918.7364},"reg":{"workers":378,"months":10.5159,"salary":12673.847}},{"code":"19+20","label":"נפט מזוקק וכימיקלים","seder":"תעשייה","parts":["ייצור מוצרי נפט מזוקק","ייצור כימיקלים ומוצריהם"],"nat":{"workers":19777,"months":10.9867,"salary":20195.6587},"reg":{"workers":616,"months":10.6055,"salary":13856.207}},{"code":"21","label":"ייצור תרופות","seder":"תעשייה","parts":["ייצור תרופות, כולל תרופות הומאופתיות, לבני אדם ולשימוש וטרינרי"],"nat":{"workers":10954,"months":11.2338,"salary":22802.5623},"reg":{"workers":106,"months":9.6981,"salary":11124.7656}},{"code":"22","label":"גומי ופלסטיק","seder":"תעשייה","parts":["ייצור מוצרי גומי ופלסטיק"],"nat":{"workers":21481,"months":10.7862,"salary":14290.7828},"reg":{"workers":959,"months":10.5808,"salary":14274.1516}},{"code":"23+24+25","label":"מינרלים אל-מתכתיים ומתכת","seder":"תעשייה","parts":["ייצור מוצרים אחרים על בסיס מינרלים אל-מתכתיים","תעשיית מתכות בסיסיות","ייצור מוצרי מתכת בהרכבה, פרט למכונות ולציוד"],"nat":{"workers":55016,"months":10.7386,"salary":15346.6081},"reg":{"workers":825,"months":10.4545,"salary":14556.9928}},{"code":"26","label":"מחשבים, אלקטרוניקה ואופטיקה","seder":"תעשייה","parts":["ייצור מחשבים, מכשור אלקטרוני ואופטי"],"nat":{"workers":63736,"months":11.1921,"salary":25982.4196},"reg":{"workers":875,"months":10.992,"salary":20315.2048}},{"code":"27+28","label":"ציוד חשמלי ומכונות","seder":"תעשייה","parts":["ייצור ציוד חשמלי","ייצור מכונות וציוד לנמ\"א"],"nat":{"workers":31149,"months":11.0712,"salary":19812.4681},"reg":{"workers":1003,"months":10.5872,"salary":13946.681}},{"code":"29+30","label":"כלי רכב וכלי תחבורה","seder":"תעשייה","parts":["ייצור כלי רכב מנועיים ונגררים","ייצור כלי תחבורה והובלה אחרים"],"nat":{"workers":25330,"months":11.2433,"salary":24878.6232},"reg":{"workers":310,"months":10.7839,"salary":18554.6438}},{"code":"31+32+33+34","label":"רהיטים, יהלומים וייצור אחר","seder":"תעשייה","parts":["ייצור רהיטים","ענפי ייצור אחרים","תיקון, תחזוקה והתקנה של מכונות וציוד","עיבוד יהלומים"],"nat":{"workers":33825,"months":10.4671,"salary":14260.8752},"reg":{"workers":1185,"months":10.3122,"salary":13969.4532}},{"code":"35+36+37+38+39","label":"חשמל, מים וטיפול בפסולת","seder":"אספקת חשמל, גז, קיטור ומיזוג אוויר · אספקת מים; שירותי ביוב, טיפול באשפה ובפסולת ושירותי טיהור","parts":["אספקת חשמל, גז, קיטור ומיזוג אוויר (קירור)","אגירת מים, טיפול ואספקה","שירותי ביוב","איסוף, טיפול וסילוק של אשפה ופסולת; מחזור (והשבה) של חומרים","שירותי טיהור ושירותים אחרים לטיפול בפסולת"],"nat":{"workers":29904,"months":10.8945,"salary":23164.2612},"reg":{"workers":622,"months":10.5434,"salary":18698.019}},{"code":"41","label":"בניית מבנים ובניינים","seder":"בינוי","parts":["בניית מבנים ובניינים"],"nat":{"workers":92998,"months":9.4961,"salary":12807.7043},"reg":{"workers":1871,"months":8.8135,"salary":9026.7431}},{"code":"42","label":"עבודות הנדסה אזרחית","seder":"בינוי","parts":["עבודות הנדסה אזרחית"],"nat":{"workers":38275,"months":10.0137,"salary":13679.7694},"reg":{"workers":888,"months":9.5878,"salary":10499.9751}},{"code":"43","label":"עבודות בנייה מיוחדות","seder":"בינוי","parts":["עבודות בנייה מיוחדות"],"nat":{"workers":120240,"months":9.5871,"salary":10639.2444},"reg":{"workers":1853,"months":8.9196,"salary":8825.9089}},{"code":"45","label":"מסחר ותיקון כלי רכב","seder":"מסחר סיטוני וקמעוני; תיקון כלי רכב מנועיים ואופנועים","parts":["מסחר סיטוני וקמעוני בכלי רכב מנועיים ובאופנועים ותיקונם"],"nat":{"workers":59257,"months":10.388,"salary":12610.263},"reg":{"workers":682,"months":10.1276,"salary":11508.3095}},{"code":"46","label":"מסחר סיטוני","seder":"מסחר סיטוני וקמעוני; תיקון כלי רכב מנועיים ואופנועים","parts":["מסחר סיטוני, פרט לכלי רכב מנועיים ולאופנועים"],"nat":{"workers":176955,"months":10.3676,"salary":14656.9613},"reg":{"workers":1947,"months":9.4792,"salary":12135.5794}},{"code":"47","label":"מסחר קמעוני","seder":"מסחר סיטוני וקמעוני; תיקון כלי רכב מנועיים ואופנועים","parts":["מכירה קמעונית, פרט לכלי רכב מנועיים ולאופנועים"],"nat":{"workers":354560,"months":9.2762,"salary":7652.9716},"reg":{"workers":5760,"months":8.6682,"salary":6587.3465}},{"code":"49","label":"הובלה יבשתית","seder":"שירותי תחבורה, אחסנה, דואר ובלדרות","parts":["הובלה יבשתית והובלה באמצעות קווי צינורות"],"nat":{"workers":105827,"months":10.1451,"salary":11726.0546},"reg":{"workers":1826,"months":10.2415,"salary":10599.3365}},{"code":"50+51+52+53","label":"הובלה ימית ואווירית, אחסנה ודואר","seder":"שירותי תחבורה, אחסנה, דואר ובלדרות","parts":["הובלה ימית","הובלה אווירית","אחסנה ושירותי עזר לתחבורה","שירותי דואר ובלדרות"],"nat":{"workers":55035,"months":10.5233,"salary":17890.8144},"reg":{"workers":516,"months":9.7539,"salary":14044.6821}},{"code":"55","label":"שירותי אירוח","seder":"שירותי אירוח ואוכל","parts":["שירותי אירוח"],"nat":{"workers":35888,"months":9.3161,"salary":9830.4692},"reg":{"workers":1569,"months":8.1109,"salary":8110.0993}},{"code":"56","label":"מסעדות ושירותי מזון","seder":"שירותי אירוח ואוכל","parts":["שירותי מזון ומשקאות"],"nat":{"workers":257057,"months":7.923,"salary":5301.6558},"reg":{"workers":4569,"months":7.5747,"salary":5066.0957}},{"code":"58+59+60","label":"הוצאה לאור, קולנוע ושידור","seder":"מידע ותקשורת","parts":["הוצאה לאור","הפקה, פוסט-פרודקשן והפצה של סרטי קולנוע, סרטי וידאו, תכניות טלוויזיה, הקלטה","שידור תכניות רדיו וטלוויזיה"],"nat":{"workers":17126,"months":10.1531,"salary":13482.8818},"reg":{"workers":160,"months":9.65,"salary":13263.5597}},{"code":"61","label":"שירותי תקשורת","seder":"מידע ותקשורת","parts":["שירותי תקשורת"],"nat":{"workers":19419,"months":10.8785,"salary":18672.3933},"reg":{"workers":291,"months":10.5361,"salary":13435.9994}},{"code":"62+63","label":"תכנות, ייעוץ ושירותי מידע","seder":"מידע ותקשורת","parts":["תכנות מחשבים, ייעוץ בתחום המחשבים ושירותים נלווים אחרים","שירותי מידע"],"nat":{"workers":232351,"months":10.7821,"salary":31994.0592},"reg":{"workers":1713,"months":10.5552,"salary":24194.1502}},{"code":"64+65+66","label":"שירותים פיננסיים וביטוח","seder":"שירותים פיננסיים ושירותי ביטוח","parts":["שירותים פיננסיים, פרט לביטוח ולקרנות פנסיה","ביטוח, ביטוח משנה וקרנות פנסיה, פרט לביטוח לאומי חובה","פעילויות עזר הנלוות לשירותים פיננסיים ולשירותי ביטוח"],"nat":{"workers":118854,"months":10.8269,"salary":21885.1382},"reg":{"workers":1064,"months":10.3355,"salary":15860.4183}},{"code":"68","label":"פעילויות בנדל\"ן","seder":"פעילויות בנדל\"ן","parts":["פעילויות בנדל\"ן"],"nat":{"workers":35742,"months":10.2924,"salary":15393.5317},"reg":{"workers":393,"months":10.173,"salary":12993.5401}},{"code":"69","label":"שירותים משפטיים וחשבונאות","seder":"שירותים מקצועיים, מדעיים וטכניים","parts":["שירותים משפטיים ושירותי חשבונאות"],"nat":{"workers":77888,"months":10.4283,"salary":13434.2905},"reg":{"workers":863,"months":10.1136,"salary":10199.9071}},{"code":"70","label":"ייעוץ ניהולי ומשרדים ראשיים","seder":"שירותים מקצועיים, מדעיים וטכניים","parts":["שירותי משרדים ראשיים; שירותי ייעוץ ניהולי"],"nat":{"workers":50931,"months":10.0403,"salary":16796.7622},"reg":{"workers":1081,"months":9.2932,"salary":10678.4617}},{"code":"71","label":"אדריכלות, הנדסה ובדיקות טכניות","seder":"שירותים מקצועיים, מדעיים וטכניים","parts":["שירותי אדריכלות והנדסה; בדיקות טכניות וניתוח נתונים טכניים"],"nat":{"workers":61923,"months":10.5666,"salary":15541.4668},"reg":{"workers":1062,"months":10.1921,"salary":12675.1727}},{"code":"72","label":"מחקר מדעי ופיתוח","seder":"שירותים מקצועיים, מדעיים וטכניים","parts":["מחקר מדעי ופיתוח"],"nat":{"workers":51640,"months":10.8974,"salary":34018.9584},"reg":{"workers":822,"months":10.371,"salary":20487.7344}},{"code":"73+74+75","label":"פרסום ושירותים מקצועיים אחרים","seder":"שירותים מקצועיים, מדעיים וטכניים","parts":["פרסום וחקר שווקים","סוגים אחרים של שירותים מקצועיים, מדעיים וטכניים","שירותים וטרינריים"],"nat":{"workers":46750,"months":9.7035,"salary":12762.1877},"reg":{"workers":668,"months":8.9222,"salary":9978.7355}},{"code":"77+79","label":"השכרה וסוכנויות נסיעות","seder":"שירותי ניהול ותמיכה","parts":["שירותי השכרה והחכרה","פעילויות של סוכנויות נסיעות, מארגני טיולים, הזמנות ושירותים נלווים"],"nat":{"workers":26353,"months":9.5519,"salary":12539.6068},"reg":{"workers":432,"months":8.4491,"salary":9568.4676}},{"code":"78","label":"שירותי תעסוקה","seder":"שירותי ניהול ותמיכה","parts":["שירותי תעסוקה"],"nat":{"workers":69828,"months":7.2844,"salary":6099.2972},"reg":{"workers":1150,"months":7.0878,"salary":5424.4443}},{"code":"80","label":"שמירה ואבטחה","seder":"שירותי ניהול ותמיכה","parts":["שירותי שמירה, אבטחה וחקירה"],"nat":{"workers":50100,"months":9.8922,"salary":9072.4262},"reg":{"workers":790,"months":9.1785,"salary":8564.9565}},{"code":"81","label":"תחזוקת בניינים וגינון","seder":"שירותי ניהול ותמיכה","parts":["שירותי תחזוקה לבניינים ועבודות גינון"],"nat":{"workers":104339,"months":9.3635,"salary":7323.4813},"reg":{"workers":1206,"months":8.6866,"salary":6852.7067}},{"code":"82","label":"ניהול ותמיכה למשרדים ולעסקים","seder":"שירותי ניהול ותמיכה","parts":["שירותי ניהול ותמיכה למשרדים ולעסקים"],"nat":{"workers":50447,"months":9.295,"salary":8069.5597},"reg":{"workers":1058,"months":9.1285,"salary":6981.7761}},{"code":"83","label":"מינהל מקומי","seder":"מינהל מקומי, מינהל ציבורי וביטחון; ביטוח לאומי חובה","parts":["מינהל מקומי"],"nat":{"workers":215694,"months":10.8526,"salary":11536.4147},"reg":{"workers":4602,"months":10.2182,"salary":10262.4579}},{"code":"84","label":"מינהל ציבורי, ביטחון וביטוח לאומי","seder":"מינהל מקומי, מינהל ציבורי וביטחון; ביטוח לאומי חובה","parts":["מינהל ציבורי וביטחון; ביטוח לאומי חובה"],"nat":{"workers":91337,"months":10.9234,"salary":19488.4905},"reg":{"workers":1921,"months":11.0489,"salary":18906.8229}},{"code":"85","label":"חינוך","seder":"חינוך","parts":["חינוך"],"nat":{"workers":475354,"months":10.2026,"salary":11163.277},"reg":{"workers":11534,"months":10.0899,"salary":11550.8825}},{"code":"86","label":"שירותי בריאות","seder":"שירותי בריאות, רווחה וסעד","parts":["שירותי בריאות"],"nat":{"workers":189550,"months":10.8844,"salary":16108.9109},"reg":{"workers":2461,"months":10.4563,"salary":13715.3046}},{"code":"87+88","label":"רווחה, סעד ומגורים טיפוליים","seder":"שירותי בריאות, רווחה וסעד","parts":["מגורים טיפוליים","שירותי רווחה וסעד ללא מגורים"],"nat":{"workers":332238,"months":9.6713,"salary":5177.194},"reg":{"workers":5778,"months":9.1215,"salary":4606.2917}},{"code":"90+91+92","label":"אמנות, תרבות ובידור","seder":"אמנות, בידור ופנאי","parts":["יצירה, אמנות ובידור","הפעלת ספריות, ארכיונים, מוזאונים ופעילויות תרבות אחרות","פעילויות הימורים והתערבויות"],"nat":{"workers":23122,"months":9.3553,"salary":10179.6775},"reg":{"workers":495,"months":9.4263,"salary":10990.926}},{"code":"93","label":"ספורט, בילוי ופנאי","seder":"אמנות, בידור ופנאי","parts":["פעילויות ספורט, בילוי ופנאי"],"nat":{"workers":51649,"months":7.7107,"salary":6163.2382},"reg":{"workers":1043,"months":6.9837,"salary":7021.5342}},{"code":"94","label":"ארגוני חברים","seder":"שירותים אחרים","parts":["פעילויות של ארגוני חברים"],"nat":{"workers":115821,"months":9.0196,"salary":7018.5345},"reg":{"workers":2664,"months":8.479,"salary":6495.8049}},{"code":"95+96","label":"תיקון ושירותים אישיים","seder":"שירותים אחרים","parts":["תיקון של מחשבים, ציוד אישי וציוד לבית","שירותים אישיים אחרים"],"nat":{"workers":27468,"months":9.3345,"salary":7996.7976},"reg":{"workers":369,"months":8.5041,"salary":6546.069}},{"code":"97+98+99","label":"משקי בית כמעסיקים וארגונים חוץ-מדינתיים","seder":"משקי בית כמעסיקים; משקי בית המייצרים מגוון טובין ושירותים לשימוש עצמי · ארגונים וגופים חוץ-מדינתיים","parts":["משקי בית כמעסיקים (של עובדי משק הבית)","משקי בית המייצרים מגוון טובין ושירותים לשימוש עצמי","ארגונים וגופים חוץ-מדינתיים"],"nat":{"workers":1936,"months":11.2882,"salary":19688.6765},"reg":{"workers":null,"months":null,"salary":null}}],"clusters":[{"id":"agri","label":"חקלאות, ייעור ודיג","codes":["1","2+3+4"]},{"id":"infra","label":"אנרגיה, מים, פסולת וכרייה","codes":["5+6+7+8","35+36+37+38+39"]},{"id":"manuf","label":"תעשייה וייצור","codes":["10","11+12","13+14+15","16+17+18","19+20","21","22","23+24+25","26","27+28","29+30","31+32+33+34"]},{"id":"constr","label":"בינוי","codes":["41","42","43"]},{"id":"trade","label":"מסחר","codes":["45","46","47"]},{"id":"transp","label":"תחבורה, אחסנה ודואר","codes":["49","50+51+52+53"]},{"id":"hosp","label":"אירוח ומזון","codes":["55","56"]},{"id":"ict","label":"מידע ותקשורת","codes":["58+59+60","61","62+63"]},{"id":"fin","label":"פיננסים, ביטוח ונדל\"ן","codes":["64+65+66","68"]},{"id":"prof","label":"שירותים מקצועיים ומדעיים","codes":["69","70","71","72","73+74+75"]},{"id":"admin","label":"שירותי ניהול ותמיכה","codes":["77+79","78","80","81","82"]},{"id":"public","label":"מינהל מקומי וציבורי","codes":["83","84"]},{"id":"edu","label":"חינוך","codes":["85"]},{"id":"health","label":"בריאות, רווחה וסעד","codes":["86","87+88"]},{"id":"other","label":"אמנות, פנאי ושירותים אחרים","codes":["90+91+92","93","94","95+96","97+98+99"]},{"id":"hitech","label":"היי-טק (תעשייה ושירותים)","codes":["21","26","61","62+63","72"]}]};
+const A = DATA.authorities, ANAF = DATA.anafim, METRICS = DATA.metrics;
+const M = Object.fromEntries(METRICS.map(m => [m.id, m]));
+const NAFA_COLOR = {"נפת צפת":"var(--s-tzfat)", "נפת גולן":"var(--s-golan)"};
+
+const state = {
+  metric: "salary",
+  auth:   {nafa:"all", sort:"desc", view:"chart"},
+  anaf:   {scope:"reg", mode:"range", range:"top10", clusters:new Set(), picks:new Set(),
+           query:"", view:"chart"}
+};
+
+/* ---------------- עזרי פורמט ---------------- */
+const nf0 = new Intl.NumberFormat("he-IL", {maximumFractionDigits:0});
+const nf2 = new Intl.NumberFormat("he-IL", {minimumFractionDigits:2, maximumFractionDigits:2});
+const fmt   = (v, id) => v == null ? "—" : (M[id].dec ? nf2 : nf0).format(v);
+const fmtU  = (v, id) => v == null ? "—" : fmt(v, id) + (M[id].unit ? " " + M[id].unit : "");
+const plural = (n, one, many) => n === 1 ? one : `${nf0.format(n)} ${many}`;
+const compact = v => v == null ? "—"
+  : v >= 1e6 ? nf2.format(v/1e6).replace(/[.,]00$/,"") + " מיליון" : nf0.format(v);
+
+/* ---------------- עזרי DOM ו-SVG ---------------- */
+const el = (tag, attrs, txt) => {
+  const n = document.createElement(tag);
+  for (const k in attrs) k === "class" ? (n.className = attrs[k]) : n.setAttribute(k, attrs[k]);
+  if (txt != null) n.textContent = txt;
+  return n;
+};
+const NS = "http://www.w3.org/2000/svg";
+const S = (tag, attrs) => {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  return n;
+};
+const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); return n; };
+/* אומדן רוחב טקסט — משמש רק כדי להחליט אם תווית נכנסת בתוך עמודה */
+const textW = (s, size) => String(s).length * size * 0.53;
+
+/* פינות מעוגלות בקצה הנתונים בלבד; הבסיס נשאר ישר */
+function capTop(x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w/2, h));
+  return `M${x},${y+h} L${x},${y+r} Q${x},${y} ${x+r},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h} Z`;
+}
+function capStart(xEnd, y, w, h, r) {           /* גדל ימינה→שמאלה; קצה מעוגל בשמאל */
+  const x = xEnd - w;
+  r = Math.max(0, Math.min(r, w, h/2));
+  return `M${xEnd},${y} L${x+r},${y} Q${x},${y} ${x},${y+r} L${x},${y+h-r} Q${x},${y+h} ${x+r},${y+h} L${xEnd},${y+h} Z`;
+}
+
+/* ציר ערכים בקפיצות עגולות */
+function niceAxis(max, ticks) {
+  if (!(max > 0)) return {hi:1, step:1};
+  const raw = max / (ticks || 5);
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const f = raw / mag;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * mag;
+  return {hi: Math.ceil(max / step) * step, step};
+}
+
+/* ---------------- טולטיפ ---------------- */
+const tip = el("div", {class:"tip"});
+document.body.appendChild(tip);
+const hideTip = () => tip.classList.remove("show");
+function moveTip(e) {
+  const p = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX + p, y = e.clientY + p;
+  if (x + w > innerWidth - 8)  x = e.clientX - w - p;
+  if (y + h > innerHeight - 8) y = e.clientY - h - p;
+  tip.style.left = Math.max(8, x) + "px";
+  tip.style.top  = Math.max(8, y) + "px";
+}
+function bindTip(node, html) {
+  const show = e => { tip.innerHTML = html; tip.classList.add("show"); moveTip(e); };
+  node.addEventListener("mouseenter", show);
+  node.addEventListener("mousemove", moveTip);
+  node.addEventListener("mouseleave", hideTip);
+}
+const tipRows = vals => METRICS
+  .map(m => `<div class="t-row"><span>${m.label}</span><span>${fmtU(vals[m.id], m.id)}</span></div>`)
+  .join("");
+
+/* ---------------- פקד מקטעים ---------------- */
+function segment(host, options, current, onPick) {
+  clear(host);
+  options.forEach(o => {
+    const b = el("button", {type:"button", "aria-pressed": String(o.id === current)}, o.label);
+    if (o.title) b.title = o.title;
+    b.addEventListener("click", () => { if (o.id !== current) onPick(o.id); });
+    host.appendChild(b);
+  });
+}
+
+/* ============================================================
+   גרף עמודות אנכי — רשויות (RTL: הראשון מימין)
+   ============================================================ */
+function columnChart(host, items, opt) {
+  const id = state.metric, m = M[id];
+  const W = 1040, mT = 26, mR = 66, plotH = 300;
+  /* התוויות מוטות ב-45°, ולכן הן נמתחות שמאלה ומטה. השוליים נגזרים מהתווית
+     הארוכה ביותר, כדי שהתווית של העמודה השמאלית לא תיחתך בקצה. */
+  const longest = Math.max(...items.map(d => textW(d.label, 12.5))) * Math.SQRT1_2;
+  const step0 = (W - mR - 12) / items.length;
+  const mL = Math.max(12, Math.ceil(longest - step0 / 2) + 12);
+  const mB = Math.max(64, Math.ceil(longest) + 26);
+  const plotW = W - mR - mL, H = mT + plotH + mB;
+  const base = mT + plotH, right = W - mR;
+
+  const maxV = Math.max(...items.map(d => d.value), opt.ref || 0);
+  const ax = niceAxis(maxV, 5);
+  const Y = v => base - (v / ax.hi) * plotH;
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img",
+                        "aria-label":`${m.label} לפי רשות`, style:`min-width:${Math.max(560, items.length*46)}px`});
+  clear(host).appendChild(svg);
+
+  /* קווי סרגל + תוויות ציר (RTL — הציר מימין) */
+  for (let v = 0; v <= ax.hi + 1e-6; v += ax.step) {
+    svg.appendChild(S("line", {x1:mL, x2:right, y1:Y(v), y2:Y(v),
+      stroke: v === 0 ? "var(--line-2)" : "var(--line)", "stroke-width":1}));
+    const t = S("text", {x:right + 10, y:Y(v) + 4, "text-anchor":"start",
+      style:"font:500 12px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = fmt(v, id);
+    svg.appendChild(t);
+  }
+
+  const step = plotW / items.length;
+  const bw = Math.min(24, step * 0.62);
+  const hiV = Math.max(...items.map(d => d.value)), loV = Math.min(...items.map(d => d.value));
+  let hiDone = false, loDone = false;
+
+  items.forEach((d, i) => {
+    const cx = right - (i + 0.5) * step;
+    const h = Math.max(1, base - Y(d.value));
+    const color = opt.colorOf(d);
+
+    svg.appendChild(S("path", {d: capTop(cx - bw/2, base - h, bw, h, 4), fill: color}));
+
+    /* אזור העכבר — הרצועה כולה, לא רק העמודה */
+    const hit = S("rect", {x:cx - step/2, y:mT, width:step, height:plotH, fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all)}`);
+    svg.appendChild(hit);
+
+    /* תווית ערך — רק לקצוות, כדי לא להציף את הגרף במספרים */
+    const isHi = !hiDone && d.value === hiV, isLo = !loDone && d.value === loV && hiV !== loV;
+    if (isHi) hiDone = true;
+    if (isLo) loDone = true;
+    if (isHi || isLo) {
+      const t = S("text", {x:cx, y:base - h - 9, "text-anchor":"middle",
+        style:"font:700 12.5px var(--font-head);fill:var(--ink);direction:ltr"});
+      t.textContent = fmt(d.value, id);
+      svg.appendChild(t);
+    }
+
+    /* שם הרשות — מוטה 45°, כך שהקריאה מתחילה סמוך לעמודה.
+       ב-RTL ‏text-anchor:start מעגן את קצה הטקסט הימני, ולכן הוא נמתח שמאלה-מטה. */
+    const g = S("g", {transform:`translate(${cx},${base + 13}) rotate(-45)`});
+    const lab = S("text", {x:0, y:0, "text-anchor":"start",
+      style:"font:600 12.5px var(--font-body);fill:var(--ink-2);direction:rtl;unicode-bidi:plaintext"});
+    lab.textContent = d.label;
+    g.appendChild(lab);
+    svg.appendChild(g);
+  });
+
+  /* קו ייחוס — מסומן בליגנדה, כדי לא להוסיף טקסט לתוך שטח הנתונים */
+  if (opt.ref != null) {
+    const y = Y(opt.ref);
+    svg.appendChild(S("line", {x1:mL, x2:right, y1:y, y2:y, stroke:"var(--s-ref)",
+      "stroke-width":2, "stroke-dasharray":"6 5"}));
+  }
+  return svg;
+}
+
+/* ============================================================
+   גרף עמודות אופקי — ענפים (תווית מעל כל עמודה, RTL)
+   ============================================================ */
+function barChart(host, rows, opt) {
+  const id = state.metric, m = M[id];
+  const W = 1040, rowH = 46, pad = 10;
+  const items = rows.filter(r => !r.gap);
+  const H = pad * 2 + rows.length * rowH - (rows.length ? rowH - 34 : 0);
+  const maxV = Math.max(...items.map(d => d.value), opt.ref || 0) || 1;
+  const scale = v => (v / (maxV * 1.16)) * W;      /* 16% אוויר משמאל לתוויות ערך */
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img",
+                        "aria-label":`${m.label} לפי ענף כלכלי`, style:"min-width:520px"});
+  clear(host).appendChild(svg);
+
+  rows.forEach((d, i) => {
+    const rTop = pad + i * rowH;
+    if (d.gap) {                                   /* מפריד בין "גבוהים" ל"נמוכים" */
+      const y = rTop + 16;
+      svg.appendChild(S("line", {x1:0, x2:W, y1:y, y2:y, stroke:"var(--line)",
+        "stroke-width":1, "stroke-dasharray":"3 6"}));
+      const t = S("text", {x:W/2, y:y - 6, "text-anchor":"middle",
+        style:"font:600 12px var(--font-body);fill:var(--ink-3)"});
+      t.textContent = d.gapLabel;
+      svg.appendChild(t);
+      return;
+    }
+    const lab = S("text", {x:W, y:rTop + 13, "text-anchor":"start",
+      style:"font:600 13.5px var(--font-body);fill:var(--ink);direction:rtl;unicode-bidi:plaintext"});
+    lab.textContent = d.label;
+    svg.appendChild(lab);
+
+    const by = rTop + 21, bh = 14, bw = Math.max(2, scale(d.value));
+    svg.appendChild(S("line", {x1:0, x2:W, y1:by + bh + 5, y2:by + bh + 5,
+      stroke:"var(--line)", "stroke-width":1}));
+    svg.appendChild(S("path", {d: capStart(W, by, bw, bh, 4), fill:"var(--s-bar)"}));
+
+    const hit = S("rect", {x:0, y:rTop, width:W, height:rowH - 6, fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all)}`);
+    svg.appendChild(hit);
+
+    /* ערך בקצה העמודה — בפנים אם נכנס בנוחות, אחרת מחוצה לה */
+    const txt = fmt(d.value, id), inside = bw > textW(txt, 12) + 22;
+    const t = S("text", {x: inside ? W - bw + 10 : W - bw - 8, y: by + 11,
+      "text-anchor": inside ? "start" : "end",
+      style:`font:700 12px var(--font-head);fill:${inside ? "#fff" : "var(--ink-2)"};direction:ltr`});
+    t.textContent = txt;
+    svg.appendChild(t);
+  });
+
+  if (opt.ref != null && items.length) {
+    const x = W - scale(opt.ref);
+    svg.appendChild(S("line", {x1:x, x2:x, y1:pad, y2:H - 8, stroke:"var(--s-ref)",
+      "stroke-width":2, "stroke-dasharray":"6 5"}));
+  }
+  return svg;
+}
+
+/* ---------------- טבלאות ---------------- */
+function dataTable(host, cols, rows) {
+  const box = el("div", {class:"tbl-scroll"});
+  const t = el("table", {class:"data"});
+  const thead = el("thead"), tr = el("tr");
+  cols.forEach(c => tr.appendChild(el("th", {scope:"col"}, c.head)));
+  thead.appendChild(tr); t.appendChild(thead);
+  const tb = el("tbody");
+  rows.forEach(r => {
+    const row = el("tr");
+    cols.forEach(c => row.appendChild(el("td", {class:c.cls || ""}, c.get(r))));
+    tb.appendChild(row);
+  });
+  t.appendChild(tb); box.appendChild(t);
+  clear(host).appendChild(box);
+}
+
+/* ============================================================
+   מדדי מפתח
+   ============================================================ */
+function renderKpis() {
+  const id = state.metric, m = M[id];
+  const cards = [
+    {lab:"נפת צפת",       v:A.nafot[0][id], note:"11 רשויות"},
+    {lab:"נפת גולן",      v:A.nafot[1][id], note:"7 רשויות"},
+    {lab:"נפות צפת וגולן", v:A.region[id],   note: id === "workers" ? "סך הכול באזור" : "ממוצע משוקלל"},
+    {lab:"כלל הארץ",      v:A.national[id], note: id === "workers" ? "סך הכול" : "ממוצע ארצי"}
+  ];
+  const host = clear(document.getElementById("kpis"));
+  cards.forEach(c => {
+    const k = el("div", {class:"kpi"});
+    k.appendChild(el("div", {class:"lab"}, c.lab));
+    const n = el("div", {class:"num"});
+    n.appendChild(document.createTextNode(id === "workers" && c.v >= 1e6 ? compact(c.v) : fmt(c.v, id)));
+    if (m.unit) n.appendChild(el("span", {class:"u"}, m.unit));
+    k.appendChild(n);
+    k.appendChild(el("div", {class:"note"}, c.note));
+    host.appendChild(k);
+  });
+}
+
+/* ============================================================
+   מקטע הרשויות
+   ============================================================ */
+function authRows() {
+  const id = state.metric;
+  let items = A.items.filter(x => state.auth.nafa === "all" || x.nafa === state.auth.nafa);
+  const s = state.auth.sort;
+  const cmp = {
+    desc: (a, b) => b[id] - a[id],
+    asc:  (a, b) => a[id] - b[id],
+    name: (a, b) => a.name.localeCompare(b.name, "he"),
+    nafa: (a, b) => a.nafa.localeCompare(b.nafa, "he") || b[id] - a[id]
+  }[s];
+  return items.slice().sort(cmp);
+}
+
+function renderAuth() {
+  const id = state.metric, m = M[id];
+  const items = authRows();
+  const scope = state.auth.nafa === "all" ? A.region : A.nafot.find(n => n.name === state.auth.nafa);
+
+  document.getElementById("authTitle").textContent = `${m.label} לפי רשות מקומית`;
+  document.getElementById("authSub").textContent =
+    `${items.length} רשויות · ${state.auth.nafa === "all" ? "נפות צפת וגולן" : state.auth.nafa}` +
+    (m.unit ? ` · ${m.unit}` : "");
+
+  /* קו ייחוס: ממוצע משוקלל למדדי שכר/חודשים, ממוצע פשוט לרשות למספר שכירים */
+  const ref = id === "workers"
+    ? items.reduce((s, x) => s + x.workers, 0) / (items.length || 1)
+    : scope[id];
+  const refLabel = id === "workers" ? "ממוצע לרשות" : "ממוצע האזור";
+
+  const body = document.getElementById("authBody");
+  if (state.auth.view === "table") {
+    dataTable(body, [
+      {head:"רשות",  cls:"nm",  get:r => r.name},
+      {head:"נפה",   cls:"dim", get:r => r.nafa},
+      {head:"שכר חודשי ממוצע (₪)", cls:"n", get:r => fmt(r.salary, "salary")},
+      {head:"מספר שכירים",         cls:"n", get:r => fmt(r.workers, "workers")},
+      {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.months, "months")}
+    ], items);
+    return;
+  }
+
+  const chart = el("div", {class:"chart"});
+  clear(body).appendChild(chart);
+  columnChart(chart, items.map(x => ({
+    label: x.name, value: x[id], sub: x.nafa, all: x, nafa: x.nafa
+  })), {colorOf: d => NAFA_COLOR[d.nafa], ref, refLabel});
+
+  const lg = el("div", {class:"legend"});
+  const shown = [...new Set(items.map(x => x.nafa))];
+  shown.forEach(n => {
+    const it = el("span", {class:"item"});
+    const sw = el("span", {class:"sw"}); sw.style.background = NAFA_COLOR[n];
+    it.appendChild(sw); it.appendChild(document.createTextNode(n));
+    lg.appendChild(it);
+  });
+  const ri = el("span", {class:"item"});
+  ri.appendChild(el("span", {class:"sw ref"}));
+  ri.appendChild(document.createTextNode(`${refLabel} · ${fmtU(ref, id)}`));
+  lg.appendChild(ri);
+  body.appendChild(lg);
+}
+
+/* ============================================================
+   מקטע הענפים
+   ============================================================ */
+const RANGES = [
+  {id:"top10",   label:"10 הגבוהים ביותר",       n:10, from:"top"},
+  {id:"top15",   label:"15 הגבוהים ביותר",       n:15, from:"top"},
+  {id:"top20",   label:"20 הגבוהים ביותר",       n:20, from:"top"},
+  {id:"bottom10",label:"10 הנמוכים ביותר",       n:10, from:"bottom"},
+  {id:"ends",    label:"10 הגבוהים ו-10 הנמוכים", n:10, from:"ends"},
+  {id:"all",     label:"כל הענפים",               n:0,  from:"top"}
+];
+
+function anafBase() {
+  const id = state.metric, k = state.anaf.scope;   /* reg | nat */
+  return ANAF.map(x => ({
+    code:x.code, label:x.label, seder:x.seder, parts:x.parts,
+    value:x[k][id], all:x[k]
+  })).filter(x => x.value != null);
+}
+
+/* כל עוד לא נבחר קיבוץ/ענף — מציגים את 10 הגבוהים, ולא את כל הרשימה */
+const FALLBACK_N = 10;
+
+function anafFiltered() {
+  const st = state.anaf;
+  let rows = anafBase(), chosen = true;
+  if (st.mode === "cluster") {
+    if (st.clusters.size) {
+      const allow = new Set();
+      DATA.clusters.filter(c => st.clusters.has(c.id)).forEach(c => c.codes.forEach(x => allow.add(x)));
+      rows = rows.filter(r => allow.has(r.code));
+    } else chosen = false;
+  } else if (st.mode === "pick") {
+    if (st.picks.size) rows = rows.filter(r => st.picks.has(r.code));
+    else chosen = false;
+  }
+  rows.sort((a, b) => b.value - a.value);
+
+  if (st.mode !== "range") {
+    if (chosen) return {rows, total:rows.length, hidden:0};
+    return {rows: rows.slice(0, FALLBACK_N), total:rows.length,
+            hidden: Math.max(0, rows.length - FALLBACK_N)};
+  }
+  const r = RANGES.find(x => x.id === st.range);
+  if (r.id === "all" || rows.length <= r.n) return {rows, total:rows.length, hidden:0};
+  if (r.from === "top")    return {rows: rows.slice(0, r.n), total:rows.length, hidden:rows.length - r.n};
+  if (r.from === "bottom") return {rows: rows.slice(-r.n), total:rows.length, hidden:rows.length - r.n};
+  const hidden = rows.length - r.n * 2;
+  if (hidden <= 0) return {rows, total:rows.length, hidden:0};
+  return {rows: [...rows.slice(0, r.n),
+                 {gap:true, gapLabel:`${hidden} ענפים נוספים אינם מוצגים`},
+                 ...rows.slice(-r.n)], total:rows.length, hidden};
+}
+
+function renderAnafPanel() {
+  const host = clear(document.getElementById("anafPanel")), st = state.anaf;
+
+  if (st.mode === "range") {
+    const p = el("div", {class:"panel"});
+    p.appendChild(el("div", {class:"p-lab"}, "הצגת טווח מתוך הענפים, לפי המדד הנבחר"));
+    const g = el("div", {class:"ctl-group"});
+    const sel = el("select", {class:"ctl", id:"anafRange", "aria-label":"טווח להצגה"});
+    RANGES.forEach(r => {
+      const o = el("option", {value:r.id}, r.label);
+      if (r.id === st.range) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener("change", () => { st.range = sel.value; renderAnaf(); });
+    g.appendChild(sel); p.appendChild(g); host.appendChild(p);
+    return;
+  }
+
+  if (st.mode === "cluster") {
+    const p = el("div", {class:"panel"});
+    p.appendChild(el("div", {class:"p-lab"}, "קיבוץ ענפים דומים — בחרו קיבוץ אחד או יותר"));
+    const list = el("div", {class:"cluster-list"});
+    DATA.clusters.forEach(c => {
+      const on = st.clusters.has(c.id);
+      const b = el("button", {type:"button", class:"pill", "aria-pressed":String(on)},
+                   `${c.label} (${c.codes.length})`);
+      b.addEventListener("click", () => {
+        st.clusters.has(c.id) ? st.clusters.delete(c.id) : st.clusters.add(c.id);
+        renderAnaf();
+      });
+      list.appendChild(b);
+    });
+    p.appendChild(list);
+    const foot = el("div", {class:"panel-foot"});
+    if (st.clusters.size) {
+      const b = el("button", {type:"button", class:"linkbtn"}, "ניקוי הבחירה");
+      b.addEventListener("click", () => { st.clusters.clear(); renderAnaf(); });
+      foot.appendChild(b);
+    } else {
+      foot.appendChild(el("span", {}, `לא נבחר קיבוץ — מוצגים ${FALLBACK_N} הגבוהים ביותר.`));
+    }
+    foot.appendChild(el("span", {}, "הקיבוצים מבוססים על סדרי הענפים של הלמ\"ס. הקיבוץ „היי-טק” חוצה סדרים ולכן חופף לאחרים."));
+    p.appendChild(foot); host.appendChild(p);
+    return;
+  }
+
+  /* בחירה ידנית */
+  const p = el("div", {class:"panel"});
+  p.appendChild(el("div", {class:"p-lab"}, "בחירת ענפים — סמנו את הענפים שברצונכם להשוות"));
+  const search = el("input", {class:"ctl", type:"search", placeholder:"חיפוש ענף…",
+                              "aria-label":"חיפוש ענף", style:"width:min(320px,100%)"});
+  search.value = st.query;
+  search.addEventListener("input", () => { st.query = search.value; renderAnafPicks(); });
+  p.appendChild(search);
+  p.appendChild(el("div", {class:"pick-box", id:"pickBox"}));
+  const foot = el("div", {class:"panel-foot", id:"pickFoot"});
+  p.appendChild(foot);
+  host.appendChild(p);
+  renderAnafPicks();
+}
+
+function renderAnafPicks() {
+  const st = state.anaf, box = clear(document.getElementById("pickBox"));
+  const q = st.query.trim();
+  const list = el("div", {class:"pick-list"});
+  const src = anafBase();
+  const shown = q ? src.filter(x => x.label.includes(q) || x.seder.includes(q)
+                                 || x.parts.some(pp => pp.includes(q))) : src;
+  shown.forEach(x => {
+    const lb = el("label", {class:"pick", title:x.parts.join(" · ")});
+    const cb = el("input", {type:"checkbox"});
+    cb.checked = st.picks.has(x.code);
+    cb.addEventListener("change", () => {
+      cb.checked ? st.picks.add(x.code) : st.picks.delete(x.code);
+      renderAnafChart(); renderPickFoot();
+    });
+    lb.appendChild(cb);
+    lb.appendChild(el("span", {}, x.label));
+    list.appendChild(lb);
+  });
+  if (!shown.length) list.appendChild(el("div", {class:"empty"}, "לא נמצא ענף תואם"));
+  box.appendChild(list);
+  renderPickFoot();
+}
+
+function renderPickFoot() {
+  const st = state.anaf, foot = clear(document.getElementById("pickFoot"));
+  if (!foot) return;
+  foot.appendChild(el("span", {}, st.picks.size ? `נבחרו ${st.picks.size} ענפים`
+                                                : `לא נבחר ענף — מוצגים ${FALLBACK_N} הגבוהים ביותר.`));
+  if (st.picks.size) {
+    const b = el("button", {type:"button", class:"linkbtn"}, "ניקוי הבחירה");
+    b.addEventListener("click", () => { st.picks.clear(); renderAnaf(); });
+    foot.appendChild(b);
+  }
+}
+
+function renderAnafChart() {
+  const id = state.metric, m = M[id], st = state.anaf;
+  const {rows, total, hidden} = anafFiltered();
+  const items = rows.filter(r => !r.gap);
+  const scopeName = st.scope === "reg" ? "נפות צפת וגולן" : "כלל הארץ";
+
+  document.getElementById("anafTitle").textContent = `${m.label} לפי ענף כלכלי — ${scopeName}`;
+  document.getElementById("anafSub").textContent =
+    `מוצגים ${items.length} מתוך ${anafBase().length} ענפים` + (m.unit ? ` · ${m.unit}` : "");
+
+  const body = document.getElementById("anafBody");
+  if (!items.length) {
+    clear(body).appendChild(el("div", {class:"empty"}, "לא נבחר ענף להצגה"));
+    return;
+  }
+
+  if (st.view === "table") {
+    dataTable(body, [
+      {head:"ענף כלכלי", cls:"nm",  get:r => r.label},
+      {head:"קוד",       cls:"dim n", get:r => r.code},
+      {head:"שכר חודשי ממוצע (₪)", cls:"n", get:r => fmt(r.all.salary, "salary")},
+      {head:"מספר שכירים",         cls:"n", get:r => fmt(r.all.workers, "workers")},
+      {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.all.months, "months")}
+    ], items);
+  } else {
+    const chart = el("div", {class:"chart"});
+    clear(body).appendChild(chart);
+    /* קו הייחוס הוא ממוצע כלל הענפים באזור הנבחר — עוגן קבוע שאינו זז עם הסינון */
+    const base = anafBase();
+    const wsum = base.reduce((s, x) => s + x.all.workers, 0);
+    const ref = id === "workers"
+      ? base.reduce((s, x) => s + x.value, 0) / base.length
+      : (wsum ? base.reduce((s, x) => s + x.all.workers * x.value, 0) / wsum : null);
+    barChart(chart, rows.map(r => r.gap ? r : {...r, sub:r.seder}), {ref});
+
+    const lg = el("div", {class:"legend"});
+    const it = el("span", {class:"item"});
+    const sw = el("span", {class:"sw"}); sw.style.background = "var(--s-bar)";
+    it.appendChild(sw);
+    it.appendChild(document.createTextNode(`${m.label} · ${scopeName}`));
+    lg.appendChild(it);
+    if (ref != null) {
+      const ri = el("span", {class:"item"});
+      ri.appendChild(el("span", {class:"sw ref"}));
+      ri.appendChild(document.createTextNode(
+        (id === "workers" ? "ממוצע לענף · " : "ממוצע כלל הענפים · ") + fmtU(ref, id)));
+      lg.appendChild(ri);
+    }
+    body.appendChild(lg);
+  }
+
+  const notes = [`מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (2024) · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`];
+  if (hidden) notes.unshift(
+    `${plural(hidden, "ענף אחד אינו מוצג", "ענפים אינם מוצגים")} בבחירה הנוכחית (מתוך ${total}).`);
+  const dropped = ANAF.length - anafBase().length;
+  if (st.scope === "reg" && dropped) notes.unshift(
+    `${plural(dropped, "קבוצת ענפים אחת אינה מוצגת", "קבוצות ענפים אינן מוצגות")} ברמת האזור בשל חוסר מקרים במקור.`);
+  document.getElementById("anafNote").textContent = notes.join(" · ");
+}
+
+function renderAnaf() { renderAnafPanel(); renderAnafChart(); }
+
+/* ============================================================
+   הערות שוליים — נגזרות מהנתונים עצמם
+   ============================================================ */
+function renderFootNotes() {
+  const covReg = ANAF.reduce((s, x) => s + (x.reg.workers || 0), 0);
+  const covNat = ANAF.reduce((s, x) => s + (x.nat.workers || 0), 0);
+  const pct = (a, b) => nf0.format(Math.round(a / b * 100));
+  const missing = ANAF.filter(x => x.reg.workers == null).map(x => x.label);
+  const notes = [
+    `סכום השכירים בפילוח לפי ענף מכסה ${nf0.format(covReg)} מתוך ${nf0.format(A.region.workers)} שכירים באזור (${pct(covReg, A.region.workers)}%), ` +
+    `ו-${nf0.format(covNat)} מתוך ${nf0.format(A.national.workers)} ארצית (${pct(covNat, A.national.workers)}%). ההפרש נובע ממקרים שאינם מסווגים לענף או שמספרם קטן מכדי לפרסמו.`,
+    missing.length ? `ברמת האזור אין נתון עבור: ${missing.join(", ")} (מסומן ".." במקור — חוסר מקרים).` : null,
+    `ממוצעי הנפות והאזור משוקללים לפי מספר השכירים; ממוצע האזור אינו מופיע במקור אלא חושב מנתוני הרשויות.`,
+    `"גולן" ברשימת הרשויות היא המועצה האזורית גולן, להבדיל מנפת גולן שכוללת גם את קצרין ואת יישובי הגולן האחרים.`,
+    `סכום השכירים ב-18 הרשויות זהה לסכום שתי הנפות במקור (${nf0.format(A.region.workers)}).`
+  ].filter(Boolean);
+  const ul = clear(document.getElementById("footNotes"));
+  notes.forEach(t => ul.appendChild(el("li", {}, t)));
+}
+
+/* ============================================================
+   חיווט
+   ============================================================ */
+function renderAll() { renderKpis(); renderAuth(); renderAnaf(); }
+
+function init() {
+  document.getElementById("chipWorkers").textContent = nf0.format(A.region.workers);
+
+  wireMetric();
+  wireAuth();
+  wireAnaf();
+  renderAll();
+  renderFootNotes();
+  addEventListener("scroll", hideTip, {passive:true});
+}
+
+function wireMetric() {
+  segment(document.getElementById("metricSeg"),
+    METRICS.map(m => ({id:m.id, label:m.label})), state.metric,
+    id => { state.metric = id; renderAll(); wireMetric(); });
+}
+
+function wireAuth() {
+  const draw = () => { renderAuth(); wireAuth(); };
+  segment(document.getElementById("authNafa"), [
+    {id:"all", label:"הכול"},
+    {id:"נפת צפת", label:"נפת צפת"},
+    {id:"נפת גולן", label:"נפת גולן"}
+  ], state.auth.nafa, id => { state.auth.nafa = id; draw(); });
+
+  segment(document.getElementById("authView"), [
+    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+  ], state.auth.view, id => { state.auth.view = id; draw(); });
+
+  const sort = document.getElementById("authSort");
+  sort.value = state.auth.sort;
+  sort.onchange = () => { state.auth.sort = sort.value; renderAuth(); };
+}
+
+function wireAnaf() {
+  const draw = () => { renderAnaf(); wireAnaf(); };
+  segment(document.getElementById("anafScope"), [
+    {id:"reg", label:"נפות צפת וגולן"}, {id:"nat", label:"כלל הארץ"}
+  ], state.anaf.scope, id => { state.anaf.scope = id; draw(); });
+
+  segment(document.getElementById("anafMode"), [
+    {id:"range",   label:"טווח",         title:"הצגת 10 הגבוהים, 10 הנמוכים וכדומה"},
+    {id:"cluster", label:"קיבוץ ענפים",  title:"צמצום לפי קבוצות של ענפים דומים"},
+    {id:"pick",    label:"בחירת ענפים",  title:"בחירה ידנית של ענפים להשוואה"}
+  ], state.anaf.mode, id => { state.anaf.mode = id; draw(); });
+
+  segment(document.getElementById("anafView"), [
+    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+  ], state.anaf.view, id => { state.anaf.view = id; draw(); });
+}
+
+document.readyState === "loading" ? addEventListener("DOMContentLoaded", init) : init();
+})();
+</script>
