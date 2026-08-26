@@ -140,6 +140,7 @@ def read_authorities(wb):
         nafot.append({"name": r[1].strip(), "workers": num(r[3]),
                       "months": num(r[4]), "salary": num(r[5])})
 
+    # הנפות משמשות לאימות מול המקור בלבד — הדשבורד מציג את האשכול כיחידה אחת
     items = []
     for r in rows[5:23]:
         name = (r[2] or "").strip()
@@ -157,7 +158,7 @@ def read_authorities(wb):
 
     total_w = sum(i["workers"] for i in items)
     region = {
-        "name": "נפות צפת וגולן",
+        "name": "אשכול גליל מזרחי",
         "workers": total_w,
         "salary": round(sum(i["workers"] * i["salary"] for i in items) / total_w, 2),
         "months": round(sum(i["workers"] * i["months"] for i in items) / total_w, 3),
@@ -217,6 +218,7 @@ def main():
     data = {
         "meta": {
             "year": "2024",
+            "cluster": "אשכול גליל מזרחי",
             "source": 'הלשכה המרכזית לסטטיסטיקה — עיבוד מיוחד מתוך קובצי הכנסה מנהליים',
             "processing": "עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי",
         },

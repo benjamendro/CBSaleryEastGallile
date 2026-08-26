@@ -19,21 +19,21 @@
   --c-cyan:#1CA8C4; --c-sky:#54C4E0; --c-blue:#1C70A8;
   --c-bluedeep:#1C548C; --c-navy:#14273F; --c-gold:#C4A870;
 
-  --paper:#F1F5F8; --paper-2:#E6EEF3; --card:#FFFFFF;
+  /* רקע לבן; ההיררכיה נשענת על מסגרות וצללים ולא על גוון הרקע */
+  --paper:#FFFFFF; --paper-2:#F2F6F9; --card:#FFFFFF;
   --ink:#14273F; --ink-2:#41566B; --ink-3:#74879A;
-  --line:#DBE4EB; --line-2:#C3D2DC;
+  --line:#DCE5EC; --line-2:#C3D2DC;
   --accent:#1C70A8; --accent-2:#1CA8C4; --accent-soft:#DBEEF4;
 
-  /* צבעי סדרות — עברו אימות נגישות (CVD ΔE 15.6 · ניגודיות ≥3:1) */
-  --s-tzfat:#1C548C;   /* נפת צפת  */
-  --s-golan:#0E8AA3;   /* נפת גולן */
-  --s-bar:#1C70A8;     /* סדרה יחידה — ענפים */
-  --s-ref:#8496A6;     /* קו ייחוס — נייטרלי, אינו צבע נתונים */
+  /* צבעי גרפים — עברו אימות נגישות מול רקע לבן (CVD ΔE 20.1 · ניגודיות ≥3:1) */
+  --s-bar:#1C70A8;     /* העמודות — סדרה יחידה */
+  --s-ref:#8496A6;     /* קו ממוצע האשכול — נייטרלי, אינו צבע נתונים */
+  --s-nat:#A8823A;     /* קו הממוצע הארצי — זהב המותג, מוכהה לניגודיות */
 
   --font-head:'Rubik',system-ui,sans-serif;
   --font-body:'Assistant',system-ui,sans-serif;
   --r-sm:6px; --r-md:10px; --r-lg:14px;
-  --sh-1:0 1px 2px rgba(20,39,63,.05), 0 1px 1px rgba(20,39,63,.04);
+  --sh-1:0 1px 3px rgba(20,39,63,.06), 0 1px 1px rgba(20,39,63,.04);
   --sh-2:0 8px 26px -12px rgba(20,39,63,.22);
   --sh-3:0 20px 50px -20px rgba(20,39,63,.42);
   --gutter:clamp(16px,3.4vw,40px);
@@ -130,10 +130,10 @@ input.ctl{cursor:text;font-weight:500}
   background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:18px 20px;box-shadow:var(--sh-1);position:relative;overflow:hidden;
 }
-.kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--s-tzfat)}
-.kpi:nth-child(2)::after{background:var(--s-golan)}
-.kpi:nth-child(3)::after{background:var(--c-gold)}
-.kpi:nth-child(4)::after{background:var(--ink-3)}
+.kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--s-bar)}
+.kpi:nth-child(2)::after{background:var(--s-nat)}
+.kpi:nth-child(3)::after{background:var(--ink-3)}
+.kpi:nth-child(4)::after{background:var(--c-cyan)}
 .kpi .lab{font-size:13.5px;font-weight:600;color:var(--ink-3)}
 .kpi .num{
   font-family:var(--font-head);font-weight:700;font-size:clamp(25px,3vw,33px);
@@ -159,7 +159,8 @@ section.block{padding:clamp(28px,4vw,46px) 0 4px}
 .legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;align-items:center}
 .legend .item{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
 .legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
-.legend .sw.ref{width:16px;height:0;border-top:2px dashed var(--s-ref);border-radius:0}
+.legend .sw.ref{width:18px;height:0;border-top:2px dashed var(--s-ref);border-radius:0}
+.legend .sw.ref.nat{border-top-color:var(--s-nat)}
 
 /* ---------- טבלה ---------- */
 .tbl-scroll{overflow-x:auto;margin-top:10px;max-height:560px;overflow-y:auto}
@@ -173,6 +174,7 @@ table.data td{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--i
 table.data td.nm{color:var(--ink);font-weight:600;white-space:normal;min-width:180px}
 table.data td.n{text-align:start;direction:ltr;unicode-bidi:plaintext}
 table.data tr:hover td{background:var(--paper-2)}
+table.data td:first-child{padding-inline-start:0}
 table.data td.dim{color:var(--ink-3)}
 
 /* ---------- לוח בחירת ענפים ---------- */
@@ -248,16 +250,16 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <header class="head">
     <div class="wrap">
       <div class="kicker"><span class="mk"><i></i><i></i><i></i><i></i></span>שכר ותעסוקה · שנת 2024</div>
-      <h1>שכר, שכירים וחודשי עבודה<br>בנפות צפת וגולן</h1>
+      <h1>שכר, שכירים וחודשי עבודה<br>באשכול גליל מזרחי</h1>
       <p class="lede">
-        השוואה בין 18 הרשויות המקומיות בנפות צפת וגולן, ובין 51 קבוצות של ענפי כלכלה —
-        באזור ובכלל הארץ. בחרו מדד בסרגל שלהלן; כל הגרפים והמדדים מתעדכנים יחד.
+        השוואה בין 18 הרשויות המקומיות באשכול גליל מזרחי, ובין 51 קבוצות של ענפי כלכלה —
+        באשכול ובכלל הארץ, תמיד לצד הממוצע הארצי. בחרו מדד בסרגל שלהלן; כל הגרפים והמדדים מתעדכנים יחד.
       </p>
       <div class="chips">
         <span class="chip">שנת נתונים <b>2024</b></span>
         <span class="chip">רשויות <b>18</b></span>
         <span class="chip">קבוצות ענפים <b>51</b></span>
-        <span class="chip">שכירים באזור <b id="chipWorkers">—</b></span>
+        <span class="chip">שכירים באשכול <b id="chipWorkers">—</b></span>
       </div>
     </div>
   </header>
@@ -278,21 +280,16 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
     <div class="wrap">
       <div class="block-head">
         <h2>השוואה בין הרשויות</h2>
-        <p>כל עמודה היא רשות מקומית אחת, צבועה לפי הנפה שאליה היא משתייכת. הקו המקווקו הוא ממוצע האזור.</p>
+        <p>כל עמודה היא רשות מקומית אחת. הקווים המקווקווים הם ממוצע האשכול והממוצע הארצי.</p>
       </div>
 
       <div class="ctl-row" role="group" aria-label="פקדי גרף הרשויות">
-        <div class="ctl-group">
-          <label id="authNafaLab">נפה</label>
-          <div class="seg sm" id="authNafa" role="group" aria-labelledby="authNafaLab"></div>
-        </div>
         <div class="ctl-group">
           <label for="authSort">סדר</label>
           <select class="ctl" id="authSort">
             <option value="desc">מהגבוה לנמוך</option>
             <option value="asc">מהנמוך לגבוה</option>
             <option value="name">לפי שם הרשות</option>
-            <option value="nafa">לפי נפה</option>
           </select>
         </div>
         <div class="spacer"></div>
@@ -325,6 +322,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
         <p>
           הנתונים מסווגים ל-51 קבוצות של ענפי כלכלה (ברמת שתי ספרות, בקיבוץ של מזמין העיבוד).
           מכיוון שזו רשימה ארוכה, צמצמו אותה באחת משלוש הדרכים: טווח, קיבוץ ענפים דומים, או בחירה ידנית.
+          הקווים המקווקווים הם ממוצע כלל הענפים — באשכול ובכלל הארץ.
         </p>
       </div>
 
@@ -397,23 +395,25 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 const DATA = "__DATA__";
 const A = DATA.authorities, ANAF = DATA.anafim, METRICS = DATA.metrics;
 const M = Object.fromEntries(METRICS.map(m => [m.id, m]));
-const NAFA_COLOR = {"נפת צפת":"var(--s-tzfat)", "נפת גולן":"var(--s-golan)"};
+const CLUSTER = DATA.meta.cluster;
 
 const state = {
   metric: "salary",
-  auth:   {nafa:"all", sort:"desc", view:"chart"},
+  auth:   {sort:"desc", view:"chart"},
   anaf:   {scope:"reg", mode:"range", range:"top10", clusters:new Set(), picks:new Set(),
            query:"", view:"chart"}
 };
 
 /* ---------------- עזרי פורמט ---------------- */
 const nf0 = new Intl.NumberFormat("he-IL", {maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat("he-IL", {minimumFractionDigits:1, maximumFractionDigits:1});
 const nf2 = new Intl.NumberFormat("he-IL", {minimumFractionDigits:2, maximumFractionDigits:2});
 const fmt   = (v, id) => v == null ? "—" : (M[id].dec ? nf2 : nf0).format(v);
 const fmtU  = (v, id) => v == null ? "—" : fmt(v, id) + (M[id].unit ? " " + M[id].unit : "");
 const plural = (n, one, many) => n === 1 ? one : `${nf0.format(n)} ${many}`;
 const compact = v => v == null ? "—"
   : v >= 1e6 ? nf2.format(v/1e6).replace(/[.,]00$/,"") + " מיליון" : nf0.format(v);
+const fmtBig = (v, id) => id === "workers" && v >= 1e6 ? compact(v) : fmt(v, id);
 
 /* ---------------- עזרי DOM ו-SVG ---------------- */
 const el = (tag, attrs, txt) => {
@@ -441,6 +441,15 @@ function capStart(xEnd, y, w, h, r) {           /* גדל ימינה→שמאל�
   const x = xEnd - w;
   r = Math.max(0, Math.min(r, w, h/2));
   return `M${xEnd},${y} L${x+r},${y} Q${x},${y} ${x},${y+r} L${x},${y+h-r} Q${x},${y+h} ${x+r},${y+h} L${xEnd},${y+h} Z`;
+}
+
+/* קו ייחוס: מקטע לבן מתחת לכל מקף בלבד, כך שהקו נקרא גם מעל עמודה
+   צבועה ובכל זאת אינו חוצה אותה בפס לבן רציף */
+const REF_DASH = "6 5";
+function refLine(svg, pos, color) {
+  svg.appendChild(S("line", {...pos, stroke:"var(--card)", "stroke-width":3.4,
+                             "stroke-dasharray":REF_DASH, "stroke-linecap":"round", opacity:.55}));
+  svg.appendChild(S("line", {...pos, stroke:color, "stroke-width":2, "stroke-dasharray":REF_DASH}));
 }
 
 /* ציר ערכים בקפיצות עגולות */
@@ -501,7 +510,7 @@ function columnChart(host, items, opt) {
   const plotW = W - mR - mL, H = mT + plotH + mB;
   const base = mT + plotH, right = W - mR;
 
-  const maxV = Math.max(...items.map(d => d.value), opt.ref || 0);
+  const maxV = Math.max(...items.map(d => d.value), ...opt.refs.map(r => r.value));
   const ax = niceAxis(maxV, 5);
   const Y = v => base - (v / ax.hi) * plotH;
 
@@ -527,9 +536,7 @@ function columnChart(host, items, opt) {
   items.forEach((d, i) => {
     const cx = right - (i + 0.5) * step;
     const h = Math.max(1, base - Y(d.value));
-    const color = opt.colorOf(d);
-
-    svg.appendChild(S("path", {d: capTop(cx - bw/2, base - h, bw, h, 4), fill: color}));
+    svg.appendChild(S("path", {d: capTop(cx - bw/2, base - h, bw, h, 4), fill:"var(--s-bar)"}));
 
     /* אזור העכבר — הרצועה כולה, לא רק העמודה */
     const hit = S("rect", {x:cx - step/2, y:mT, width:step, height:plotH, fill:"transparent", style:"cursor:pointer"});
@@ -557,12 +564,11 @@ function columnChart(host, items, opt) {
     svg.appendChild(g);
   });
 
-  /* קו ייחוס — מסומן בליגנדה, כדי לא להוסיף טקסט לתוך שטח הנתונים */
-  if (opt.ref != null) {
-    const y = Y(opt.ref);
-    svg.appendChild(S("line", {x1:mL, x2:right, y1:y, y2:y, stroke:"var(--s-ref)",
-      "stroke-width":2, "stroke-dasharray":"6 5"}));
-  }
+  /* קווי ייחוס — מסומנים במקרא, כדי לא להוסיף טקסט לתוך שטח הנתונים */
+  opt.refs.forEach(r => {
+    const y = Y(r.value);
+    refLine(svg, {x1:mL, x2:right, y1:y, y2:y}, r.color);
+  });
   return svg;
 }
 
@@ -574,7 +580,7 @@ function barChart(host, rows, opt) {
   const W = 1040, rowH = 46, pad = 10;
   const items = rows.filter(r => !r.gap);
   const H = pad * 2 + rows.length * rowH - (rows.length ? rowH - 34 : 0);
-  const maxV = Math.max(...items.map(d => d.value), opt.ref || 0) || 1;
+  const maxV = Math.max(...items.map(d => d.value), ...opt.refs.map(r => r.value)) || 1;
   const scale = v => (v / (maxV * 1.16)) * W;      /* 16% אוויר משמאל לתוויות ערך */
 
   const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img",
@@ -616,11 +622,10 @@ function barChart(host, rows, opt) {
     svg.appendChild(t);
   });
 
-  if (opt.ref != null && items.length) {
-    const x = W - scale(opt.ref);
-    svg.appendChild(S("line", {x1:x, x2:x, y1:pad, y2:H - 8, stroke:"var(--s-ref)",
-      "stroke-width":2, "stroke-dasharray":"6 5"}));
-  }
+  if (items.length) opt.refs.forEach(r => {
+    const x = W - scale(r.value);
+    refLine(svg, {x1:x, x2:x, y1:pad, y2:H - 8}, r.color);
+  });
   return svg;
 }
 
@@ -645,20 +650,33 @@ function dataTable(host, cols, rows) {
    מדדי מפתח
    ============================================================ */
 function renderKpis() {
-  const id = state.metric, m = M[id];
+  const id = state.metric, m = M[id], isCount = id === "workers";
+  const reg = A.region[id], nat = A.national[id];
+  const top = A.items.reduce((a, b) => (b[id] > a[id] ? b : a));
+
+  /* מדד שלישי: לשכר ולחודשי עבודה — פער מהממוצע הארצי;
+     למספר שכירים — החלק מכלל השכירים בישראל, שכן "פער" אינו מושג רלוונטי לספירה. */
+  const rel = isCount ? reg / nat * 100 : (reg - nat) / nat * 100;
+  const relTxt = (!isCount && rel > 0 ? "+" : isCount ? "" : "−") +
+                 nf1.format(Math.abs(rel)) + "%";
+
   const cards = [
-    {lab:"נפת צפת",       v:A.nafot[0][id], note:"11 רשויות"},
-    {lab:"נפת גולן",      v:A.nafot[1][id], note:"7 רשויות"},
-    {lab:"נפות צפת וגולן", v:A.region[id],   note: id === "workers" ? "סך הכול באזור" : "ממוצע משוקלל"},
-    {lab:"כלל הארץ",      v:A.national[id], note: id === "workers" ? "סך הכול" : "ממוצע ארצי"}
+    {lab:CLUSTER,      txt: fmtBig(reg, id), unit:m.unit,
+     note: isCount ? "סך הכול · 18 רשויות" : "ממוצע משוקלל · 18 רשויות"},
+    {lab:"כלל הארץ",   txt: fmtBig(nat, id), unit:m.unit,
+     note: isCount ? "סך הכול" : "ממוצע ארצי"},
+    {lab: isCount ? "חלקו של האשכול" : "פער מהממוצע הארצי", txt: relTxt, unit:"",
+     note: isCount ? "מכלל השכירים בישראל" : `${CLUSTER} לעומת כלל הארץ`},
+    {lab:"הרשות המובילה", txt: fmtBig(top[id], id), unit:m.unit, note: top.name}
   ];
+
   const host = clear(document.getElementById("kpis"));
   cards.forEach(c => {
     const k = el("div", {class:"kpi"});
     k.appendChild(el("div", {class:"lab"}, c.lab));
     const n = el("div", {class:"num"});
-    n.appendChild(document.createTextNode(id === "workers" && c.v >= 1e6 ? compact(c.v) : fmt(c.v, id)));
-    if (m.unit) n.appendChild(el("span", {class:"u"}, m.unit));
+    n.appendChild(el("bdi", {}, c.txt));
+    if (c.unit) n.appendChild(el("span", {class:"u"}, c.unit));
     k.appendChild(n);
     k.appendChild(el("div", {class:"note"}, c.note));
     host.appendChild(k);
@@ -670,38 +688,39 @@ function renderKpis() {
    ============================================================ */
 function authRows() {
   const id = state.metric;
-  let items = A.items.filter(x => state.auth.nafa === "all" || x.nafa === state.auth.nafa);
-  const s = state.auth.sort;
-  const cmp = {
+  return A.items.slice().sort({
     desc: (a, b) => b[id] - a[id],
     asc:  (a, b) => a[id] - b[id],
-    name: (a, b) => a.name.localeCompare(b.name, "he"),
-    nafa: (a, b) => a.nafa.localeCompare(b.nafa, "he") || b[id] - a[id]
-  }[s];
-  return items.slice().sort(cmp);
+    name: (a, b) => a.name.localeCompare(b.name, "he")
+  }[state.auth.sort]);
+}
+
+/* קווי הייחוס: ממוצע האשכול תמיד; הממוצע הארצי רק כשהוא בר-השוואה.
+   במספר שכירים הערך הארצי הוא סך הכול ולא ממוצע לרשות, ולכן אינו מוצג. */
+function authRefs(items) {
+  const id = state.metric;
+  if (id === "workers") return [{
+    value: items.reduce((s, x) => s + x.workers, 0) / (items.length || 1),
+    label: "ממוצע לרשות", color: "var(--s-ref)"
+  }];
+  return [
+    {value: A.region[id],   label: "ממוצע האשכול", color: "var(--s-ref)"},
+    {value: A.national[id], label: "ממוצע ארצי",   color: "var(--s-nat)", nat: true}
+  ];
 }
 
 function renderAuth() {
   const id = state.metric, m = M[id];
   const items = authRows();
-  const scope = state.auth.nafa === "all" ? A.region : A.nafot.find(n => n.name === state.auth.nafa);
 
   document.getElementById("authTitle").textContent = `${m.label} לפי רשות מקומית`;
   document.getElementById("authSub").textContent =
-    `${items.length} רשויות · ${state.auth.nafa === "all" ? "נפות צפת וגולן" : state.auth.nafa}` +
-    (m.unit ? ` · ${m.unit}` : "");
-
-  /* קו ייחוס: ממוצע משוקלל למדדי שכר/חודשים, ממוצע פשוט לרשות למספר שכירים */
-  const ref = id === "workers"
-    ? items.reduce((s, x) => s + x.workers, 0) / (items.length || 1)
-    : scope[id];
-  const refLabel = id === "workers" ? "ממוצע לרשות" : "ממוצע האזור";
+    `${items.length} רשויות · ${CLUSTER}` + (m.unit ? ` · ${m.unit}` : "");
 
   const body = document.getElementById("authBody");
   if (state.auth.view === "table") {
     dataTable(body, [
-      {head:"רשות",  cls:"nm",  get:r => r.name},
-      {head:"נפה",   cls:"dim", get:r => r.nafa},
+      {head:"רשות", cls:"nm", get:r => r.name},
       {head:"שכר חודשי ממוצע (₪)", cls:"n", get:r => fmt(r.salary, "salary")},
       {head:"מספר שכירים",         cls:"n", get:r => fmt(r.workers, "workers")},
       {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.months, "months")}
@@ -711,23 +730,21 @@ function renderAuth() {
 
   const chart = el("div", {class:"chart"});
   clear(body).appendChild(chart);
-  columnChart(chart, items.map(x => ({
-    label: x.name, value: x[id], sub: x.nafa, all: x, nafa: x.nafa
-  })), {colorOf: d => NAFA_COLOR[d.nafa], ref, refLabel});
+  const refs = authRefs(items);
+  columnChart(chart, items.map(x => ({label:x.name, value:x[id], all:x})), {refs});
+  body.appendChild(refLegend(refs, id));
+}
 
+/* מקרא — סדרה יחידה אינה זקוקה לתיבת מקרא, ולכן מוצגים בו קווי הייחוס בלבד */
+function refLegend(refs, id) {
   const lg = el("div", {class:"legend"});
-  const shown = [...new Set(items.map(x => x.nafa))];
-  shown.forEach(n => {
+  refs.forEach(r => {
     const it = el("span", {class:"item"});
-    const sw = el("span", {class:"sw"}); sw.style.background = NAFA_COLOR[n];
-    it.appendChild(sw); it.appendChild(document.createTextNode(n));
+    it.appendChild(el("span", {class:"sw ref" + (r.nat ? " nat" : "")}));
+    it.appendChild(document.createTextNode(`${r.label} · ${fmtU(r.value, id)}`));
     lg.appendChild(it);
   });
-  const ri = el("span", {class:"item"});
-  ri.appendChild(el("span", {class:"sw ref"}));
-  ri.appendChild(document.createTextNode(`${refLabel} · ${fmtU(ref, id)}`));
-  lg.appendChild(ri);
-  body.appendChild(lg);
+  return lg;
 }
 
 /* ============================================================
@@ -885,7 +902,7 @@ function renderAnafChart() {
   const id = state.metric, m = M[id], st = state.anaf;
   const {rows, total, hidden} = anafFiltered();
   const items = rows.filter(r => !r.gap);
-  const scopeName = st.scope === "reg" ? "נפות צפת וגולן" : "כלל הארץ";
+  const scopeName = st.scope === "reg" ? CLUSTER : "כלל הארץ";
 
   document.getElementById("anafTitle").textContent = `${m.label} לפי ענף כלכלי — ${scopeName}`;
   document.getElementById("anafSub").textContent =
@@ -908,28 +925,9 @@ function renderAnafChart() {
   } else {
     const chart = el("div", {class:"chart"});
     clear(body).appendChild(chart);
-    /* קו הייחוס הוא ממוצע כלל הענפים באזור הנבחר — עוגן קבוע שאינו זז עם הסינון */
-    const base = anafBase();
-    const wsum = base.reduce((s, x) => s + x.all.workers, 0);
-    const ref = id === "workers"
-      ? base.reduce((s, x) => s + x.value, 0) / base.length
-      : (wsum ? base.reduce((s, x) => s + x.all.workers * x.value, 0) / wsum : null);
-    barChart(chart, rows.map(r => r.gap ? r : {...r, sub:r.seder}), {ref});
-
-    const lg = el("div", {class:"legend"});
-    const it = el("span", {class:"item"});
-    const sw = el("span", {class:"sw"}); sw.style.background = "var(--s-bar)";
-    it.appendChild(sw);
-    it.appendChild(document.createTextNode(`${m.label} · ${scopeName}`));
-    lg.appendChild(it);
-    if (ref != null) {
-      const ri = el("span", {class:"item"});
-      ri.appendChild(el("span", {class:"sw ref"}));
-      ri.appendChild(document.createTextNode(
-        (id === "workers" ? "ממוצע לענף · " : "ממוצע כלל הענפים · ") + fmtU(ref, id)));
-      lg.appendChild(ri);
-    }
-    body.appendChild(lg);
+    const refs = anafRefs();
+    barChart(chart, rows.map(r => r.gap ? r : {...r, sub:r.seder}), {refs});
+    body.appendChild(refLegend(refs, id));
   }
 
   const notes = [`מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (2024) · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`];
@@ -937,8 +935,31 @@ function renderAnafChart() {
     `${plural(hidden, "ענף אחד אינו מוצג", "ענפים אינם מוצגים")} בבחירה הנוכחית (מתוך ${total}).`);
   const dropped = ANAF.length - anafBase().length;
   if (st.scope === "reg" && dropped) notes.unshift(
-    `${plural(dropped, "קבוצת ענפים אחת אינה מוצגת", "קבוצות ענפים אינן מוצגות")} ברמת האזור בשל חוסר מקרים במקור.`);
+    `${plural(dropped, "קבוצת ענפים אחת אינה מוצגת", "קבוצות ענפים אינן מוצגות")} ברמת האשכול בשל חוסר מקרים במקור.`);
   document.getElementById("anafNote").textContent = notes.join(" · ");
+}
+
+/* ממוצע משוקלל של כלל הענפים בהיקף נתון — עוגן קבוע שאינו זז עם הסינון */
+function anafAvg(key) {
+  const id = state.metric;
+  const rows = ANAF.map(x => x[key]).filter(v => v[id] != null);
+  if (id === "workers") return rows.reduce((s, v) => s + v.workers, 0) / rows.length;
+  const w = rows.reduce((s, v) => s + v.workers, 0);
+  return w ? rows.reduce((s, v) => s + v.workers * v[id], 0) / w : null;
+}
+
+/* ממוצע ההיקף הנבחר, ולצדו הממוצע הארצי כשהוא בר-השוואה. במספר שכירים
+   הממוצע הארצי לענף גדול בשני סדרי גודל מזה שבאשכול, ולכן אינו מוצג לצדו. */
+function anafRefs() {
+  const id = state.metric;
+  const nat = {value: anafAvg("nat"),
+               label: id === "workers" ? "ממוצע ארצי לענף" : "ממוצע ארצי · כלל הענפים",
+               color: "var(--s-nat)", nat: true};
+  if (state.anaf.scope !== "reg") return [nat];
+  const own = {value: anafAvg("reg"),
+               label: id === "workers" ? "ממוצע לענף באשכול" : "ממוצע האשכול · כלל הענפים",
+               color: "var(--s-ref)"};
+  return id === "workers" ? [own] : [own, nat];
 }
 
 function renderAnaf() { renderAnafPanel(); renderAnafChart(); }
@@ -952,12 +973,12 @@ function renderFootNotes() {
   const pct = (a, b) => nf0.format(Math.round(a / b * 100));
   const missing = ANAF.filter(x => x.reg.workers == null).map(x => x.label);
   const notes = [
-    `סכום השכירים בפילוח לפי ענף מכסה ${nf0.format(covReg)} מתוך ${nf0.format(A.region.workers)} שכירים באזור (${pct(covReg, A.region.workers)}%), ` +
+    `סכום השכירים בפילוח לפי ענף מכסה ${nf0.format(covReg)} מתוך ${nf0.format(A.region.workers)} שכירים באשכול (${pct(covReg, A.region.workers)}%), ` +
     `ו-${nf0.format(covNat)} מתוך ${nf0.format(A.national.workers)} ארצית (${pct(covNat, A.national.workers)}%). ההפרש נובע ממקרים שאינם מסווגים לענף או שמספרם קטן מכדי לפרסמו.`,
-    missing.length ? `ברמת האזור אין נתון עבור: ${missing.join(", ")} (מסומן ".." במקור — חוסר מקרים).` : null,
-    `ממוצעי הנפות והאזור משוקללים לפי מספר השכירים; ממוצע האזור אינו מופיע במקור אלא חושב מנתוני הרשויות.`,
-    `"גולן" ברשימת הרשויות היא המועצה האזורית גולן, להבדיל מנפת גולן שכוללת גם את קצרין ואת יישובי הגולן האחרים.`,
-    `סכום השכירים ב-18 הרשויות זהה לסכום שתי הנפות במקור (${nf0.format(A.region.workers)}).`
+    missing.length ? `ברמת האשכול אין נתון עבור: ${missing.join(", ")} (מסומן ".." במקור — חוסר מקרים).` : null,
+    `${CLUSTER} מוגדר כאן כ-18 הרשויות שבנפות צפת וגולן שבמקור. ממוצעיו משוקללים לפי מספר השכירים, ` +
+    `ואינם מופיעים במקור אלא חושבו מנתוני הרשויות — סכום השכירים ב-18 הרשויות זהה לסכום שתי הנפות במקור (${nf0.format(A.region.workers)}).`,
+    `"גולן" ברשימת הרשויות היא המועצה האזורית גולן.`
   ].filter(Boolean);
   const ul = clear(document.getElementById("footNotes"));
   notes.forEach(t => ul.appendChild(el("li", {}, t)));
@@ -987,12 +1008,6 @@ function wireMetric() {
 
 function wireAuth() {
   const draw = () => { renderAuth(); wireAuth(); };
-  segment(document.getElementById("authNafa"), [
-    {id:"all", label:"הכול"},
-    {id:"נפת צפת", label:"נפת צפת"},
-    {id:"נפת גולן", label:"נפת גולן"}
-  ], state.auth.nafa, id => { state.auth.nafa = id; draw(); });
-
   segment(document.getElementById("authView"), [
     {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
   ], state.auth.view, id => { state.auth.view = id; draw(); });
@@ -1005,7 +1020,7 @@ function wireAuth() {
 function wireAnaf() {
   const draw = () => { renderAnaf(); wireAnaf(); };
   segment(document.getElementById("anafScope"), [
-    {id:"reg", label:"נפות צפת וגולן"}, {id:"nat", label:"כלל הארץ"}
+    {id:"reg", label:CLUSTER}, {id:"nat", label:"כלל הארץ"}
   ], state.anaf.scope, id => { state.anaf.scope = id; draw(); });
 
   segment(document.getElementById("anafMode"), [
