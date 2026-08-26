@@ -72,8 +72,16 @@ ANAF_LABELS = {
 }
 
 # --- קיבוצים (clusters) ------------------------------------------------------
-# ברירת המחדל: סדרי הענפים של הלמ"ס (אותיות A–U), מאוחדים לקיבוצים קריאים.
-# "היי-טק" הוא קיבוץ חוצה-סדרים לפי הגדרת הלמ"ס, ולכן חופף לקיבוצים אחרים.
+# הבסיס: עמודת SemelSederAnafOt/ShemSederAnafOt במילון — סדרי הענפים של הלמ"ס,
+# אותיות A–U, שהן רמת הקיבוץ הרשמית מעל הרמה הדו-ספרתית שבה מגיעים הנתונים.
+# כל קבוצת ענפים בנתונים שויכה לסדר של הקודים שבה; סדרים קרובים אוחדו כדי
+# להימנע מקיבוצים בני ענף אחד:
+#   B (כרייה) + D (חשמל) + E (מים ופסולת)  →  "אנרגיה, מים, פסולת וכרייה"
+#   K (פיננסים) + L (נדל"ן)                →  "פיננסים, ביטוח ונדל\"ן"
+#   R (אמנות) + S (שירותים אחרים) + T + U  →  "אמנות, פנאי ושירותים אחרים"
+# "היי-טק" אינו סדר אלא קיבוץ חוצה-סדרים, שנגזר מהעמודות high_tech_manufacturing
+# ו-high_tech_services שבמילון (ענפים 21, 26, 61, 62+63, 72) — ולכן הוא חופף
+# לקיבוצים "תעשייה וייצור", "מידע ותקשורת" ו"שירותים מקצועיים".
 CLUSTERS = [
     ("agri",    "חקלאות, ייעור ודיג",        ["1", "2+3+4"]),
     ("infra",   "אנרגיה, מים, פסולת וכרייה",  ["5+6+7+8", "35+36+37+38+39"]),
@@ -127,6 +135,37 @@ def read_dictionary():
         }
     wb.close()
     return out
+
+
+def read_meta(wb):
+    """שולף מגיליון 'מידע נילווה' את פרטי ההפקה ואת ההגדרות — מילה במילה מהמקור."""
+    ws = wb["מידע נילווה"]
+    rows = [[(c or "").strip() if isinstance(c, str) else c for c in r]
+            for r in ws.iter_rows(min_col=1, max_col=2, values_only=True)]
+
+    def field(prefix):
+        for a, b in rows:
+            if isinstance(a, str) and a.startswith(prefix) and b:
+                return str(b).strip()
+        return ""
+
+    # ההגדרות הן השורות שאחרי הכותרת "הסבר נוסף"
+    defs, seen_header = [], False
+    for a, b in rows:
+        if isinstance(a, str) and a.startswith("הסבר נוסף"):
+            seen_header = True
+            continue
+        if seen_header and a and b:
+            defs.append({"term": str(a).strip(), "text": str(b).strip()})
+    if len(defs) != 3:
+        sys.exit(f"צפויות 3 הגדרות בגיליון 'מידע נילווה', נמצאו {len(defs)}")
+
+    return {
+        "unit": field('יחידה בלמ"ס'),
+        "kind": field("סוג ההפקה"),
+        "definitions": defs,
+        "sheet": "מידע נילווה",
+    }
 
 
 def read_authorities(wb):
@@ -211,6 +250,7 @@ def read_anafim(wb, dic):
 def main():
     dic = read_dictionary()
     wb = openpyxl.load_workbook(SRC_DATA, data_only=True)
+    meta = read_meta(wb)
     authorities = read_authorities(wb)
     anafim = read_anafim(wb, dic)
     wb.close()
@@ -219,8 +259,9 @@ def main():
         "meta": {
             "year": "2024",
             "cluster": "אשכול גליל מזרחי",
-            "source": 'הלשכה המרכזית לסטטיסטיקה — עיבוד מיוחד מתוך קובצי הכנסה מנהליים',
+            "source": "הלשכה המרכזית לסטטיסטיקה — עיבוד מיוחד מתוך קובצי הכנסה מנהליים",
             "processing": "עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי",
+            **meta,
         },
         "metrics": [
             {"id": "salary",  "label": "שכר חודשי ממוצע",   "short": "שכר",         "unit": "₪",     "dec": 0},
@@ -240,8 +281,10 @@ def main():
     nat_sum = sum(i["nat"]["workers"] for i in anafim if isinstance(i["nat"]["workers"], (int, float)))
     print(f"נכתב {out}")
     print(f"  רשויות: {len(authorities['items'])} · ענפים: {len(anafim)} · קיבוצים: {len(CLUSTERS)}")
-    print(f"  כיסוי שכירים לפי ענף — אזור {reg_sum:,} מתוך {authorities['region']['workers']:,}"
+    print(f"  כיסוי שכירים לפי ענף — אשכול {reg_sum:,} מתוך {authorities['region']['workers']:,}"
           f" · ארצי {nat_sum:,} מתוך {authorities['national']['workers']:,}")
+    for d in meta["definitions"]:
+        print(f"  הגדרה מהמקור · {d['term']}: {d['text'][:60]}…")
 
 
 if __name__ == "__main__":

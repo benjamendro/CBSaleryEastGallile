@@ -123,9 +123,8 @@ input.ctl{cursor:text;font-weight:500}
 .ctl-row .spacer{flex:1 1 auto}
 
 /* ---------- כרטיסי מדדים ---------- */
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0 4px}
-@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:470px){.kpis{grid-template-columns:1fr}}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 4px}
+@media(max-width:820px){.kpis{grid-template-columns:1fr}}
 .kpi{
   background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
   padding:18px 20px;box-shadow:var(--sh-1);position:relative;overflow:hidden;
@@ -133,7 +132,6 @@ input.ctl{cursor:text;font-weight:500}
 .kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--s-bar)}
 .kpi:nth-child(2)::after{background:var(--s-nat)}
 .kpi:nth-child(3)::after{background:var(--ink-3)}
-.kpi:nth-child(4)::after{background:var(--c-cyan)}
 .kpi .lab{font-size:13.5px;font-weight:600;color:var(--ink-3)}
 .kpi .num{
   font-family:var(--font-head);font-weight:700;font-size:clamp(25px,3vw,33px);
@@ -212,6 +210,8 @@ footer.foot .cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:30px}
 footer.foot p,footer.foot li{font-size:13.5px;line-height:1.7;color:#B8CEDC;margin:0 0 8px}
 footer.foot ul{margin:0;padding-inline-start:18px}
 footer.foot b{color:#fff;font-weight:600}
+footer.foot .dim{font-size:12.5px;color:#8FAABC;margin-top:12px}
+footer.foot li{margin-bottom:11px}
 footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:12.5px;color:#93AFC1}
 
 /* מסכים צרים: פקדי המקטעים נשברים לשורות במקום לדחוף את העמוד לרוחב */
@@ -362,20 +362,14 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
       <div class="cols">
         <div>
           <h3>מקור הנתונים</h3>
-          <p>
-            <b>הלשכה המרכזית לסטטיסטיקה</b> — עיבוד מיוחד מורכב, אגף מיקרו כלכלה,
-            מתוך קובצי הכנסה מנהליים לשנת <b>2024</b>.
-          </p>
+          <p id="footSource"></p>
           <p><b>עיבוד והצגה:</b> מרכז הידע האזורי גליל מזרחי | מערבי.</p>
-          <p>מילון ענפי הכלכלה: מילון ענפי כלכלה 4 ספרות (למ"ס).</p>
+          <p>שמות הענפים והקיבוצים נגזרו ממילון ענפי כלכלה 4 ספרות (למ"ס).</p>
         </div>
-        <div>
+        <div id="defs">
           <h3>הגדרות</h3>
-          <ul>
-            <li><b>שכיר</b> — כל בעל הכנסה משכר במהלך השנה, גם אם הייתה לו גם הכנסה עסקית.</li>
-            <li><b>שכר חודשי ממוצע</b> — השכר השנתי חלקי מספר חודשי העבודה; הכנסה משכר בלבד.</li>
-            <li><b>ענף כלכלי</b> — ענף המשרה שהניבה יותר במהלך השנה, ברמת שתי ספרות.</li>
-          </ul>
+          <ul id="footDefs"></ul>
+          <p class="dim">כלשונן בגיליון „מידע נילווה” שבקובץ המקור של הלמ"ס.</p>
         </div>
         <div>
           <h3>הערות והסתייגויות</h3>
@@ -396,6 +390,7 @@ const DATA = "__DATA__";
 const A = DATA.authorities, ANAF = DATA.anafim, METRICS = DATA.metrics;
 const M = Object.fromEntries(METRICS.map(m => [m.id, m]));
 const CLUSTER = DATA.meta.cluster;
+const ANAF_LABEL = Object.fromEntries(ANAF.map(x => [x.code, x.label]));
 
 const state = {
   metric: "salary",
@@ -652,7 +647,6 @@ function dataTable(host, cols, rows) {
 function renderKpis() {
   const id = state.metric, m = M[id], isCount = id === "workers";
   const reg = A.region[id], nat = A.national[id];
-  const top = A.items.reduce((a, b) => (b[id] > a[id] ? b : a));
 
   /* מדד שלישי: לשכר ולחודשי עבודה — פער מהממוצע הארצי;
      למספר שכירים — החלק מכלל השכירים בישראל, שכן "פער" אינו מושג רלוונטי לספירה. */
@@ -666,8 +660,7 @@ function renderKpis() {
     {lab:"כלל הארץ",   txt: fmtBig(nat, id), unit:m.unit,
      note: isCount ? "סך הכול" : "ממוצע ארצי"},
     {lab: isCount ? "חלקו של האשכול" : "פער מהממוצע הארצי", txt: relTxt, unit:"",
-     note: isCount ? "מכלל השכירים בישראל" : `${CLUSTER} לעומת כלל הארץ`},
-    {lab:"הרשות המובילה", txt: fmtBig(top[id], id), unit:m.unit, note: top.name}
+     note: isCount ? "מכלל השכירים בישראל" : `${CLUSTER} לעומת כלל הארץ`}
   ];
 
   const host = clear(document.getElementById("kpis"));
@@ -825,7 +818,8 @@ function renderAnafPanel() {
     const list = el("div", {class:"cluster-list"});
     DATA.clusters.forEach(c => {
       const on = st.clusters.has(c.id);
-      const b = el("button", {type:"button", class:"pill", "aria-pressed":String(on)},
+      const b = el("button", {type:"button", class:"pill", "aria-pressed":String(on),
+                              title: c.codes.map(k => ANAF_LABEL[k]).join(" · ")},
                    `${c.label} (${c.codes.length})`);
       b.addEventListener("click", () => {
         st.clusters.has(c.id) ? st.clusters.delete(c.id) : st.clusters.add(c.id);
@@ -842,7 +836,9 @@ function renderAnafPanel() {
     } else {
       foot.appendChild(el("span", {}, `לא נבחר קיבוץ — מוצגים ${FALLBACK_N} הגבוהים ביותר.`));
     }
-    foot.appendChild(el("span", {}, "הקיבוצים מבוססים על סדרי הענפים של הלמ\"ס. הקיבוץ „היי-טק” חוצה סדרים ולכן חופף לאחרים."));
+    foot.appendChild(el("span", {}, "הקיבוצים הם סדרי הענפים (אותיות A–U) שבמילון ענפי הכלכלה של הלמ\"ס, " +
+      "כשסדרים קרובים אוחדו. „היי-טק” נגזר מסימוני ההיי-טק שבמילון, חוצה סדרים וחופף לאחרים. " +
+      "ריחוף מעל קיבוץ מציג את הענפים שבו."));
     p.appendChild(foot); host.appendChild(p);
     return;
   }
@@ -967,6 +963,22 @@ function renderAnaf() { renderAnafPanel(); renderAnafChart(); }
 /* ============================================================
    הערות שוליים — נגזרות מהנתונים עצמם
    ============================================================ */
+/* ההגדרות ופרטי ההפקה מגיעים מגיליון "מידע נילווה" שבקובץ המקור — לא מנוסחים כאן */
+function renderMeta() {
+  const meta = DATA.meta;
+  const ul = clear(document.getElementById("footDefs"));
+  meta.definitions.forEach(d => {
+    const li = el("li");
+    li.appendChild(el("b", {}, d.term));
+    li.appendChild(document.createTextNode(" — " + d.text));
+    ul.appendChild(li);
+  });
+  const src = clear(document.getElementById("footSource"));
+  src.appendChild(el("b", {}, "הלשכה המרכזית לסטטיסטיקה"));
+  src.appendChild(document.createTextNode(
+    ` — ${meta.kind}, ${meta.unit}, מתוך קובצי הכנסה מנהליים לשנת ${meta.year}.`));
+}
+
 function renderFootNotes() {
   const covReg = ANAF.reduce((s, x) => s + (x.reg.workers || 0), 0);
   const covNat = ANAF.reduce((s, x) => s + (x.nat.workers || 0), 0);
@@ -996,6 +1008,7 @@ function init() {
   wireAuth();
   wireAnaf();
   renderAll();
+  renderMeta();
   renderFootNotes();
   addEventListener("scroll", hideTip, {passive:true});
 }
