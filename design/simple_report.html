@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז הידע - דשבורד חזרת תושבים</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-light: #eff6ff;
+            --secondary: #0ea5e9;
+            --secondary-light: #e0f2fe;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+        }
+        body { font-family: 'Assistant', sans-serif; background-color: var(--bg-body); margin: 0; padding: 2rem 1rem; color: var(--text-main); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card { background: var(--bg-card); border-radius: 16px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); padding: 2.5rem; margin-bottom: 2rem; border: 1px solid var(--border); }
+        .header { display: flex; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 1.5rem; margin-bottom: 2rem; }
+        .header img { max-height: 85px; margin-left: 1.5rem; }
+        .header-text h1 { color: var(--primary); margin: 0 0 0.25rem 0; font-size: 28px; font-weight: 800; }
+        .header-text p { color: var(--text-muted); margin: 0; font-size: 16px; }
+        .pipeline-steps { background-color: var(--primary-light); border-right: 4px solid var(--primary); padding: 1.5rem 2rem; border-radius: 12px; margin-bottom: 2rem; }
+        .pipeline-steps h3 { margin-top: 0; color: var(--primary); margin-bottom: 1rem; }
+        .pipeline-steps ol { margin: 0; padding-right: 1.5rem; }
+        .pipeline-steps li { margin-bottom: 0.5rem; font-size: 15px; }
+        .controls-section { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; background-color: #f1f5f9; padding: 1.5rem; border-radius: 12px; margin-bottom: 2.5rem; border: 1px solid var(--border); }
+        .control-group { display: flex; align-items: center; gap: 0.75rem; }
+        .control-group label { font-weight: 600; font-size: 16px; color: var(--primary); }
+        select { padding: 0.5rem 1rem; font-size: 15px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: 'Assistant', sans-serif; cursor: pointer; outline: none; background: white; }
+        .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2.5rem; }
+        .chart-box { border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; background: #fff; }
+        .chart-box h3 { text-align: center; margin-top: 0; color: var(--text-main); margin-bottom: 1.5rem; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .future-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-top: 2px solid var(--border); padding-top: 2rem; margin-top: 1rem; }
+        .future-card { background-color: #f8fafc; border: 1px solid var(--border); border-right: 4px solid var(--secondary); padding: 1.5rem 2rem; border-radius: 12px; }
+        .future-card h3 { margin-top: 0; color: var(--primary); margin-bottom: 1rem; font-size: 20px; }
+        .future-card p { margin-bottom: 0.75rem; font-size: 15px; }
+        .future-card ul { margin: 0; padding-right: 1.5rem; }
+        .future-card li { margin-bottom: 0.75rem; font-size: 15px; }
+        @media (max-width: 900px) { .charts-grid, .future-steps { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <img src="uploads/לוגו מרכז הידע חדש עם גליל מערבי רקע לבן.jpg" alt="לוגו מרכז הידע">
+                <div class="header-text">
+                    <h1>הערכת נוכחות תושבים: קרית שמונה</h1>
+                    <p>ניתוח נתוני צריכת מים בשיטה הדינמית (Top-20%) לעומת השיטה הישנה</p>
+                </div>
+            </div>
+
+            <div class="pipeline-steps">
+                <h3>מתודולוגיית הניתוח (השיטה הדינמית)</h3>
+                <ol>
+                    <li><strong>סינון מגורים:</strong> התמקדות בצרכני מגורים בלבד בהתבסס על נתוני התאגיד וקישורם ל-11 שכונות העיר.</li>
+                    <li><strong>סינון רעשים (Noise Floor):</strong> איפוס צריכות חריגות וזניחות (מתחת ל-0.1 קוב) למניעת זיהוי שגוי של נזילות כנוכחות.</li>
+                    <li><strong>בניית עוגן דינמי P80:</strong> בכל שבוע, מחושב האחוזון ה-80 של הצריכה בעיר (נחשב כ-"צריכה מלאה" לאותו שבוע). העוגן מנטרל הטיות של עונתיות ומזג אוויר.</li>
+                    <li><strong>סיווג נוכחות אבסולוטי:</strong>
+                        <ul>
+                            <li>מעל 60% מהעוגן - <strong>נוכחות מלאה</strong></li>
+                            <li>בין 35% ל-60% מהעוגן - <strong>נוכחות חלקית</strong></li>
+                            <li>בין 12% ל-35% מהעוגן - נוכחות נמוכה (לא נספרים כנוכחים בסך הכללי)</li>
+                            <li>מתחת ל-12% - לא נוכח</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="controls-section">
+                <div class="control-group">
+                    <label for="presenceFilter">סוג נוכחות:</label>
+                    <select id="presenceFilter">
+                        <option value="total">כלל הנוכחים (מלאה + חלקית)</option>
+                        <option value="full">נוכחות מלאה בלבד</option>
+                        <option value="partial">נוכחות חלקית בלבד</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="neighborhoodSelect">הצג שכונה:</label>
+                    <select id="neighborhoodSelect">
+                        <option value="city">-- כלל העיר --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="charts-grid" id="chartsArea">
+                <div class="chart-box">
+                    <h3 id="hhTitle">משקי בית (%)</h3>
+                    <div class="chart-container">
+                        <canvas id="hhChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <h3 id="personsTitle">תושבים - נפשות (%)</h3>
+                    <div class="chart-container">
+                        <canvas id="personsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="future-steps">
+                <div class="future-card">
+                    <h3>פערים ונתונים חסרים</h3>
+                    <p><strong>פערים בנתונים:</strong> נכון לעכשיו, קיימים פערים ויש חוסר בנתונים רציפים מחודש ינואר ועד מאי, מה שמקשה על בניית רצף אנליטי ומעקב מגמה שלם.</p>
+                    <p><strong>גיבוש Baseline אמיתי:</strong> נדרשים נתונים היסטוריים מלאים מינואר 2023. זה יאפשר לגבש קו בסיס מציאותי שמשקף שגרה ומהווה Baseline אמיתי, במקום להתבסס על הערכות.</p>
+                </div>
+                
+                <div class="future-card">
+                    <h3>השלב הבא: הערכת חזרת עסקים</h3>
+                    <ul>
+                        <li><strong>בדיקת מדד רציפות שבועי:</strong> יצירת מדד שסופר ויחשב כמה ימים מתוך השבוע העסק היה פעיל בפועל.</li>
+                        <li><strong>מציאת סף הרעש:</strong> הגדרת רף רעש ייעודי לעסקים על ידי בדיקת צריכת המים בשבתות ובלילות - זמנים בהם העסק אמור להיות סגור.</li>
+                        <li><strong>השוואה ל-Baseline:</strong> השוואה לחודשים טרם המערכה הם Baseline סביר, מאחר שבתעשייה, עסקים ומסחר השפעת העונתיות הרבה פחות משחקת תפקיד לעומת צריכה ביתית.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const LABELS = ["ינואר (1-6)", "פברואר (1-7)", "פברואר (10-16)", "מרץ (1-7)", "מרץ (11-17)", "אפריל (1-7)", "אפריל (7-13)", "מאי (5-11)", "מאי (12-19)"];
+        const CITY_DATA = {"total": {"new_hh": [61.57, 61.12, 61.95, 55.85, 54.17, 46.69, 50.35, 59.55, 59.36], "new_persons": [65.45, 64.76, 65.82, 62.78, 59.98, 51.53, 55.68, 63.45, 62.71], "old_hh": [60.38, 64.59, 65.36, 58.06, 55.99, 47.72, 51.65, 64.16, 67.86], "old_persons": [64.02, 69.13, 70.23, 65.44, 62.24, 52.94, 57.38, 69.38, 73.35]}, "full": {"new_hh": [37.98, 37.89, 38.19, 36.04, 34.65, 29.99, 31.83, 36.96, 36.22], "new_persons": [35.27, 34.95, 35.68, 36.76, 34.31, 30.08, 31.42, 34.87, 33.4], "old_hh": [28.5, 35.72, 36.03, 32.93, 30.51, 26.12, 27.57, 36.95, 43.84], "old_persons": [23.71, 32.31, 33.12, 32.74, 28.95, 25.39, 26.15, 34.86, 42.95]}, "partial": {"new_hh": [23.59, 23.23, 23.76, 19.81, 19.53, 16.69, 18.52, 22.6, 23.14], "new_persons": [30.19, 29.82, 30.14, 26.02, 25.67, 21.45, 24.26, 28.57, 29.31], "old_hh": [31.88, 28.87, 29.34, 25.13, 25.47, 21.6, 24.08, 27.22, 24.01], "old_persons": [40.31, 36.82, 37.11, 32.71, 33.29, 27.55, 31.23, 34.53, 30.41]}};
+        const NEIGHBORHOOD_DATA = {"שיכון ב'": {"total": {"new_hh": [61.74, 59.39, 59.74, 53.57, 51.83, 44.26, 48.78, 59.13, 59.3], "new_persons": [66.45, 63.55, 64.84, 61.0, 57.79, 49.92, 55.37, 63.9, 63.55], "old_hh": [60.87, 62.17, 63.3, 55.3, 53.65, 45.39, 50.52, 63.13, 66.43], "old_persons": [65.28, 66.92, 68.87, 62.54, 59.46, 51.34, 57.26, 69.06, 72.05]}, "full": {"new_hh": [30.52, 35.39, 36.26, 33.04, 30.78, 26.17, 28.17, 38.78, 45.57], "new_persons": [26.41, 33.4, 35.03, 34.69, 30.28, 26.47, 28.83, 39.12, 46.24], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [30.35, 26.78, 27.04, 22.26, 22.87, 19.22, 22.35, 24.35, 20.87], "new_persons": [38.87, 33.52, 33.84, 27.86, 29.18, 24.87, 28.42, 29.93, 25.81], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "בנה ביתך": {"total": {"new_hh": [56.46, 57.26, 59.65, 53.0, 52.06, 42.34, 45.81, 55.93, 55.26], "new_persons": [59.31, 60.62, 61.68, 58.64, 56.8, 46.15, 49.2, 60.72, 57.91], "old_hh": [55.13, 59.92, 62.18, 55.13, 54.33, 43.41, 48.07, 60.45, 63.91], "old_persons": [57.38, 64.44, 65.75, 61.83, 60.52, 47.99, 52.73, 66.18, 70.25]}, "full": {"new_hh": [27.96, 34.22, 35.95, 31.16, 27.56, 23.04, 24.9, 37.28, 41.15], "new_persons": [23.22, 30.58, 31.98, 29.32, 24.38, 21.48, 22.3, 33.58, 38.85], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [27.16, 25.7, 26.23, 23.97, 26.76, 20.37, 23.17, 23.17, 22.77], "new_persons": [34.16, 33.87, 33.77, 32.51, 36.14, 26.51, 30.43, 32.61, 31.4], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "דרום מערב": {"total": {"new_hh": [62.33, 62.33, 63.13, 53.58, 53.85, 45.89, 48.81, 58.36, 59.95], "new_persons": [65.24, 64.81, 66.64, 56.18, 57.23, 47.13, 51.05, 61.67, 62.46], "old_hh": [61.54, 67.64, 67.9, 57.82, 55.7, 45.89, 49.87, 63.4, 69.23], "old_persons": [64.55, 72.74, 72.47, 60.71, 59.32, 47.13, 52.0, 69.08, 76.57]}, "full": {"new_hh": [30.77, 36.87, 34.48, 34.48, 30.77, 27.59, 27.85, 36.6, 45.89], "new_persons": [23.87, 31.27, 29.01, 32.32, 27.61, 26.22, 24.3, 33.36, 44.25], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [30.77, 30.77, 33.42, 23.34, 24.93, 18.3, 22.02, 26.79, 23.34], "new_persons": [40.68, 41.46, 43.47, 28.4, 31.71, 20.91, 27.7, 35.71, 32.32], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "יגאל אלון": {"total": {"new_hh": [53.92, 55.39, 57.35, 50.0, 48.53, 36.27, 40.69, 53.92, 54.41], "new_persons": [59.96, 60.37, 61.4, 58.73, 54.83, 42.51, 47.43, 60.37, 59.75], "old_hh": [51.96, 59.8, 60.78, 52.45, 48.53, 36.27, 41.67, 57.35, 61.27], "old_persons": [57.08, 66.74, 65.71, 60.99, 54.83, 42.51, 48.46, 64.07, 67.15]}, "full": {"new_hh": [30.88, 34.31, 36.76, 29.41, 24.51, 20.59, 21.08, 34.8, 40.69], "new_persons": [27.72, 33.47, 35.52, 29.36, 25.87, 22.38, 22.18, 33.88, 40.25], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [21.08, 25.49, 24.02, 23.04, 24.02, 15.69, 20.59, 22.55, 20.59], "new_persons": [29.36, 33.26, 30.18, 31.62, 28.95, 20.12, 26.28, 30.18, 26.9], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "ז'בוטינסקי": {"total": {"new_hh": [49.24, 48.55, 48.49, 42.57, 41.44, 35.89, 38.73, 45.34, 45.78], "new_persons": [56.67, 54.76, 55.02, 51.99, 49.84, 42.84, 45.76, 51.47, 52.41], "old_hh": [48.17, 52.14, 51.39, 44.65, 43.07, 36.78, 39.74, 49.81, 54.16], "old_persons": [55.33, 59.42, 58.85, 54.73, 52.21, 44.16, 47.01, 58.36, 62.47]}, "full": {"new_hh": [20.84, 26.51, 26.07, 22.48, 21.6, 17.88, 19.9, 25.76, 31.86], "new_persons": [19.26, 26.35, 25.55, 24.52, 22.06, 17.83, 20.38, 26.81, 33.84], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [27.33, 25.63, 25.31, 22.17, 21.47, 18.89, 19.84, 24.06, 22.29], "new_persons": [36.07, 33.07, 33.3, 30.21, 30.15, 26.32, 26.64, 31.55, 28.64], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "מרכז העיר": {"total": {"new_hh": [54.6, 54.05, 54.7, 45.86, 46.41, 39.32, 41.62, 53.68, 53.13], "new_persons": [56.38, 55.95, 56.46, 52.2, 52.75, 45.0, 46.89, 55.77, 55.55], "old_hh": [53.5, 58.1, 59.39, 48.53, 48.25, 40.15, 42.73, 59.67, 61.6], "old_persons": [54.97, 60.82, 62.53, 55.55, 54.67, 46.27, 48.45, 63.91, 66.61]}, "full": {"new_hh": [23.2, 29.37, 28.82, 23.39, 22.65, 19.34, 20.72, 30.2, 37.02], "new_persons": [18.37, 24.66, 24.15, 22.84, 21.21, 19.32, 19.68, 27.57, 34.34], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [30.29, 28.73, 30.57, 25.14, 25.6, 20.81, 22.01, 29.47, 24.59], "new_persons": [36.6, 36.16, 38.38, 32.7, 33.47, 26.96, 28.77, 36.34, 32.27], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "אצ\"ל": {"total": {"new_hh": [65.16, 64.0, 67.01, 57.75, 56.71, 48.38, 53.59, 62.5, 62.5], "new_persons": [66.99, 65.73, 68.81, 63.49, 61.95, 52.43, 58.5, 64.8, 63.77], "old_hh": [64.0, 67.01, 69.91, 59.84, 58.8, 50.0, 54.86, 67.36, 71.76], "old_persons": [65.78, 69.47, 72.6, 65.92, 64.61, 54.25, 59.94, 70.63, 75.21]}, "full": {"new_hh": [29.51, 38.54, 38.31, 34.84, 32.41, 28.12, 29.05, 36.34, 43.06], "new_persons": [23.16, 32.45, 33.61, 34.69, 30.86, 27.08, 26.75, 32.45, 40.43], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [34.49, 28.47, 31.6, 25.0, 26.39, 21.88, 25.81, 31.02, 28.7], "new_persons": [42.62, 37.02, 38.98, 31.23, 33.75, 27.17, 33.19, 38.19, 34.78], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "הוורדים": {"total": {"new_hh": [67.79, 67.28, 69.3, 67.96, 65.52, 57.44, 60.72, 67.12, 65.52], "new_persons": [69.93, 68.6, 71.18, 72.13, 67.98, 58.75, 62.8, 67.79, 65.73], "old_hh": [66.02, 71.57, 73.0, 70.14, 67.28, 58.87, 61.9, 72.33, 76.28], "old_persons": [68.14, 73.51, 75.85, 74.63, 70.18, 60.73, 64.42, 73.7, 78.32]}, "full": {"new_hh": [28.85, 36.75, 37.85, 38.35, 35.41, 31.62, 31.79, 40.2, 47.01], "new_persons": [23.15, 31.67, 33.57, 35.74, 32.02, 29.42, 27.92, 35.5, 43.18], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [37.17, 34.82, 35.16, 31.79, 31.88, 27.25, 30.11, 32.13, 29.27], "new_persons": [44.99, 41.85, 42.28, 38.89, 38.15, 31.32, 36.5, 38.21, 35.14], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "נוף החרמון": {"total": {"new_hh": [58.88, 59.93, 57.29, 52.9, 49.91, 44.64, 48.33, 56.24, 56.06], "new_persons": [58.56, 59.83, 57.85, 55.66, 51.2, 45.83, 50.07, 57.57, 54.95], "old_hh": [56.77, 63.09, 61.51, 55.54, 51.49, 45.52, 49.56, 60.81, 65.03], "old_persons": [55.8, 63.72, 63.79, 59.34, 52.97, 46.46, 51.84, 62.31, 66.55]}, "full": {"new_hh": [24.43, 32.69, 31.99, 29.88, 29.17, 23.37, 24.08, 32.69, 40.6], "new_persons": [17.19, 26.59, 26.31, 25.81, 24.68, 21.15, 20.65, 26.94, 36.28], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [32.34, 30.4, 29.53, 25.66, 22.32, 22.14, 25.48, 28.12, 24.43], "new_persons": [38.61, 37.13, 37.48, 33.52, 28.29, 25.32, 31.19, 35.36, 30.27], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "בימת תל חי": {"total": {"new_hh": [75.16, 71.61, 72.58, 67.1, 64.52, 57.42, 62.9, 73.23, 74.52], "new_persons": [75.32, 72.69, 72.79, 74.15, 69.0, 60.25, 68.71, 73.57, 75.7], "old_hh": [74.52, 77.1, 78.06, 70.0, 66.45, 58.06, 63.87, 77.1, 82.9], "old_persons": [74.34, 79.49, 79.4, 76.97, 72.01, 61.52, 70.17, 78.72, 84.65]}, "full": {"new_hh": [34.84, 42.58, 46.45, 40.65, 36.45, 33.23, 34.84, 44.52, 56.77], "new_persons": [30.22, 37.12, 43.34, 40.23, 33.53, 30.03, 31.97, 39.75, 54.62], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [39.68, 34.52, 31.61, 29.35, 30.0, 24.84, 29.03, 32.58, 26.13], "new_persons": [44.12, 42.37, 36.05, 36.73, 38.48, 31.49, 38.19, 38.97, 30.03], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}, "היובלים": {"total": {"new_hh": [87.04, 89.2, 89.34, 84.08, 78.14, 69.91, 74.36, 86.37, 85.56], "new_persons": [86.37, 89.38, 89.6, 85.98, 79.16, 70.99, 75.32, 85.19, 84.1], "old_hh": [86.5, 90.96, 90.55, 85.16, 80.16, 71.12, 75.57, 89.47, 91.5], "old_persons": [85.8, 91.31, 91.26, 87.68, 81.39, 72.61, 76.85, 89.47, 91.79]}, "full": {"new_hh": [46.96, 61.13, 61.4, 59.24, 53.71, 45.48, 48.58, 63.97, 72.33], "new_persons": [35.21, 53.21, 53.78, 52.73, 46.18, 38.97, 41.68, 56.01, 67.1], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}, "partial": {"new_hh": [39.54, 29.82, 29.15, 25.91, 26.45, 25.64, 26.99, 25.51, 19.16], "new_persons": [50.59, 38.1, 37.48, 34.95, 35.21, 33.64, 35.17, 33.46, 24.68], "old_hh": [null, null, null, null, null, null, null, null, null], "old_persons": [null, null, null, null, null, null, null, null, null]}}};
+
+        const selectNeigh = document.getElementById('neighborhoodSelect');
+        const selectPresence = document.getElementById('presenceFilter');
+        
+        Object.keys(NEIGHBORHOOD_DATA).forEach(area => {
+            const opt = document.createElement('option');
+            opt.value = area; opt.textContent = area;
+            selectNeigh.appendChild(opt);
+        });
+
+        let hhChart = null;
+        let personsChart = null;
+
+        const commonOptions = {
+            responsive: true, maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: { legend: { display: true, position: 'top', labels: { font: { family: 'Assistant', size: 13 } } }, tooltip: { titleFont: { family: 'Assistant' }, bodyFont: { family: 'Assistant' }, callbacks: { label: function(c) { return c.dataset.label + ': ' + c.parsed.y + '%'; } } } },
+            scales: { x: { grid: { display: false }, ticks: { font: { family: 'Assistant', size: 12 } } }, y: { min: 0, max: 80, grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Assistant', size: 12 }, callback: v => v + '%' } } }
+        };
+
+        function updateCharts() {
+            const area = selectNeigh.value;
+            const pType = selectPresence.value;
+            
+            let dataObj = area === 'city' ? CITY_DATA : NEIGHBORHOOD_DATA[area];
+            
+            const titlePrefix = area === 'city' ? 'כלל העיר' : area;
+            document.getElementById('hhTitle').textContent = `משקי בית - ${titlePrefix} (%)`;
+            document.getElementById('personsTitle').textContent = `תושבים - ${titlePrefix} (%)`;
+
+            const hasOld = dataObj[pType].old_hh.some(v => v !== null);
+
+            let hhDatasets = [{
+                label: 'דינמית (חדשה)', data: dataObj[pType].new_hh,
+                borderColor: '#1e40af', backgroundColor: 'transparent',
+                borderWidth: 3, tension: 0.3, pointRadius: 4
+            }];
+            
+            if (hasOld) {
+                hhDatasets.push({
+                    label: 'ערכי סף (ישנה)', data: dataObj[pType].old_hh,
+                    borderColor: '#94a3b8', borderDash: [5, 5], backgroundColor: 'transparent',
+                    borderWidth: 2, tension: 0.3, pointRadius: 3
+                });
+            }
+
+            let psDatasets = [{
+                label: 'דינמית (חדשה)', data: dataObj[pType].new_persons,
+                borderColor: '#0ea5e9', backgroundColor: 'transparent',
+                borderWidth: 3, tension: 0.3, pointRadius: 4
+            }];
+            
+            if (hasOld) {
+                psDatasets.push({
+                    label: 'ערכי סף (ישנה)', data: dataObj[pType].old_persons,
+                    borderColor: '#94a3b8', borderDash: [5, 5], backgroundColor: 'transparent',
+                    borderWidth: 2, tension: 0.3, pointRadius: 3
+                });
+            }
+
+            if (hhChart) hhChart.destroy();
+            hhChart = new Chart(document.getElementById('hhChart'), {
+                type: 'line',
+                data: { labels: LABELS, datasets: hhDatasets },
+                options: commonOptions
+            });
+
+            if (personsChart) personsChart.destroy();
+            personsChart = new Chart(document.getElementById('personsChart'), {
+                type: 'line',
+                data: { labels: LABELS, datasets: psDatasets },
+                options: commonOptions
+            });
+        }
+
+        selectNeigh.addEventListener('change', updateCharts);
+        selectPresence.addEventListener('change', updateCharts);
+        updateCharts();
+    </script>
+</body>
+</html>
