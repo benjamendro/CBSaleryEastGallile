@@ -1,0 +1,1463 @@
+<title>שכר ותעסוקה בגליל המזרחי</title>
+<meta name="description" content="דשבורד שכר, שכירים וחודשי עבודה לפי רשויות וענפי כלכלה — נפות צפת וגולן">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =============================================================
+   מרכז הידע האזורי גליל מזרחי | מערבי — דשבורד שכר ותעסוקה
+   ערכת העיצוב נגזרת מ-design/template/brand.css (RTL, ערכת "civic")
+   ============================================================= */
+:root{
+  /* הדשבורד מחויב לערכת הנייר הבהירה של המותג (design/template/brand.css);
+     color-scheme מבטיח שגם פקדי הדפדפן יישארו בהירים אצל משתמשי מצב כהה. */
+  color-scheme: light;
+
+  /* מותג — נדגם מהלוגו */
+  --c-cyan:#1CA8C4; --c-sky:#54C4E0; --c-blue:#1C70A8;
+  --c-bluedeep:#1C548C; --c-navy:#14273F; --c-gold:#C4A870;
+
+  /* רקע לבן; ההיררכיה נשענת על מסגרות וצללים ולא על גוון הרקע */
+  --paper:#FFFFFF; --paper-2:#F2F6F9; --card:#FFFFFF;
+  --ink:#14273F; --ink-2:#41566B; --ink-3:#74879A;
+  --line:#DCE5EC; --line-2:#C3D2DC;
+  --accent:#1C70A8; --accent-2:#1CA8C4; --accent-soft:#DBEEF4;
+
+  /* צבעי גרפים — עברו אימות נגישות מול רקע לבן (CVD ΔE 20.1 · ניגודיות ≥3:1) */
+  --s-bar:#1C70A8;     /* העמודות — סדרה יחידה */
+  --s-ref:#6E8CA8;     /* קו ממוצע האשכול — נייטרלי, אינו צבע נתונים */
+  --s-nat:#A8823A;     /* קו הממוצע הארצי — זהב המותג, מוכהה לניגודיות */
+  --s-socio:#8C1C5A;   /* קו האשכול החברתי-כלכלי — מדורג, מגנטה המותג */
+
+  --font-head:'Rubik',system-ui,sans-serif;
+  --font-body:'Assistant',system-ui,sans-serif;
+  --r-sm:6px; --r-md:10px; --r-lg:14px;
+  --sh-1:0 1px 3px rgba(20,39,63,.06), 0 1px 1px rgba(20,39,63,.04);
+  --sh-2:0 8px 26px -12px rgba(20,39,63,.22);
+  --sh-3:0 20px 50px -20px rgba(20,39,63,.42);
+  --gutter:clamp(16px,3.4vw,40px);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink)}
+.page{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.page ::selection{background:var(--accent-soft);color:var(--ink)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;line-height:1.15;letter-spacing:-.015em;margin:0}
+
+/* ---------- סרגל עליון ---------- */
+.topbar{
+  background:var(--card); border-bottom:1px solid var(--line);
+  position:sticky; top:0; z-index:50;
+}
+.topbar .wrap{display:flex;align-items:center;gap:18px;min-height:76px;padding-block:10px;flex-wrap:wrap}
+.topbar img{height:52px;width:auto;display:block}
+.topbar .tb-meta{
+  margin-inline-start:auto;font-size:13px;color:var(--ink-3);
+  text-align:end;line-height:1.5;
+}
+.topbar .tb-meta b{color:var(--ink-2);font-weight:600}
+
+/* ---------- כותרת ---------- */
+.head{padding:clamp(26px,4vw,44px) 0 6px}
+.head .kicker{
+  font-family:var(--font-head);font-size:13px;font-weight:600;letter-spacing:.03em;
+  color:var(--accent);display:inline-flex;align-items:center;gap:9px;margin-bottom:12px;
+}
+.head .kicker .mk{display:inline-grid;grid-template-columns:repeat(2,5px);gap:2px}
+.head .kicker .mk i{width:5px;height:5px;display:block;background:var(--accent-2)}
+.head .kicker .mk i:nth-child(1){background:var(--c-bluedeep)}
+.head .kicker .mk i:nth-child(4){background:var(--c-gold)}
+.head h1{font-size:clamp(27px,4.2vw,42px);font-weight:800;letter-spacing:-.025em}
+.head p.lede{margin:12px 0 0;max-width:70ch;font-size:clamp(16px,1.7vw,19px);color:var(--ink-2);line-height:1.55}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{
+  font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--card);
+  border:1px solid var(--line);border-radius:100px;padding:4px 12px;
+}
+.chip b{color:var(--ink);font-weight:700}
+
+/* ---------- סרגל מדד גלובלי ---------- */
+.metricbar{
+  position:sticky;top:76px;z-index:40;background:color-mix(in srgb,var(--paper) 92%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:22px;
+}
+.metricbar .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px}
+.metricbar .lab{font-family:var(--font-head);font-size:13px;font-weight:600;color:var(--ink-3)}
+
+/* ---------- פקדים ---------- */
+.seg{display:inline-flex;max-width:100%;background:var(--paper-2);border:1px solid var(--line);border-radius:100px;padding:3px;gap:2px}
+.seg button{
+  font-family:var(--font-body);font-size:14px;font-weight:700;border:0;background:transparent;
+  color:var(--ink-3);padding:7px 18px;border-radius:100px;cursor:pointer;
+  transition:background .18s,color .18s;white-space:nowrap;
+}
+.seg button:hover{color:var(--ink)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff;box-shadow:var(--sh-1)}
+.seg.sm button{font-size:13px;padding:5px 14px}
+.seg:focus-within{outline:2px solid var(--accent);outline-offset:2px}
+.seg button:focus-visible{outline:none}
+
+.pill{
+  font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--line-2);background:var(--card);color:var(--ink-2);
+  border-radius:100px;padding:5px 14px;transition:all .16s;
+}
+.pill:hover{border-color:var(--accent);color:var(--accent)}
+.pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+
+select.ctl,input.ctl{
+  font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);
+  background:var(--card);border:1px solid var(--line-2);border-radius:var(--r-md);
+  padding:7px 12px;cursor:pointer;outline:none;
+}
+select.ctl:focus,input.ctl:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+input.ctl{cursor:text;font-weight:500}
+.ctl-row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:14px}
+.ctl-group{display:inline-flex;align-items:center;gap:8px}
+.ctl-group>label{font-family:var(--font-head);font-size:12.5px;font-weight:600;color:var(--ink-3);white-space:nowrap}
+.ctl-row .spacer{flex:1 1 auto}
+
+/* ---------- כרטיסי מדדים ---------- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:24px 0 4px}
+@media(max-width:820px){.kpis{grid-template-columns:1fr}}
+.kpi{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:18px 20px;box-shadow:var(--sh-1);position:relative;overflow:hidden;
+}
+.kpi::after{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--s-bar)}
+.kpi:nth-child(2)::after{background:var(--s-nat)}
+.kpi:nth-child(3)::after{background:var(--ink-3)}
+.kpi .lab{font-size:13.5px;font-weight:600;color:var(--ink-3)}
+.kpi .num{
+  font-family:var(--font-head);font-weight:700;font-size:clamp(25px,3vw,33px);
+  line-height:1.15;margin-top:5px;letter-spacing:-.02em;
+}
+.kpi .num .u{font-size:.55em;color:var(--ink-3);font-weight:600;margin-inline-start:3px}
+.kpi .note{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+.kpi-note{
+  font-size:13px;line-height:1.6;color:var(--ink-2);margin:12px 0 0;max-width:100ch;
+  border-inline-start:3px solid var(--s-nat);padding-inline-start:12px;
+}
+.kpi-note b{color:var(--ink);font-weight:700}
+
+/* ---------- מקטע + כרטיס גרף ---------- */
+section.block{padding:clamp(28px,4vw,46px) 0 4px}
+.block-head{margin-bottom:16px}
+.block-head h2{font-size:clamp(21px,2.6vw,28px);font-weight:700}
+.block-head p{margin:6px 0 0;color:var(--ink-2);font-size:15px;max-width:80ch}
+.figure{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-1);padding:20px 22px 16px}
+.fig-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+.fig-title{font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--ink)}
+.fig-sub{font-size:13px;color:var(--ink-3);margin-top:3px}
+.fig-note{font-size:12.5px;color:var(--ink-3);margin-top:12px;line-height:1.55}
+.chart{width:100%;overflow-x:auto;overflow-y:hidden;margin-top:10px}
+.chart svg{display:block;height:auto}
+.empty{padding:44px 10px;text-align:center;color:var(--ink-3);font-size:15px}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;align-items:center}
+.legend .item{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
+.legend .sw.ref{width:18px;height:0;border-top:2px dashed var(--s-ref);border-radius:0}
+.legend .sw.ref.nat{border-top-color:var(--s-nat)}
+.legend .sw.ref.socio{border-top:2.5px solid var(--s-socio)}
+.legend .sw.dot{width:13px;height:13px;border-radius:50%;background:var(--s-bar)}
+.legend .sw.dot.hollow{background:var(--card);box-shadow:inset 0 0 0 2.5px var(--s-bar)}
+.legend .sw.conn{width:22px;height:3px;border-radius:2px;background:var(--line-2)}
+.legend .sw.line{width:22px;height:3px;border-radius:2px}
+.legend-lead{
+  margin:2px 0 4px;gap:10px 24px;padding:10px 14px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);
+}
+.legend-lead .item{font-size:13.5px;color:var(--ink)}
+
+/* ---------- טבלה ---------- */
+.tbl-scroll{overflow-x:auto;margin-top:10px;max-height:560px;overflow-y:auto}
+table.data{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.data th{
+  position:sticky;top:0;background:var(--card);z-index:1;
+  text-align:start;font-family:var(--font-head);font-size:12.5px;color:var(--ink-3);
+  font-weight:600;padding:8px 12px;border-bottom:2px solid var(--line-2);white-space:nowrap;
+}
+table.data td{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+table.data td.nm{color:var(--ink);font-weight:600;white-space:normal;min-width:180px}
+table.data td.n{text-align:start;direction:ltr;unicode-bidi:plaintext}
+table.data tr:hover td{background:var(--paper-2)}
+table.data td:first-child{padding-inline-start:0}
+table.data td.dim{color:var(--ink-3)}
+
+/* ---------- לוח בחירת ענפים ---------- */
+.panel{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 14px;margin-bottom:14px}
+.panel .p-lab{font-family:var(--font-head);font-size:12.5px;font-weight:600;color:var(--ink-3);margin-bottom:9px}
+.cluster-list{display:flex;flex-wrap:wrap;gap:7px}
+.pick-box{max-height:220px;overflow-y:auto;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:6px 4px;margin-top:9px}
+.pick-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px 10px}
+.pick{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2);padding:4px 8px;border-radius:var(--r-sm);cursor:pointer}
+.pick:hover{background:var(--paper-2)}
+.pick input{accent-color:var(--accent);width:15px;height:15px;flex:none;cursor:pointer}
+.pick span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.panel-foot{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:9px;font-size:12.5px;color:var(--ink-3)}
+.linkbtn{background:none;border:0;color:var(--accent);font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;padding:2px 0;text-decoration:underline}
+.linkbtn:hover{color:var(--c-bluedeep)}
+
+/* ---------- טולטיפ ---------- */
+.tip{
+  position:fixed;z-index:200;pointer-events:none;background:var(--c-navy);color:#fff;
+  border-radius:var(--r-md);padding:9px 13px;font-size:13px;line-height:1.5;box-shadow:var(--sh-3);
+  opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;
+  max-width:280px;font-family:var(--font-body);
+}
+.tip.show{opacity:1;transform:none}
+.tip .t-key{font-family:var(--font-head);font-size:12.5px;font-weight:700;color:var(--c-sky);display:block;margin-bottom:4px}
+.tip .t-sub{font-size:11.5px;color:#A9C4D4;display:block;margin-bottom:6px}
+.tip .t-row{display:flex;justify-content:space-between;gap:20px}
+.tip .t-row span:last-child{font-weight:700;direction:ltr;unicode-bidi:plaintext}
+.tip .t-extra{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.22);color:#C8DCE8}
+
+/* ---------- כותרת תחתונה ---------- */
+footer.foot{background:var(--c-navy);color:#D9E7EF;margin-top:44px;padding:40px 0 46px}
+footer.foot h3{font-size:16px;color:#fff;margin-bottom:10px;font-weight:600}
+footer.foot .cols{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:30px}
+@media(max-width:820px){footer.foot .cols{grid-template-columns:1fr}}
+footer.foot p,footer.foot li{font-size:13.5px;line-height:1.7;color:#B8CEDC;margin:0 0 8px}
+footer.foot ul{margin:0;padding-inline-start:18px}
+footer.foot b{color:#fff;font-weight:600}
+footer.foot .dim{font-size:12.5px;color:#8FAABC;margin-top:12px}
+footer.foot li{margin-bottom:11px}
+footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);font-size:12.5px;color:#93AFC1}
+
+/* מסכים צרים: פקדי המקטעים נשברים לשורות במקום לדחוף את העמוד לרוחב */
+@media(max-width:640px){
+  .seg{flex-wrap:wrap;border-radius:var(--r-md)}
+  .seg button{font-size:13px;padding:6px 12px}
+  .seg.sm button{font-size:12.5px;padding:5px 11px}
+  .ctl-row .spacer{flex-basis:100%}
+  .topbar .tb-meta{margin-inline-start:0;text-align:start;flex-basis:100%}
+}
+
+/* מיקוד מקלדת — נראה בכל פקד */
+.page :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:var(--r-sm)}
+.seg button:focus-visible{outline:none}
+
+@media(prefers-reduced-motion:reduce){
+  .page *,.page *::before,.page *::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media print{.metricbar,.topbar{position:static}.chart{overflow:visible}}
+</style>
+
+<div class="page" dir="rtl" lang="he">
+
+  <div class="topbar">
+    <div class="wrap">
+      <img src="__LOGO__" alt="מרכז ידע אזורי גליל מזרחי | מערבי">
+      <div class="tb-meta">
+        מקור: <b>הלשכה המרכזית לסטטיסטיקה</b><br>
+        עיבוד: <b>מרכז הידע האזורי גליל מזרחי | מערבי</b>
+      </div>
+    </div>
+  </div>
+
+  <header class="head">
+    <div class="wrap">
+      <div class="kicker"><span class="mk"><i></i><i></i><i></i><i></i></span>שכר ותעסוקה · שנת 2024</div>
+      <h1>שכר, שכירים וחודשי עבודה<br>באשכול גליל מזרחי</h1>
+      <p class="lede">
+        השוואה בין 18 הרשויות המקומיות באשכול גליל מזרחי, ובין 51 קבוצות של ענפי כלכלה —
+        באשכול ובכלל הארץ, תמיד לצד הממוצע הארצי. בחרו מדד בסרגל שלהלן; כל הגרפים והמדדים מתעדכנים יחד.
+      </p>
+      <div class="chips">
+        <span class="chip">שנת נתונים <b>2024</b></span>
+        <span class="chip">רשויות <b>18</b></span>
+        <span class="chip">קבוצות ענפים <b>51</b></span>
+        <span class="chip">שכירים באשכול <b id="chipWorkers">—</b></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="metricbar">
+    <div class="wrap">
+      <span class="lab" id="metricLab">מדד להצגה</span>
+      <div class="seg" id="metricSeg" role="group" aria-labelledby="metricLab"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="kpis" id="kpis"></div>
+    <p class="kpi-note" id="kpiNote"></p>
+  </div>
+
+  <!-- ============ לפי רשויות ============ -->
+  <section class="block" id="sec-auth">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>השוואה בין הרשויות</h2>
+        <p>
+          כל עמודה היא רשות מקומית אחת. הקווים המקווקווים הם ממוצע גליל מזרחי והממוצע הארצי;
+          הקו המדורג הוא רף ההשוואה של כל רשות — ממוצע השכר בכל הרשויות בישראל שבאותו
+          אשכול חברתי-כלכלי. מיון „לפי אשכול חברתי-כלכלי” מסדר את המדרגות בסדר עולה.
+        </p>
+      </div>
+
+      <div class="ctl-row" role="group" aria-label="פקדי גרף הרשויות">
+        <div class="ctl-group">
+          <label for="authSort">סדר</label>
+          <select class="ctl" id="authSort">
+            <option value="desc">מהגבוה לנמוך</option>
+            <option value="asc">מהנמוך לגבוה</option>
+            <option value="name">לפי שם הרשות</option>
+            <option value="socio">לפי אשכול חברתי-כלכלי</option>
+          </select>
+        </div>
+        <div class="spacer"></div>
+        <div class="ctl-group">
+          <label id="authViewLab" class="sr-only">תצוגה</label>
+          <div class="seg sm" id="authView" role="group" aria-labelledby="authViewLab"></div>
+        </div>
+      </div>
+
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="authTitle">—</div>
+            <div class="fig-sub" id="authSub">—</div>
+          </div>
+        </div>
+        <div id="authBody"></div>
+        <div class="fig-note" id="authNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ השינוי בין 2022 ל-2024 ============ -->
+  <section class="block" id="sec-change">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="changeHead">השינוי לפי רשות · 2022 ← 2024</h2>
+        <p id="changeLede"></p>
+      </div>
+
+      <div class="ctl-row" role="group" aria-label="פקדי גרף השינוי">
+        <div class="ctl-group">
+          <label for="changeSort">סדר</label>
+          <select class="ctl" id="changeSort">
+            <option value="pct">לפי שיעור השינוי</option>
+            <option value="value">לפי הערך ב-2024</option>
+            <option value="name">לפי שם הרשות</option>
+          </select>
+        </div>
+        <div class="spacer"></div>
+        <div class="ctl-group">
+          <label id="changeViewLab" class="sr-only">תצוגה</label>
+          <div class="seg sm" id="changeView" role="group" aria-labelledby="changeViewLab"></div>
+        </div>
+      </div>
+
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="changeTitle">—</div>
+            <div class="fig-sub" id="changeSub">—</div>
+          </div>
+        </div>
+        <div id="changeBody"></div>
+        <div class="fig-note" id="changeNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ מגמה רב-שנתית — ביטוח לאומי ============ -->
+  <section class="block" id="sec-trend">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>מגמת האשכול · 2016–2022</h2>
+        <p id="trendLede"></p>
+      </div>
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="trendTitle">—</div>
+            <div class="fig-sub" id="trendSub">—</div>
+          </div>
+        </div>
+        <div id="trendBody"></div>
+        <div class="fig-note" id="trendNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ לפי ענף כלכלי ============ -->
+  <section class="block" id="sec-anaf">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>השוואה בין ענפי כלכלה</h2>
+        <p>
+          הנתונים מסווגים ל-51 קבוצות של ענפי כלכלה (ברמת שתי ספרות, בקיבוץ של מזמין העיבוד).
+          מכיוון שזו רשימה ארוכה, צמצמו אותה באחת משלוש הדרכים: טווח, קיבוץ ענפים דומים, או בחירה ידנית.
+          הקווים המקווקווים הם ממוצע כלל הענפים — באשכול ובכלל הארץ.
+        </p>
+      </div>
+
+      <div class="ctl-row" role="group" aria-label="פקדי גרף הענפים">
+        <div class="ctl-group">
+          <label id="anafScopeLab">אזור</label>
+          <div class="seg sm" id="anafScope" role="group" aria-labelledby="anafScopeLab"></div>
+        </div>
+        <div class="ctl-group">
+          <label id="anafModeLab">צמצום הרשימה</label>
+          <div class="seg sm" id="anafMode" role="group" aria-labelledby="anafModeLab"></div>
+        </div>
+        <div class="spacer"></div>
+        <div class="ctl-group">
+          <label id="anafViewLab" class="sr-only">תצוגה</label>
+          <div class="seg sm" id="anafView" role="group" aria-labelledby="anafViewLab"></div>
+        </div>
+      </div>
+
+      <div id="anafPanel"></div>
+
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="anafTitle">—</div>
+            <div class="fig-sub" id="anafSub">—</div>
+          </div>
+        </div>
+        <div id="anafBody"></div>
+        <div class="fig-note" id="anafNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <h3>מקור הנתונים</h3>
+          <p id="footSource"></p>
+          <p><b>עיבוד והצגה:</b> מרכז הידע האזורי גליל מזרחי | מערבי.</p>
+          <p>שמות הענפים והקיבוצים נגזרו ממילון ענפי כלכלה 4 ספרות (למ"ס).</p>
+        </div>
+        <div id="defs">
+          <h3>הגדרות</h3>
+          <ul id="footDefs"></ul>
+          <p class="dim">כלשונן בגיליון „מידע נילווה” שבקובץ המקור של הלמ"ס.</p>
+        </div>
+        <div>
+          <h3>הערות והסתייגויות</h3>
+          <ul id="footNotes"></ul>
+        </div>
+      </div>
+      <div class="sig">מרכז הידע האזורי גליל מזרחי | מערבי · דשבורד שכר ותעסוקה · נתוני 2024</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+const DATA = "__DATA__";
+const A = DATA.authorities, ANAF = DATA.anafim, METRICS = DATA.metrics;
+const M = Object.fromEntries(METRICS.map(m => [m.id, m]));
+const CLUSTER = DATA.meta.cluster;
+const ANAF_LABEL = Object.fromEntries(ANAF.map(x => [x.code, x.label]));
+const SOCIO = DATA.socio;
+const socioAvg = c => (SOCIO.clusters[c] || {}).salary;
+/* יחס השכר הארצי בין שנת הנתונים לשנת קובץ הרשויות — מכמת את פער השנים */
+const SOCIO_LIFT = A.national.salary / SOCIO.national;
+
+const state = {
+  metric: "salary",
+  auth:   {sort:"desc", view:"chart"},
+  anaf:   {scope:"reg", mode:"range", range:"top10", clusters:new Set(), picks:new Set(),
+           query:"", view:"chart"},
+  change: {sort:"pct", view:"chart"}
+};
+
+/* ---------------- עזרי פורמט ---------------- */
+const nf0 = new Intl.NumberFormat("he-IL", {maximumFractionDigits:0});
+const nf1 = new Intl.NumberFormat("he-IL", {minimumFractionDigits:1, maximumFractionDigits:1});
+const nf2 = new Intl.NumberFormat("he-IL", {minimumFractionDigits:2, maximumFractionDigits:2});
+const fmt   = (v, id) => v == null ? "—" : (M[id].dec ? nf2 : nf0).format(v);
+const fmtU  = (v, id) => v == null ? "—" : fmt(v, id) + (M[id].unit ? " " + M[id].unit : "");
+const plural = (n, one, many) => n === 1 ? one : `${nf0.format(n)} ${many}`;
+const compact = v => v == null ? "—"
+  : v >= 1e6 ? nf2.format(v/1e6).replace(/[.,]00$/,"") + " מיליון" : nf0.format(v);
+const fmtBig = (v, id) => id === "workers" && v >= 1e6 ? compact(v) : fmt(v, id);
+
+/* ---------------- עזרי DOM ו-SVG ---------------- */
+const el = (tag, attrs, txt) => {
+  const n = document.createElement(tag);
+  for (const k in attrs) k === "class" ? (n.className = attrs[k]) : n.setAttribute(k, attrs[k]);
+  if (txt != null) n.textContent = txt;
+  return n;
+};
+const NS = "http://www.w3.org/2000/svg";
+const S = (tag, attrs) => {
+  const n = document.createElementNS(NS, tag);
+  for (const k in attrs) n.setAttribute(k, attrs[k]);
+  return n;
+};
+const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); return n; };
+/* אומדן רוחב טקסט — משמש רק כדי להחליט אם תווית נכנסת בתוך עמודה */
+const textW = (s, size) => String(s).length * size * 0.53;
+
+/* פינות מעוגלות בקצה הנתונים בלבד; הבסיס נשאר ישר */
+function capTop(x, y, w, h, r) {
+  r = Math.max(0, Math.min(r, w/2, h));
+  return `M${x},${y+h} L${x},${y+r} Q${x},${y} ${x+r},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h} Z`;
+}
+function capStart(xEnd, y, w, h, r) {           /* גדל ימינה→שמאלה; קצה מעוגל בשמאל */
+  const x = xEnd - w;
+  r = Math.max(0, Math.min(r, w, h/2));
+  return `M${xEnd},${y} L${x+r},${y} Q${x},${y} ${x},${y+r} L${x},${y+h-r} Q${x},${y+h} ${x+r},${y+h} L${xEnd},${y+h} Z`;
+}
+
+/* קו ייחוס: מקטע לבן מתחת לכל מקף בלבד, כך שהקו נקרא גם מעל עמודה
+   צבועה ובכל זאת אינו חוצה אותה בפס לבן רציף */
+const REF_DASH = "6 5";
+function refLine(svg, pos, color) {
+  svg.appendChild(S("line", {...pos, stroke:"var(--card)", "stroke-width":3.4,
+                             "stroke-dasharray":REF_DASH, "stroke-linecap":"round", opacity:.55}));
+  svg.appendChild(S("line", {...pos, stroke:color, "stroke-width":2, "stroke-dasharray":REF_DASH}));
+}
+
+/* ציר ערכים בקפיצות עגולות */
+function niceAxis(max, ticks) {
+  if (!(max > 0)) return {hi:1, step:1};
+  const raw = max / (ticks || 5);
+  const mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const f = raw / mag;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * mag;
+  return {hi: Math.ceil(max / step) * step, step};
+}
+
+/* ---------------- טולטיפ ---------------- */
+const tip = el("div", {class:"tip"});
+document.body.appendChild(tip);
+const hideTip = () => tip.classList.remove("show");
+function moveTip(e) {
+  const p = 14, w = tip.offsetWidth, h = tip.offsetHeight;
+  let x = e.clientX + p, y = e.clientY + p;
+  if (x + w > innerWidth - 8)  x = e.clientX - w - p;
+  if (y + h > innerHeight - 8) y = e.clientY - h - p;
+  tip.style.left = Math.max(8, x) + "px";
+  tip.style.top  = Math.max(8, y) + "px";
+}
+function bindTip(node, html) {
+  const show = e => { tip.innerHTML = html; tip.classList.add("show"); moveTip(e); };
+  node.addEventListener("mouseenter", show);
+  node.addEventListener("mousemove", moveTip);
+  node.addEventListener("mouseleave", hideTip);
+}
+const tipRows = (vals, extra) => METRICS
+  .map(m => `<div class="t-row"><span>${m.label}</span><span>${fmtU(vals[m.id], m.id)}</span></div>`)
+  .join("") + (extra || [])
+  .map(([k, v]) => `<div class="t-row t-extra"><span>${k}</span><span>${v}</span></div>`).join("");
+
+/* ---------------- פקד מקטעים ---------------- */
+function segment(host, options, current, onPick) {
+  clear(host);
+  options.forEach(o => {
+    const b = el("button", {type:"button", "aria-pressed": String(o.id === current)}, o.label);
+    if (o.title) b.title = o.title;
+    b.addEventListener("click", () => { if (o.id !== current) onPick(o.id); });
+    host.appendChild(b);
+  });
+}
+
+/* ============================================================
+   גרף עמודות אנכי — רשויות (RTL: הראשון מימין)
+   ============================================================ */
+function columnChart(host, items, opt) {
+  const id = state.metric, m = M[id];
+  const W = 1040, mT = 26, mR = 66, plotH = 300;
+  /* התוויות מוטות ב-45°, ולכן הן נמתחות שמאלה ומטה. השוליים נגזרים מהתווית
+     הארוכה ביותר, כדי שהתווית של העמודה השמאלית לא תיחתך בקצה. */
+  const longest = Math.max(...items.map(d => textW(d.label, 12.5))) * Math.SQRT1_2;
+  const step0 = (W - mR - 12) / items.length;
+  const mL = Math.max(12, Math.ceil(longest - step0 / 2) + 12);
+  const mB = Math.max(64, Math.ceil(longest) + 26);
+  const plotW = W - mR - mL, H = mT + plotH + mB;
+  const base = mT + plotH, right = W - mR;
+
+  const stepVals = opt.step || [];
+  const maxV = Math.max(...items.map(d => d.value), ...opt.refs.map(r => r.value),
+                        ...stepVals.filter(v => v != null));
+  const ax = niceAxis(maxV, 5);
+  const Y = v => base - (v / ax.hi) * plotH;
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img",
+                        "aria-label":`${m.label} לפי רשות`, style:`min-width:${Math.max(560, items.length*46)}px`});
+  clear(host).appendChild(svg);
+
+  /* קווי סרגל + תוויות ציר (RTL — הציר מימין) */
+  for (let v = 0; v <= ax.hi + 1e-6; v += ax.step) {
+    svg.appendChild(S("line", {x1:mL, x2:right, y1:Y(v), y2:Y(v),
+      stroke: v === 0 ? "var(--line-2)" : "var(--line)", "stroke-width":1}));
+    const t = S("text", {x:right + 10, y:Y(v) + 4, "text-anchor":"start",
+      style:"font:500 12px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = fmt(v, id);
+    svg.appendChild(t);
+  }
+
+  const step = plotW / items.length;
+  const bw = Math.min(24, step * 0.62);
+  const hiV = Math.max(...items.map(d => d.value)), loV = Math.min(...items.map(d => d.value));
+  let hiDone = false, loDone = false;
+
+  items.forEach((d, i) => {
+    const cx = right - (i + 0.5) * step;
+    const h = Math.max(1, base - Y(d.value));
+    svg.appendChild(S("path", {d: capTop(cx - bw/2, base - h, bw, h, 4), fill:"var(--s-bar)"}));
+
+    /* אזור העכבר — הרצועה כולה, לא רק העמודה */
+    const hit = S("rect", {x:cx - step/2, y:mT, width:step, height:plotH, fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all, d.extra)}`);
+    svg.appendChild(hit);
+
+    /* תווית ערך — רק לקצוות, כדי לא להציף את הגרף במספרים */
+    const isHi = !hiDone && d.value === hiV, isLo = !loDone && d.value === loV && hiV !== loV;
+    if (isHi) hiDone = true;
+    if (isLo) loDone = true;
+    if (isHi || isLo) {
+      const t = S("text", {x:cx, y:base - h - 9, "text-anchor":"middle",
+        style:"font:700 12.5px var(--font-head);fill:var(--ink);direction:ltr"});
+      t.textContent = fmt(d.value, id);
+      svg.appendChild(t);
+    }
+
+    /* שם הרשות — מוטה 45°, כך שהקריאה מתחילה סמוך לעמודה.
+       ב-RTL ‏text-anchor:start מעגן את קצה הטקסט הימני, ולכן הוא נמתח שמאלה-מטה. */
+    const g = S("g", {transform:`translate(${cx},${base + 13}) rotate(-45)`});
+    const lab = S("text", {x:0, y:0, "text-anchor":"start",
+      style:"font:600 12.5px var(--font-body);fill:var(--ink-2);direction:rtl;unicode-bidi:plaintext"});
+    lab.textContent = d.label;
+    g.appendChild(lab);
+    svg.appendChild(g);
+  });
+
+  /* קווי ייחוס — מסומנים במקרא, כדי לא להוסיף טקסט לתוך שטח הנתונים */
+  opt.refs.forEach(r => {
+    const y = Y(r.value);
+    refLine(svg, {x1:mL, x2:right, y1:y, y2:y}, r.color);
+  });
+
+  /* קו מדורג — לכל רשות הרף של האשכול החברתי-כלכלי שלה.
+     המדרגות נוצרות מאליהן: כל רצועה נמתחת בין שני גבולותיה, והמעבר בין רצועות
+     שכנות בעלות רף שונה הופך לקפיצה אנכית. */
+  if (stepVals.length) {
+    let d = "", open = false;
+    stepVals.forEach((v, i) => {
+      if (v == null) { open = false; return; }
+      const cx = right - (i + 0.5) * step, y = Y(v);
+      d += (open ? ` L${cx + step/2},${y}` : ` M${cx + step/2},${y}`) + ` L${cx - step/2},${y}`;
+      open = true;
+    });
+    if (d) svg.appendChild(S("path", {d, fill:"none", stroke:"var(--s-socio)",
+                                      "stroke-width":2.5, "stroke-linejoin":"miter"}));
+  }
+  return svg;
+}
+
+/* ============================================================
+   גרף עמודות אופקי — ענפים (תווית מעל כל עמודה, RTL)
+   ============================================================ */
+function barChart(host, rows, opt) {
+  const id = state.metric, m = M[id];
+  const W = 1040, rowH = 46, pad = 10;
+  const items = rows.filter(r => !r.gap);
+  const H = pad * 2 + rows.length * rowH - (rows.length ? rowH - 34 : 0);
+  const maxV = Math.max(...items.map(d => d.value), ...opt.refs.map(r => r.value)) || 1;
+  const scale = v => (v / (maxV * 1.16)) * W;      /* 16% אוויר משמאל לתוויות ערך */
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img",
+                        "aria-label":`${m.label} לפי ענף כלכלי`, style:"min-width:520px"});
+  clear(host).appendChild(svg);
+
+  rows.forEach((d, i) => {
+    const rTop = pad + i * rowH;
+    if (d.gap) {                                   /* מפריד בין "גבוהים" ל"נמוכים" */
+      const y = rTop + 16;
+      svg.appendChild(S("line", {x1:0, x2:W, y1:y, y2:y, stroke:"var(--line)",
+        "stroke-width":1, "stroke-dasharray":"3 6"}));
+      const t = S("text", {x:W/2, y:y - 6, "text-anchor":"middle",
+        style:"font:600 12px var(--font-body);fill:var(--ink-3)"});
+      t.textContent = d.gapLabel;
+      svg.appendChild(t);
+      return;
+    }
+    const lab = S("text", {x:W, y:rTop + 13, "text-anchor":"start",
+      style:"font:600 13.5px var(--font-body);fill:var(--ink);direction:rtl;unicode-bidi:plaintext"});
+    lab.textContent = d.label;
+    svg.appendChild(lab);
+
+    const by = rTop + 21, bh = 14, bw = Math.max(2, scale(d.value));
+    svg.appendChild(S("line", {x1:0, x2:W, y1:by + bh + 5, y2:by + bh + 5,
+      stroke:"var(--line)", "stroke-width":1}));
+    svg.appendChild(S("path", {d: capStart(W, by, bw, bh, 4), fill:"var(--s-bar)"}));
+
+    const hit = S("rect", {x:0, y:rTop, width:W, height:rowH - 6, fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all, d.extra)}`);
+    svg.appendChild(hit);
+
+    /* ערך בקצה העמודה — בפנים אם נכנס בנוחות, אחרת מחוצה לה */
+    const txt = fmt(d.value, id), inside = bw > textW(txt, 12) + 22;
+    const t = S("text", {x: inside ? W - bw + 10 : W - bw - 8, y: by + 11,
+      "text-anchor": inside ? "start" : "end",
+      style:`font:700 12px var(--font-head);fill:${inside ? "#fff" : "var(--ink-2)"};direction:ltr`});
+    t.textContent = txt;
+    svg.appendChild(t);
+  });
+
+  if (items.length) opt.refs.forEach(r => {
+    const x = W - scale(r.value);
+    refLine(svg, {x1:x, x2:x, y1:pad, y2:H - 8}, r.color);
+  });
+  return svg;
+}
+
+/* ============================================================
+   דמבל — ערך "לפני" ו"אחרי" לכל רשות, מחוברים בקו.
+   הזהות נקבעת לפי צורה (חלול מול מלא) ולא לפי גוון, כדי ששתי
+   הנקודות יישארו בניגודיות מלאה מול הרקע.
+   ============================================================ */
+function niceRange(lo, hi, ticks) {
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const raw = span / (ticks - 1);
+  const mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * mag;
+  return {lo: Math.floor(lo / step) * step, hi: Math.ceil(hi / step) * step, step};
+}
+
+function dumbbell(host, rows, opt) {
+  const id = state.metric, W = 1040, rowH = 38, labelW = 150, changeW = 96, top = 30;
+  const H = top + rows.length * rowH + 34;
+  const plotR = W - labelW, plotL = changeW;
+  const vals = rows.flatMap(r => [r.from, r.to]);
+  const ax = niceRange(Math.min(...vals), Math.max(...vals), 5);
+  const X = v => plotR - (v - ax.lo) / (ax.hi - ax.lo) * (plotR - plotL);
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:660px",
+                        "aria-label":`שינוי ב${M[id].label} בין ${opt.fromLabel} ל-${opt.toLabel}`});
+  clear(host).appendChild(svg);
+
+  /* סרגל ערכים */
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    const x = X(v);
+    svg.appendChild(S("line", {x1:x, x2:x, y1:top - 12, y2:H - 30,
+                               stroke:"var(--line)", "stroke-width":1}));
+    const t = S("text", {x, y:H - 12, "text-anchor":"middle",
+      style:"font:500 12px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = fmt(v, id);
+    svg.appendChild(t);
+  }
+
+  rows.forEach((r, i) => {
+    const y = top + i * rowH + rowH / 2;
+    const x1 = X(r.from), x2 = X(r.to);
+
+    svg.appendChild(S("line", {x1, x2, y1:y, y2:y, stroke:"var(--line-2)",
+                               "stroke-width":3, "stroke-linecap":"round"}));
+    /* "לפני" — נקודה חלולה; "אחרי" — מלאה */
+    svg.appendChild(S("circle", {cx:x1, cy:y, r:5.5, fill:"var(--card)",
+                                 stroke:"var(--s-bar)", "stroke-width":2.5}));
+    svg.appendChild(S("circle", {cx:x2, cy:y, r:5.5, fill:"var(--s-bar)",
+                                 stroke:"var(--card)", "stroke-width":2}));
+
+    const name = S("text", {x:W, y:y + 5, "text-anchor":"start",
+      style:"font:600 13.5px var(--font-body);fill:var(--ink);direction:rtl;unicode-bidi:plaintext"});
+    name.textContent = r.label;
+    svg.appendChild(name);
+
+    const up = r.to >= r.from;
+    const pct = S("text", {x:0, y:y + 5, "text-anchor":"start",
+      style:"font:700 12.5px var(--font-head);fill:var(--ink-2);direction:ltr;unicode-bidi:isolate"});
+    pct.textContent = `${up ? "▲" : "▼"} ${up ? "+" : "−"}${nf1.format(Math.abs(r.pct))}%`;
+    svg.appendChild(pct);
+
+    const hit = S("rect", {x:0, y:y - rowH/2, width:W, height:rowH,
+                           fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${r.label}</span>` +
+      `<div class="t-row"><span>${opt.fromLabel}</span><span>${fmtU(r.from, id)}</span></div>` +
+      `<div class="t-row"><span>${opt.toLabel}</span><span>${fmtU(r.to, id)}</span></div>` +
+      `<div class="t-row t-extra"><span>שינוי</span><span>${up ? "+" : "−"}${fmt(Math.abs(r.to - r.from), id)} · ${up ? "+" : "−"}${nf1.format(Math.abs(r.pct))}%</span></div>`);
+    svg.appendChild(hit);
+  });
+  return svg;
+}
+
+/* ============================================================
+   גרף קו — מגמה רב-שנתית, שתי סדרות (LTR: השנה המוקדמת משמאל)
+   ============================================================ */
+function lineChart(host, rows, series) {
+  const W = 1040, mT = 26, mR = 58, mB = 46, mL = 20, plotH = 250;
+  const H = mT + plotH + mB, base = mT + plotH, right = W - mR;
+  const all = rows.flatMap(r => series.map(s => r[s.key]));
+  const ax = niceRange(Math.min(...all), Math.max(...all), 5);
+  const X = i => mL + 26 + (i / (rows.length - 1)) * (right - mL - 52);
+  const Y = v => base - (v - ax.lo) / (ax.hi - ax.lo) * plotH;
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:620px",
+                        "aria-label":"מגמת שכר רב-שנתית, אשכול גליל מזרחי מול הממוצע הארצי"});
+  clear(host).appendChild(svg);
+
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    svg.appendChild(S("line", {x1:mL, x2:right, y1:Y(v), y2:Y(v),
+                               stroke:"var(--line)", "stroke-width":1}));
+    const t = S("text", {x:right + 10, y:Y(v) + 4, "text-anchor":"start",
+      style:"font:500 12px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = nf0.format(v);
+    svg.appendChild(t);
+  }
+  rows.forEach((r, i) => {
+    const t = S("text", {x:X(i), y:H - 16, "text-anchor":"middle",
+      style:"font:500 12.5px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = r.year;
+    svg.appendChild(t);
+  });
+
+  series.forEach(sr => {
+    const pts = rows.map((r, i) => [X(i), Y(r[sr.key])]);
+    svg.appendChild(S("path", {d:"M" + pts.map(p => p.join(",")).join("L"), fill:"none",
+      stroke:sr.color, "stroke-width":2, "stroke-linecap":"round", "stroke-linejoin":"round"}));
+    pts.forEach(([x, y]) => {
+      svg.appendChild(S("circle", {cx:x, cy:y, r:4.5, fill:sr.color,
+                                   stroke:"var(--card)", "stroke-width":2}));
+    });
+    /* תווית ישירה בקצה הסדרה בלבד */
+    const [lx, ly] = pts[pts.length - 1];
+    const t = S("text", {x:lx, y:ly - 13, "text-anchor":"middle",
+      style:`font:700 12.5px var(--font-head);fill:var(--ink);direction:ltr`});
+    t.textContent = nf0.format(rows[rows.length - 1][sr.key]);
+    svg.appendChild(t);
+  });
+
+  /* רצועת עכבר לכל שנה */
+  rows.forEach((r, i) => {
+    const w = (right - mL) / rows.length;
+    const hit = S("rect", {x:X(i) - w/2, y:mT - 12, width:w, height:plotH + 12,
+                           fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${r.year}</span>` +
+      series.map(sr => `<div class="t-row"><span>${sr.name}</span><span>${nf0.format(r[sr.key])} ₪</span></div>`).join("") +
+      `<div class="t-row t-extra"><span>יחס האשכול לארצי</span><span>${nf1.format(r.ratio * 100)}%</span></div>`);
+    svg.appendChild(hit);
+  });
+  return svg;
+}
+
+/* ---------------- טבלאות ---------------- */
+function dataTable(host, cols, rows) {
+  const box = el("div", {class:"tbl-scroll"});
+  const t = el("table", {class:"data"});
+  const thead = el("thead"), tr = el("tr");
+  cols.forEach(c => tr.appendChild(el("th", {scope:"col"}, c.head)));
+  thead.appendChild(tr); t.appendChild(thead);
+  const tb = el("tbody");
+  rows.forEach(r => {
+    const row = el("tr");
+    cols.forEach(c => row.appendChild(el("td", {class:c.cls || ""}, c.get(r))));
+    tb.appendChild(row);
+  });
+  t.appendChild(tb); box.appendChild(t);
+  clear(host).appendChild(box);
+}
+
+/* ============================================================
+   מדדי מפתח
+   ============================================================ */
+function renderKpis() {
+  const id = state.metric, m = M[id], isCount = id === "workers";
+  const reg = A.region[id], nat = A.national[id];
+
+  const cards = [
+    {lab:CLUSTER,      txt: fmtBig(reg, id), unit:m.unit,
+     note: (isCount ? "סך הכול" : "ממוצע משוקלל") + ` · 18 רשויות · ${DATA.meta.year}`},
+    {lab:"כלל הארץ",   txt: fmtBig(nat, id), unit:m.unit,
+     note: (isCount ? "סך הכול" : "ממוצע ארצי") + " · " + DATA.meta.year}
+  ];
+  /* הפער מהממוצע הארצי מוצג רק במדד השכר — בשני האחרים הוא אינו נושא מידע */
+  if (id === "salary") {
+    const rel = (reg - nat) / nat * 100;
+    cards.push({lab:"פער מהממוצע הארצי", unit:"",
+                txt:(rel > 0 ? "+" : "−") + nf1.format(Math.abs(rel)) + "%",
+                note:`${CLUSTER} לעומת כלל הארץ`});
+  }
+
+  const host = clear(document.getElementById("kpis"));
+  cards.forEach(c => {
+    const k = el("div", {class:"kpi"});
+    k.appendChild(el("div", {class:"lab"}, c.lab));
+    const n = el("div", {class:"num"});
+    n.appendChild(el("bdi", {}, c.txt));
+    if (c.unit) n.appendChild(el("span", {class:"u"}, c.unit));
+    k.appendChild(n);
+    k.appendChild(el("div", {class:"note"}, c.note));
+    host.appendChild(k);
+  });
+}
+
+/* ============================================================
+   מקטע הרשויות
+   ============================================================ */
+function authRows() {
+  const id = state.metric;
+  return A.items.slice().sort({
+    desc:  (a, b) => b[id] - a[id],
+    asc:   (a, b) => a[id] - b[id],
+    name:  (a, b) => a.name.localeCompare(b.name, "he"),
+    socio: (a, b) => a.socio - b.socio || b[id] - a[id]
+  }[state.auth.sort]);
+}
+
+/* קווי הייחוס מוצגים רק במדד השכר. במספר שכירים ובחודשי עבודה ההשוואה
+   לממוצע אינה נושאת מידע שימושי, ולכן היא הוסרה. */
+function authRefs(items) {
+  if (state.metric !== "salary") return [];
+  const id = state.metric;
+  return [
+    {value: A.region[id],   label: "ממוצע גליל מזרחי", color: "var(--s-ref)"},
+    {value: A.national[id], label: "ממוצע ארצי",   color: "var(--s-nat)", nat: true}
+  ];
+}
+
+function renderAuth() {
+  const id = state.metric, m = M[id];
+  const items = authRows();
+
+  document.getElementById("authTitle").textContent = `${m.label} לפי רשות מקומית · ${DATA.meta.year}`;
+  document.getElementById("authSub").textContent =
+    `${items.length} רשויות · ${CLUSTER}` + (m.unit ? ` · ${m.unit}` : "");
+
+  const body = document.getElementById("authBody");
+  if (state.auth.view === "table") {
+    dataTable(body, [
+      {head:"רשות", cls:"nm", get:r => r.name},
+      {head:"שכר חודשי ממוצע (₪)", cls:"n", get:r => fmt(r.salary, "salary")},
+      {head:"מספר שכירים",         cls:"n", get:r => fmt(r.workers, "workers")},
+      {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.months, "months")},
+      {head:"אשכול חברתי-כלכלי",   cls:"n dim", get:r => String(r.socio)},
+      {head:`שכר הרשות (₪, ${SOCIO.year})`, cls:"n dim", get:r => fmt(r.socioOwn, "salary")},
+      {head:`רף האשכול (₪, ${SOCIO.year})`, cls:"n dim",
+       get:r => fmt(socioAvg(r.socio), "salary")},
+      {head:`יחס לרף (${SOCIO.year})`, cls:"n dim",
+       get:r => nf1.format(r.socioRatio * 100) + "%"}
+    ], items);
+    return;
+  }
+
+  const chart = el("div", {class:"chart"});
+  clear(body).appendChild(chart);
+  const refs = authRefs(items);
+  /* הרף החברתי-כלכלי הוא נתון שכר, ולכן מוצג רק כשמדד השכר נבחר */
+  const step = id === "salary" ? items.map(x => socioAvg(x.socio)) : null;
+  columnChart(chart, items.map(x => ({
+    label: x.name, value: x[id], sub: `אשכול חברתי-כלכלי ${x.socio}`, all: x,
+    extra: id === "salary" ? [
+      [`שכר הרשות · ${SOCIO.year}`, fmtU(x.socioOwn, "salary")],
+      [`רף אשכול ${x.socio} · ${SOCIO.year}`, fmtU(socioAvg(x.socio), "salary")],
+      [`יחס לרף (${SOCIO.year})`, nf1.format(x.socioRatio * 100) + "%"]
+    ] : null
+  })), {refs, step});
+
+  const lg = refLegend(refs, id);
+  if (step) {
+    const it = el("span", {class:"item"});
+    it.appendChild(el("span", {class:"sw ref socio"}));
+    it.appendChild(document.createTextNode(
+      `רף האשכול החברתי-כלכלי של כל רשות · ${SOCIO.year}`));
+    lg.appendChild(it);
+  }
+  body.appendChild(lg);
+}
+
+/* מקרא — סדרה יחידה אינה זקוקה לתיבת מקרא, ולכן מוצגים בו קווי הייחוס בלבד */
+function refLegend(refs, id) {
+  const lg = el("div", {class:"legend"});
+  refs.forEach(r => {
+    const it = el("span", {class:"item"});
+    it.appendChild(el("span", {class:"sw ref" + (r.nat ? " nat" : "")}));
+    it.appendChild(document.createTextNode(`${r.label} · ${fmtU(r.value, id)}`));
+    lg.appendChild(it);
+  });
+  return lg;
+}
+
+/* ============================================================
+   מקטע המגמה הרב-שנתית (ביטוח לאומי)
+   ============================================================ */
+const BTL = DATA.btl;
+
+function renderTrend() {
+  const rows = BTL.rows, f = rows[0], l = rows[rows.length - 1];
+  document.getElementById("trendLede").textContent =
+    `נתוני הביטוח הלאומי מאפשרים מבט של שבע שנים על ${CLUSTER} מול הממוצע הארצי. ` +
+    `האוכלוסייה כאן היא ${BTL.population} — רחבה מזו שבשאר העמוד, שבו נספרים שכירים בלבד — ולכן ` +
+    `הסדרה מוצגת בנפרד ואינה מעורבבת עם נתוני הלמ"ס.`;
+  document.getElementById("trendTitle").textContent = `${BTL.measure} · ${f.year}–${l.year}`;
+  document.getElementById("trendSub").textContent =
+    `יחס האשכול לממוצע הארצי: ${nf1.format(f.ratio * 100)}% ב-${f.year} ← ` +
+    `${nf1.format(l.ratio * 100)}% ב-${l.year} · ₪`;
+
+  const body = clear(document.getElementById("trendBody"));
+  const series = [
+    {key:"salary",   name:CLUSTER,     color:"var(--s-bar)"},
+    {key:"national", name:"ממוצע ארצי", color:"var(--s-nat)"}
+  ];
+  const lg = el("div", {class:"legend legend-lead"});
+  series.forEach(sr => {
+    const it = el("span", {class:"item"});
+    const sw = el("span", {class:"sw line"}); sw.style.background = sr.color;
+    it.appendChild(sw);
+    it.appendChild(document.createTextNode(sr.name));
+    lg.appendChild(it);
+  });
+  body.appendChild(lg);
+  const chart = el("div", {class:"chart"});
+  body.appendChild(chart);
+  lineChart(chart, rows, series);
+
+  document.getElementById("trendNote").textContent =
+    `${BTL.note}. מקור: ${BTL.source} · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`;
+}
+const RANGES = [
+  {id:"top10",   label:"10 הגבוהים ביותר",       n:10, from:"top"},
+  {id:"top15",   label:"15 הגבוהים ביותר",       n:15, from:"top"},
+  {id:"top20",   label:"20 הגבוהים ביותר",       n:20, from:"top"},
+  {id:"bottom10",label:"10 הנמוכים ביותר",       n:10, from:"bottom"},
+  {id:"ends",    label:"10 הגבוהים ו-10 הנמוכים", n:10, from:"ends"},
+  {id:"all",     label:"כל הענפים",               n:0,  from:"top"}
+];
+
+function anafBase() {
+  const id = state.metric, k = state.anaf.scope;   /* reg | nat */
+  return ANAF.map(x => ({
+    code:x.code, label:x.label, seder:x.seder, parts:x.parts,
+    value:x[k][id], all:x[k]
+  })).filter(x => x.value != null);
+}
+
+/* כל עוד לא נבחר קיבוץ/ענף — מציגים את 10 הגבוהים, ולא את כל הרשימה */
+const FALLBACK_N = 10;
+
+function anafFiltered() {
+  const st = state.anaf;
+  let rows = anafBase(), chosen = true;
+  if (st.mode === "cluster") {
+    if (st.clusters.size) {
+      const allow = new Set();
+      DATA.clusters.filter(c => st.clusters.has(c.id)).forEach(c => c.codes.forEach(x => allow.add(x)));
+      rows = rows.filter(r => allow.has(r.code));
+    } else chosen = false;
+  } else if (st.mode === "pick") {
+    if (st.picks.size) rows = rows.filter(r => st.picks.has(r.code));
+    else chosen = false;
+  }
+  rows.sort((a, b) => b.value - a.value);
+
+  if (st.mode !== "range") {
+    if (chosen) return {rows, total:rows.length, hidden:0};
+    return {rows: rows.slice(0, FALLBACK_N), total:rows.length,
+            hidden: Math.max(0, rows.length - FALLBACK_N)};
+  }
+  const r = RANGES.find(x => x.id === st.range);
+  if (r.id === "all" || rows.length <= r.n) return {rows, total:rows.length, hidden:0};
+  if (r.from === "top")    return {rows: rows.slice(0, r.n), total:rows.length, hidden:rows.length - r.n};
+  if (r.from === "bottom") return {rows: rows.slice(-r.n), total:rows.length, hidden:rows.length - r.n};
+  const hidden = rows.length - r.n * 2;
+  if (hidden <= 0) return {rows, total:rows.length, hidden:0};
+  return {rows: [...rows.slice(0, r.n),
+                 {gap:true, gapLabel:`${hidden} ענפים נוספים אינם מוצגים`},
+                 ...rows.slice(-r.n)], total:rows.length, hidden};
+}
+
+function renderAnafPanel() {
+  const host = clear(document.getElementById("anafPanel")), st = state.anaf;
+
+  if (st.mode === "range") {
+    const p = el("div", {class:"panel"});
+    p.appendChild(el("div", {class:"p-lab"}, "הצגת טווח מתוך הענפים, לפי המדד הנבחר"));
+    const g = el("div", {class:"ctl-group"});
+    const sel = el("select", {class:"ctl", id:"anafRange", "aria-label":"טווח להצגה"});
+    RANGES.forEach(r => {
+      const o = el("option", {value:r.id}, r.label);
+      if (r.id === st.range) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener("change", () => { st.range = sel.value; renderAnaf(); });
+    g.appendChild(sel); p.appendChild(g); host.appendChild(p);
+    return;
+  }
+
+  if (st.mode === "cluster") {
+    const p = el("div", {class:"panel"});
+    p.appendChild(el("div", {class:"p-lab"}, "קיבוץ ענפים דומים — בחרו קיבוץ אחד או יותר"));
+    const list = el("div", {class:"cluster-list"});
+    DATA.clusters.forEach(c => {
+      const on = st.clusters.has(c.id);
+      const b = el("button", {type:"button", class:"pill", "aria-pressed":String(on),
+                              title: c.codes.map(k => ANAF_LABEL[k]).join(" · ")},
+                   `${c.label} (${c.codes.length})`);
+      b.addEventListener("click", () => {
+        st.clusters.has(c.id) ? st.clusters.delete(c.id) : st.clusters.add(c.id);
+        renderAnaf();
+      });
+      list.appendChild(b);
+    });
+    p.appendChild(list);
+    const foot = el("div", {class:"panel-foot"});
+    if (st.clusters.size) {
+      const b = el("button", {type:"button", class:"linkbtn"}, "ניקוי הבחירה");
+      b.addEventListener("click", () => { st.clusters.clear(); renderAnaf(); });
+      foot.appendChild(b);
+    } else {
+      foot.appendChild(el("span", {}, `לא נבחר קיבוץ — מוצגים ${FALLBACK_N} הגבוהים ביותר.`));
+    }
+    foot.appendChild(el("span", {}, "הקיבוצים הם סדרי הענפים (אותיות A–U) שבמילון ענפי הכלכלה של הלמ\"ס, " +
+      "כשסדרים קרובים אוחדו. „היי-טק” נגזר מסימוני ההיי-טק שבמילון, חוצה סדרים וחופף לאחרים. " +
+      "ריחוף מעל קיבוץ מציג את הענפים שבו."));
+    p.appendChild(foot); host.appendChild(p);
+    return;
+  }
+
+  /* בחירה ידנית */
+  const p = el("div", {class:"panel"});
+  p.appendChild(el("div", {class:"p-lab"}, "בחירת ענפים — סמנו את הענפים שברצונכם להשוות"));
+  const search = el("input", {class:"ctl", type:"search", placeholder:"חיפוש ענף…",
+                              "aria-label":"חיפוש ענף", style:"width:min(320px,100%)"});
+  search.value = st.query;
+  search.addEventListener("input", () => { st.query = search.value; renderAnafPicks(); });
+  p.appendChild(search);
+  p.appendChild(el("div", {class:"pick-box", id:"pickBox"}));
+  const foot = el("div", {class:"panel-foot", id:"pickFoot"});
+  p.appendChild(foot);
+  host.appendChild(p);
+  renderAnafPicks();
+}
+
+function renderAnafPicks() {
+  const st = state.anaf, box = clear(document.getElementById("pickBox"));
+  const q = st.query.trim();
+  const list = el("div", {class:"pick-list"});
+  const src = anafBase();
+  const shown = q ? src.filter(x => x.label.includes(q) || x.seder.includes(q)
+                                 || x.parts.some(pp => pp.includes(q))) : src;
+  shown.forEach(x => {
+    const lb = el("label", {class:"pick", title:x.parts.join(" · ")});
+    const cb = el("input", {type:"checkbox"});
+    cb.checked = st.picks.has(x.code);
+    cb.addEventListener("change", () => {
+      cb.checked ? st.picks.add(x.code) : st.picks.delete(x.code);
+      renderAnafChart(); renderPickFoot();
+    });
+    lb.appendChild(cb);
+    lb.appendChild(el("span", {}, x.label));
+    list.appendChild(lb);
+  });
+  if (!shown.length) list.appendChild(el("div", {class:"empty"}, "לא נמצא ענף תואם"));
+  box.appendChild(list);
+  renderPickFoot();
+}
+
+function renderPickFoot() {
+  const st = state.anaf, foot = clear(document.getElementById("pickFoot"));
+  if (!foot) return;
+  foot.appendChild(el("span", {}, st.picks.size ? `נבחרו ${st.picks.size} ענפים`
+                                                : `לא נבחר ענף — מוצגים ${FALLBACK_N} הגבוהים ביותר.`));
+  if (st.picks.size) {
+    const b = el("button", {type:"button", class:"linkbtn"}, "ניקוי הבחירה");
+    b.addEventListener("click", () => { st.picks.clear(); renderAnaf(); });
+    foot.appendChild(b);
+  }
+}
+
+function renderAnafChart() {
+  const id = state.metric, m = M[id], st = state.anaf;
+  const {rows, total, hidden} = anafFiltered();
+  const items = rows.filter(r => !r.gap);
+  const scopeName = st.scope === "reg" ? CLUSTER : "כלל הארץ";
+
+  document.getElementById("anafTitle").textContent =
+    `${m.label} לפי ענף כלכלי · ${DATA.meta.year} — ${scopeName}`;
+  document.getElementById("anafSub").textContent =
+    `מוצגים ${items.length} מתוך ${anafBase().length} ענפים` + (m.unit ? ` · ${m.unit}` : "");
+
+  const body = document.getElementById("anafBody");
+  if (!items.length) {
+    clear(body).appendChild(el("div", {class:"empty"}, "לא נבחר ענף להצגה"));
+    return;
+  }
+
+  if (st.view === "table") {
+    dataTable(body, [
+      {head:"ענף כלכלי", cls:"nm",  get:r => r.label},
+      {head:"קוד",       cls:"dim n", get:r => r.code},
+      {head:"שכר חודשי ממוצע (₪)", cls:"n", get:r => fmt(r.all.salary, "salary")},
+      {head:"מספר שכירים",         cls:"n", get:r => fmt(r.all.workers, "workers")},
+      {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.all.months, "months")}
+    ], items);
+  } else {
+    const chart = el("div", {class:"chart"});
+    clear(body).appendChild(chart);
+    const refs = anafRefs();
+    barChart(chart, rows.map(r => r.gap ? r : {...r, sub:r.seder}), {refs});
+    body.appendChild(refLegend(refs, id));
+  }
+
+  const notes = [`מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (2024) · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`];
+  if (hidden) notes.unshift(
+    `${plural(hidden, "ענף אחד אינו מוצג", "ענפים אינם מוצגים")} בבחירה הנוכחית (מתוך ${total}).`);
+  const dropped = ANAF.length - anafBase().length;
+  if (st.scope === "reg" && dropped) notes.unshift(
+    `${plural(dropped, "קבוצת ענפים אחת אינה מוצגת", "קבוצות ענפים אינן מוצגות")} ברמת האשכול בשל חוסר מקרים במקור.`);
+  document.getElementById("anafNote").textContent = notes.join(" · ");
+}
+
+/* ממוצע משוקלל של כלל הענפים בהיקף נתון — עוגן קבוע שאינו זז עם הסינון */
+function anafAvg(key) {
+  const id = state.metric;
+  const rows = ANAF.map(x => x[key]).filter(v => v[id] != null);
+  if (id === "workers") return rows.reduce((s, v) => s + v.workers, 0) / rows.length;
+  const w = rows.reduce((s, v) => s + v.workers, 0);
+  return w ? rows.reduce((s, v) => s + v.workers * v[id], 0) / w : null;
+}
+
+/* ממוצע ההיקף הנבחר, ולצדו הממוצע הארצי כשהוא בר-השוואה. במספר שכירים
+   הממוצע הארצי לענף גדול בשני סדרי גודל מזה שבאשכול, ולכן אינו מוצג לצדו. */
+function anafRefs() {
+  if (state.metric !== "salary") return [];      /* כמו בגרף הרשויות — רק במדד השכר */
+  const nat = {value: anafAvg("nat"), label: "ממוצע ארצי · כלל הענפים",
+               color: "var(--s-nat)", nat: true};
+  if (state.anaf.scope !== "reg") return [nat];
+  return [{value: anafAvg("reg"), label: "ממוצע גליל מזרחי · כלל הענפים",
+           color: "var(--s-ref)"}, nat];
+}
+
+function renderAnaf() { renderAnafPanel(); renderAnafChart(); }
+
+/* ============================================================
+   מקטע השינוי 2022 → 2024
+   ============================================================ */
+const CH = DATA.change, FROM = CH.year, TO = DATA.meta.year;
+
+function changeRows() {
+  const id = state.metric;
+  const rows = A.items.map(x => {
+    const from = CH.byAuthority[x.name][id];
+    return {label:x.name, from, to:x[id], pct:(x[id] / from - 1) * 100};
+  });
+  return rows.sort({
+    pct:   (a, b) => b.pct - a.pct,
+    value: (a, b) => b.to - a.to,
+    name:  (a, b) => a.label.localeCompare(b.label, "he")
+  }[state.change.sort]);
+}
+
+function renderChange() {
+  const id = state.metric, m = M[id];
+  const body = document.getElementById("changeBody");
+  const note = document.getElementById("changeNote");
+  document.getElementById("changeLede").textContent =
+    `כל שורה היא רשות אחת: הנקודה החלולה היא ${FROM} והמלאה ${TO}, ואורך הקו הוא גודל השינוי. ` +
+    `שני העיבודים נעשו באותה יחידה בלמ"ס ובאותה הגדרה בדיוק, ולכן הם ברי-השוואה.`;
+
+  /* בקובץ 2022 אין חודשי עבודה — אין מה להשוות */
+  if (!CH.metrics.includes(id)) {
+    document.getElementById("changeTitle").textContent = `${m.label} — אין נתוני ${FROM}`;
+    document.getElementById("changeSub").textContent = "";
+    clear(body).appendChild(el("div", {class:"empty"},
+      `בעיבוד של ${FROM} נמסרו מספר שכירים ושכר חודשי ממוצע בלבד; ` +
+      `${m.label} אינו מופיע בו, ולכן אי אפשר להציג שינוי במדד זה.`));
+    note.textContent = "";
+    return;
+  }
+
+  const rows = changeRows();
+  const tot = {from: 0, to: 0};
+  if (id === "workers") {
+    tot.from = CH.workers; tot.to = A.region.workers;
+  } else {
+    const wf = rows.reduce((s, r) => s + CH.byAuthority[r.label].workers, 0);
+    tot.from = rows.reduce((s, r) => s + CH.byAuthority[r.label].workers * r.from, 0) / wf;
+    tot.to = A.region[id];
+  }
+  const totPct = (tot.to / tot.from - 1) * 100;
+
+  document.getElementById("changeTitle").textContent =
+    `${m.label} — השינוי בין ${FROM} ל-${TO}`;
+  document.getElementById("changeSub").textContent =
+    `18 רשויות · ${CLUSTER} כולו: ${fmtU(tot.from, id)} ← ${fmtU(tot.to, id)} ` +
+    `(${totPct >= 0 ? "+" : "−"}${nf1.format(Math.abs(totPct))}%)`;
+
+  if (state.change.view === "table") {
+    dataTable(body, [
+      {head:"רשות", cls:"nm", get:r => r.label},
+      {head:`${m.label} · ${FROM}`, cls:"n", get:r => fmt(r.from, id)},
+      {head:`${m.label} · ${TO}`,   cls:"n", get:r => fmt(r.to, id)},
+      {head:"שינוי", cls:"n", get:r => (r.to >= r.from ? "+" : "−") + fmt(Math.abs(r.to - r.from), id)},
+      {head:"שינוי באחוזים", cls:"n",
+       get:r => (r.pct >= 0 ? "+" : "−") + nf1.format(Math.abs(r.pct)) + "%"}
+    ], rows);
+  } else {
+    clear(body);
+    /* המקרא מעל הגרף — הקורא פוגש את מפתח הסימנים לפני הנתונים */
+    const lg = el("div", {class:"legend legend-lead"});
+    [[`${FROM} — הערך הקודם`, "dot hollow"], [`${TO} — הערך הנוכחי`, "dot"]]
+      .forEach(([lab, cls]) => {
+        const it = el("span", {class:"item"});
+        it.appendChild(el("span", {class:"sw " + cls}));
+        it.appendChild(document.createTextNode(lab));
+        lg.appendChild(it);
+      });
+    const conn = el("span", {class:"item"});
+    conn.appendChild(el("span", {class:"sw conn"}));
+    conn.appendChild(document.createTextNode("אורך הקו — גודל השינוי"));
+    lg.appendChild(conn);
+    body.appendChild(lg);
+
+    const chart = el("div", {class:"chart"});
+    body.appendChild(chart);
+    dumbbell(chart, rows, {fromLabel:FROM, toLabel:TO});
+  }
+
+  note.textContent =
+    `בעיבוד של ${FROM} אין שורת סיכום לרשות, ולכן הערכים נסכמו מפילוח הרשות לפי סדרי ענפים ` +
+    `(השכר משוקלל לפי מספר השכירים). הלמ"ס אינה מדווחת תאים שבהם פחות מ-${CH.floor} שכירים, ` +
+    `ולכן ${FROM} מכוסה ב-${nf1.format(CH.coverage * 100)}% לפחות — עד ${nf0.format(CH.maxMissing)} שכירים ` +
+    `בתאים שהושמטו, מתוך ${nf0.format(CH.workers)}. ` +
+    `מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`;
+}
+
+/* ============================================================
+   הערות שוליים — נגזרות מהנתונים עצמם
+   ============================================================ */
+/* ההגדרות ופרטי ההפקה מגיעים מגיליון "מידע נילווה" שבקובץ המקור — לא מנוסחים כאן */
+function renderMeta() {
+  const meta = DATA.meta;
+  const ul = clear(document.getElementById("footDefs"));
+  meta.definitions.forEach(d => {
+    const li = el("li");
+    li.appendChild(el("b", {}, d.term));
+    li.appendChild(document.createTextNode(" — " + d.text));
+    ul.appendChild(li);
+  });
+  const src = clear(document.getElementById("footSource"));
+  src.appendChild(el("b", {}, "הלשכה המרכזית לסטטיסטיקה"));
+  src.appendChild(document.createTextNode(
+    ` — ${meta.kind}, ${meta.unit}, מתוך קובצי הכנסה מנהליים לשנת ${meta.year}.`));
+}
+
+/* המספר הארצי כאן אינו סדרת "שכר ממוצע למשרת שכיר" המצוטטת בתקשורת — שתי
+   הסדרות מודדות דברים שונים, ולכן ההבדל מוסבר במקום שבו המספר מוצג. */
+function renderAuthNote() {
+  const n = clear(document.getElementById("authNote"));
+  const parts = [`מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (${DATA.meta.year}) · ` +
+                 `עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`];
+  if (state.metric === "salary") parts.unshift(
+    `הרף החברתי-כלכלי לקוח מ${SOCIO.source} ומשקלל את כל הרשויות בישראל שבאותו אשכול. ` +
+    `הוא מתייחס לשנת ${SOCIO.year} בעוד העמודות הן ל-${DATA.meta.year} — פער של ` +
+    `${nf1.format((SOCIO_LIFT - 1) * 100)}% בשכר הארצי בין השנים. כדי להשוות שנה מול שנה, ` +
+    `בריחוף מעל כל רשות מוצגים גם שכרה ב-${SOCIO.year} ויחסו לרף של אותה שנה; אותם ערכים בתצוגת הטבלה.`);
+  n.textContent = parts.join(" · ");
+}
+
+function renderKpiNote() {
+  const n = clear(document.getElementById("kpiNote"));
+  n.appendChild(el("b", {}, `כל הנתונים בעמוד — כולל הממוצע הארצי — הם לשנת ${DATA.meta.year}. `));
+  n.appendChild(document.createTextNode(
+    `הממוצע הארצי כאן (${fmtU(A.national.salary, "salary")}) מחושב לפי אנשים: סך השכר השנתי חלקי ` +
+    `חודשי העבודה, לכל מי שהייתה לו הכנסה משכר במהלך השנה. זו אינה סדרת „שכר ממוצע למשרת שכיר” ` +
+    `(13,514 ₪ ב-${DATA.meta.year}), שמחושבת לפי משרות ולא לפי אנשים ולכן גבוהה יותר.`));
+}
+
+function renderFootNotes() {
+  const covReg = ANAF.reduce((s, x) => s + (x.reg.workers || 0), 0);
+  const covNat = ANAF.reduce((s, x) => s + (x.nat.workers || 0), 0);
+  const pct = (a, b) => nf0.format(Math.round(a / b * 100));
+  const missing = ANAF.filter(x => x.reg.workers == null).map(x => x.label);
+  const notes = [
+    `סכום השכירים בפילוח לפי ענף מכסה ${nf0.format(covReg)} מתוך ${nf0.format(A.region.workers)} שכירים באשכול (${pct(covReg, A.region.workers)}%), ` +
+    `ו-${nf0.format(covNat)} מתוך ${nf0.format(A.national.workers)} ארצית (${pct(covNat, A.national.workers)}%). ההפרש נובע ממקרים שאינם מסווגים לענף או שמספרם קטן מכדי לפרסמו.`,
+    missing.length ? `ברמת האשכול אין נתון עבור: ${missing.join(", ")} (מסומן ".." במקור — חוסר מקרים).` : null,
+    `${CLUSTER} מוגדר כאן כ-18 הרשויות שבנפות צפת וגולן שבמקור. ממוצעיו משוקללים לפי מספר השכירים, ` +
+    `ואינם מופיעים במקור אלא חושבו מנתוני הרשויות — סכום השכירים ב-18 הרשויות זהה לסכום שתי הנפות במקור (${nf0.format(A.region.workers)}).`,
+    `"גולן" ברשימת הרשויות היא המועצה האזורית גולן.`
+  ].filter(Boolean);
+  const ul = clear(document.getElementById("footNotes"));
+  notes.forEach(t => ul.appendChild(el("li", {}, t)));
+}
+
+/* ============================================================
+   חיווט
+   ============================================================ */
+function renderAll() { renderKpis(); renderAuth(); renderAuthNote(); renderChange(); renderAnaf(); }
+
+function init() {
+  document.getElementById("chipWorkers").textContent = nf0.format(A.region.workers);
+
+  wireMetric();
+  wireAuth();
+  wireChange();
+  wireAnaf();
+  renderAll();
+  renderTrend();
+  renderMeta();
+  renderKpiNote();
+  renderFootNotes();
+  addEventListener("scroll", hideTip, {passive:true});
+}
+
+function wireMetric() {
+  segment(document.getElementById("metricSeg"),
+    METRICS.map(m => ({id:m.id, label:m.label})), state.metric,
+    id => { state.metric = id; renderAll(); wireMetric(); });
+}
+
+function wireAuth() {
+  const draw = () => { renderAuth(); wireAuth(); };
+  segment(document.getElementById("authView"), [
+    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+  ], state.auth.view, id => { state.auth.view = id; draw(); });
+
+  const sort = document.getElementById("authSort");
+  sort.value = state.auth.sort;
+  sort.onchange = () => { state.auth.sort = sort.value; renderAuth(); };
+}
+
+function wireChange() {
+  segment(document.getElementById("changeView"), [
+    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+  ], state.change.view, id => { state.change.view = id; renderChange(); wireChange(); });
+  const sort = document.getElementById("changeSort");
+  sort.value = state.change.sort;
+  sort.onchange = () => { state.change.sort = sort.value; renderChange(); };
+}
+
+function wireAnaf() {
+  const draw = () => { renderAnaf(); wireAnaf(); };
+  segment(document.getElementById("anafScope"), [
+    {id:"reg", label:CLUSTER}, {id:"nat", label:"כלל הארץ"}
+  ], state.anaf.scope, id => { state.anaf.scope = id; draw(); });
+
+  segment(document.getElementById("anafMode"), [
+    {id:"range",   label:"טווח",         title:"הצגת 10 הגבוהים, 10 הנמוכים וכדומה"},
+    {id:"cluster", label:"קיבוץ ענפים",  title:"צמצום לפי קבוצות של ענפים דומים"},
+    {id:"pick",    label:"בחירת ענפים",  title:"בחירה ידנית של ענפים להשוואה"}
+  ], state.anaf.mode, id => { state.anaf.mode = id; draw(); });
+
+  segment(document.getElementById("anafView"), [
+    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+  ], state.anaf.view, id => { state.anaf.view = id; draw(); });
+}
+
+document.readyState === "loading" ? addEventListener("DOMContentLoaded", init) : init();
+})();
+</script>
