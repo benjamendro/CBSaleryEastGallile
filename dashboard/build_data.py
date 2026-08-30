@@ -268,7 +268,7 @@ def read_socio():
         except (TypeError, ValueError):
             return None
 
-    of_authority, totals = {}, {}
+    of_authority, own_salary, totals = {}, {}, {}
     for r in range(FIRST_AUTHORITY_ROW, ws.max_row + 1):
         name = ws.cell(r, NAME).value
         if not isinstance(name, str) or not name.strip():
@@ -278,6 +278,7 @@ def read_socio():
             continue
         clu = int(clu)
         of_authority[name.strip()] = clu
+        own_salary[name.strip()] = round(sal, 2)
         t = totals.setdefault(clu, [0.0, 0.0, 0])
         t[0] += cnt * sal
         t[1] += cnt
@@ -301,7 +302,7 @@ def read_socio():
     if not (salary_year and cluster_year):
         sys.exit("לא נמצאו שנות העדכון בשורה 3 של קובץ הרשויות המקומיות")
 
-    return {"of_authority": of_authority, "clusters": clusters,
+    return {"of_authority": of_authority, "ownSalary": own_salary, "clusters": clusters,
             "national": round(national, 2),
             "year": salary_year, "clusterYear": cluster_year,
             "source": f"הלמ\"ס — קובץ רשויות מקומיות; שכר {salary_year}, "
@@ -360,9 +361,14 @@ def read_authorities(wb, socio):
             sys.exit(f"רשות לא מוכרת בשיוך לנפה: {name}")
         if name not in socio["of_authority"]:
             sys.exit(f"רשות ללא אשכול חברתי-כלכלי בקובץ הרשויות: {name}")
+        clu = socio["of_authority"][name]
+        own = socio["ownSalary"][name]
         items.append({"name": name, "nafa": of_nafa[name], "workers": num(r[3]),
                       "months": num(r[4]), "salary": num(r[5]),
-                      "socio": socio["of_authority"][name]})
+                      "socio": clu,
+                      # שכר הרשות בשנת הרף — מאפשר השוואה שנה-מול-שנה מול האשכול
+                      "socioOwn": own,
+                      "socioRatio": round(own / socio["clusters"][str(clu)]["salary"], 4)})
 
     # אימות: סכום השכירים ברשויות חייב להתאים לסכום הנפות
     for nf in nafot:

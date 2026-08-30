@@ -124,7 +124,7 @@ input.ctl{cursor:text;font-weight:500}
 .ctl-row .spacer{flex:1 1 auto}
 
 /* ---------- כרטיסי מדדים ---------- */
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0 4px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin:24px 0 4px}
 @media(max-width:820px){.kpis{grid-template-columns:1fr}}
 .kpi{
   background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
@@ -339,7 +339,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-change">
     <div class="wrap">
       <div class="block-head">
-        <h2 id="changeHead">השינוי בין 2022 ל-2024</h2>
+        <h2 id="changeHead">השינוי לפי רשות · 2022 ← 2024</h2>
         <p id="changeLede"></p>
       </div>
 
@@ -376,7 +376,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-trend">
     <div class="wrap">
       <div class="block-head">
-        <h2>מגמה רב-שנתית · 2016–2022</h2>
+        <h2>מגמת האשכול · 2016–2022</h2>
         <p id="trendLede"></p>
       </div>
       <div class="figure">
@@ -878,20 +878,19 @@ function renderKpis() {
   const id = state.metric, m = M[id], isCount = id === "workers";
   const reg = A.region[id], nat = A.national[id];
 
-  /* מדד שלישי: לשכר ולחודשי עבודה — פער מהממוצע הארצי;
-     למספר שכירים — החלק מכלל השכירים בישראל, שכן "פער" אינו מושג רלוונטי לספירה. */
-  const rel = isCount ? reg / nat * 100 : (reg - nat) / nat * 100;
-  const relTxt = (!isCount && rel > 0 ? "+" : isCount ? "" : "−") +
-                 nf1.format(Math.abs(rel)) + "%";
-
   const cards = [
     {lab:CLUSTER,      txt: fmtBig(reg, id), unit:m.unit,
      note: (isCount ? "סך הכול" : "ממוצע משוקלל") + ` · 18 רשויות · ${DATA.meta.year}`},
     {lab:"כלל הארץ",   txt: fmtBig(nat, id), unit:m.unit,
-     note: (isCount ? "סך הכול" : "ממוצע ארצי") + " · " + DATA.meta.year},
-    {lab: isCount ? "חלקו של האשכול" : "פער מהממוצע הארצי", txt: relTxt, unit:"",
-     note: isCount ? "מכלל השכירים בישראל" : `${CLUSTER} לעומת כלל הארץ`}
+     note: (isCount ? "סך הכול" : "ממוצע ארצי") + " · " + DATA.meta.year}
   ];
+  /* הפער מהממוצע הארצי מוצג רק במדד השכר — בשני האחרים הוא אינו נושא מידע */
+  if (id === "salary") {
+    const rel = (reg - nat) / nat * 100;
+    cards.push({lab:"פער מהממוצע הארצי", unit:"",
+                txt:(rel > 0 ? "+" : "−") + nf1.format(Math.abs(rel)) + "%",
+                note:`${CLUSTER} לעומת כלל הארץ`});
+  }
 
   const host = clear(document.getElementById("kpis"));
   cards.forEach(c => {
@@ -919,14 +918,11 @@ function authRows() {
   }[state.auth.sort]);
 }
 
-/* קווי הייחוס: ממוצע האשכול תמיד; הממוצע הארצי רק כשהוא בר-השוואה.
-   במספר שכירים הערך הארצי הוא סך הכול ולא ממוצע לרשות, ולכן אינו מוצג. */
+/* קווי הייחוס מוצגים רק במדד השכר. במספר שכירים ובחודשי עבודה ההשוואה
+   לממוצע אינה נושאת מידע שימושי, ולכן היא הוסרה. */
 function authRefs(items) {
+  if (state.metric !== "salary") return [];
   const id = state.metric;
-  if (id === "workers") return [{
-    value: items.reduce((s, x) => s + x.workers, 0) / (items.length || 1),
-    label: "ממוצע לרשות בגליל מזרחי", color: "var(--s-ref)"
-  }];
   return [
     {value: A.region[id],   label: "ממוצע גליל מזרחי", color: "var(--s-ref)"},
     {value: A.national[id], label: "ממוצע ארצי",   color: "var(--s-nat)", nat: true}
@@ -949,8 +945,11 @@ function renderAuth() {
       {head:"מספר שכירים",         cls:"n", get:r => fmt(r.workers, "workers")},
       {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.months, "months")},
       {head:"אשכול חברתי-כלכלי",   cls:"n dim", get:r => String(r.socio)},
-      {head:`ממוצע האשכול (₪, ${SOCIO.year})`, cls:"n dim",
-       get:r => fmt(socioAvg(r.socio), "salary")}
+      {head:`שכר הרשות (₪, ${SOCIO.year})`, cls:"n dim", get:r => fmt(r.socioOwn, "salary")},
+      {head:`רף האשכול (₪, ${SOCIO.year})`, cls:"n dim",
+       get:r => fmt(socioAvg(r.socio), "salary")},
+      {head:`יחס לרף (${SOCIO.year})`, cls:"n dim",
+       get:r => nf1.format(r.socioRatio * 100) + "%"}
     ], items);
     return;
   }
@@ -962,7 +961,11 @@ function renderAuth() {
   const step = id === "salary" ? items.map(x => socioAvg(x.socio)) : null;
   columnChart(chart, items.map(x => ({
     label: x.name, value: x[id], sub: `אשכול חברתי-כלכלי ${x.socio}`, all: x,
-    extra: id === "salary" ? [[`ממוצע אשכול ${x.socio} · ${SOCIO.year}`, fmtU(socioAvg(x.socio), "salary")]] : null
+    extra: id === "salary" ? [
+      [`שכר הרשות · ${SOCIO.year}`, fmtU(x.socioOwn, "salary")],
+      [`רף אשכול ${x.socio} · ${SOCIO.year}`, fmtU(socioAvg(x.socio), "salary")],
+      [`יחס לרף (${SOCIO.year})`, nf1.format(x.socioRatio * 100) + "%"]
+    ] : null
   })), {refs, step});
 
   const lg = refLegend(refs, id);
@@ -1230,15 +1233,12 @@ function anafAvg(key) {
 /* ממוצע ההיקף הנבחר, ולצדו הממוצע הארצי כשהוא בר-השוואה. במספר שכירים
    הממוצע הארצי לענף גדול בשני סדרי גודל מזה שבאשכול, ולכן אינו מוצג לצדו. */
 function anafRefs() {
-  const id = state.metric;
-  const nat = {value: anafAvg("nat"),
-               label: id === "workers" ? "ממוצע ארצי לענף" : "ממוצע ארצי · כלל הענפים",
+  if (state.metric !== "salary") return [];      /* כמו בגרף הרשויות — רק במדד השכר */
+  const nat = {value: anafAvg("nat"), label: "ממוצע ארצי · כלל הענפים",
                color: "var(--s-nat)", nat: true};
   if (state.anaf.scope !== "reg") return [nat];
-  const own = {value: anafAvg("reg"),
-               label: id === "workers" ? "ממוצע לענף בגליל מזרחי" : "ממוצע גליל מזרחי · כלל הענפים",
-               color: "var(--s-ref)"};
-  return id === "workers" ? [own] : [own, nat];
+  return [{value: anafAvg("reg"), label: "ממוצע גליל מזרחי · כלל הענפים",
+           color: "var(--s-ref)"}, nat];
 }
 
 function renderAnaf() { renderAnafPanel(); renderAnafChart(); }
@@ -1362,9 +1362,10 @@ function renderAuthNote() {
   const parts = [`מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (${DATA.meta.year}) · ` +
                  `עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`];
   if (state.metric === "salary") parts.unshift(
-    `הרף החברתי-כלכלי לקוח מ${SOCIO.source}, ומשקלל את כל הרשויות בישראל שבאותו אשכול. ` +
-    `הוא מתייחס לשנת ${SOCIO.year} — הנתון העדכני ביותר שפורסם ברמת הרשות — בעוד העמודות הן ל-${DATA.meta.year}; ` +
-    `השכר הארצי עלה בין השנים ב-${nf1.format((SOCIO_LIFT - 1) * 100)}%, ולכן הרשויות נמדדות מול רף נמוך יחסית.`);
+    `הרף החברתי-כלכלי לקוח מ${SOCIO.source} ומשקלל את כל הרשויות בישראל שבאותו אשכול. ` +
+    `הוא מתייחס לשנת ${SOCIO.year} בעוד העמודות הן ל-${DATA.meta.year} — פער של ` +
+    `${nf1.format((SOCIO_LIFT - 1) * 100)}% בשכר הארצי בין השנים. כדי להשוות שנה מול שנה, ` +
+    `בריחוף מעל כל רשות מוצגים גם שכרה ב-${SOCIO.year} ויחסו לרף של אותה שנה; אותם ערכים בתצוגת הטבלה.`);
   n.textContent = parts.join(" · ");
 }
 
