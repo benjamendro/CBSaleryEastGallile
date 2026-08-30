@@ -16,6 +16,7 @@ SRC_DATA = os.path.join(ROOT, "עיבוד לפי ענף ורשות בני דור
 SRC_DIC  = os.path.join(ROOT, "dicAnaf4SfarotMaster 2.xlsx")
 SRC_RASH = os.path.join(ROOT, "p_libud_24.xlsx")   # קובץ רשויות מקומיות, מהדורת 2024
 SRC_2022 = os.path.join(ROOT, "עיבוד לפי ענף ורשות 2022.xlsx")
+SRC_BTL  = os.path.join(ROOT, "שכר ממוצע לחודש עבודה של כלל העובדים, לפי מחוז ונפה, 2022-2016.xlsx")
 
 # --- שמות תצוגה קצרים לקבוצות הענפים (54 קודים דו-ספרתיים ב-51 קבוצות) -------
 # נגזרו ממילון ענפי הכלכלה של הלמ"ס; קוצרו כדי שייקראו היטב על גבי גרף.
@@ -145,6 +146,59 @@ def read_dictionary():
 # הסדר. הממוצע משוקלל לפי מספר השכירים — אותה שיטה שבה הלמ"ס עצמה גוזרת את שורות
 # הנפה מנתוני הרשויות בקובץ 2024 (נבדק והתאים בדיוק).
 SUPPRESSION_FLOOR = 10
+
+
+def read_btl_trend():
+    """
+    סדרת מגמה של הביטוח הלאומי, 2016–2022, ברמת האשכול מול הארצי.
+
+    הלוח מפורסם לפי מחוז ונפה. רמת האשכול נבנית מחיבור נפת צפת ונפת גולן —
+    אותה גאוגרפיה בדיוק של 18 הרשויות (נבדק מול קובץ הלמ"ס: סכום השכירים
+    ב-18 הרשויות זהה לסכום שתי הנפות).
+
+    שים לב: בקובץ קיימת שורת "גליל מזרחי" מוכנה, אך השכר בה הוא ממוצע פשוט
+    של שתי הנפות ולא משוקלל לפי מספר העובדים, ולכן הוא נמוך ב-1.5% בערך.
+    כאן הסדרה מחושבת מחדש, משוקללת כראוי.
+
+    האוכלוסייה בלוח היא "כלל העובדים" — כוללת עצמאים, ולכן רחבה מזו שבשאר
+    הדשבורד (שכירים בלבד). הסדרה מוצגת בנפרד ואינה מעורבבת עם נתוני הלמ"ס.
+    """
+    wb = openpyxl.load_workbook(SRC_BTL, data_only=True)
+    ws = wb["8"]
+    years = [ws.cell(4, 3 + i).value for i in range(7)]
+    if [str(y) for y in years] != [str(y) for y in range(2016, 2023)]:
+        sys.exit(f"שנות הלוח אינן 2016–2022: {years}")
+
+    def find(label):
+        for r in range(5, ws.max_row + 1):
+            if str(ws.cell(r, 2).value or "").strip() == label:
+                return r
+        sys.exit(f"לא נמצאה שורת {label!r} בלוח")
+
+    def series(r):
+        return ([float(ws.cell(r, 3 + i).value) for i in range(7)],
+                [float(ws.cell(r, 10 + i).value) for i in range(7)])
+
+    nat_row = 5
+    if str(ws.cell(nat_row, 1).value or "").strip() != 'סה"כ- נפה ומחוז':
+        sys.exit("שורת הסך הארצי אינה במקומה הצפוי")
+    nat_w, nat_s = series(nat_row)
+    tz_w, tz_s = series(find("צפת"))
+    gl_w, gl_s = series(find("גולן"))
+    wb.close()
+
+    out = []
+    for i, y in enumerate(years):
+        workers = tz_w[i] + gl_w[i]
+        salary = (tz_w[i] * tz_s[i] + gl_w[i] * gl_s[i]) / workers
+        out.append({"year": str(y), "workers": round(workers),
+                    "salary": round(salary, 1), "national": round(nat_s[i], 1),
+                    "nationalWorkers": round(nat_w[i]),
+                    "ratio": round(salary / nat_s[i], 4)})
+    return {"rows": out, "population": "כלל העובדים (שכירים ועצמאים)",
+            "measure": "שכר ממוצע לחודש עבודה",
+            "source": 'הביטוח הלאומי — שכר והכנסה מעבודה לפי יישוב, לוח 8 (מחוז ונפה)',
+            "note": "רמת האשכול חושבה מחיבור נפת צפת ונפת גולן, משוקלל לפי מספר העובדים"}
 
 
 def read_change(names):
@@ -374,6 +428,7 @@ def main():
     socio = read_socio()
     authorities = read_authorities(wb, socio)
     change = read_change([i["name"] for i in authorities["items"]])
+    btl = read_btl_trend()
     anafim = read_anafim(wb, dic)
     wb.close()
 
@@ -397,6 +452,7 @@ def main():
         "socio": {k: socio[k] for k in
                   ("clusters", "national", "year", "clusterYear", "source")},
         "change": change,
+        "btl": btl,
     }
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.json")
@@ -413,6 +469,10 @@ def main():
           f"{change['workers']:,} → {authorities['region']['workers']:,}"
           f" · כיסוי 2022 {change['coverage']*100:.1f}% לפחות"
           f" (עד {change['maxMissing']:,} שכירים בתאים שהושמטו)")
+    f, l = btl["rows"][0], btl["rows"][-1]
+    print(f"  מגמת ביטוח לאומי {f['year']}–{l['year']}: שכר אשכול "
+          f"{f['salary']:,.0f} → {l['salary']:,.0f} ₪ · ארצי {f['national']:,.0f} → {l['national']:,.0f} ₪"
+          f" · יחס {f['ratio']*100:.1f}% → {l['ratio']*100:.1f}%")
     used = sorted({i["socio"] for i in authorities["items"]})
     print(f"  אשכולות חברתיים-כלכליים בשימוש: {used}"
           f" · ארצי {socio['year']}: {socio['national']:,.0f} ₪"

@@ -169,6 +169,7 @@ section.block{padding:clamp(28px,4vw,46px) 0 4px}
 .legend .sw.dot{width:13px;height:13px;border-radius:50%;background:var(--s-bar)}
 .legend .sw.dot.hollow{background:var(--card);box-shadow:inset 0 0 0 2.5px var(--s-bar)}
 .legend .sw.conn{width:22px;height:3px;border-radius:2px;background:var(--line-2)}
+.legend .sw.line{width:22px;height:3px;border-radius:2px}
 .legend-lead{
   margin:2px 0 4px;gap:10px 24px;padding:10px 14px;
   background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);
@@ -367,6 +368,26 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
         </div>
         <div id="changeBody"></div>
         <div class="fig-note" id="changeNote"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ מגמה רב-שנתית — ביטוח לאומי ============ -->
+  <section class="block" id="sec-trend">
+    <div class="wrap">
+      <div class="block-head">
+        <h2>מגמה רב-שנתית · 2016–2022</h2>
+        <p id="trendLede"></p>
+      </div>
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="trendTitle">—</div>
+            <div class="fig-sub" id="trendSub">—</div>
+          </div>
+        </div>
+        <div id="trendBody"></div>
+        <div class="fig-note" id="trendNote"></div>
       </div>
     </div>
   </section>
@@ -774,6 +795,65 @@ function dumbbell(host, rows, opt) {
   return svg;
 }
 
+/* ============================================================
+   גרף קו — מגמה רב-שנתית, שתי סדרות (LTR: השנה המוקדמת משמאל)
+   ============================================================ */
+function lineChart(host, rows, series) {
+  const W = 1040, mT = 26, mR = 58, mB = 46, mL = 20, plotH = 250;
+  const H = mT + plotH + mB, base = mT + plotH, right = W - mR;
+  const all = rows.flatMap(r => series.map(s => r[s.key]));
+  const ax = niceRange(Math.min(...all), Math.max(...all), 5);
+  const X = i => mL + 26 + (i / (rows.length - 1)) * (right - mL - 52);
+  const Y = v => base - (v - ax.lo) / (ax.hi - ax.lo) * plotH;
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:620px",
+                        "aria-label":"מגמת שכר רב-שנתית, אשכול גליל מזרחי מול הממוצע הארצי"});
+  clear(host).appendChild(svg);
+
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    svg.appendChild(S("line", {x1:mL, x2:right, y1:Y(v), y2:Y(v),
+                               stroke:"var(--line)", "stroke-width":1}));
+    const t = S("text", {x:right + 10, y:Y(v) + 4, "text-anchor":"start",
+      style:"font:500 12px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = nf0.format(v);
+    svg.appendChild(t);
+  }
+  rows.forEach((r, i) => {
+    const t = S("text", {x:X(i), y:H - 16, "text-anchor":"middle",
+      style:"font:500 12.5px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = r.year;
+    svg.appendChild(t);
+  });
+
+  series.forEach(sr => {
+    const pts = rows.map((r, i) => [X(i), Y(r[sr.key])]);
+    svg.appendChild(S("path", {d:"M" + pts.map(p => p.join(",")).join("L"), fill:"none",
+      stroke:sr.color, "stroke-width":2, "stroke-linecap":"round", "stroke-linejoin":"round"}));
+    pts.forEach(([x, y]) => {
+      svg.appendChild(S("circle", {cx:x, cy:y, r:4.5, fill:sr.color,
+                                   stroke:"var(--card)", "stroke-width":2}));
+    });
+    /* תווית ישירה בקצה הסדרה בלבד */
+    const [lx, ly] = pts[pts.length - 1];
+    const t = S("text", {x:lx, y:ly - 13, "text-anchor":"middle",
+      style:`font:700 12.5px var(--font-head);fill:var(--ink);direction:ltr`});
+    t.textContent = nf0.format(rows[rows.length - 1][sr.key]);
+    svg.appendChild(t);
+  });
+
+  /* רצועת עכבר לכל שנה */
+  rows.forEach((r, i) => {
+    const w = (right - mL) / rows.length;
+    const hit = S("rect", {x:X(i) - w/2, y:mT - 12, width:w, height:plotH + 12,
+                           fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${r.year}</span>` +
+      series.map(sr => `<div class="t-row"><span>${sr.name}</span><span>${nf0.format(r[sr.key])} ₪</span></div>`).join("") +
+      `<div class="t-row t-extra"><span>יחס האשכול לארצי</span><span>${nf1.format(r.ratio * 100)}%</span></div>`);
+    svg.appendChild(hit);
+  });
+  return svg;
+}
+
 /* ---------------- טבלאות ---------------- */
 function dataTable(host, cols, rows) {
   const box = el("div", {class:"tbl-scroll"});
@@ -909,8 +989,42 @@ function refLegend(refs, id) {
 }
 
 /* ============================================================
-   מקטע הענפים
+   מקטע המגמה הרב-שנתית (ביטוח לאומי)
    ============================================================ */
+const BTL = DATA.btl;
+
+function renderTrend() {
+  const rows = BTL.rows, f = rows[0], l = rows[rows.length - 1];
+  document.getElementById("trendLede").textContent =
+    `נתוני הביטוח הלאומי מאפשרים מבט של שבע שנים על ${CLUSTER} מול הממוצע הארצי. ` +
+    `האוכלוסייה כאן היא ${BTL.population} — רחבה מזו שבשאר העמוד, שבו נספרים שכירים בלבד — ולכן ` +
+    `הסדרה מוצגת בנפרד ואינה מעורבבת עם נתוני הלמ"ס.`;
+  document.getElementById("trendTitle").textContent = `${BTL.measure} · ${f.year}–${l.year}`;
+  document.getElementById("trendSub").textContent =
+    `יחס האשכול לממוצע הארצי: ${nf1.format(f.ratio * 100)}% ב-${f.year} ← ` +
+    `${nf1.format(l.ratio * 100)}% ב-${l.year} · ₪`;
+
+  const body = clear(document.getElementById("trendBody"));
+  const series = [
+    {key:"salary",   name:CLUSTER,     color:"var(--s-bar)"},
+    {key:"national", name:"ממוצע ארצי", color:"var(--s-nat)"}
+  ];
+  const lg = el("div", {class:"legend legend-lead"});
+  series.forEach(sr => {
+    const it = el("span", {class:"item"});
+    const sw = el("span", {class:"sw line"}); sw.style.background = sr.color;
+    it.appendChild(sw);
+    it.appendChild(document.createTextNode(sr.name));
+    lg.appendChild(it);
+  });
+  body.appendChild(lg);
+  const chart = el("div", {class:"chart"});
+  body.appendChild(chart);
+  lineChart(chart, rows, series);
+
+  document.getElementById("trendNote").textContent =
+    `${BTL.note}. מקור: ${BTL.source} · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`;
+}
 const RANGES = [
   {id:"top10",   label:"10 הגבוהים ביותר",       n:10, from:"top"},
   {id:"top15",   label:"15 הגבוהים ביותר",       n:15, from:"top"},
@@ -1293,6 +1407,7 @@ function init() {
   wireChange();
   wireAnaf();
   renderAll();
+  renderTrend();
   renderMeta();
   renderKpiNote();
   renderFootNotes();

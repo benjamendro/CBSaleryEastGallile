@@ -1493,5 +1493,69 @@
   "maxMissing": 405,
   "workers": 84536,
   "coverage": 0.9952
+ },
+ "btl": {
+  "rows": [
+   {
+    "year": "2016",
+    "workers": 81747,
+    "salary": 8951.2,
+    "national": 11117.0,
+    "nationalWorkers": 4082547,
+    "ratio": 0.8052
+   },
+   {
+    "year": "2017",
+    "workers": 85073,
+    "salary": 9195.9,
+    "national": 11358.0,
+    "nationalWorkers": 4245218,
+    "ratio": 0.8096
+   },
+   {
+    "year": "2018",
+    "workers": 87264,
+    "salary": 9473.6,
+    "national": 11699.0,
+    "nationalWorkers": 4354689,
+    "ratio": 0.8098
+   },
+   {
+    "year": "2019",
+    "workers": 89319,
+    "salary": 9811.8,
+    "national": 12074.0,
+    "nationalWorkers": 4449429,
+    "ratio": 0.8126
+   },
+   {
+    "year": "2020",
+    "workers": 87568,
+    "salary": 10098.8,
+    "national": 12515.0,
+    "nationalWorkers": 4428536,
+    "ratio": 0.8069
+   },
+   {
+    "year": "2021",
+    "workers": 89925,
+    "salary": 10445.7,
+    "national": 12978.0,
+    "nationalWorkers": 4540953,
+    "ratio": 0.8049
+   },
+   {
+    "year": "2022",
+    "workers": 93522,
+    "salary": 10610.4,
+    "national": 13396.0,
+    "nationalWorkers": 4719549,
+    "ratio": 0.7921
+   }
+  ],
+  "population": "כלל העובדים (שכירים ועצמאים)",
+  "measure": "שכר ממוצע לחודש עבודה",
+  "source": "הביטוח הלאומי — שכר והכנסה מעבודה לפי יישוב, לוח 8 (מחוז ונפה)",
+  "note": "רמת האשכול חושבה מחיבור נפת צפת ונפת גולן, משוקלל לפי מספר העובדים"
  }
 }
