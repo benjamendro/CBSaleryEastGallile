@@ -166,6 +166,14 @@ section.block{padding:clamp(28px,4vw,46px) 0 4px}
 .legend .sw.ref{width:18px;height:0;border-top:2px dashed var(--s-ref);border-radius:0}
 .legend .sw.ref.nat{border-top-color:var(--s-nat)}
 .legend .sw.ref.socio{border-top:2.5px solid var(--s-socio)}
+.legend .sw.dot{width:13px;height:13px;border-radius:50%;background:var(--s-bar)}
+.legend .sw.dot.hollow{background:var(--card);box-shadow:inset 0 0 0 2.5px var(--s-bar)}
+.legend .sw.conn{width:22px;height:3px;border-radius:2px;background:var(--line-2)}
+.legend-lead{
+  margin:2px 0 4px;gap:10px 24px;padding:10px 14px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);
+}
+.legend-lead .item{font-size:13.5px;color:var(--ink)}
 
 /* ---------- טבלה ---------- */
 .tbl-scroll{overflow-x:auto;margin-top:10px;max-height:560px;overflow-y:auto}
@@ -326,6 +334,43 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
     </div>
   </section>
 
+  <!-- ============ השינוי בין 2022 ל-2024 ============ -->
+  <section class="block" id="sec-change">
+    <div class="wrap">
+      <div class="block-head">
+        <h2 id="changeHead">השינוי בין 2022 ל-2024</h2>
+        <p id="changeLede"></p>
+      </div>
+
+      <div class="ctl-row" role="group" aria-label="פקדי גרף השינוי">
+        <div class="ctl-group">
+          <label for="changeSort">סדר</label>
+          <select class="ctl" id="changeSort">
+            <option value="pct">לפי שיעור השינוי</option>
+            <option value="value">לפי הערך ב-2024</option>
+            <option value="name">לפי שם הרשות</option>
+          </select>
+        </div>
+        <div class="spacer"></div>
+        <div class="ctl-group">
+          <label id="changeViewLab" class="sr-only">תצוגה</label>
+          <div class="seg sm" id="changeView" role="group" aria-labelledby="changeViewLab"></div>
+        </div>
+      </div>
+
+      <div class="figure">
+        <div class="fig-head">
+          <div>
+            <div class="fig-title" id="changeTitle">—</div>
+            <div class="fig-sub" id="changeSub">—</div>
+          </div>
+        </div>
+        <div id="changeBody"></div>
+        <div class="fig-note" id="changeNote"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ לפי ענף כלכלי ============ -->
   <section class="block" id="sec-anaf">
     <div class="wrap">
@@ -412,7 +457,8 @@ const state = {
   metric: "salary",
   auth:   {sort:"desc", view:"chart"},
   anaf:   {scope:"reg", mode:"range", range:"top10", clusters:new Set(), picks:new Set(),
-           query:"", view:"chart"}
+           query:"", view:"chart"},
+  change: {sort:"pct", view:"chart"}
 };
 
 /* ---------------- עזרי פורמט ---------------- */
@@ -654,6 +700,76 @@ function barChart(host, rows, opt) {
   if (items.length) opt.refs.forEach(r => {
     const x = W - scale(r.value);
     refLine(svg, {x1:x, x2:x, y1:pad, y2:H - 8}, r.color);
+  });
+  return svg;
+}
+
+/* ============================================================
+   דמבל — ערך "לפני" ו"אחרי" לכל רשות, מחוברים בקו.
+   הזהות נקבעת לפי צורה (חלול מול מלא) ולא לפי גוון, כדי ששתי
+   הנקודות יישארו בניגודיות מלאה מול הרקע.
+   ============================================================ */
+function niceRange(lo, hi, ticks) {
+  const span = (hi - lo) || Math.abs(hi) || 1;
+  const raw = span / (ticks - 1);
+  const mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * mag;
+  return {lo: Math.floor(lo / step) * step, hi: Math.ceil(hi / step) * step, step};
+}
+
+function dumbbell(host, rows, opt) {
+  const id = state.metric, W = 1040, rowH = 38, labelW = 150, changeW = 96, top = 30;
+  const H = top + rows.length * rowH + 34;
+  const plotR = W - labelW, plotL = changeW;
+  const vals = rows.flatMap(r => [r.from, r.to]);
+  const ax = niceRange(Math.min(...vals), Math.max(...vals), 5);
+  const X = v => plotR - (v - ax.lo) / (ax.hi - ax.lo) * (plotR - plotL);
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:660px",
+                        "aria-label":`שינוי ב${M[id].label} בין ${opt.fromLabel} ל-${opt.toLabel}`});
+  clear(host).appendChild(svg);
+
+  /* סרגל ערכים */
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    const x = X(v);
+    svg.appendChild(S("line", {x1:x, x2:x, y1:top - 12, y2:H - 30,
+                               stroke:"var(--line)", "stroke-width":1}));
+    const t = S("text", {x, y:H - 12, "text-anchor":"middle",
+      style:"font:500 12px var(--font-body);fill:var(--ink-3);direction:ltr"});
+    t.textContent = fmt(v, id);
+    svg.appendChild(t);
+  }
+
+  rows.forEach((r, i) => {
+    const y = top + i * rowH + rowH / 2;
+    const x1 = X(r.from), x2 = X(r.to);
+
+    svg.appendChild(S("line", {x1, x2, y1:y, y2:y, stroke:"var(--line-2)",
+                               "stroke-width":3, "stroke-linecap":"round"}));
+    /* "לפני" — נקודה חלולה; "אחרי" — מלאה */
+    svg.appendChild(S("circle", {cx:x1, cy:y, r:5.5, fill:"var(--card)",
+                                 stroke:"var(--s-bar)", "stroke-width":2.5}));
+    svg.appendChild(S("circle", {cx:x2, cy:y, r:5.5, fill:"var(--s-bar)",
+                                 stroke:"var(--card)", "stroke-width":2}));
+
+    const name = S("text", {x:W, y:y + 5, "text-anchor":"start",
+      style:"font:600 13.5px var(--font-body);fill:var(--ink);direction:rtl;unicode-bidi:plaintext"});
+    name.textContent = r.label;
+    svg.appendChild(name);
+
+    const up = r.to >= r.from;
+    const pct = S("text", {x:0, y:y + 5, "text-anchor":"start",
+      style:"font:700 12.5px var(--font-head);fill:var(--ink-2);direction:ltr;unicode-bidi:isolate"});
+    pct.textContent = `${up ? "▲" : "▼"} ${up ? "+" : "−"}${nf1.format(Math.abs(r.pct))}%`;
+    svg.appendChild(pct);
+
+    const hit = S("rect", {x:0, y:y - rowH/2, width:W, height:rowH,
+                           fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${r.label}</span>` +
+      `<div class="t-row"><span>${opt.fromLabel}</span><span>${fmtU(r.from, id)}</span></div>` +
+      `<div class="t-row"><span>${opt.toLabel}</span><span>${fmtU(r.to, id)}</span></div>` +
+      `<div class="t-row t-extra"><span>שינוי</span><span>${up ? "+" : "−"}${fmt(Math.abs(r.to - r.from), id)} · ${up ? "+" : "−"}${nf1.format(Math.abs(r.pct))}%</span></div>`);
+    svg.appendChild(hit);
   });
   return svg;
 }
@@ -1014,6 +1130,99 @@ function anafRefs() {
 function renderAnaf() { renderAnafPanel(); renderAnafChart(); }
 
 /* ============================================================
+   מקטע השינוי 2022 → 2024
+   ============================================================ */
+const CH = DATA.change, FROM = CH.year, TO = DATA.meta.year;
+
+function changeRows() {
+  const id = state.metric;
+  const rows = A.items.map(x => {
+    const from = CH.byAuthority[x.name][id];
+    return {label:x.name, from, to:x[id], pct:(x[id] / from - 1) * 100};
+  });
+  return rows.sort({
+    pct:   (a, b) => b.pct - a.pct,
+    value: (a, b) => b.to - a.to,
+    name:  (a, b) => a.label.localeCompare(b.label, "he")
+  }[state.change.sort]);
+}
+
+function renderChange() {
+  const id = state.metric, m = M[id];
+  const body = document.getElementById("changeBody");
+  const note = document.getElementById("changeNote");
+  document.getElementById("changeLede").textContent =
+    `כל שורה היא רשות אחת: הנקודה החלולה היא ${FROM} והמלאה ${TO}, ואורך הקו הוא גודל השינוי. ` +
+    `שני העיבודים נעשו באותה יחידה בלמ"ס ובאותה הגדרה בדיוק, ולכן הם ברי-השוואה.`;
+
+  /* בקובץ 2022 אין חודשי עבודה — אין מה להשוות */
+  if (!CH.metrics.includes(id)) {
+    document.getElementById("changeTitle").textContent = `${m.label} — אין נתוני ${FROM}`;
+    document.getElementById("changeSub").textContent = "";
+    clear(body).appendChild(el("div", {class:"empty"},
+      `בעיבוד של ${FROM} נמסרו מספר שכירים ושכר חודשי ממוצע בלבד; ` +
+      `${m.label} אינו מופיע בו, ולכן אי אפשר להציג שינוי במדד זה.`));
+    note.textContent = "";
+    return;
+  }
+
+  const rows = changeRows();
+  const tot = {from: 0, to: 0};
+  if (id === "workers") {
+    tot.from = CH.workers; tot.to = A.region.workers;
+  } else {
+    const wf = rows.reduce((s, r) => s + CH.byAuthority[r.label].workers, 0);
+    tot.from = rows.reduce((s, r) => s + CH.byAuthority[r.label].workers * r.from, 0) / wf;
+    tot.to = A.region[id];
+  }
+  const totPct = (tot.to / tot.from - 1) * 100;
+
+  document.getElementById("changeTitle").textContent =
+    `${m.label} — השינוי בין ${FROM} ל-${TO}`;
+  document.getElementById("changeSub").textContent =
+    `18 רשויות · ${CLUSTER} כולו: ${fmtU(tot.from, id)} ← ${fmtU(tot.to, id)} ` +
+    `(${totPct >= 0 ? "+" : "−"}${nf1.format(Math.abs(totPct))}%)`;
+
+  if (state.change.view === "table") {
+    dataTable(body, [
+      {head:"רשות", cls:"nm", get:r => r.label},
+      {head:`${m.label} · ${FROM}`, cls:"n", get:r => fmt(r.from, id)},
+      {head:`${m.label} · ${TO}`,   cls:"n", get:r => fmt(r.to, id)},
+      {head:"שינוי", cls:"n", get:r => (r.to >= r.from ? "+" : "−") + fmt(Math.abs(r.to - r.from), id)},
+      {head:"שינוי באחוזים", cls:"n",
+       get:r => (r.pct >= 0 ? "+" : "−") + nf1.format(Math.abs(r.pct)) + "%"}
+    ], rows);
+  } else {
+    clear(body);
+    /* המקרא מעל הגרף — הקורא פוגש את מפתח הסימנים לפני הנתונים */
+    const lg = el("div", {class:"legend legend-lead"});
+    [[`${FROM} — הערך הקודם`, "dot hollow"], [`${TO} — הערך הנוכחי`, "dot"]]
+      .forEach(([lab, cls]) => {
+        const it = el("span", {class:"item"});
+        it.appendChild(el("span", {class:"sw " + cls}));
+        it.appendChild(document.createTextNode(lab));
+        lg.appendChild(it);
+      });
+    const conn = el("span", {class:"item"});
+    conn.appendChild(el("span", {class:"sw conn"}));
+    conn.appendChild(document.createTextNode("אורך הקו — גודל השינוי"));
+    lg.appendChild(conn);
+    body.appendChild(lg);
+
+    const chart = el("div", {class:"chart"});
+    body.appendChild(chart);
+    dumbbell(chart, rows, {fromLabel:FROM, toLabel:TO});
+  }
+
+  note.textContent =
+    `בעיבוד של ${FROM} אין שורת סיכום לרשות, ולכן הערכים נסכמו מפילוח הרשות לפי סדרי ענפים ` +
+    `(השכר משוקלל לפי מספר השכירים). הלמ"ס אינה מדווחת תאים שבהם פחות מ-${CH.floor} שכירים, ` +
+    `ולכן ${FROM} מכוסה ב-${nf1.format(CH.coverage * 100)}% לפחות — עד ${nf0.format(CH.maxMissing)} שכירים ` +
+    `בתאים שהושמטו, מתוך ${nf0.format(CH.workers)}. ` +
+    `מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`;
+}
+
+/* ============================================================
    הערות שוליים — נגזרות מהנתונים עצמם
    ============================================================ */
 /* ההגדרות ופרטי ההפקה מגיעים מגיליון "מידע נילווה" שבקובץ המקור — לא מנוסחים כאן */
@@ -1074,13 +1283,14 @@ function renderFootNotes() {
 /* ============================================================
    חיווט
    ============================================================ */
-function renderAll() { renderKpis(); renderAuth(); renderAuthNote(); renderAnaf(); }
+function renderAll() { renderKpis(); renderAuth(); renderAuthNote(); renderChange(); renderAnaf(); }
 
 function init() {
   document.getElementById("chipWorkers").textContent = nf0.format(A.region.workers);
 
   wireMetric();
   wireAuth();
+  wireChange();
   wireAnaf();
   renderAll();
   renderMeta();
@@ -1104,6 +1314,15 @@ function wireAuth() {
   const sort = document.getElementById("authSort");
   sort.value = state.auth.sort;
   sort.onchange = () => { state.auth.sort = sort.value; renderAuth(); };
+}
+
+function wireChange() {
+  segment(document.getElementById("changeView"), [
+    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+  ], state.change.view, id => { state.change.view = id; renderChange(); wireChange(); });
+  const sort = document.getElementById("changeSort");
+  sort.value = state.change.sort;
+  sort.onchange = () => { state.change.sort = sort.value; renderChange(); };
 }
 
 function wireAnaf() {

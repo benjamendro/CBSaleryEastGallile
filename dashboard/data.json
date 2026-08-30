@@ -1389,5 +1389,109 @@
   "year": "2023",
   "clusterYear": "2021",
   "source": "הלמ\"ס — קובץ רשויות מקומיות; שכר 2023, אשכול חברתי-כלכלי 2021"
+ },
+ "change": {
+  "year": "2022",
+  "byAuthority": {
+   "בוקעאתא": {
+    "workers": 3012,
+    "salary": 7679.81,
+    "sections": 18
+   },
+   "ג'ש (גוש חלב)": {
+    "workers": 1643,
+    "salary": 10863.42,
+    "sections": 16
+   },
+   "גולן": {
+    "workers": 9343,
+    "salary": 11304.99,
+    "sections": 19
+   },
+   "הגליל העליון": {
+    "workers": 8778,
+    "salary": 12066.2,
+    "sections": 19
+   },
+   "חצור הגלילית": {
+    "workers": 4919,
+    "salary": 8715.38,
+    "sections": 19
+   },
+   "טובא-זנגרייה": {
+    "workers": 3448,
+    "salary": 7722.47,
+    "sections": 16
+   },
+   "יסוד המעלה": {
+    "workers": 886,
+    "salary": 13964.85,
+    "sections": 16
+   },
+   "מבואות החרמון": {
+    "workers": 4052,
+    "salary": 12486.35,
+    "sections": 18
+   },
+   "מג'דל שמס": {
+    "workers": 4855,
+    "salary": 7454.91,
+    "sections": 17
+   },
+   "מטולה": {
+    "workers": 1018,
+    "salary": 11158.61,
+    "sections": 16
+   },
+   "מסעדה": {
+    "workers": 1694,
+    "salary": 7055.04,
+    "sections": 17
+   },
+   "מרום הגליל": {
+    "workers": 7057,
+    "salary": 10767.44,
+    "sections": 20
+   },
+   "ע'ג'ר": {
+    "workers": 1354,
+    "salary": 8618.42,
+    "sections": 14
+   },
+   "עין קנייא": {
+    "workers": 1062,
+    "salary": 8058.15,
+    "sections": 16
+   },
+   "צפת": {
+    "workers": 13856,
+    "salary": 7823.73,
+    "sections": 19
+   },
+   "קצרין": {
+    "workers": 4069,
+    "salary": 8867.91,
+    "sections": 18
+   },
+   "קריית שמונה": {
+    "workers": 11873,
+    "salary": 9368.15,
+    "sections": 19
+   },
+   "ראש פינה": {
+    "workers": 1617,
+    "salary": 12481.67,
+    "sections": 18
+   }
+  },
+  "cells": 315,
+  "metrics": [
+   "workers",
+   "salary"
+  ],
+  "floor": 10,
+  "maxMissing": 405,
+  "workers": 84536,
+  "coverage": 0.9952
  }
 }

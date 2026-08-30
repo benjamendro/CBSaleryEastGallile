@@ -15,6 +15,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_DATA = os.path.join(ROOT, "עיבוד לפי ענף ורשות בני דורמבט.xlsx")
 SRC_DIC  = os.path.join(ROOT, "dicAnaf4SfarotMaster 2.xlsx")
 SRC_RASH = os.path.join(ROOT, "p_libud_24.xlsx")   # קובץ רשויות מקומיות, מהדורת 2024
+SRC_2022 = os.path.join(ROOT, "עיבוד לפי ענף ורשות 2022.xlsx")
 
 # --- שמות תצוגה קצרים לקבוצות הענפים (54 קודים דו-ספרתיים ב-51 קבוצות) -------
 # נגזרו ממילון ענפי הכלכלה של הלמ"ס; קוצרו כדי שייקראו היטב על גבי גרף.
@@ -136,6 +137,56 @@ def read_dictionary():
         }
     wb.close()
     return out
+
+
+# הקובץ של 2022 מציג רק פילוח רשות × ענף, ללא שורת סיכום לרשות. הסכימה נעשית
+# מרמת "סדר ענפים" (אותיות) ולא מרמת שתי הספרות: שתי הרמות מדווחות רק תאים שבהם
+# 10 שכירים ומעלה, ולכן ברמה הדקה אובדים 5.2% מהשכירים לעומת 0.5% לכל היותר ברמת
+# הסדר. הממוצע משוקלל לפי מספר השכירים — אותה שיטה שבה הלמ"ס עצמה גוזרת את שורות
+# הנפה מנתוני הרשויות בקובץ 2024 (נבדק והתאים בדיוק).
+SUPPRESSION_FLOOR = 10
+
+
+def read_change(names):
+    """מחזיר את נתוני 2022 לכל רשות: מספר שכירים ושכר חודשי ממוצע."""
+    wb = openpyxl.load_workbook(SRC_2022, data_only=True)
+    ws = wb["רשויות_ענף_כלכלי__סדר_"]
+    if (ws.cell(1, 3).value or "").strip() != "מספר שכירים":
+        sys.exit("מבנה קובץ 2022 השתנה — עמודה 3 אינה 'מספר שכירים'")
+
+    per, cells, floor = {}, 0, None
+    for r in range(2, ws.max_row + 1):
+        name = ws.cell(r, 1).value
+        workers, salary = ws.cell(r, 3).value, ws.cell(r, 4).value
+        if not isinstance(name, str) or not name.strip() or workers is None or salary is None:
+            continue
+        workers, salary = float(workers), float(salary)
+        per.setdefault(name.strip(), []).append((workers, salary))
+        cells += 1
+        floor = workers if floor is None else min(floor, workers)
+    wb.close()
+
+    if floor is None or floor < SUPPRESSION_FLOOR:
+        sys.exit(f"סף ההשמטה בקובץ 2022 אינו {SUPPRESSION_FLOOR} כמצופה (נמצא {floor})")
+    if set(per) != set(names):
+        sys.exit(f"רשימת הרשויות ב-2022 אינה תואמת: "
+                 f"חסרות {set(names) - set(per)} · עודפות {set(per) - set(names)}")
+
+    out = {}
+    for name, rows in per.items():
+        w = sum(x for x, _ in rows)
+        out[name] = {"workers": round(w),
+                     "salary": round(sum(x * y for x, y in rows) / w, 2),
+                     "sections": len(rows)}
+    # חסם עליון על ההשמטה: כל תא חסר נושא לכל היותר 9 שכירים
+    missing = sum(20 - v["sections"] for v in out.values())   # 19 סדרים + "ללא ענף"
+    total = sum(v["workers"] for v in out.values())
+    return {"year": "2022", "byAuthority": out, "cells": cells,
+            # בקובץ 2022 נמסרו שני מדדים בלבד — אין בו חודשי עבודה ואין נתון ארצי
+            "metrics": ["workers", "salary"],
+            "floor": SUPPRESSION_FLOOR,
+            "maxMissing": missing * (SUPPRESSION_FLOOR - 1), "workers": total,
+            "coverage": round(1 - missing * (SUPPRESSION_FLOOR - 1) / total, 4)}
 
 
 def read_socio():
@@ -322,12 +373,14 @@ def main():
     meta = read_meta(wb)
     socio = read_socio()
     authorities = read_authorities(wb, socio)
+    change = read_change([i["name"] for i in authorities["items"]])
     anafim = read_anafim(wb, dic)
     wb.close()
 
+    data_year = "2024"
     data = {
         "meta": {
-            "year": "2024",
+            "year": data_year,
             "cluster": "אשכול גליל מזרחי",
             "source": "הלשכה המרכזית לסטטיסטיקה — עיבוד מיוחד מתוך קובצי הכנסה מנהליים",
             "processing": "עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי",
@@ -343,6 +396,7 @@ def main():
         "clusters": [{"id": c, "label": l, "codes": codes} for c, l, codes in CLUSTERS],
         "socio": {k: socio[k] for k in
                   ("clusters", "national", "year", "clusterYear", "source")},
+        "change": change,
     }
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.json")
@@ -355,6 +409,10 @@ def main():
     print(f"  רשויות: {len(authorities['items'])} · ענפים: {len(anafim)} · קיבוצים: {len(CLUSTERS)}")
     print(f"  כיסוי שכירים לפי ענף — אשכול {reg_sum:,} מתוך {authorities['region']['workers']:,}"
           f" · ארצי {nat_sum:,} מתוך {authorities['national']['workers']:,}")
+    print(f"  שינוי {change['year']}→{data_year}: שכירים "
+          f"{change['workers']:,} → {authorities['region']['workers']:,}"
+          f" · כיסוי 2022 {change['coverage']*100:.1f}% לפחות"
+          f" (עד {change['maxMissing']:,} שכירים בתאים שהושמטו)")
     used = sorted({i["socio"] for i in authorities["items"]})
     print(f"  אשכולות חברתיים-כלכליים בשימוש: {used}"
           f" · ארצי {socio['year']}: {socio['national']:,.0f} ₪"
