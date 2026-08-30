@@ -1335,59 +1335,59 @@
  "socio": {
   "clusters": {
    "1": {
-    "salary": 7169.01,
-    "workers": 52534,
+    "salary": 7664.19,
+    "workers": 55328,
     "authorities": 8
    },
    "2": {
-    "salary": 8441.49,
-    "workers": 563679,
+    "salary": 8989.06,
+    "workers": 573357,
     "authorities": 18
    },
    "3": {
-    "salary": 8147.19,
-    "workers": 404171,
+    "salary": 8698.53,
+    "workers": 410567,
     "authorities": 50
    },
    "4": {
-    "salary": 9013.42,
-    "workers": 229939,
+    "salary": 9714.07,
+    "workers": 232845,
     "authorities": 23
    },
    "5": {
-    "salary": 10063.64,
-    "workers": 640390,
+    "salary": 10781.39,
+    "workers": 643738,
     "authorities": 39
    },
    "6": {
-    "salary": 11082.56,
-    "workers": 376912,
+    "salary": 11867.02,
+    "workers": 379660,
     "authorities": 23
    },
    "7": {
-    "salary": 12962.39,
-    "workers": 869851,
+    "salary": 13801.91,
+    "workers": 867866,
     "authorities": 46
    },
    "8": {
-    "salary": 17167.77,
-    "workers": 669105,
+    "salary": 18231.17,
+    "workers": 659519,
     "authorities": 30
    },
    "9": {
-    "salary": 19676.17,
-    "workers": 156424,
+    "salary": 20617.09,
+    "workers": 153136,
     "authorities": 16
    },
    "10": {
-    "salary": 29815.82,
-    "workers": 2756,
+    "salary": 29834.17,
+    "workers": 2636,
     "authorities": 2
    }
   },
-  "national": 11864.45,
-  "year": "2022",
+  "national": 12592.77,
+  "year": "2023",
   "clusterYear": "2021",
-  "source": "הלמ\"ס — קובץ רשויות מקומיות 2023; שכר 2022, אשכול חברתי-כלכלי 2021"
+  "source": "הלמ\"ס — קובץ רשויות מקומיות; שכר 2023, אשכול חברתי-כלכלי 2021"
  }
 }
