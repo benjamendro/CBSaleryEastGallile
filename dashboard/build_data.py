@@ -14,6 +14,7 @@ import openpyxl
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC_DATA = os.path.join(ROOT, "עיבוד לפי ענף ורשות בני דורמבט.xlsx")
 SRC_DIC  = os.path.join(ROOT, "dicAnaf4SfarotMaster 2.xlsx")
+SRC_RASH = os.path.join(ROOT, "קובץ רשויות מקומיות 2023.xlsx")
 
 # --- שמות תצוגה קצרים לקבוצות הענפים (54 קודים דו-ספרתיים ב-51 קבוצות) -------
 # נגזרו ממילון ענפי הכלכלה של הלמ"ס; קוצרו כדי שייקראו היטב על גבי גרף.
@@ -137,6 +138,71 @@ def read_dictionary():
     return out
 
 
+def read_socio():
+    """
+    מחלץ מקובץ הרשויות המקומיות של הלמ"ס את האשכול החברתי-כלכלי של כל רשות,
+    ומחשב את השכר החודשי הממוצע בכל אחד מ-10 האשכולות.
+
+    השנים נקראות מהקובץ עצמו (שורה 3 נושאת שנת עדכון לכל עמודה): נתוני השכר
+    הם ל-2022 והאשכול החברתי-כלכלי ל-2021. ההגדרה של השכר זהה לזו שבקובץ
+    העיבוד — "סך שכר ברוטו לפרט מכל משרות העבודה במהלך השנה מחולק במספר חודשי
+    העבודה" — ולכן המדדים ברי-השוואה, אך השנים אינן זהות. הפער נשמר ומדווח.
+    """
+    wb = openpyxl.load_workbook(SRC_RASH, data_only=True)
+    ws = wb["נתונים פיזיים ונתוני אוכלוסייה "]
+    NAME, CLUSTER, COUNT, SALARY = 1, 251, 138, 139
+    NATIONAL_ROW, FIRST_AUTHORITY_ROW = 6, 10   # 7–9 הן שורות סיכום לפי סוג רשות
+    if (ws.cell(4, COUNT).value or "").strip() != "בעלי הכנסה משכר" \
+            or (ws.cell(5, SALARY).value or "").strip() != "שכר ממוצע" \
+            or (ws.cell(NATIONAL_ROW, NAME).value or "").strip() != "כלל ארצי":
+        sys.exit("מבנה קובץ הרשויות המקומיות השתנה — יש לעדכן את מיפוי העמודות")
+
+    def num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    of_authority, totals = {}, {}
+    for r in range(FIRST_AUTHORITY_ROW, ws.max_row + 1):
+        name = ws.cell(r, NAME).value
+        if not isinstance(name, str) or not name.strip():
+            continue
+        clu, cnt, sal = (num(ws.cell(r, c).value) for c in (CLUSTER, COUNT, SALARY))
+        if not (clu and cnt and sal):
+            continue
+        clu = int(clu)
+        of_authority[name.strip()] = clu
+        t = totals.setdefault(clu, [0.0, 0.0, 0])
+        t[0] += cnt * sal
+        t[1] += cnt
+        t[2] += 1
+
+    national = num(ws.cell(NATIONAL_ROW, SALARY).value)
+    clusters = {str(k): {"salary": round(v[0] / v[1], 2), "workers": round(v[1]),
+                         "authorities": v[2]}
+                for k, v in sorted(totals.items())}
+
+    # אימות: השחזור המשוקלל חייב להתלכד עם שורת "כלל ארצי" שבקובץ
+    w = sum(v["workers"] for v in clusters.values())
+    mine = sum(v["salary"] * v["workers"] for v in clusters.values()) / w
+    wb.close()
+    if national and abs(mine - national) / national > 0.005:
+        sys.exit(f"ממוצע משוחזר {mine:.2f} אינו תואם את שורת כלל ארצי {national:.2f}")
+
+    # שורה 3 בקובץ נושאת את שנת העדכון של כל עמודה
+    salary_year = str(ws.cell(3, COUNT).value or "").strip()
+    cluster_year = str(ws.cell(3, CLUSTER).value or "").strip()
+    if not (salary_year and cluster_year):
+        sys.exit("לא נמצאו שנות העדכון בשורה 3 של קובץ הרשויות המקומיות")
+
+    return {"of_authority": of_authority, "clusters": clusters,
+            "national": round(national, 2),
+            "year": salary_year, "clusterYear": cluster_year,
+            "source": f"הלמ\"ס — קובץ רשויות מקומיות 2023; שכר {salary_year}, "
+                      f"אשכול חברתי-כלכלי {cluster_year}"}
+
+
 def read_meta(wb):
     """שולף מגיליון 'מידע נילווה' את פרטי ההפקה ואת ההגדרות — מילה במילה מהמקור."""
     ws = wb["מידע נילווה"]
@@ -168,7 +234,7 @@ def read_meta(wb):
     }
 
 
-def read_authorities(wb):
+def read_authorities(wb, socio):
     ws = wb["לפי רשויות בנפת צפת וגולן"]
     rows = list(ws.iter_rows(values_only=True))
     of_nafa = {name: nafa for nafa, names in NAFOT.items() for name in names}
@@ -187,8 +253,11 @@ def read_authorities(wb):
             continue
         if name not in of_nafa:
             sys.exit(f"רשות לא מוכרת בשיוך לנפה: {name}")
+        if name not in socio["of_authority"]:
+            sys.exit(f"רשות ללא אשכול חברתי-כלכלי בקובץ הרשויות: {name}")
         items.append({"name": name, "nafa": of_nafa[name], "workers": num(r[3]),
-                      "months": num(r[4]), "salary": num(r[5])})
+                      "months": num(r[4]), "salary": num(r[5]),
+                      "socio": socio["of_authority"][name]})
 
     # אימות: סכום השכירים ברשויות חייב להתאים לסכום הנפות
     for nf in nafot:
@@ -251,7 +320,8 @@ def main():
     dic = read_dictionary()
     wb = openpyxl.load_workbook(SRC_DATA, data_only=True)
     meta = read_meta(wb)
-    authorities = read_authorities(wb)
+    socio = read_socio()
+    authorities = read_authorities(wb, socio)
     anafim = read_anafim(wb, dic)
     wb.close()
 
@@ -271,6 +341,8 @@ def main():
         "authorities": authorities,
         "anafim": anafim,
         "clusters": [{"id": c, "label": l, "codes": codes} for c, l, codes in CLUSTERS],
+        "socio": {k: socio[k] for k in
+                  ("clusters", "national", "year", "clusterYear", "source")},
     }
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.json")
@@ -283,6 +355,10 @@ def main():
     print(f"  רשויות: {len(authorities['items'])} · ענפים: {len(anafim)} · קיבוצים: {len(CLUSTERS)}")
     print(f"  כיסוי שכירים לפי ענף — אשכול {reg_sum:,} מתוך {authorities['region']['workers']:,}"
           f" · ארצי {nat_sum:,} מתוך {authorities['national']['workers']:,}")
+    used = sorted({i["socio"] for i in authorities["items"]})
+    print(f"  אשכולות חברתיים-כלכליים בשימוש: {used}"
+          f" · ארצי {socio['year']}: {socio['national']:,.0f} ₪"
+          f" (יחס 2024/{socio['year']}: {authorities['national']['salary'] / socio['national']:.4f})")
     for d in meta["definitions"]:
         print(f"  הגדרה מהמקור · {d['term']}: {d['text'][:60]}…")
 

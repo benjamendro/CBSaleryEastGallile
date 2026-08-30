@@ -27,8 +27,9 @@
 
   /* צבעי גרפים — עברו אימות נגישות מול רקע לבן (CVD ΔE 20.1 · ניגודיות ≥3:1) */
   --s-bar:#1C70A8;     /* העמודות — סדרה יחידה */
-  --s-ref:#8496A6;     /* קו ממוצע האשכול — נייטרלי, אינו צבע נתונים */
+  --s-ref:#6E8CA8;     /* קו ממוצע האשכול — נייטרלי, אינו צבע נתונים */
   --s-nat:#A8823A;     /* קו הממוצע הארצי — זהב המותג, מוכהה לניגודיות */
+  --s-socio:#8C1C5A;   /* קו האשכול החברתי-כלכלי — מדורג, מגנטה המותג */
 
   --font-head:'Rubik',system-ui,sans-serif;
   --font-body:'Assistant',system-ui,sans-serif;
@@ -139,6 +140,11 @@ input.ctl{cursor:text;font-weight:500}
 }
 .kpi .num .u{font-size:.55em;color:var(--ink-3);font-weight:600;margin-inline-start:3px}
 .kpi .note{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+.kpi-note{
+  font-size:13px;line-height:1.6;color:var(--ink-2);margin:12px 0 0;max-width:100ch;
+  border-inline-start:3px solid var(--s-nat);padding-inline-start:12px;
+}
+.kpi-note b{color:var(--ink);font-weight:700}
 
 /* ---------- מקטע + כרטיס גרף ---------- */
 section.block{padding:clamp(28px,4vw,46px) 0 4px}
@@ -159,6 +165,7 @@ section.block{padding:clamp(28px,4vw,46px) 0 4px}
 .legend .sw{width:12px;height:12px;border-radius:3px;flex:none}
 .legend .sw.ref{width:18px;height:0;border-top:2px dashed var(--s-ref);border-radius:0}
 .legend .sw.ref.nat{border-top-color:var(--s-nat)}
+.legend .sw.ref.socio{border-top:2.5px solid var(--s-socio)}
 
 /* ---------- טבלה ---------- */
 .tbl-scroll{overflow-x:auto;margin-top:10px;max-height:560px;overflow-y:auto}
@@ -201,6 +208,7 @@ table.data td.dim{color:var(--ink-3)}
 .tip .t-sub{font-size:11.5px;color:#A9C4D4;display:block;margin-bottom:6px}
 .tip .t-row{display:flex;justify-content:space-between;gap:20px}
 .tip .t-row span:last-child{font-weight:700;direction:ltr;unicode-bidi:plaintext}
+.tip .t-extra{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.22);color:#C8DCE8}
 
 /* ---------- כותרת תחתונה ---------- */
 footer.foot{background:var(--c-navy);color:#D9E7EF;margin-top:44px;padding:40px 0 46px}
@@ -273,6 +281,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 
   <div class="wrap">
     <div class="kpis" id="kpis"></div>
+    <p class="kpi-note" id="kpiNote"></p>
   </div>
 
   <!-- ============ לפי רשויות ============ -->
@@ -280,7 +289,11 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
     <div class="wrap">
       <div class="block-head">
         <h2>השוואה בין הרשויות</h2>
-        <p>כל עמודה היא רשות מקומית אחת. הקווים המקווקווים הם ממוצע האשכול והממוצע הארצי.</p>
+        <p>
+          כל עמודה היא רשות מקומית אחת. הקווים המקווקווים הם ממוצע גליל מזרחי והממוצע הארצי;
+          הקו המדורג הוא רף ההשוואה של כל רשות — ממוצע השכר בכל הרשויות בישראל שבאותו
+          אשכול חברתי-כלכלי. מיון „לפי אשכול חברתי-כלכלי” מסדר את המדרגות בסדר עולה.
+        </p>
       </div>
 
       <div class="ctl-row" role="group" aria-label="פקדי גרף הרשויות">
@@ -290,6 +303,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
             <option value="desc">מהגבוה לנמוך</option>
             <option value="asc">מהנמוך לגבוה</option>
             <option value="name">לפי שם הרשות</option>
+            <option value="socio">לפי אשכול חברתי-כלכלי</option>
           </select>
         </div>
         <div class="spacer"></div>
@@ -307,9 +321,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
           </div>
         </div>
         <div id="authBody"></div>
-        <div class="fig-note">
-          מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (2024) · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי
-        </div>
+        <div class="fig-note" id="authNote"></div>
       </div>
     </div>
   </section>
@@ -391,6 +403,10 @@ const A = DATA.authorities, ANAF = DATA.anafim, METRICS = DATA.metrics;
 const M = Object.fromEntries(METRICS.map(m => [m.id, m]));
 const CLUSTER = DATA.meta.cluster;
 const ANAF_LABEL = Object.fromEntries(ANAF.map(x => [x.code, x.label]));
+const SOCIO = DATA.socio;
+const socioAvg = c => (SOCIO.clusters[c] || {}).salary;
+/* יחס השכר הארצי בין שנת הנתונים לשנת קובץ הרשויות — מכמת את פער השנים */
+const SOCIO_LIFT = A.national.salary / SOCIO.national;
 
 const state = {
   metric: "salary",
@@ -475,9 +491,10 @@ function bindTip(node, html) {
   node.addEventListener("mousemove", moveTip);
   node.addEventListener("mouseleave", hideTip);
 }
-const tipRows = vals => METRICS
+const tipRows = (vals, extra) => METRICS
   .map(m => `<div class="t-row"><span>${m.label}</span><span>${fmtU(vals[m.id], m.id)}</span></div>`)
-  .join("");
+  .join("") + (extra || [])
+  .map(([k, v]) => `<div class="t-row t-extra"><span>${k}</span><span>${v}</span></div>`).join("");
 
 /* ---------------- פקד מקטעים ---------------- */
 function segment(host, options, current, onPick) {
@@ -505,7 +522,9 @@ function columnChart(host, items, opt) {
   const plotW = W - mR - mL, H = mT + plotH + mB;
   const base = mT + plotH, right = W - mR;
 
-  const maxV = Math.max(...items.map(d => d.value), ...opt.refs.map(r => r.value));
+  const stepVals = opt.step || [];
+  const maxV = Math.max(...items.map(d => d.value), ...opt.refs.map(r => r.value),
+                        ...stepVals.filter(v => v != null));
   const ax = niceAxis(maxV, 5);
   const Y = v => base - (v / ax.hi) * plotH;
 
@@ -535,7 +554,7 @@ function columnChart(host, items, opt) {
 
     /* אזור העכבר — הרצועה כולה, לא רק העמודה */
     const hit = S("rect", {x:cx - step/2, y:mT, width:step, height:plotH, fill:"transparent", style:"cursor:pointer"});
-    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all)}`);
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all, d.extra)}`);
     svg.appendChild(hit);
 
     /* תווית ערך — רק לקצוות, כדי לא להציף את הגרף במספרים */
@@ -564,6 +583,21 @@ function columnChart(host, items, opt) {
     const y = Y(r.value);
     refLine(svg, {x1:mL, x2:right, y1:y, y2:y}, r.color);
   });
+
+  /* קו מדורג — לכל רשות הרף של האשכול החברתי-כלכלי שלה.
+     המדרגות נוצרות מאליהן: כל רצועה נמתחת בין שני גבולותיה, והמעבר בין רצועות
+     שכנות בעלות רף שונה הופך לקפיצה אנכית. */
+  if (stepVals.length) {
+    let d = "", open = false;
+    stepVals.forEach((v, i) => {
+      if (v == null) { open = false; return; }
+      const cx = right - (i + 0.5) * step, y = Y(v);
+      d += (open ? ` L${cx + step/2},${y}` : ` M${cx + step/2},${y}`) + ` L${cx - step/2},${y}`;
+      open = true;
+    });
+    if (d) svg.appendChild(S("path", {d, fill:"none", stroke:"var(--s-socio)",
+                                      "stroke-width":2.5, "stroke-linejoin":"miter"}));
+  }
   return svg;
 }
 
@@ -605,7 +639,7 @@ function barChart(host, rows, opt) {
     svg.appendChild(S("path", {d: capStart(W, by, bw, bh, 4), fill:"var(--s-bar)"}));
 
     const hit = S("rect", {x:0, y:rTop, width:W, height:rowH - 6, fill:"transparent", style:"cursor:pointer"});
-    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all)}`);
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all, d.extra)}`);
     svg.appendChild(hit);
 
     /* ערך בקצה העמודה — בפנים אם נכנס בנוחות, אחרת מחוצה לה */
@@ -656,9 +690,9 @@ function renderKpis() {
 
   const cards = [
     {lab:CLUSTER,      txt: fmtBig(reg, id), unit:m.unit,
-     note: isCount ? "סך הכול · 18 רשויות" : "ממוצע משוקלל · 18 רשויות"},
+     note: (isCount ? "סך הכול" : "ממוצע משוקלל") + ` · 18 רשויות · ${DATA.meta.year}`},
     {lab:"כלל הארץ",   txt: fmtBig(nat, id), unit:m.unit,
-     note: isCount ? "סך הכול" : "ממוצע ארצי"},
+     note: (isCount ? "סך הכול" : "ממוצע ארצי") + " · " + DATA.meta.year},
     {lab: isCount ? "חלקו של האשכול" : "פער מהממוצע הארצי", txt: relTxt, unit:"",
      note: isCount ? "מכלל השכירים בישראל" : `${CLUSTER} לעומת כלל הארץ`}
   ];
@@ -682,9 +716,10 @@ function renderKpis() {
 function authRows() {
   const id = state.metric;
   return A.items.slice().sort({
-    desc: (a, b) => b[id] - a[id],
-    asc:  (a, b) => a[id] - b[id],
-    name: (a, b) => a.name.localeCompare(b.name, "he")
+    desc:  (a, b) => b[id] - a[id],
+    asc:   (a, b) => a[id] - b[id],
+    name:  (a, b) => a.name.localeCompare(b.name, "he"),
+    socio: (a, b) => a.socio - b.socio || b[id] - a[id]
   }[state.auth.sort]);
 }
 
@@ -694,10 +729,10 @@ function authRefs(items) {
   const id = state.metric;
   if (id === "workers") return [{
     value: items.reduce((s, x) => s + x.workers, 0) / (items.length || 1),
-    label: "ממוצע לרשות", color: "var(--s-ref)"
+    label: "ממוצע לרשות בגליל מזרחי", color: "var(--s-ref)"
   }];
   return [
-    {value: A.region[id],   label: "ממוצע האשכול", color: "var(--s-ref)"},
+    {value: A.region[id],   label: "ממוצע גליל מזרחי", color: "var(--s-ref)"},
     {value: A.national[id], label: "ממוצע ארצי",   color: "var(--s-nat)", nat: true}
   ];
 }
@@ -706,7 +741,7 @@ function renderAuth() {
   const id = state.metric, m = M[id];
   const items = authRows();
 
-  document.getElementById("authTitle").textContent = `${m.label} לפי רשות מקומית`;
+  document.getElementById("authTitle").textContent = `${m.label} לפי רשות מקומית · ${DATA.meta.year}`;
   document.getElementById("authSub").textContent =
     `${items.length} רשויות · ${CLUSTER}` + (m.unit ? ` · ${m.unit}` : "");
 
@@ -716,7 +751,10 @@ function renderAuth() {
       {head:"רשות", cls:"nm", get:r => r.name},
       {head:"שכר חודשי ממוצע (₪)", cls:"n", get:r => fmt(r.salary, "salary")},
       {head:"מספר שכירים",         cls:"n", get:r => fmt(r.workers, "workers")},
-      {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.months, "months")}
+      {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.months, "months")},
+      {head:"אשכול חברתי-כלכלי",   cls:"n dim", get:r => String(r.socio)},
+      {head:`ממוצע האשכול (₪, ${SOCIO.year})`, cls:"n dim",
+       get:r => fmt(socioAvg(r.socio), "salary")}
     ], items);
     return;
   }
@@ -724,8 +762,22 @@ function renderAuth() {
   const chart = el("div", {class:"chart"});
   clear(body).appendChild(chart);
   const refs = authRefs(items);
-  columnChart(chart, items.map(x => ({label:x.name, value:x[id], all:x})), {refs});
-  body.appendChild(refLegend(refs, id));
+  /* הרף החברתי-כלכלי הוא נתון שכר, ולכן מוצג רק כשמדד השכר נבחר */
+  const step = id === "salary" ? items.map(x => socioAvg(x.socio)) : null;
+  columnChart(chart, items.map(x => ({
+    label: x.name, value: x[id], sub: `אשכול חברתי-כלכלי ${x.socio}`, all: x,
+    extra: id === "salary" ? [[`ממוצע אשכול ${x.socio} · ${SOCIO.year}`, fmtU(socioAvg(x.socio), "salary")]] : null
+  })), {refs, step});
+
+  const lg = refLegend(refs, id);
+  if (step) {
+    const it = el("span", {class:"item"});
+    it.appendChild(el("span", {class:"sw ref socio"}));
+    it.appendChild(document.createTextNode(
+      `רף האשכול החברתי-כלכלי של כל רשות · ${SOCIO.year}`));
+    lg.appendChild(it);
+  }
+  body.appendChild(lg);
 }
 
 /* מקרא — סדרה יחידה אינה זקוקה לתיבת מקרא, ולכן מוצגים בו קווי הייחוס בלבד */
@@ -900,7 +952,8 @@ function renderAnafChart() {
   const items = rows.filter(r => !r.gap);
   const scopeName = st.scope === "reg" ? CLUSTER : "כלל הארץ";
 
-  document.getElementById("anafTitle").textContent = `${m.label} לפי ענף כלכלי — ${scopeName}`;
+  document.getElementById("anafTitle").textContent =
+    `${m.label} לפי ענף כלכלי · ${DATA.meta.year} — ${scopeName}`;
   document.getElementById("anafSub").textContent =
     `מוצגים ${items.length} מתוך ${anafBase().length} ענפים` + (m.unit ? ` · ${m.unit}` : "");
 
@@ -953,7 +1006,7 @@ function anafRefs() {
                color: "var(--s-nat)", nat: true};
   if (state.anaf.scope !== "reg") return [nat];
   const own = {value: anafAvg("reg"),
-               label: id === "workers" ? "ממוצע לענף באשכול" : "ממוצע האשכול · כלל הענפים",
+               label: id === "workers" ? "ממוצע לענף בגליל מזרחי" : "ממוצע גליל מזרחי · כלל הענפים",
                color: "var(--s-ref)"};
   return id === "workers" ? [own] : [own, nat];
 }
@@ -979,6 +1032,28 @@ function renderMeta() {
     ` — ${meta.kind}, ${meta.unit}, מתוך קובצי הכנסה מנהליים לשנת ${meta.year}.`));
 }
 
+/* המספר הארצי כאן אינו סדרת "שכר ממוצע למשרת שכיר" המצוטטת בתקשורת — שתי
+   הסדרות מודדות דברים שונים, ולכן ההבדל מוסבר במקום שבו המספר מוצג. */
+function renderAuthNote() {
+  const n = clear(document.getElementById("authNote"));
+  const parts = [`מקור: הלמ"ס, עיבוד מיוחד מקובצי הכנסה מנהליים (${DATA.meta.year}) · ` +
+                 `עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי`];
+  if (state.metric === "salary") parts.unshift(
+    `הרף החברתי-כלכלי לקוח מ${SOCIO.source}, ומשקלל את כל הרשויות בישראל שבאותו אשכול. ` +
+    `הוא מתייחס לשנת ${SOCIO.year} — הנתון העדכני ביותר שפורסם ברמת הרשות — בעוד העמודות הן ל-${DATA.meta.year}; ` +
+    `השכר הארצי עלה בין השנים ב-${nf1.format((SOCIO_LIFT - 1) * 100)}%, ולכן הרשויות נמדדות מול רף נמוך יחסית.`);
+  n.textContent = parts.join(" · ");
+}
+
+function renderKpiNote() {
+  const n = clear(document.getElementById("kpiNote"));
+  n.appendChild(el("b", {}, `כל הנתונים בעמוד — כולל הממוצע הארצי — הם לשנת ${DATA.meta.year}. `));
+  n.appendChild(document.createTextNode(
+    `הממוצע הארצי כאן (${fmtU(A.national.salary, "salary")}) מחושב לפי אנשים: סך השכר השנתי חלקי ` +
+    `חודשי העבודה, לכל מי שהייתה לו הכנסה משכר במהלך השנה. זו אינה סדרת „שכר ממוצע למשרת שכיר” ` +
+    `(13,514 ₪ ב-${DATA.meta.year}), שמחושבת לפי משרות ולא לפי אנשים ולכן גבוהה יותר.`));
+}
+
 function renderFootNotes() {
   const covReg = ANAF.reduce((s, x) => s + (x.reg.workers || 0), 0);
   const covNat = ANAF.reduce((s, x) => s + (x.nat.workers || 0), 0);
@@ -999,7 +1074,7 @@ function renderFootNotes() {
 /* ============================================================
    חיווט
    ============================================================ */
-function renderAll() { renderKpis(); renderAuth(); renderAnaf(); }
+function renderAll() { renderKpis(); renderAuth(); renderAuthNote(); renderAnaf(); }
 
 function init() {
   document.getElementById("chipWorkers").textContent = nf0.format(A.region.workers);
@@ -1009,6 +1084,7 @@ function init() {
   wireAnaf();
   renderAll();
   renderMeta();
+  renderKpiNote();
   renderFootNotes();
   addEventListener("scroll", hideTip, {passive:true});
 }
