@@ -144,12 +144,16 @@ def table_file(number, edition, geo):
             "מספרי לוחות חוזרים בין המהדורות." % key)
 
 
-def read(number, edition, geo, cols, skip=5, gendered=True):
+def read(number, edition, geo, cols, skip=5, gendered=True, gender_col=1):
     """קורא לוח לפי (מספר, מהדורה, רמה).
 
     cols: {שם -> אינדקס עמודה}. מחזיר {תווית: {מין: {שם: float|None}}} כשיש פילוח
     מגדרי, אחרת {תווית: {שם: float|None}}. תאים מושמטים ('.', '..', ריק) -> None.
     התווית מתמלאת קדימה, כי הלוחות כותבים אותה רק בשורה הראשונה של כל רשות.
+
+    **לוחות „מחוז ונפה” בנויים אחרת** — עמודת תווית נוספת (מחוז + נפה), ולכן
+    המגדר יושב בעמודה 2 ולא 1 והנתונים מוסטים ב-1. לכן `gender_col`, ולכן
+    מפות העמודות שלהם מוגדרות בנפרד ואינן משותפות עם לוחות היישוב/המועצה.
     """
     wb = openpyxl.load_workbook(os.path.join(BTL_DIR, table_file(number, edition, geo)),
                                 read_only=True)
@@ -163,9 +167,9 @@ def read(number, edition, geo, cols, skip=5, gendered=True):
         if current is None:
             continue
         if gendered:
-            if row[1] is None:
+            if len(row) <= gender_col or row[gender_col] is None:
                 continue
-            bucket = out.setdefault(current, {}).setdefault(str(row[1]).strip(), {})
+            bucket = out.setdefault(current, {}).setdefault(str(row[gender_col]).strip(), {})
         else:
             bucket = out.setdefault(current, {})
         for key, col in cols.items():

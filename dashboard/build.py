@@ -41,6 +41,8 @@ def main():
         tpl = f.read()
     with open(os.path.join(HERE, "data.json"), encoding="utf-8") as f:
         data = json.load(f)
+    with open(os.path.join(HERE, "btl.json"), encoding="utf-8") as f:
+        data["btl2"] = json.load(f)      # חלק ב׳ — ראו build_btl.py
 
     page = tpl.replace('"__DATA__"', json.dumps(data, ensure_ascii=False, separators=(",", ":")))
     page = page.replace("__LOGO__", logo_data_uri())
