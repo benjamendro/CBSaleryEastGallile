@@ -184,7 +184,7 @@ section.block{padding:clamp(28px,4vw,46px) 0 4px}
 .legend .sw.dot{width:13px;height:13px;border-radius:50%;background:var(--s-bar)}
 .legend .sw.dot.hollow{background:var(--card);box-shadow:inset 0 0 0 2.5px var(--s-bar)}
 .legend .sw.conn{width:22px;height:3px;border-radius:2px;background:var(--line-2)}
-.legend .sw.tick{width:3px;height:15px;border-radius:1px;background:var(--s-nat)}
+.legend .sw.step{width:22px;height:0;border-top:2.5px solid var(--s-nat);border-radius:0}
 .legend .sw.line{width:22px;height:3px;border-radius:2px}
 .legend-lead{
   margin:2px 0 4px;gap:10px 24px;padding:10px 14px;
@@ -726,6 +726,90 @@ function segment(host, options, current, onPick) {
   });
 }
 
+
+/* ============================================================
+   גרף עכביש — כל ענף מול אותו ענף בכלל הארץ
+   הרדיוס הוא היחס באחוזים, ולכן המרכז הוא אפס אמיתי ואין עיוות שטח.
+   מעגל 100% הוא הממוצע הארצי: מה שבפנים מפגר, מה שבחוץ מקדים.
+   ============================================================ */
+function radarChart(host, items, opt) {
+  const id = state.metric;
+  const n = items.length;
+  const W = 1040, H = 640, cx = W / 2, cy = H / 2 + 6, R = 214;
+  const ratios = items.map(d => d.value / d.peer * 100);
+  const hi = Math.max(110, Math.ceil(Math.max(...ratios) / 10) * 10 + 10);
+  const rad = v => Math.max(0, v / hi) * R;
+  /* מתחילים למעלה ומתקדמים נגד כיוון השעון — סדר קריאה טבעי ב-RTL */
+  const ang = i => -Math.PI / 2 - (i / n) * 2 * Math.PI;
+  const P = (i, v) => [cx + rad(v) * Math.cos(ang(i)), cy + rad(v) * Math.sin(ang(i))];
+
+  const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:620px",
+                        "aria-label":"יחס השכר בכל ענף לממוצע הארצי באותו ענף"});
+  clear(host).appendChild(svg);
+
+  /* טבעות + תוויות סרגל */
+  for (let v = 20; v <= hi + 1e-6; v += 20) {
+    const isRef = Math.abs(v - 100) < 1e-6;
+    svg.appendChild(S("circle", {cx, cy, r:rad(v), fill:"none",
+      stroke: isRef ? "var(--s-nat)" : "var(--line)",
+      "stroke-width": isRef ? 2 : 1,
+      "stroke-dasharray": isRef ? "6 5" : ""}));
+    /* תווית הטבעת החיצונית יושבת בדיוק במקום תווית הענף שבראש — מושמטת */
+    if (v < hi - 1e-6) {
+      const t = S("text", {x:cx + 4, y:cy - rad(v) - 4, "text-anchor":"end",
+        style:`font:${isRef ? 700 : 500} 11px var(--font-body);fill:${isRef ? "var(--s-nat)" : "var(--ink-3)"};direction:ltr`});
+      t.textContent = v + "%";
+      svg.appendChild(t);
+    }
+  }
+  /* חישורים */
+  items.forEach((d, i) => {
+    const [x, y] = P(i, hi);
+    svg.appendChild(S("line", {x1:cx, y1:cy, x2:x, y2:y, stroke:"var(--line)", "stroke-width":1}));
+  });
+
+  /* המצולע של האשכול */
+  const pts = ratios.map((v, i) => P(i, v));
+  svg.appendChild(S("path", {d:"M" + pts.map(q => q.join(",")).join("L") + "Z",
+    fill:"var(--s-bar)", opacity:.16}));
+  svg.appendChild(S("path", {d:"M" + pts.map(q => q.join(",")).join("L") + "Z",
+    fill:"none", stroke:"var(--s-bar)", "stroke-width":2.5, "stroke-linejoin":"round"}));
+
+  items.forEach((d, i) => {
+    const [x, y] = pts[i], r = ratios[i];
+    const below = r < 100;
+    svg.appendChild(S("circle", {cx:x, cy:y, r:5,
+      fill: below ? "var(--s-down)" : "var(--s-up)", stroke:"var(--card)", "stroke-width":2}));
+
+    /* תווית הענף על ההיקף. ב-RTL ‏text-anchor="start" מעגן את הקצה הימני,
+       ולכן בצד ימין של המעגל צריך "end" ובצד שמאל "start" — הפוך מהאינטואיציה. */
+    const a = ang(i), cosA = Math.cos(a);
+    /* בקצה העליון והתחתון התווית עומדת מעל החישור, ולכן דורשת מרווח גדול יותר */
+    const pad2 = Math.abs(cosA) < 0.25 ? 30 : 16;
+    const [lx, ly] = [cx + (R + pad2) * Math.cos(a), cy + (R + pad2) * Math.sin(a)];
+    const anchor = Math.abs(cosA) < 0.25 ? "middle" : (cosA > 0 ? "end" : "start");
+    const lab = S("text", {x:lx, y:ly + (Math.sin(a) > 0.75 ? 12 : Math.sin(a) < -0.75 ? -4 : 4),
+      "text-anchor":anchor,
+      style:"font:600 12px var(--font-body);fill:var(--ink-2);direction:rtl;unicode-bidi:plaintext"});
+    lab.textContent = d.label.length > 26 ? d.label.slice(0, 25) + "…" : d.label;
+    svg.appendChild(lab);
+
+    const val = S("text", {x:lx, y:ly + (Math.sin(a) > 0.75 ? 26 : Math.sin(a) < -0.75 ? 10 : 18),
+      "text-anchor":anchor,
+      style:`font:700 11.5px var(--font-head);fill:${below ? "var(--s-down)" : "var(--s-up)"};direction:ltr`});
+    val.textContent = nf0.format(r) + "%";
+    svg.appendChild(val);
+
+    const hit = S("circle", {cx:x, cy:y, r:14, fill:"transparent", style:"cursor:pointer"});
+    bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>` +
+      `<div class="t-row"><span>${CLUSTER}</span><span>${fmtU(d.value, id)}</span></div>` +
+      `<div class="t-row"><span>${d.peerLabel}</span><span>${fmtU(d.peer, id)}</span></div>` +
+      `<div class="t-row t-extra"><span>יחס לארצי</span><span>${nf1.format(r)}%</span></div>`);
+    svg.appendChild(hit);
+  });
+  return svg;
+}
+
 /* ============================================================
    גרף עמודות אנכי — רשויות (RTL: הראשון מימין)
    ============================================================ */
@@ -842,16 +926,6 @@ function barChart(host, rows, opt) {
       stroke:"var(--line)", "stroke-width":1}));
     svg.appendChild(S("path", {d: capStart(W, by, bw, bh, 4), fill:"var(--s-bar)"}));
 
-    /* סימון הענף עצמו בכלל הארץ — ההשוואה היחידה שיש בה מובן:
-       ענף מול אותו ענף, ולא ענף מול ממוצע כל הענפים. */
-    if (d.peer != null) {
-      const px = W - scale(d.peer);
-      svg.appendChild(S("line", {x1:px, x2:px, y1:by - 4, y2:by + bh + 4,
-        stroke:"var(--card)", "stroke-width":4}));
-      svg.appendChild(S("line", {x1:px, x2:px, y1:by - 4, y2:by + bh + 4,
-        stroke:"var(--s-nat)", "stroke-width":2.5}));
-    }
-
     const hit = S("rect", {x:0, y:rTop, width:W, height:rowH - 6, fill:"transparent", style:"cursor:pointer"});
     bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>${tipRows(d.all, d.extra)}` +
       (d.peer != null ? `<div class="t-row t-extra"><span>${d.peerLabel}</span><span>${fmtU(d.peer, id)}</span></div>` +
@@ -866,6 +940,29 @@ function barChart(host, rows, opt) {
     t.textContent = txt;
     svg.appendChild(t);
   });
+
+  /* קו מדורג — לכל ענף הערך שלו עצמו בכלל הארץ. קו רציף ולא סימונים בודדים:
+     כך נקרא מיד היכן העמודה חוצה אותו והיכן היא נופלת ממנו. הקו נשבר
+     במפרידים ובענפים שאין להם ערך ארצי. */
+  let d = "", open = false;
+  /* המדרגות ממורכזות על העמודות עצמן ולא על גובה השורה — העמודה יושבת
+     מתחת לתווית, ולכן מרכז השורה נמצא 5px מעל מרכז העמודה. */
+  const SHIFT = 21 + 7 - rowH / 2;
+  rows.forEach((r, i) => {
+    const yTop = Math.min(H - 2, pad + i * rowH + SHIFT);
+    const yBot = Math.min(H - 2, yTop + rowH);
+    if (r.gap || r.peer == null) { open = false; return; }
+    const px = W - scale(r.peer);
+    d += (open ? ` L${px},${yTop}` : ` M${px},${yTop}`) + ` L${px},${yBot}`;
+    open = true;
+  });
+  if (d) {
+    /* מקטע לבן מתחת לקו, כדי שייקרא גם כשהוא חוצה עמודה כהה */
+    svg.appendChild(S("path", {d, fill:"none", stroke:"var(--card)",
+                               "stroke-width":4.5, "stroke-linejoin":"round", opacity:.7}));
+    svg.appendChild(S("path", {d, fill:"none", stroke:"var(--s-nat)",
+                               "stroke-width":2.5, "stroke-linejoin":"round"}));
+  }
 
   return svg;
 }
@@ -1899,13 +1996,24 @@ function renderAnafChart() {
   document.getElementById("anafTitle").textContent =
     `${m.label} לפי ענף כלכלי · ${DATA.meta.year} — ${scopeName}`;
   document.getElementById("anafSub").textContent =
-    `מוצגים ${items.length} מתוך ${anafBase().length} ענפים` + (m.unit ? ` · ${m.unit}` : "");
+    `מוצגים ${items.length} מתוך ${anafBase().length} ענפים` +
+    (st.view === "radar" ? " · היחס לממוצע הארצי באותו ענף" : (m.unit ? ` · ${m.unit}` : ""));
 
   const body = document.getElementById("anafBody");
   if (!items.length) {
     clear(body).appendChild(el("div", {class:"empty"}, "לא נבחר ענף להצגה"));
     return;
   }
+
+  /* ההשוואה לארצי היא ענף מול אותו ענף, ולכן יש בה מובן רק בשכר:
+     מספר השכירים בענף גדול ארצית בשני סדרי גודל, וחודשי העבודה כמעט זהים. */
+  const canCompare = st.scope === "reg" && id === "salary";
+  const peerLabel = "אותו ענף · כלל הארץ";
+  const withPeer = r => r.gap ? r : {
+    ...r, sub:r.seder,
+    peer: canCompare ? (ANAF_BY_CODE[r.code] || {}).nat[id] : null,
+    peerLabel
+  };
 
   if (st.view === "table") {
     dataTable(body, [
@@ -1915,22 +2023,38 @@ function renderAnafChart() {
       {head:"מספר שכירים",         cls:"n", get:r => fmt(r.all.workers, "workers")},
       {head:"ממוצע חודשי עבודה",   cls:"n", get:r => fmt(r.all.months, "months")}
     ], items);
+  } else if (st.view === "radar") {
+    if (!canCompare) {
+      clear(body).appendChild(el("div", {class:"empty"}, st.scope !== "reg"
+        ? "גרף העכביש משווה כל ענף באשכול לאותו ענף בכלל הארץ — בתצוגה הארצית אין למה להשוות."
+        : `גרף העכביש מציג את היחס בין ${CLUSTER} לכלל הארץ באותו ענף. ` +
+          `היחס נושא מובן בשכר בלבד: מספר השכירים בענף גדול ארצית בשני סדרי גודל, וחודשי העבודה כמעט זהים.`));
+    } else if (items.length < 3) {
+      clear(body).appendChild(el("div", {class:"empty"},
+        "גרף עכביש דורש שלושה ענפים לפחות. הרחיבו את הבחירה."));
+    } else {
+      const chart = el("div", {class:"chart"});
+      clear(body).appendChild(chart);
+      radarChart(chart, items.map(withPeer), {});
+      const lg = el("div", {class:"legend"});
+      [["sw", "var(--s-bar)", `${CLUSTER} — היחס לארצי בכל ענף`],
+       ["sw ref nat", null, "100% = הממוצע הארצי באותו ענף"]].forEach(([cls, bg, txt]) => {
+        const it = el("span", {class:"item"});
+        const sw = el("span", {class:"sw " + cls});
+        if (bg) sw.style.background = bg;
+        it.appendChild(sw); it.appendChild(document.createTextNode(txt));
+        lg.appendChild(it);
+      });
+      body.appendChild(lg);
+    }
   } else {
     const chart = el("div", {class:"chart"});
     clear(body).appendChild(chart);
-    /* ההשוואה היא בין אותו ענף באשכול לאותו ענף בכלל הארץ.
-       בתצוגה הארצית אין למה להשוות, ולכן אין סימון. */
-    const peerKey = st.scope === "reg" ? "nat" : null;
-    const peerLabel = "אותו ענף · כלל הארץ";
-    barChart(chart, rows.map(r => r.gap ? r : {
-      ...r, sub:r.seder,
-      peer: peerKey ? (ANAF_BY_CODE[r.code] || {})[peerKey][id] : null,
-      peerLabel
-    }), {});
-    if (peerKey) {
+    barChart(chart, rows.map(withPeer), {});
+    if (canCompare) {
       const lg = el("div", {class:"legend"});
       const it = el("span", {class:"item"});
-      it.appendChild(el("span", {class:"sw tick"}));
+      it.appendChild(el("span", {class:"sw step"}));
       it.appendChild(document.createTextNode(peerLabel));
       lg.appendChild(it);
       body.appendChild(lg);
@@ -2168,7 +2292,9 @@ function wireAnaf() {
   ], state.anaf.mode, id => { state.anaf.mode = id; draw(); });
 
   segment(document.getElementById("anafView"), [
-    {id:"chart", label:"גרף"}, {id:"table", label:"טבלה"}
+    {id:"chart", label:"עמודות"},
+    {id:"radar", label:"עכביש", title:"יחס כל ענף לממוצע הארצי באותו ענף"},
+    {id:"table", label:"טבלה"}
   ], state.anaf.view, id => { state.anaf.view = id; draw(); });
 }
 
