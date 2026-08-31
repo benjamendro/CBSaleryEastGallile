@@ -52,180 +52,126 @@
     "nafa": "נפת צפת",
     "workers": 1576,
     "months": 9.6396,
-    "salary": 12807.0874,
-    "socio": 7,
-    "socioOwn": 12281.57,
-    "socioRatio": 0.8898
+    "salary": 12807.0874
    },
    {
     "name": "יסוד המעלה",
     "nafa": "נפת צפת",
     "workers": 865,
     "months": 9.7191,
-    "salary": 13567.9167,
-    "socio": 7,
-    "socioOwn": 13120.9,
-    "socioRatio": 0.9507
+    "salary": 13567.9167
    },
    {
     "name": "מטולה",
     "nafa": "נפת צפת",
     "workers": 1131,
     "months": 9.0371,
-    "salary": 10879.8482,
-    "socio": 7,
-    "socioOwn": 11052.26,
-    "socioRatio": 0.8008
+    "salary": 10879.8482
    },
    {
     "name": "ג'ש (גוש חלב)",
     "nafa": "נפת צפת",
     "workers": 1680,
     "months": 10.1155,
-    "salary": 11911.3955,
-    "socio": 7,
-    "socioOwn": 11641.97,
-    "socioRatio": 0.8435
+    "salary": 11911.3955
    },
    {
     "name": "טובא-זנגרייה",
     "nafa": "נפת צפת",
     "workers": 3457,
     "months": 9.5725,
-    "salary": 8641.8395,
-    "socio": 3,
-    "socioOwn": 8199.27,
-    "socioRatio": 0.9426
+    "salary": 8641.8395
    },
    {
     "name": "חצור הגלילית",
     "nafa": "נפת צפת",
     "workers": 4747,
     "months": 9.8664,
-    "salary": 9934.5861,
-    "socio": 4,
-    "socioOwn": 9477.33,
-    "socioRatio": 0.9756
+    "salary": 9934.5861
    },
    {
     "name": "קריית שמונה",
     "nafa": "נפת צפת",
     "workers": 10907,
     "months": 9.2862,
-    "salary": 10218.781,
-    "socio": 5,
-    "socioOwn": 9691.02,
-    "socioRatio": 0.8989
+    "salary": 10218.781
    },
    {
     "name": "הגליל העליון",
     "nafa": "נפת צפת",
     "workers": 8429,
     "months": 9.6378,
-    "salary": 13507.1778,
-    "socio": 7,
-    "socioOwn": 12615.1,
-    "socioRatio": 0.914
+    "salary": 13507.1778
    },
    {
     "name": "מרום הגליל",
     "nafa": "נפת צפת",
     "workers": 6875,
     "months": 9.6561,
-    "salary": 11145.6948,
-    "socio": 5,
-    "socioOwn": 10820.57,
-    "socioRatio": 1.0036
+    "salary": 11145.6948
    },
    {
     "name": "מבואות החרמון",
     "nafa": "נפת צפת",
     "workers": 4363,
     "months": 9.702,
-    "salary": 12284.5057,
-    "socio": 7,
-    "socioOwn": 12559.83,
-    "socioRatio": 0.91
+    "salary": 12284.5057
    },
    {
     "name": "צפת",
     "nafa": "נפת צפת",
     "workers": 13746,
     "months": 9.463,
-    "salary": 8442.4882,
-    "socio": 2,
-    "socioOwn": 8115.03,
-    "socioRatio": 0.9028
+    "salary": 8442.4882
    },
    {
     "name": "בוקעאתא",
     "nafa": "נפת גולן",
     "workers": 3111,
     "months": 9.4892,
-    "salary": 8227.6884,
-    "socio": 3,
-    "socioOwn": 7878.06,
-    "socioRatio": 0.9057
+    "salary": 8227.6884
    },
    {
     "name": "קצרין",
     "nafa": "נפת גולן",
     "workers": 4190,
     "months": 9.5883,
-    "salary": 9642.5781,
-    "socio": 5,
-    "socioOwn": 9510.49,
-    "socioRatio": 0.8821
+    "salary": 9642.5781
    },
    {
     "name": "מג'דל שמס",
     "nafa": "נפת גולן",
     "workers": 4908,
     "months": 9.3708,
-    "salary": 8102.4747,
-    "socio": 3,
-    "socioOwn": 7648.32,
-    "socioRatio": 0.8793
+    "salary": 8102.4747
    },
    {
     "name": "מסעדה",
     "nafa": "נפת גולן",
     "workers": 1783,
     "months": 9.484,
-    "salary": 7690.716,
-    "socio": 3,
-    "socioOwn": 7131.49,
-    "socioRatio": 0.8199
+    "salary": 7690.716
    },
    {
     "name": "ע'ג'ר",
     "nafa": "נפת גולן",
     "workers": 1118,
     "months": 9.6664,
-    "salary": 10116.5692,
-    "socio": 3,
-    "socioOwn": 9041.19,
-    "socioRatio": 1.0394
+    "salary": 10116.5692
    },
    {
     "name": "עין קנייא",
     "nafa": "נפת גולן",
     "workers": 1047,
     "months": 9.2674,
-    "salary": 8294.0636,
-    "socio": 3,
-    "socioOwn": 8024.58,
-    "socioRatio": 0.9225
+    "salary": 8294.0636
    },
    {
     "name": "גולן",
     "nafa": "נפת גולן",
     "workers": 9841,
     "months": 9.485,
-    "salary": 12399.4624,
-    "socio": 6,
-    "socioOwn": 11439.0,
-    "socioRatio": 0.9639
+    "salary": 12399.4624
    }
   ],
   "nafot": [
@@ -1368,64 +1314,6 @@
    ]
   }
  ],
- "socio": {
-  "clusters": {
-   "1": {
-    "salary": 7664.19,
-    "workers": 55328,
-    "authorities": 8
-   },
-   "2": {
-    "salary": 8989.06,
-    "workers": 573357,
-    "authorities": 18
-   },
-   "3": {
-    "salary": 8698.53,
-    "workers": 410567,
-    "authorities": 50
-   },
-   "4": {
-    "salary": 9714.07,
-    "workers": 232845,
-    "authorities": 23
-   },
-   "5": {
-    "salary": 10781.39,
-    "workers": 643738,
-    "authorities": 39
-   },
-   "6": {
-    "salary": 11867.02,
-    "workers": 379660,
-    "authorities": 23
-   },
-   "7": {
-    "salary": 13801.91,
-    "workers": 867866,
-    "authorities": 46
-   },
-   "8": {
-    "salary": 18231.17,
-    "workers": 659519,
-    "authorities": 30
-   },
-   "9": {
-    "salary": 20617.09,
-    "workers": 153136,
-    "authorities": 16
-   },
-   "10": {
-    "salary": 29834.17,
-    "workers": 2636,
-    "authorities": 2
-   }
-  },
-  "national": 12592.77,
-  "year": "2023",
-  "clusterYear": "2021",
-  "source": "הלמ\"ס — קובץ רשויות מקומיות; שכר 2023, אשכול חברתי-כלכלי 2021"
- },
  "change": {
   "year": "2022",
   "byAuthority": {
