@@ -9,6 +9,7 @@
   5. tag every row with its geography level and Eastern-Galilee cluster membership
 """
 import re, sys
+import numpy as np
 import pandas as pd
 
 sys.path.insert(0, '/home/user/CBSaleryEastGallile/eshkol-matching')
@@ -35,8 +36,10 @@ METRIC_RULES = [
     (r'^אחוזים \| שכירים ועצמאים', 'pct_both'),
     (r'^אחוזים \| כלל העובדים',    'drop'),
     # in the 'קבוצת ההכנסה' tables the wage column carries only the basis as header
-    (r'^ממוצע לחודש בשנה$',  'wage_year_mean'),
-    (r'^ממוצע לחודש עבודה$', 'wage_work_mean'),
+    # unified_all.csv appends ' - מספר עובדים' to every column label in these
+    # tables, wage columns included, so the suffix is optional here
+    (r'^ממוצע לחודש בשנה( - מספר עובדים)?$',  'wage_year_mean'),
+    (r'^ממוצע לחודש עבודה( - מספר עובדים)?$', 'wage_work_mean'),
     (r'משך העבודה .* 1-2 חודשים',   'dur_1_2'),
     (r'משך העבודה .* 3-5 חודשים',   'dur_3_5'),
     (r'משך העבודה .* 6-8 חודשים',   'dur_6_8'),
@@ -96,6 +99,40 @@ def geo_level(src):
     return 'יישוב'
 
 
+def reconcile_counts(df):
+    """Drop head-count cells that a table contradicts within its own time series.
+
+    'שכר ממוצע לחודש עבודה ... לפי יישוב, 2022-2016' publishes a corrupt 2019
+    worker-count column: 50 of its 271 rows carry a value belonging to a different
+    locality (מסעדה reads 12,652 between 1,765 and 1,842; its twin table reads
+    1,794).  Rather than patch that one file, flag any count that departs from the
+    geometric mean of its own neighbouring years by more than 2x while those
+    neighbours agree with each other to within 25% - a workforce does not multiply
+    and revert in a single year.  Flagged cells are dropped, so the value survives
+    from whichever other table reports the same cell.
+    """
+    key = ['src', 'level', 'entity', 'population', 'concept', 'gender']
+    c = df[(df.mkey == 'n_workers') & df.level.isin(['יישוב', 'מועצה אזורית'])]
+    ser = c.groupby(key + ['year'], observed=True).value.median().rename('v').reset_index()
+    ser = ser.sort_values(key + ['year'])
+    g = ser.groupby(key, observed=True).v
+    prev, nxt = g.shift(1), g.shift(-1)
+    neigh = np.sqrt(prev * nxt)
+    stable = (prev / nxt).between(0.8, 1.25)
+    flag = (stable & (neigh > 0) & ((ser.v / neigh > 2) | (ser.v / neigh < 0.5))).fillna(False)
+    bad = ser[flag][key + ['year']]
+    if bad.empty:
+        return df
+    # drop only the head-count cell, never the wage columns of the same row-set
+    r = df.reset_index()
+    idx = r[r.mkey == 'n_workers'].merge(bad, on=key + ['year'])['index']
+    rep = df.loc[idx].groupby(['src', 'year']).size().sort_values(ascending=False)
+    print('integrity: dropped %d implausible head-count cells' % len(idx))
+    for (src, yr), k in rep.items():
+        print('   %d cells | %d | %s' % (k, yr, src[:78]))
+    return df.drop(index=idx)
+
+
 def main():
     df = pd.read_pickle('/d/work/btl_reparsed.pkl')
 
@@ -148,6 +185,7 @@ def main():
     df['entity'] = df.geo1.where(df.level != 'נפה/מחוז', df.geo2.fillna('סה"כ'))
     df['parent'] = df.geo1.where(df.level == 'נפה/מחוז')
     df['ent_n'] = df.entity.map(sanitize)
+    df = reconcile_counts(df)
 
     # ---- Eastern-Galilee tagging ------------------------------------------------
     m = pd.read_excel(MAP)
