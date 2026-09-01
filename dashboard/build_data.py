@@ -16,6 +16,7 @@ SRC_DATA = os.path.join(ROOT, "עיבוד לפי ענף ורשות בני דור
 SRC_DIC  = os.path.join(ROOT, "dicAnaf4SfarotMaster 2.xlsx")
 SRC_2022 = os.path.join(ROOT, "עיבוד לפי ענף ורשות 2022.xlsx")
 SRC_BTL  = os.path.join(ROOT, "שכר ממוצע לחודש עבודה של כלל העובדים, לפי מחוז ונפה, 2022-2016.xlsx")
+SRC_ANAF_AUTH = os.path.join(ROOT, "ענף כלכלי ורשות 1גליל מזרחי.xlsx")
 
 # --- שמות תצוגה קצרים לקבוצות הענפים (54 קודים דו-ספרתיים ב-51 קבוצות) -------
 # נגזרו ממילון ענפי הכלכלה של הלמ"ס; קוצרו כדי שייקראו היטב על גבי גרף.
@@ -316,6 +317,49 @@ def read_authorities(wb):
     }
 
 
+
+def read_anaf_by_auth(anafim, authorities):
+    """ענף × רשות בתוך האשכול — הקובץ המשלים.
+
+    מבנה ארוך: שורה לכל צירוף (רשות, ענף) שעבר את סף ההשמטה.
+    סף ההשמטה פוגע כאן הרבה יותר מאשר ברמת האשכול, כי התא דק פי 18 —
+    ולכן נשמר **כיסוי לכל רשות**, והדשבורד מציג אותו במפורש.
+
+    נכשל אם: שם רשות אינו מוכר · קוד ענף אינו במילון הקבוצות ·
+    סכום השכירים ברשות עולה על הסך שלה בקובץ הראשי.
+    """
+    wb = openpyxl.load_workbook(SRC_ANAF_AUTH, data_only=True)
+    ws = wb[wb.sheetnames[0]]
+    known_codes = {a["code"] for a in anafim}
+    totals = {i["name"]: i for i in authorities["items"]}
+
+    cells = {}
+    for r in ws.iter_rows(min_row=4, values_only=True):
+        if r[0] is None or not str(r[0]).strip():
+            continue
+        code, auth = str(r[0]).strip(), str(r[4]).strip()
+        if code not in known_codes:
+            sys.exit(f"קוד ענף בקובץ ענף×רשות אינו מוכר: {code}")
+        if auth not in totals:
+            sys.exit(f"רשות בקובץ ענף×רשות אינה מוכרת: {auth}")
+        cells.setdefault(auth, {})[code] = {
+            "workers": num(r[1]), "months": num(r[2]), "salary": num(r[3])}
+    wb.close()
+
+    out = {}
+    for auth, byCode in cells.items():
+        w = sum(c["workers"] for c in byCode.values())
+        tot = totals[auth]["workers"]
+        if w > tot + 1:
+            sys.exit(f"סכום השכירים בענפים ב{auth} ({w:,}) עולה על הסך שלה ({tot:,})")
+        out[auth] = {"cells": byCode, "workers": w, "of": tot,
+                     "coverage": round(w / tot, 4), "anafim": len(byCode)}
+    missing = sorted(set(totals) - set(out))
+    if missing:
+        sys.exit(f"רשויות ללא פילוח ענפי: {missing}")
+    return out
+
+
 def read_anafim(wb, dic):
     ws = wb["לפי ענף כלכלי"]
     rows = list(ws.iter_rows(values_only=True))
@@ -360,6 +404,7 @@ def main():
     change = read_change([i["name"] for i in authorities["items"]])
     btl = read_btl_trend()
     anafim = read_anafim(wb, dic)
+    anaf_by_auth = read_anaf_by_auth(anafim, authorities)
     wb.close()
 
     data_year = "2024"
@@ -378,6 +423,7 @@ def main():
         ],
         "authorities": authorities,
         "anafim": anafim,
+        "anafByAuth": anaf_by_auth,
         "clusters": [{"id": c, "label": l, "codes": codes} for c, l, codes in CLUSTERS],
         "change": change,
         "btl": btl,
@@ -401,6 +447,14 @@ def main():
     print(f"  מגמת ביטוח לאומי {f['year']}–{l['year']}: שכר אשכול "
           f"{f['salary']:,.0f} → {l['salary']:,.0f} ₪ · ארצי {f['national']:,.0f} → {l['national']:,.0f} ₪"
           f" · יחס {f['ratio']*100:.1f}% → {l['ratio']*100:.1f}%")
+    cov = sorted(anaf_by_auth.items(), key=lambda kv: kv[1]["coverage"])
+    print(f"  פילוח ענפי לפי רשות: {len(anaf_by_auth)} רשויות · "
+          f"{sum(v['workers'] for v in anaf_by_auth.values()):,} שכירים מתוך "
+          f"{authorities['region']['workers']:,}")
+    print(f"    כיסוי נמוך ביותר: " + " · ".join(
+        f"{k} {v['coverage']*100:.0f}%" for k, v in cov[:3]))
+    print(f"    כיסוי גבוה ביותר: " + " · ".join(
+        f"{k} {v['coverage']*100:.0f}%" for k, v in cov[-3:]))
     for d in meta["definitions"]:
         print(f"  הגדרה מהמקור · {d['term']}: {d['text'][:60]}…")
 

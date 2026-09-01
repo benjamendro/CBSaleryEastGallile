@@ -1160,6 +1160,1997 @@
    }
   }
  ],
+ "anafByAuth": {
+  "ראש פינה": {
+   "cells": {
+    "1": {
+     "workers": 59,
+     "months": 8.339,
+     "salary": 8188.82
+    },
+    "47": {
+     "workers": 82,
+     "months": 9.4024,
+     "salary": 7905.27
+    },
+    "56": {
+     "workers": 150,
+     "months": 7.7933,
+     "salary": 5243.28
+    },
+    "83": {
+     "workers": 98,
+     "months": 8.5918,
+     "salary": 9937.5
+    },
+    "84": {
+     "workers": 55,
+     "months": 11.4909,
+     "salary": 32498.34
+    },
+    "85": {
+     "workers": 205,
+     "months": 10.2683,
+     "salary": 12884.37
+    },
+    "86": {
+     "workers": 58,
+     "months": 9.6552,
+     "salary": 14720.07
+    },
+    "87+88": {
+     "workers": 65,
+     "months": 8.5385,
+     "salary": 5571.61
+    },
+    "94": {
+     "workers": 80,
+     "months": 9.5375,
+     "salary": 7619.33
+    }
+   },
+   "workers": 852,
+   "of": 1576,
+   "coverage": 0.5406,
+   "anafim": 9
+  },
+  "יסוד המעלה": {
+   "cells": {
+    "1": {
+     "workers": 64,
+     "months": 9.1875,
+     "salary": 10929.72
+    },
+    "56": {
+     "workers": 73,
+     "months": 7.9178,
+     "salary": 5262.6
+    },
+    "85": {
+     "workers": 91,
+     "months": 10.1648,
+     "salary": 12542.98
+    }
+   },
+   "workers": 228,
+   "of": 865,
+   "coverage": 0.2636,
+   "anafim": 3
+  },
+  "מטולה": {
+   "cells": {
+    "1": {
+     "workers": 55,
+     "months": 8.5636,
+     "salary": 7993.96
+    },
+    "47": {
+     "workers": 57,
+     "months": 7.4386,
+     "salary": 8541.32
+    },
+    "56": {
+     "workers": 92,
+     "months": 7.0109,
+     "salary": 4051.99
+    },
+    "83": {
+     "workers": 59,
+     "months": 8.6271,
+     "salary": 10272.91
+    },
+    "85": {
+     "workers": 162,
+     "months": 8.7963,
+     "salary": 11084.04
+    },
+    "87+88": {
+     "workers": 84,
+     "months": 8.2619,
+     "salary": 5740.91
+    },
+    "94": {
+     "workers": 57,
+     "months": 9.0351,
+     "salary": 7373.21
+    }
+   },
+   "workers": 566,
+   "of": 1131,
+   "coverage": 0.5004,
+   "anafim": 7
+  },
+  "ג'ש (גוש חלב)": {
+   "cells": {
+    "1": {
+     "workers": 83,
+     "months": 9.6747,
+     "salary": 9936.34
+    },
+    "10": {
+     "workers": 56,
+     "months": 10.9286,
+     "salary": 9948.48
+    },
+    "31+32+33+34": {
+     "workers": 84,
+     "months": 11.1071,
+     "salary": 12255.4
+    },
+    "43": {
+     "workers": 52,
+     "months": 8.9808,
+     "salary": 9134.58
+    },
+    "47": {
+     "workers": 119,
+     "months": 9.7563,
+     "salary": 9036.18
+    },
+    "56": {
+     "workers": 70,
+     "months": 8.9714,
+     "salary": 5915.52
+    },
+    "69": {
+     "workers": 55,
+     "months": 10.0909,
+     "salary": 9195.74
+    },
+    "83": {
+     "workers": 82,
+     "months": 11.0732,
+     "salary": 14787.58
+    },
+    "84": {
+     "workers": 92,
+     "months": 11.3152,
+     "salary": 20123.16
+    },
+    "85": {
+     "workers": 123,
+     "months": 10.6179,
+     "salary": 15455.13
+    },
+    "86": {
+     "workers": 89,
+     "months": 11.0562,
+     "salary": 17094.8
+    },
+    "87+88": {
+     "workers": 101,
+     "months": 9.4158,
+     "salary": 4916.46
+    }
+   },
+   "workers": 1006,
+   "of": 1680,
+   "coverage": 0.5988,
+   "anafim": 12
+  },
+  "טובא-זנגרייה": {
+   "cells": {
+    "1": {
+     "workers": 252,
+     "months": 9.8135,
+     "salary": 8461.92
+    },
+    "10": {
+     "workers": 177,
+     "months": 8.6045,
+     "salary": 8775.55
+    },
+    "22": {
+     "workers": 92,
+     "months": 10.3913,
+     "salary": 12726.76
+    },
+    "23+24+25": {
+     "workers": 81,
+     "months": 10.1728,
+     "salary": 10289.3
+    },
+    "35+36+37+38+39": {
+     "workers": 73,
+     "months": 9.0274,
+     "salary": 9338.85
+    },
+    "43": {
+     "workers": 67,
+     "months": 8.8806,
+     "salary": 8522.42
+    },
+    "46": {
+     "workers": 79,
+     "months": 9.8861,
+     "salary": 8171.83
+    },
+    "47": {
+     "workers": 349,
+     "months": 9.3524,
+     "salary": 6705.8
+    },
+    "49": {
+     "workers": 370,
+     "months": 10.0162,
+     "salary": 11160.86
+    },
+    "55": {
+     "workers": 201,
+     "months": 9.0647,
+     "salary": 6855.85
+    },
+    "56": {
+     "workers": 198,
+     "months": 9.0404,
+     "salary": 6002.13
+    },
+    "78": {
+     "workers": 113,
+     "months": 6.885,
+     "salary": 5017.61
+    },
+    "80": {
+     "workers": 54,
+     "months": 8.6111,
+     "salary": 7452.5
+    },
+    "81": {
+     "workers": 157,
+     "months": 8.5159,
+     "salary": 5453.3
+    },
+    "83": {
+     "workers": 168,
+     "months": 10.9762,
+     "salary": 12141.42
+    },
+    "84": {
+     "workers": 64,
+     "months": 11.0156,
+     "salary": 15295.58
+    },
+    "85": {
+     "workers": 130,
+     "months": 10.8231,
+     "salary": 13724.24
+    },
+    "86": {
+     "workers": 65,
+     "months": 10.3077,
+     "salary": 11781.12
+    },
+    "87+88": {
+     "workers": 193,
+     "months": 10.1088,
+     "salary": 4508.83
+    }
+   },
+   "workers": 2883,
+   "of": 3457,
+   "coverage": 0.834,
+   "anafim": 19
+  },
+  "חצור הגלילית": {
+   "cells": {
+    "1": {
+     "workers": 74,
+     "months": 10.2973,
+     "salary": 8203.07
+    },
+    "10": {
+     "workers": 147,
+     "months": 9.0952,
+     "salary": 9108.66
+    },
+    "22": {
+     "workers": 56,
+     "months": 10.6429,
+     "salary": 12271.24
+    },
+    "23+24+25": {
+     "workers": 85,
+     "months": 11.4,
+     "salary": 14290.18
+    },
+    "26": {
+     "workers": 57,
+     "months": 11.1053,
+     "salary": 14031.31
+    },
+    "27+28": {
+     "workers": 74,
+     "months": 10.9865,
+     "salary": 12024.7
+    },
+    "31+32+33+34": {
+     "workers": 55,
+     "months": 10.0545,
+     "salary": 11832.5
+    },
+    "35+36+37+38+39": {
+     "workers": 74,
+     "months": 10,
+     "salary": 17314.75
+    },
+    "43": {
+     "workers": 89,
+     "months": 9.6517,
+     "salary": 11163.44
+    },
+    "45": {
+     "workers": 52,
+     "months": 10.6154,
+     "salary": 10309.41
+    },
+    "46": {
+     "workers": 134,
+     "months": 9.3284,
+     "salary": 10023.03
+    },
+    "47": {
+     "workers": 494,
+     "months": 8.9211,
+     "salary": 7001.8
+    },
+    "49": {
+     "workers": 96,
+     "months": 10.6354,
+     "salary": 10213.42
+    },
+    "55": {
+     "workers": 62,
+     "months": 8.6452,
+     "salary": 9468.58
+    },
+    "56": {
+     "workers": 287,
+     "months": 7.777,
+     "salary": 4880.24
+    },
+    "62+63": {
+     "workers": 63,
+     "months": 10.7619,
+     "salary": 21158.41
+    },
+    "64+65+66": {
+     "workers": 67,
+     "months": 10.6418,
+     "salary": 16326.86
+    },
+    "69": {
+     "workers": 54,
+     "months": 10.2778,
+     "salary": 8633.84
+    },
+    "81": {
+     "workers": 69,
+     "months": 10.3333,
+     "salary": 6183.57
+    },
+    "82": {
+     "workers": 123,
+     "months": 10.1301,
+     "salary": 7320.01
+    },
+    "83": {
+     "workers": 279,
+     "months": 10.4086,
+     "salary": 10176.25
+    },
+    "84": {
+     "workers": 126,
+     "months": 11.3175,
+     "salary": 17907.17
+    },
+    "85": {
+     "workers": 653,
+     "months": 10.098,
+     "salary": 10492.31
+    },
+    "86": {
+     "workers": 94,
+     "months": 11.117,
+     "salary": 13101.93
+    },
+    "87+88": {
+     "workers": 388,
+     "months": 9.3351,
+     "salary": 4671.32
+    },
+    "93": {
+     "workers": 53,
+     "months": 7.3019,
+     "salary": 7180.05
+    },
+    "94": {
+     "workers": 162,
+     "months": 9.8827,
+     "salary": 6506.5
+    }
+   },
+   "workers": 3967,
+   "of": 4747,
+   "coverage": 0.8357,
+   "anafim": 27
+  },
+  "קריית שמונה": {
+   "cells": {
+    "1": {
+     "workers": 184,
+     "months": 8.087,
+     "salary": 7072.64
+    },
+    "10": {
+     "workers": 293,
+     "months": 9.6314,
+     "salary": 11182.25
+    },
+    "11+12": {
+     "workers": 88,
+     "months": 10.7955,
+     "salary": 13284.02
+    },
+    "13+14+15": {
+     "workers": 143,
+     "months": 10.1259,
+     "salary": 12487.81
+    },
+    "16+17+18": {
+     "workers": 69,
+     "months": 11.1594,
+     "salary": 15138.35
+    },
+    "19+20": {
+     "workers": 154,
+     "months": 10.4935,
+     "salary": 15588.43
+    },
+    "22": {
+     "workers": 231,
+     "months": 10.8268,
+     "salary": 13670.19
+    },
+    "23+24+25": {
+     "workers": 193,
+     "months": 10.1606,
+     "salary": 14532.61
+    },
+    "26": {
+     "workers": 282,
+     "months": 11.1525,
+     "salary": 16325.43
+    },
+    "27+28": {
+     "workers": 160,
+     "months": 10.3563,
+     "salary": 11349.56
+    },
+    "31+32+33+34": {
+     "workers": 183,
+     "months": 10.7541,
+     "salary": 12957.07
+    },
+    "35+36+37+38+39": {
+     "workers": 58,
+     "months": 10.7759,
+     "salary": 16587.59
+    },
+    "41": {
+     "workers": 111,
+     "months": 9.3423,
+     "salary": 12395.43
+    },
+    "43": {
+     "workers": 116,
+     "months": 9.4052,
+     "salary": 9947.62
+    },
+    "45": {
+     "workers": 138,
+     "months": 9.6957,
+     "salary": 12356.23
+    },
+    "46": {
+     "workers": 264,
+     "months": 9.3636,
+     "salary": 11610.47
+    },
+    "47": {
+     "workers": 1012,
+     "months": 7.8854,
+     "salary": 6844.14
+    },
+    "49": {
+     "workers": 274,
+     "months": 10.6934,
+     "salary": 12459.65
+    },
+    "50+51+52+53": {
+     "workers": 72,
+     "months": 9.8194,
+     "salary": 11899.48
+    },
+    "55": {
+     "workers": 184,
+     "months": 7.1359,
+     "salary": 8000.76
+    },
+    "56": {
+     "workers": 848,
+     "months": 7.2193,
+     "salary": 4984.32
+    },
+    "61": {
+     "workers": 86,
+     "months": 10.5,
+     "salary": 10192.22
+    },
+    "62+63": {
+     "workers": 250,
+     "months": 10.5,
+     "salary": 20543.83
+    },
+    "64+65+66": {
+     "workers": 191,
+     "months": 10.3665,
+     "salary": 14315.34
+    },
+    "68": {
+     "workers": 64,
+     "months": 10.3281,
+     "salary": 13978
+    },
+    "69": {
+     "workers": 91,
+     "months": 9.978,
+     "salary": 10641.79
+    },
+    "70": {
+     "workers": 100,
+     "months": 8.79,
+     "salary": 9126.45
+    },
+    "71": {
+     "workers": 76,
+     "months": 10.1316,
+     "salary": 13571.55
+    },
+    "72": {
+     "workers": 121,
+     "months": 10.0826,
+     "salary": 18455.4
+    },
+    "73+74+75": {
+     "workers": 118,
+     "months": 8.1017,
+     "salary": 9003.36
+    },
+    "77+79": {
+     "workers": 57,
+     "months": 8.1053,
+     "salary": 8250.69
+    },
+    "78": {
+     "workers": 142,
+     "months": 6.7254,
+     "salary": 5844.72
+    },
+    "80": {
+     "workers": 179,
+     "months": 8.743,
+     "salary": 8457.63
+    },
+    "81": {
+     "workers": 150,
+     "months": 7.42,
+     "salary": 6838.99
+    },
+    "82": {
+     "workers": 132,
+     "months": 8.0833,
+     "salary": 6726.87
+    },
+    "83": {
+     "workers": 620,
+     "months": 10.1242,
+     "salary": 10178.81
+    },
+    "84": {
+     "workers": 134,
+     "months": 10.5597,
+     "salary": 16689.22
+    },
+    "85": {
+     "workers": 1180,
+     "months": 9.8407,
+     "salary": 10978.56
+    },
+    "86": {
+     "workers": 235,
+     "months": 10.0426,
+     "salary": 10824.32
+    },
+    "87+88": {
+     "workers": 787,
+     "months": 8.7484,
+     "salary": 4526.36
+    },
+    "93": {
+     "workers": 147,
+     "months": 7.1088,
+     "salary": 9624.44
+    },
+    "94": {
+     "workers": 265,
+     "months": 7.3962,
+     "salary": 5793.88
+    }
+   },
+   "workers": 10182,
+   "of": 10907,
+   "coverage": 0.9335,
+   "anafim": 42
+  },
+  "בוקעאתא": {
+   "cells": {
+    "1": {
+     "workers": 298,
+     "months": 8.8456,
+     "salary": 5731.43
+    },
+    "41": {
+     "workers": 304,
+     "months": 8.3914,
+     "salary": 7382.38
+    },
+    "42": {
+     "workers": 233,
+     "months": 9.9056,
+     "salary": 9052.17
+    },
+    "43": {
+     "workers": 153,
+     "months": 8.9935,
+     "salary": 6812.83
+    },
+    "46": {
+     "workers": 63,
+     "months": 9.6032,
+     "salary": 7786
+    },
+    "47": {
+     "workers": 200,
+     "months": 9.685,
+     "salary": 5444.88
+    },
+    "49": {
+     "workers": 59,
+     "months": 9.8475,
+     "salary": 7707.78
+    },
+    "55": {
+     "workers": 96,
+     "months": 7.2396,
+     "salary": 6350.97
+    },
+    "71": {
+     "workers": 79,
+     "months": 10.2152,
+     "salary": 7788.15
+    },
+    "78": {
+     "workers": 70,
+     "months": 8.1571,
+     "salary": 4219.19
+    },
+    "83": {
+     "workers": 148,
+     "months": 10.5338,
+     "salary": 10783.88
+    },
+    "85": {
+     "workers": 247,
+     "months": 10.6599,
+     "salary": 14444.57
+    },
+    "86": {
+     "workers": 157,
+     "months": 10.2803,
+     "salary": 14318.98
+    },
+    "87+88": {
+     "workers": 257,
+     "months": 9.716,
+     "salary": 3334.17
+    }
+   },
+   "workers": 2364,
+   "of": 3111,
+   "coverage": 0.7599,
+   "anafim": 14
+  },
+  "קצרין": {
+   "cells": {
+    "1": {
+     "workers": 125,
+     "months": 8.192,
+     "salary": 8632
+    },
+    "10": {
+     "workers": 83,
+     "months": 9.759,
+     "salary": 9236.48
+    },
+    "11+12": {
+     "workers": 99,
+     "months": 10.0404,
+     "salary": 11289.29
+    },
+    "22": {
+     "workers": 65,
+     "months": 10.9538,
+     "salary": 11855.41
+    },
+    "26": {
+     "workers": 112,
+     "months": 10.5625,
+     "salary": 10549.52
+    },
+    "27+28": {
+     "workers": 103,
+     "months": 10.5922,
+     "salary": 10921.9
+    },
+    "31+32+33+34": {
+     "workers": 100,
+     "months": 10.44,
+     "salary": 11716.05
+    },
+    "43": {
+     "workers": 61,
+     "months": 9.1967,
+     "salary": 11110.33
+    },
+    "46": {
+     "workers": 88,
+     "months": 8.7614,
+     "salary": 9232.93
+    },
+    "47": {
+     "workers": 235,
+     "months": 8.7957,
+     "salary": 6495.91
+    },
+    "49": {
+     "workers": 72,
+     "months": 10.2639,
+     "salary": 10187.15
+    },
+    "55": {
+     "workers": 75,
+     "months": 8.5467,
+     "salary": 9793.19
+    },
+    "56": {
+     "workers": 241,
+     "months": 7.7261,
+     "salary": 5111.31
+    },
+    "62+63": {
+     "workers": 84,
+     "months": 10.7262,
+     "salary": 22121.55
+    },
+    "64+65+66": {
+     "workers": 58,
+     "months": 9.6379,
+     "salary": 11696.85
+    },
+    "70": {
+     "workers": 59,
+     "months": 9.3729,
+     "salary": 10567.48
+    },
+    "72": {
+     "workers": 65,
+     "months": 11.2,
+     "salary": 17553.04
+    },
+    "73+74+75": {
+     "workers": 54,
+     "months": 9.1296,
+     "salary": 9315.09
+    },
+    "78": {
+     "workers": 96,
+     "months": 7.0521,
+     "salary": 5731.91
+    },
+    "80": {
+     "workers": 60,
+     "months": 10.3833,
+     "salary": 7984.3
+    },
+    "81": {
+     "workers": 103,
+     "months": 9.7864,
+     "salary": 7835.6
+    },
+    "83": {
+     "workers": 310,
+     "months": 10.5839,
+     "salary": 9268.78
+    },
+    "85": {
+     "workers": 544,
+     "months": 10.4044,
+     "salary": 12029.05
+    },
+    "86": {
+     "workers": 74,
+     "months": 10.8514,
+     "salary": 11758.79
+    },
+    "87+88": {
+     "workers": 261,
+     "months": 9.5709,
+     "salary": 4613.4
+    },
+    "93": {
+     "workers": 61,
+     "months": 6.8361,
+     "salary": 6935.14
+    },
+    "94": {
+     "workers": 236,
+     "months": 6.5424,
+     "salary": 5207.92
+    }
+   },
+   "workers": 3524,
+   "of": 4190,
+   "coverage": 0.8411,
+   "anafim": 27
+  },
+  "מג'דל שמס": {
+   "cells": {
+    "1": {
+     "workers": 162,
+     "months": 8.6605,
+     "salary": 6536.69
+    },
+    "31+32+33+34": {
+     "workers": 51,
+     "months": 8.9608,
+     "salary": 6828.14
+    },
+    "41": {
+     "workers": 584,
+     "months": 8.7363,
+     "salary": 7121.01
+    },
+    "42": {
+     "workers": 184,
+     "months": 8.9457,
+     "salary": 8809.46
+    },
+    "43": {
+     "workers": 432,
+     "months": 8.706,
+     "salary": 6175.86
+    },
+    "46": {
+     "workers": 110,
+     "months": 9.1091,
+     "salary": 7621.64
+    },
+    "47": {
+     "workers": 451,
+     "months": 9.1286,
+     "salary": 4745.04
+    },
+    "49": {
+     "workers": 87,
+     "months": 9.069,
+     "salary": 8067.35
+    },
+    "50+51+52+53": {
+     "workers": 96,
+     "months": 8.8125,
+     "salary": 5989.28
+    },
+    "56": {
+     "workers": 168,
+     "months": 8.1429,
+     "salary": 4355.65
+    },
+    "62+63": {
+     "workers": 76,
+     "months": 10.4605,
+     "salary": 20667.45
+    },
+    "64+65+66": {
+     "workers": 66,
+     "months": 9.6212,
+     "salary": 7614.92
+    },
+    "71": {
+     "workers": 184,
+     "months": 9.6739,
+     "salary": 9858.88
+    },
+    "78": {
+     "workers": 200,
+     "months": 7.815,
+     "salary": 4272.24
+    },
+    "83": {
+     "workers": 184,
+     "months": 11.0272,
+     "salary": 11199.49
+    },
+    "84": {
+     "workers": 60,
+     "months": 11.5333,
+     "salary": 26018.07
+    },
+    "85": {
+     "workers": 450,
+     "months": 10.7244,
+     "salary": 13074.67
+    },
+    "86": {
+     "workers": 205,
+     "months": 10.6146,
+     "salary": 15532.17
+    },
+    "87+88": {
+     "workers": 442,
+     "months": 9.6312,
+     "salary": 3547.3
+    },
+    "93": {
+     "workers": 59,
+     "months": 6.5763,
+     "salary": 5964.93
+    }
+   },
+   "workers": 4251,
+   "of": 4908,
+   "coverage": 0.8661,
+   "anafim": 20
+  },
+  "מסעדה": {
+   "cells": {
+    "1": {
+     "workers": 105,
+     "months": 9.4571,
+     "salary": 6875.79
+    },
+    "41": {
+     "workers": 155,
+     "months": 9.2065,
+     "salary": 7040.52
+    },
+    "42": {
+     "workers": 105,
+     "months": 9.6286,
+     "salary": 6454.23
+    },
+    "43": {
+     "workers": 141,
+     "months": 8.0355,
+     "salary": 5133.42
+    },
+    "46": {
+     "workers": 56,
+     "months": 9.3929,
+     "salary": 7380.98
+    },
+    "47": {
+     "workers": 160,
+     "months": 9.375,
+     "salary": 5237.88
+    },
+    "56": {
+     "workers": 59,
+     "months": 7.9153,
+     "salary": 3624.18
+    },
+    "83": {
+     "workers": 97,
+     "months": 10.8351,
+     "salary": 10175.17
+    },
+    "85": {
+     "workers": 143,
+     "months": 10.4476,
+     "salary": 11902.78
+    },
+    "86": {
+     "workers": 86,
+     "months": 10.3953,
+     "salary": 15453.94
+    },
+    "87+88": {
+     "workers": 170,
+     "months": 9.3706,
+     "salary": 3358.04
+    }
+   },
+   "workers": 1277,
+   "of": 1783,
+   "coverage": 0.7162,
+   "anafim": 11
+  },
+  "ע'ג'ר": {
+   "cells": {
+    "22": {
+     "workers": 104,
+     "months": 10,
+     "salary": 11126.74
+    },
+    "47": {
+     "workers": 55,
+     "months": 7.5273,
+     "salary": 6134.75
+    },
+    "78": {
+     "workers": 61,
+     "months": 8.1967,
+     "salary": 5779.36
+    },
+    "83": {
+     "workers": 57,
+     "months": 11.0877,
+     "salary": 13304.16
+    },
+    "85": {
+     "workers": 122,
+     "months": 9.9016,
+     "salary": 14442.9
+    },
+    "87+88": {
+     "workers": 59,
+     "months": 9.2712,
+     "salary": 3464.48
+    }
+   },
+   "workers": 458,
+   "of": 1118,
+   "coverage": 0.4097,
+   "anafim": 6
+  },
+  "עין קנייא": {
+   "cells": {
+    "1": {
+     "workers": 133,
+     "months": 8.3835,
+     "salary": 6455.97
+    },
+    "47": {
+     "workers": 60,
+     "months": 7.5333,
+     "salary": 6293.43
+    },
+    "85": {
+     "workers": 85,
+     "months": 10.5176,
+     "salary": 13018.13
+    },
+    "86": {
+     "workers": 53,
+     "months": 10.4151,
+     "salary": 13785.74
+    },
+    "87+88": {
+     "workers": 102,
+     "months": 9.3824,
+     "salary": 3253.4
+    }
+   },
+   "workers": 433,
+   "of": 1047,
+   "coverage": 0.4136,
+   "anafim": 5
+  },
+  "הגליל העליון": {
+   "cells": {
+    "1": {
+     "workers": 1042,
+     "months": 8.6967,
+     "salary": 8404.26
+    },
+    "10": {
+     "workers": 138,
+     "months": 8.8333,
+     "salary": 12474.08
+    },
+    "11+12": {
+     "workers": 75,
+     "months": 9.6267,
+     "salary": 15644.31
+    },
+    "13+14+15": {
+     "workers": 80,
+     "months": 10.8,
+     "salary": 17898.64
+    },
+    "19+20": {
+     "workers": 53,
+     "months": 10.5849,
+     "salary": 21759.24
+    },
+    "2+3+4": {
+     "workers": 74,
+     "months": 9.973,
+     "salary": 13668.58
+    },
+    "22": {
+     "workers": 133,
+     "months": 10.7368,
+     "salary": 20734.48
+    },
+    "23+24+25": {
+     "workers": 59,
+     "months": 10.6271,
+     "salary": 17585.34
+    },
+    "26": {
+     "workers": 114,
+     "months": 11.0702,
+     "salary": 30198.01
+    },
+    "27+28": {
+     "workers": 176,
+     "months": 10.5966,
+     "salary": 17636.82
+    },
+    "29+30": {
+     "workers": 65,
+     "months": 11.1231,
+     "salary": 24294.49
+    },
+    "31+32+33+34": {
+     "workers": 231,
+     "months": 10.5368,
+     "salary": 19501.45
+    },
+    "35+36+37+38+39": {
+     "workers": 55,
+     "months": 11.5273,
+     "salary": 26240.31
+    },
+    "43": {
+     "workers": 92,
+     "months": 9.5217,
+     "salary": 13770.23
+    },
+    "46": {
+     "workers": 188,
+     "months": 9.8404,
+     "salary": 17893.19
+    },
+    "47": {
+     "workers": 257,
+     "months": 8.5019,
+     "salary": 8791.29
+    },
+    "49": {
+     "workers": 69,
+     "months": 10.7246,
+     "salary": 12004.91
+    },
+    "55": {
+     "workers": 108,
+     "months": 8.3889,
+     "salary": 11392.24
+    },
+    "56": {
+     "workers": 482,
+     "months": 7.8216,
+     "salary": 5870.07
+    },
+    "62+63": {
+     "workers": 348,
+     "months": 10.5747,
+     "salary": 28539.65
+    },
+    "64+65+66": {
+     "workers": 131,
+     "months": 10.8397,
+     "salary": 21023.53
+    },
+    "69": {
+     "workers": 73,
+     "months": 10.3699,
+     "salary": 15327.33
+    },
+    "70": {
+     "workers": 384,
+     "months": 9.1354,
+     "salary": 10232.09
+    },
+    "71": {
+     "workers": 131,
+     "months": 10.3893,
+     "salary": 15398.77
+    },
+    "72": {
+     "workers": 194,
+     "months": 10.4278,
+     "salary": 21323.45
+    },
+    "73+74+75": {
+     "workers": 123,
+     "months": 9.0732,
+     "salary": 12793.87
+    },
+    "77+79": {
+     "workers": 71,
+     "months": 8.5211,
+     "salary": 9490.76
+    },
+    "81": {
+     "workers": 53,
+     "months": 8.4528,
+     "salary": 9229.88
+    },
+    "83": {
+     "workers": 348,
+     "months": 10.0977,
+     "salary": 12803.37
+    },
+    "84": {
+     "workers": 150,
+     "months": 11.04,
+     "salary": 19472.38
+    },
+    "85": {
+     "workers": 1208,
+     "months": 10.0273,
+     "salary": 12883.09
+    },
+    "86": {
+     "workers": 245,
+     "months": 10.1429,
+     "salary": 12606.83
+    },
+    "87+88": {
+     "workers": 347,
+     "months": 8.9481,
+     "salary": 6017.13
+    },
+    "90+91+92": {
+     "workers": 74,
+     "months": 9.5405,
+     "salary": 12112
+    },
+    "93": {
+     "workers": 152,
+     "months": 7.9342,
+     "salary": 9221.53
+    },
+    "94": {
+     "workers": 274,
+     "months": 8.8905,
+     "salary": 8349.16
+    }
+   },
+   "workers": 7797,
+   "of": 8429,
+   "coverage": 0.925,
+   "anafim": 36
+  },
+  "מרום הגליל": {
+   "cells": {
+    "1": {
+     "workers": 332,
+     "months": 9.256,
+     "salary": 8902.69
+    },
+    "10": {
+     "workers": 170,
+     "months": 9.2647,
+     "salary": 10033.77
+    },
+    "11+12": {
+     "workers": 79,
+     "months": 9.2278,
+     "salary": 13525.78
+    },
+    "2+3+4": {
+     "workers": 154,
+     "months": 9.4805,
+     "salary": 10788.17
+    },
+    "23+24+25": {
+     "workers": 98,
+     "months": 10.8878,
+     "salary": 15870.66
+    },
+    "26": {
+     "workers": 61,
+     "months": 11.1311,
+     "salary": 26930.14
+    },
+    "27+28": {
+     "workers": 52,
+     "months": 10.8462,
+     "salary": 15606.52
+    },
+    "29+30": {
+     "workers": 65,
+     "months": 10.6462,
+     "salary": 16908.57
+    },
+    "31+32+33+34": {
+     "workers": 119,
+     "months": 10.3529,
+     "salary": 13451.16
+    },
+    "35+36+37+38+39": {
+     "workers": 63,
+     "months": 11.0317,
+     "salary": 22009.66
+    },
+    "41": {
+     "workers": 95,
+     "months": 9.3158,
+     "salary": 13727.78
+    },
+    "43": {
+     "workers": 131,
+     "months": 8.7023,
+     "salary": 10610.38
+    },
+    "46": {
+     "workers": 192,
+     "months": 9.5625,
+     "salary": 12390.31
+    },
+    "47": {
+     "workers": 449,
+     "months": 8.49,
+     "salary": 6467.56
+    },
+    "49": {
+     "workers": 188,
+     "months": 10.4628,
+     "salary": 11429.79
+    },
+    "55": {
+     "workers": 133,
+     "months": 8.1504,
+     "salary": 7111.95
+    },
+    "56": {
+     "workers": 306,
+     "months": 6.8627,
+     "salary": 4344.3
+    },
+    "62+63": {
+     "workers": 124,
+     "months": 10.5806,
+     "salary": 25543.45
+    },
+    "64+65+66": {
+     "workers": 88,
+     "months": 10.6364,
+     "salary": 18430.62
+    },
+    "69": {
+     "workers": 71,
+     "months": 10.3099,
+     "salary": 10670.42
+    },
+    "71": {
+     "workers": 64,
+     "months": 9.4375,
+     "salary": 15051
+    },
+    "78": {
+     "workers": 60,
+     "months": 6.0667,
+     "salary": 5219.43
+    },
+    "80": {
+     "workers": 78,
+     "months": 8.8718,
+     "salary": 7862.97
+    },
+    "81": {
+     "workers": 108,
+     "months": 9.3333,
+     "salary": 8550.68
+    },
+    "82": {
+     "workers": 129,
+     "months": 9.5581,
+     "salary": 5890.83
+    },
+    "83": {
+     "workers": 441,
+     "months": 10.7891,
+     "salary": 10542.28
+    },
+    "84": {
+     "workers": 242,
+     "months": 10.9587,
+     "salary": 18303.01
+    },
+    "85": {
+     "workers": 971,
+     "months": 9.6972,
+     "salary": 10774.23
+    },
+    "86": {
+     "workers": 220,
+     "months": 10.3682,
+     "salary": 13056.72
+    },
+    "87+88": {
+     "workers": 370,
+     "months": 8.8216,
+     "salary": 4585.98
+    },
+    "93": {
+     "workers": 67,
+     "months": 5.7612,
+     "salary": 4924.7
+    },
+    "94": {
+     "workers": 173,
+     "months": 9.0809,
+     "salary": 7981.12
+    }
+   },
+   "workers": 5893,
+   "of": 6875,
+   "coverage": 0.8572,
+   "anafim": 32
+  },
+  "מבואות החרמון": {
+   "cells": {
+    "1": {
+     "workers": 231,
+     "months": 8.9437,
+     "salary": 8590.4
+    },
+    "10": {
+     "workers": 67,
+     "months": 9.6269,
+     "salary": 15383.68
+    },
+    "2+3+4": {
+     "workers": 68,
+     "months": 10.1618,
+     "salary": 14273.06
+    },
+    "26": {
+     "workers": 54,
+     "months": 10.6852,
+     "salary": 28848.94
+    },
+    "31+32+33+34": {
+     "workers": 59,
+     "months": 10.3559,
+     "salary": 17679.73
+    },
+    "43": {
+     "workers": 67,
+     "months": 9.4776,
+     "salary": 11990.43
+    },
+    "46": {
+     "workers": 119,
+     "months": 9.4454,
+     "salary": 16125.25
+    },
+    "47": {
+     "workers": 213,
+     "months": 8.9437,
+     "salary": 8198.97
+    },
+    "49": {
+     "workers": 74,
+     "months": 10.2838,
+     "salary": 11568.47
+    },
+    "55": {
+     "workers": 73,
+     "months": 8.3562,
+     "salary": 10499.6
+    },
+    "56": {
+     "workers": 328,
+     "months": 7.5274,
+     "salary": 5203.58
+    },
+    "62+63": {
+     "workers": 127,
+     "months": 10.2205,
+     "salary": 23032.45
+    },
+    "64+65+66": {
+     "workers": 79,
+     "months": 10.6329,
+     "salary": 19490.14
+    },
+    "69": {
+     "workers": 57,
+     "months": 10.4561,
+     "salary": 12292.74
+    },
+    "70": {
+     "workers": 63,
+     "months": 9.7619,
+     "salary": 10958.63
+    },
+    "71": {
+     "workers": 77,
+     "months": 10.5065,
+     "salary": 15310.47
+    },
+    "72": {
+     "workers": 87,
+     "months": 10.4023,
+     "salary": 22580.09
+    },
+    "83": {
+     "workers": 256,
+     "months": 9.8711,
+     "salary": 10608.35
+    },
+    "84": {
+     "workers": 104,
+     "months": 10.8077,
+     "salary": 19464.55
+    },
+    "85": {
+     "workers": 514,
+     "months": 9.8521,
+     "salary": 12312.88
+    },
+    "86": {
+     "workers": 117,
+     "months": 10.3846,
+     "salary": 14938.99
+    },
+    "87+88": {
+     "workers": 221,
+     "months": 8.6109,
+     "salary": 6306.3
+    },
+    "93": {
+     "workers": 81,
+     "months": 7.1358,
+     "salary": 6798.48
+    },
+    "94": {
+     "workers": 118,
+     "months": 8.6949,
+     "salary": 7748.84
+    }
+   },
+   "workers": 3254,
+   "of": 4363,
+   "coverage": 0.7458,
+   "anafim": 24
+  },
+  "גולן": {
+   "cells": {
+    "1": {
+     "workers": 1281,
+     "months": 8.0476,
+     "salary": 8990.37
+    },
+    "10": {
+     "workers": 144,
+     "months": 9.3819,
+     "salary": 14186.06
+    },
+    "11+12": {
+     "workers": 151,
+     "months": 9.2517,
+     "salary": 10937.9
+    },
+    "2+3+4": {
+     "workers": 206,
+     "months": 9.4272,
+     "salary": 10307.65
+    },
+    "22": {
+     "workers": 54,
+     "months": 11.1481,
+     "salary": 24221.69
+    },
+    "26": {
+     "workers": 68,
+     "months": 11.3824,
+     "salary": 30080.93
+    },
+    "27+28": {
+     "workers": 169,
+     "months": 10.7219,
+     "salary": 17134.46
+    },
+    "31+32+33+34": {
+     "workers": 70,
+     "months": 10.6429,
+     "salary": 18240.04
+    },
+    "35+36+37+38+39": {
+     "workers": 77,
+     "months": 11.2468,
+     "salary": 22772.05
+    },
+    "41": {
+     "workers": 94,
+     "months": 8.5851,
+     "salary": 12795.04
+    },
+    "43": {
+     "workers": 138,
+     "months": 8.7391,
+     "salary": 13262.77
+    },
+    "45": {
+     "workers": 52,
+     "months": 11.25,
+     "salary": 16572.79
+    },
+    "46": {
+     "workers": 201,
+     "months": 10,
+     "salary": 17220.26
+    },
+    "47": {
+     "workers": 313,
+     "months": 8.5112,
+     "salary": 7632.14
+    },
+    "49": {
+     "workers": 52,
+     "months": 10,
+     "salary": 13460.3
+    },
+    "55": {
+     "workers": 280,
+     "months": 7.75,
+     "salary": 7895.02
+    },
+    "56": {
+     "workers": 404,
+     "months": 7.6559,
+     "salary": 5677.88
+    },
+    "62+63": {
+     "workers": 288,
+     "months": 10.5313,
+     "salary": 27962.77
+    },
+    "64+65+66": {
+     "workers": 125,
+     "months": 10.264,
+     "salary": 18162.28
+    },
+    "69": {
+     "workers": 76,
+     "months": 10.0526,
+     "salary": 12650.84
+    },
+    "70": {
+     "workers": 158,
+     "months": 10.1772,
+     "salary": 14042.33
+    },
+    "71": {
+     "workers": 137,
+     "months": 10.6058,
+     "salary": 16165.99
+    },
+    "72": {
+     "workers": 150,
+     "months": 10.48,
+     "salary": 22708.77
+    },
+    "73+74+75": {
+     "workers": 105,
+     "months": 9.2571,
+     "salary": 11890.87
+    },
+    "77+79": {
+     "workers": 102,
+     "months": 8.3137,
+     "salary": 10827.25
+    },
+    "78": {
+     "workers": 56,
+     "months": 6.4286,
+     "salary": 7153.01
+    },
+    "80": {
+     "workers": 71,
+     "months": 8.8873,
+     "salary": 11958.43
+    },
+    "81": {
+     "workers": 97,
+     "months": 8.866,
+     "salary": 8461.53
+    },
+    "82": {
+     "workers": 58,
+     "months": 7.4828,
+     "salary": 8568.43
+    },
+    "83": {
+     "workers": 787,
+     "months": 9.1703,
+     "salary": 8105.91
+    },
+    "84": {
+     "workers": 166,
+     "months": 10.7349,
+     "salary": 20053.16
+    },
+    "85": {
+     "workers": 1732,
+     "months": 10.5341,
+     "salary": 14144.96
+    },
+    "86": {
+     "workers": 249,
+     "months": 10.5743,
+     "salary": 14132.35
+    },
+    "87+88": {
+     "workers": 326,
+     "months": 8.7331,
+     "salary": 5996.95
+    },
+    "90+91+92": {
+     "workers": 86,
+     "months": 9.7558,
+     "salary": 12775.49
+    },
+    "93": {
+     "workers": 178,
+     "months": 6.9326,
+     "salary": 5944.72
+    },
+    "94": {
+     "workers": 347,
+     "months": 8.513,
+     "salary": 8146.95
+    },
+    "95+96": {
+     "workers": 53,
+     "months": 8.717,
+     "salary": 5668.33
+    }
+   },
+   "workers": 9101,
+   "of": 9841,
+   "coverage": 0.9248,
+   "anafim": 38
+  },
+  "צפת": {
+   "cells": {
+    "1": {
+     "workers": 75,
+     "months": 8.44,
+     "salary": 7391.69
+    },
+    "10": {
+     "workers": 453,
+     "months": 9.7461,
+     "salary": 10011.91
+    },
+    "11+12": {
+     "workers": 58,
+     "months": 8.5517,
+     "salary": 8523.01
+    },
+    "16+17+18": {
+     "workers": 104,
+     "months": 10.5,
+     "salary": 8913.27
+    },
+    "19+20": {
+     "workers": 95,
+     "months": 10.0421,
+     "salary": 8603.81
+    },
+    "23+24+25": {
+     "workers": 65,
+     "months": 10.0308,
+     "salary": 16114.03
+    },
+    "27+28": {
+     "workers": 87,
+     "months": 10.6322,
+     "salary": 10609.87
+    },
+    "35+36+37+38+39": {
+     "workers": 80,
+     "months": 9.975,
+     "salary": 22062.19
+    },
+    "41": {
+     "workers": 174,
+     "months": 8.6437,
+     "salary": 9798.29
+    },
+    "43": {
+     "workers": 189,
+     "months": 8.6984,
+     "salary": 7681.82
+    },
+    "45": {
+     "workers": 63,
+     "months": 10.8095,
+     "salary": 12437.93
+    },
+    "46": {
+     "workers": 288,
+     "months": 9.3229,
+     "salary": 9341.59
+    },
+    "47": {
+     "workers": 1219,
+     "months": 8.6792,
+     "salary": 5869.67
+    },
+    "49": {
+     "workers": 276,
+     "months": 10.4674,
+     "salary": 8602.31
+    },
+    "50+51+52+53": {
+     "workers": 51,
+     "months": 10.0196,
+     "salary": 12128.47
+    },
+    "55": {
+     "workers": 166,
+     "months": 8.3313,
+     "salary": 6984.09
+    },
+    "56": {
+     "workers": 773,
+     "months": 7.3803,
+     "salary": 4743.57
+    },
+    "62+63": {
+     "workers": 147,
+     "months": 10.3401,
+     "salary": 17842.54
+    },
+    "64+65+66": {
+     "workers": 128,
+     "months": 9.8125,
+     "salary": 13137.76
+    },
+    "68": {
+     "workers": 74,
+     "months": 9.6892,
+     "salary": 10277.03
+    },
+    "69": {
+     "workers": 174,
+     "months": 10.0977,
+     "salary": 8719.51
+    },
+    "70": {
+     "workers": 67,
+     "months": 8.7612,
+     "salary": 9169.2
+    },
+    "71": {
+     "workers": 88,
+     "months": 10.3636,
+     "salary": 11642.56
+    },
+    "73+74+75": {
+     "workers": 84,
+     "months": 8.9048,
+     "salary": 7074.2
+    },
+    "78": {
+     "workers": 134,
+     "months": 6.0522,
+     "salary": 4939.34
+    },
+    "80": {
+     "workers": 148,
+     "months": 9.7838,
+     "salary": 7454.88
+    },
+    "81": {
+     "workers": 224,
+     "months": 8.4598,
+     "salary": 5285.77
+    },
+    "82": {
+     "workers": 367,
+     "months": 9.406,
+     "salary": 6570.44
+    },
+    "83": {
+     "workers": 589,
+     "months": 10.6876,
+     "salary": 9883.74
+    },
+    "84": {
+     "workers": 580,
+     "months": 11.2362,
+     "salary": 16929.48
+    },
+    "85": {
+     "workers": 2974,
+     "months": 9.9025,
+     "salary": 8991.23
+    },
+    "86": {
+     "workers": 421,
+     "months": 10.5914,
+     "salary": 12564.57
+    },
+    "87+88": {
+     "workers": 1578,
+     "months": 9.0881,
+     "salary": 4453.7
+    },
+    "90+91+92": {
+     "workers": 69,
+     "months": 8.7971,
+     "salary": 6050.4
+    },
+    "93": {
+     "workers": 103,
+     "months": 6.767,
+     "salary": 4308.43
+    },
+    "94": {
+     "workers": 784,
+     "months": 8.4005,
+     "salary": 4886.66
+    },
+    "95+96": {
+     "workers": 51,
+     "months": 8.6078,
+     "salary": 5918.34
+    }
+   },
+   "workers": 13000,
+   "of": 13746,
+   "coverage": 0.9457,
+   "anafim": 37
+  }
+ },
  "clusters": [
   {
    "id": "agri",

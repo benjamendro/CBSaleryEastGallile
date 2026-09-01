@@ -163,6 +163,18 @@ input.ctl{cursor:text;font-weight:500}
 .kpi-note b{color:var(--ink);font-weight:700}
 
 
+/* ---------- אזהרת כיסוי נמוך ---------- */
+.covwarn{
+  display:flex; gap:10px; align-items:flex-start; margin:2px 0 12px;
+  background:#FBEFEC; border:1px solid color-mix(in srgb,var(--s-down) 30%,transparent);
+  border-radius:var(--r-md); padding:11px 14px; font-size:13.5px; line-height:1.55; color:var(--ink-2);
+}
+.covwarn b{color:var(--ink)}
+.covwarn .ic{
+  flex:none; width:18px; height:18px; border-radius:50%; background:var(--s-down); color:#fff;
+  font:700 12px var(--font-head); display:grid; place-items:center; margin-top:1px;
+}
+
 /* ---------- „מה אפשר להוציא מכאן” — פתיח לכל מקטע ---------- */
 .brief{
   background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r-md);
@@ -535,18 +547,20 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
         <h2>השוואה בין ענפי כלכלה</h2>
         <div class="brief">
           <p><b>מה יש כאן:</b> אותם נתונים, אבל חתוכים לפי <b>ענף כלכלה</b> ולא לפי רשות —
-            51 קבוצות ענפים. אפשר לראות את האשכול או את כלל הארץ, ובמדד השכר גם את שניהם
-            יחד: <b>כל ענף באשכול מול אותו ענף בכלל הארץ</b>.</p>
+            51 קבוצות ענפים. בבורר „אזור” אפשר לבחור את האשכול, את כלל הארץ, או
+            <b>רשות בודדת</b>, ובמדד השכר כל ענף מוצג לצד <b>אותו ענף בכלל הארץ</b>.</p>
           <ul class="qs">
             <li>אילו ענפים משלמים הכי הרבה באזור, ואילו הכי מעט</li>
             <li>באילו ענפים האזור קרוב לרמה הארצית ובאילו הוא רחוק ממנה</li>
             <li>אילו ענפים מעסיקים הכי הרבה אנשים באזור</li>
+            <li>ממה מורכבת הכלכלה של רשות מסוימת, וכמה משלמים בה בכל ענף</li>
           </ul>
           <div class="meta">
             <span><b>מקור</b>הלמ"ס · עיבוד מיוחד</span>
             <span><b>שנה</b>2024</span>
             <span><b>אוכלוסייה</b>שכירים</span>
             <span><b>חתך</b>51 קבוצות ענפים</span>
+            <span><b>רזולוציה</b>אשכול · ארצי · רשות בודדת</span>
           </div>
           <p class="warn"><b>המספר אינו למשרה מלאה.</b> „שכר חודשי ממוצע” כאן הוא השכר
             השנתי חלקי <b>חודשי העבודה</b> — ולא חלקי היקף המשרה. בענפים שבהם רבים עובדים
@@ -558,13 +572,17 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
             ו<b>אין כאן השוואה בין שנים</b> — קיבוץ הענפים הוגדר אחרת ב-2022 וב-2024,
             ולכן השוואה ברמת הענף עלולה להשוות קבוצות שאינן זהות.
             הרשימה ארוכה — צמצמו אותה בפקדים שלהלן.</p>
+          <p class="warn"><b>ברשות בודדת הכיסוי חלקי.</b> הלמ"ס אינה מדווחת תא עם פחות מ-10
+            עובדים, ובחיתוך ענף×רשות תאים רבים נופלים מתחת לסף. ברשויות הגדולות מכוסים
+            85%–95% מהשכירים; ברשויות הקטנות לעיתים פחות משליש. הכיסוי נכתב מתחת לכל גרף,
+            וכשהוא נמוך מ-70% מופיעה אזהרה בגוף הגרף.</p>
         </div>
       </div>
 
       <div class="ctl-row" role="group" aria-label="פקדי גרף הענפים">
         <div class="ctl-group">
-          <label id="anafScopeLab">אזור</label>
-          <div class="seg sm" id="anafScope" role="group" aria-labelledby="anafScopeLab"></div>
+          <label for="anafScope">אזור</label>
+          <select class="ctl" id="anafScope"></select>
         </div>
         <div class="ctl-group">
           <label id="anafModeLab">צמצום הרשימה</label>
@@ -912,7 +930,7 @@ function radarChart(host, items, opt) {
 
     const hit = S("circle", {cx:x, cy:y, r:14, fill:"transparent", style:"cursor:pointer"});
     bindTip(hit, `<span class="t-key">${d.label}</span><span class="t-sub">${d.sub || ""}</span>` +
-      `<div class="t-row"><span>${CLUSTER}</span><span>${fmtU(d.value, id)}</span></div>` +
+      `<div class="t-row"><span>${opt.scopeName}</span><span>${fmtU(d.value, id)}</span></div>` +
       `<div class="t-row"><span>${d.peerLabel}</span><span>${fmtU(d.peer, id)}</span></div>` +
       `<div class="t-row t-extra"><span>יחס לארצי</span><span>${nf1.format(r)}%</span></div>`);
     svg.appendChild(hit);
@@ -2119,8 +2137,22 @@ const RANGES = [
   {id:"all",     label:"כל הענפים",               n:0,  from:"top"}
 ];
 
+/* היקף התצוגה: „reg” האשכול · „nat” כלל הארץ · „a:שם” רשות בודדת.
+   ברשות בודדת המקור הוא הקובץ המשלים ענף×רשות, שסף ההשמטה פוגע בו הרבה
+   יותר — ולכן הכיסוי נשמר ומוצג. */
+const AUTH_ANAF = DATA.anafByAuth || {};
+const anafAuthName = () => state.anaf.scope.startsWith("a:") ? state.anaf.scope.slice(2) : null;
+
 function anafBase() {
-  const id = state.metric, k = state.anaf.scope;   /* reg | nat */
+  const id = state.metric, k = state.anaf.scope;
+  const auth = anafAuthName();
+  if (auth) {
+    const cells = (AUTH_ANAF[auth] || {}).cells || {};
+    return ANAF.filter(x => cells[x.code]).map(x => ({
+      code:x.code, label:x.label, seder:x.seder, parts:x.parts,
+      value:cells[x.code][id], all:cells[x.code]
+    })).filter(x => x.value != null);
+  }
   return ANAF.map(x => ({
     code:x.code, label:x.label, seder:x.seder, parts:x.parts,
     value:x[k][id], all:x[k]
@@ -2261,11 +2293,31 @@ function renderPickFoot() {
   }
 }
 
+/* סף ההשמטה פוגע בתא ענף×רשות הרבה יותר מאשר ברמת האשכול. מתחת לכיסוי הזה
+   התמונה חלקית עד כדי הטעיה, ולכן היא נאמרת בגוף הגרף ולא בהערת שוליים. */
+const COV_WARN = 0.70;
+function coverageWarning(host) {
+  const name = anafAuthName();
+  if (!name) return;
+  const c = AUTH_ANAF[name] || {};
+  if (!(c.coverage < COV_WARN)) return;
+  const box = el("div", {class:"covwarn"});
+  box.appendChild(el("span", {class:"ic", "aria-hidden":"true"}, "!"));
+  const txt = el("div");
+  txt.innerHTML = `<b>תמונה חלקית: רק ${nf1.format(c.coverage * 100)}% משכירי ${name} מופיעים כאן.</b> ` +
+    `הלמ"ס אינה מדווחת תא עם פחות מ-${CH.floor} עובדים, ובחיתוך ענף×רשות רוב התאים ` +
+    `ברשות קטנה נופלים מתחת לסף. ${nf0.format(c.of - c.workers)} שכירים ` +
+    `מ-${nf0.format(c.of)} מפוזרים בענפים שאינם מוצגים — אל תקראו את הענפים שכן מוצגים ` +
+    `כתמונת התעסוקה של הרשות.`;
+  box.appendChild(txt);
+  host.appendChild(box);
+}
+
 function renderAnafChart() {
   const id = state.metric, m = M[id], st = state.anaf;
   const {rows, total, hidden} = anafFiltered();
   const items = rows.filter(r => !r.gap);
-  const scopeName = st.scope === "reg" ? CLUSTER : "כלל הארץ";
+  const scopeName = anafAuthName() || (st.scope === "reg" ? CLUSTER : "כלל הארץ");
 
   document.getElementById("anafTitle").textContent =
     `${m.label} לפי ענף כלכלי · ${DATA.meta.year} — ${scopeName}`;
@@ -2281,7 +2333,7 @@ function renderAnafChart() {
 
   /* ההשוואה לארצי היא ענף מול אותו ענף, ולכן יש בה מובן רק בשכר:
      מספר השכירים בענף גדול ארצית בשני סדרי גודל, וחודשי העבודה כמעט זהים. */
-  const canCompare = st.scope === "reg" && id === "salary";
+  const canCompare = st.scope !== "nat" && id === "salary";
   const peerLabel = "אותו ענף · כלל הארץ";
   const withPeer = r => r.gap ? r : {
     ...r, sub:r.seder,
@@ -2300,18 +2352,20 @@ function renderAnafChart() {
   } else if (st.view === "radar") {
     if (!canCompare) {
       clear(body).appendChild(el("div", {class:"empty"}, st.scope !== "reg"
-        ? "גרף העכביש משווה כל ענף באשכול לאותו ענף בכלל הארץ — בתצוגה הארצית אין למה להשוות."
+        ? "גרף העכביש משווה כל ענף לאותו ענף בכלל הארץ — בתצוגה הארצית אין למה להשוות."
         : `גרף העכביש מציג את היחס בין ${CLUSTER} לכלל הארץ באותו ענף. ` +
           `היחס נושא מובן בשכר בלבד: מספר השכירים בענף גדול ארצית בשני סדרי גודל, וחודשי העבודה כמעט זהים.`));
     } else if (items.length < 3) {
       clear(body).appendChild(el("div", {class:"empty"},
         "גרף עכביש דורש שלושה ענפים לפחות. הרחיבו את הבחירה."));
     } else {
+      clear(body);
+      coverageWarning(body);
       const chart = el("div", {class:"chart"});
-      clear(body).appendChild(chart);
-      radarChart(chart, items.map(withPeer), {});
+      body.appendChild(chart);
+      radarChart(chart, items.map(withPeer), {scopeName});
       const lg = el("div", {class:"legend"});
-      [["sw", "var(--s-bar)", `${CLUSTER} — היחס לארצי בכל ענף`],
+      [["sw", "var(--s-bar)", `${scopeName} — היחס לארצי בכל ענף`],
        ["sw ref nat", null, "100% = הממוצע הארצי באותו ענף"]].forEach(([cls, bg, txt]) => {
         const it = el("span", {class:"item"});
         const sw = el("span", {class:"sw " + cls});
@@ -2322,12 +2376,14 @@ function renderAnafChart() {
       body.appendChild(lg);
     }
   } else {
+    clear(body);
+    coverageWarning(body);
     const chart = el("div", {class:"chart"});
-    clear(body).appendChild(chart);
+    body.appendChild(chart);
     barChart(chart, rows.map(withPeer), {});
     if (canCompare) {
       const lg = el("div", {class:"legend legend-lead"});
-      [[CLUSTER, "var(--s-bar)"], ["כלל הארץ · אותו ענף", "var(--s-nat)"]].forEach(([nm, c]) => {
+      [[scopeName, "var(--s-bar)"], ["כלל הארץ · אותו ענף", "var(--s-nat)"]].forEach(([nm, c]) => {
         const it = el("span", {class:"item"});
         const sw = el("span", {class:"sw"}); sw.style.background = c;
         it.appendChild(sw); it.appendChild(document.createTextNode(nm));
@@ -2341,7 +2397,14 @@ function renderAnafChart() {
   if (hidden) notes.unshift(
     `${plural(hidden, "ענף אחד אינו מוצג", "ענפים אינם מוצגים")} בבחירה הנוכחית (מתוך ${total}).`);
   const dropped = ANAF.length - anafBase().length;
-  if (st.scope === "reg" && dropped) notes.unshift(
+  const authName = anafAuthName();
+  if (authName) {
+    const c = AUTH_ANAF[authName] || {};
+    notes.unshift(
+      `${nf0.format(c.workers)} מתוך ${nf0.format(c.of)} השכירים ב${authName} מכוסים בפילוח ` +
+      `הענפי (${nf1.format(c.coverage * 100)}%) — ${plural(dropped, "קבוצת ענפים אחת אינה מוצגת", "קבוצות ענפים אינן מוצגות")} ` +
+      `בשל סף ההשמטה של ${CH.floor} עובדים לתא.`);
+  } else if (st.scope === "reg" && dropped) notes.unshift(
     `${plural(dropped, "קבוצת ענפים אחת אינה מוצגת", "קבוצות ענפים אינן מוצגות")} ברמת האשכול בשל חוסר מקרים במקור.`);
   document.getElementById("anafNote").textContent = notes.join(" · ");
 }
@@ -2557,9 +2620,19 @@ function wireChange() {
 
 function wireAnaf() {
   const draw = () => { renderAnaf(); wireAnaf(); };
-  segment(document.getElementById("anafScope"), [
-    {id:"reg", label:CLUSTER}, {id:"nat", label:"כלל הארץ"}
-  ], state.anaf.scope, id => { state.anaf.scope = id; draw(); });
+  const scopeSel = document.getElementById("anafScope");
+  if (scopeSel && !scopeSel.options.length) {
+    scopeSel.appendChild(el("option", {value:"reg"}, CLUSTER));
+    scopeSel.appendChild(el("option", {value:"nat"}, "כלל הארץ"));
+    const grp = document.createElement("optgroup");
+    grp.label = "רשות בודדת";
+    A.items.forEach(a => grp.appendChild(el("option", {value:"a:" + a.name}, a.name)));
+    scopeSel.appendChild(grp);
+  }
+  if (scopeSel) {
+    scopeSel.value = state.anaf.scope;
+    scopeSel.onchange = () => { state.anaf.scope = scopeSel.value; draw(); };
+  }
 
   segment(document.getElementById("anafMode"), [
     {id:"range",   label:"טווח",         title:"הצגת 10 הגבוהים, 10 הנמוכים וכדומה"},
