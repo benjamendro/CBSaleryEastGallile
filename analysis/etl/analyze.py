@@ -16,7 +16,8 @@ from lib import M, RC, cluster, national, authorities, index_vs_national
 OUT = os.path.join(os.path.dirname(__file__), '..', 'output')
 ROOT = os.path.join(os.path.dirname(__file__), '..', '..')
 INC = ['inc_minwage', 'inc_le75', 'inc_le100', 'inc_le2x', 'inc_le3x', 'inc_le4x', 'inc_gt4x']
-INC_HE = ['עד שכר מינימום', 'עד 75% מהממוצע', 'עד הממוצע', 'עד פי 2', 'עד פי 3', 'עד פי 4', 'מעל פי 4']
+INC_HE = ['עד שכר המינימום', 'מינימום – 75% מהממוצע', '75%–100% מהממוצע',
+          'פי 1–2 מהממוצע', 'פי 2–3', 'פי 3–4', 'מעל פי 4']
 DUR = ['dur_1_2', 'dur_3_5', 'dur_6_8', 'dur_9_11', 'dur_12', 'months_avg']
 DUR_HE = ['1-2 חודשים', '3-5 חודשים', '6-8 חודשים', '9-11 חודשים', '12 חודשים', 'ממוצע חודשים']
 NAT24 = {'mean': 14751.0, 'med': 10401.0}
