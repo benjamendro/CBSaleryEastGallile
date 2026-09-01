@@ -163,6 +163,80 @@ input.ctl{cursor:text;font-weight:500}
 .kpi-note b{color:var(--ink);font-weight:700}
 
 
+
+
+/* ---------- חתימת מותג + ייצוא בכל גרף ---------- */
+.fig-foot{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:10px;
+  border-top:1px solid var(--line)}
+.fig-foot img{height:22px;width:auto;display:block;opacity:.85}
+.fig-foot .cred{font-size:11.5px;color:var(--ink-3);line-height:1.4}
+.fig-foot .sp{flex:1 1 auto}
+button.expbtn{font-family:var(--font-body);font-size:12px;font-weight:700;cursor:pointer;
+  border:1px solid var(--line-2);background:var(--card);color:var(--ink-2);border-radius:100px;
+  padding:4px 12px;white-space:nowrap}
+button.expbtn:hover{border-color:var(--accent);color:var(--accent)}
+button.expbtn:disabled{opacity:.5;cursor:default}
+
+/* ---------- מגירת „מה יש כאן” + תובנות ---------- */
+.drawer{margin:8px 0 16px}
+.drawer-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button.dbtn{
+  font-family:var(--font-body);font-size:13px;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--line-2);background:var(--card);color:var(--ink-2);
+  border-radius:100px;padding:5px 14px;display:inline-flex;align-items:center;gap:7px;transition:all .16s;
+}
+button.dbtn:hover{border-color:var(--accent);color:var(--accent)}
+button.dbtn[aria-expanded="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+button.dbtn .chev{width:9px;height:9px;border-inline-end:2px solid currentColor;border-block-end:2px solid currentColor;
+  transform:rotate(45deg);transition:transform .18s;margin-block-start:-3px}
+button.dbtn[aria-expanded="true"] .chev{transform:rotate(-135deg);margin-block-start:2px}
+button.dbtn.ins[aria-expanded="true"]{background:var(--s-nat);border-color:var(--s-nat)}
+button.dbtn.ins:hover{border-color:var(--s-nat);color:var(--s-nat)}
+.drawer .body{margin-top:10px}
+.drawer .body[hidden]{display:none}
+
+.insight{
+  background:#FBF6EA;border:1px solid color-mix(in srgb,var(--s-nat) 32%,transparent);
+  border-radius:var(--r-md);padding:13px 15px;margin-top:8px;font-size:14.5px;line-height:1.6;color:var(--ink-2);
+}
+.insight h4{font-family:var(--font-head);font-size:14px;color:var(--ink);margin:0 0 5px}
+.insight.empty{background:var(--paper-2);border-style:dashed;border-color:var(--line-2);color:var(--ink-3);font-size:13.5px}
+
+/* ---------- מורה נבוכים ---------- */
+.guide{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  box-shadow:var(--sh-1);padding:clamp(16px,2.4vw,24px);margin:18px 0 4px}
+.guide h2{font-size:clamp(18px,2.2vw,23px)}
+.guide > p{margin:8px 0 0;color:var(--ink-2);font-size:15px;max-width:88ch}
+.guide-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:16px}
+.guide-card{border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px;background:var(--paper-2)}
+.guide-card h3{font-family:var(--font-head);font-size:14.5px;display:flex;align-items:center;gap:8px}
+.guide-card .where{font-size:11.5px;font-weight:600;color:#fff;background:var(--accent);
+  border-radius:100px;padding:2px 9px;flex:none}
+.guide-card .where.b{background:var(--c-navy)}
+.guide-card ul{margin:9px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.guide-card li{font-size:13.5px;color:var(--ink-2);line-height:1.5;padding-inline-start:16px;position:relative}
+.guide-card li::before{content:"";position:absolute;inset-inline-start:2px;top:8px;width:5px;height:5px;
+  border-radius:50%;background:var(--ink-3)}
+.guide-card a.jump{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--accent);
+  text-decoration:none;border-block-end:1px solid currentColor}
+.guide-card a.jump:hover{color:var(--c-bluedeep)}
+
+/* ---------- מצב עריכה ---------- */
+.editbar{position:fixed;inset-block-end:16px;inset-inline-start:16px;z-index:300;display:flex;gap:8px;
+  align-items:center;background:var(--c-navy);color:#fff;border-radius:100px;padding:7px 9px 7px 14px;
+  box-shadow:var(--sh-3);font-size:13px}
+.editbar[hidden]{display:none}
+.editbar b{font-family:var(--font-head);font-weight:600;margin-inline-end:4px}
+.editbar button{font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;border:0;
+  border-radius:100px;padding:5px 12px;background:rgba(255,255,255,.16);color:#fff}
+.editbar button:hover{background:rgba(255,255,255,.3)}
+.editbar button.go{background:#fff;color:var(--c-navy)}
+[data-t]{border-radius:3px}
+body.editing [data-t]{outline:1px dashed color-mix(in srgb,var(--accent) 55%,transparent);
+  outline-offset:2px;cursor:text}
+body.editing [data-t]:focus{outline:2px solid var(--accent);background:var(--accent-soft)}
+body.editing .seg button,body.editing select.ctl{pointer-events:none;opacity:.55}
+
 /* ---------- אזהרת כיסוי נמוך ---------- */
 .covwarn{
   display:flex; gap:10px; align-items:flex-start; margin:2px 0 12px;
@@ -300,12 +374,13 @@ section.block{padding:clamp(28px,4vw,46px) 0 4px}
 table.data{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
 table.data th{
   position:sticky;top:0;background:var(--card);z-index:1;
-  text-align:start;font-family:var(--font-head);font-size:12.5px;color:var(--ink-3);
+  text-align:center;font-family:var(--font-head);font-size:12.5px;color:var(--ink-3);
   font-weight:600;padding:8px 12px;border-bottom:2px solid var(--line-2);white-space:nowrap;
 }
 table.data td{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
-table.data td.nm{color:var(--ink);font-weight:600;white-space:normal;min-width:180px}
-table.data td.n{text-align:start;direction:ltr;unicode-bidi:plaintext}
+table.data td.nm{color:var(--ink);font-weight:600;white-space:normal;min-width:180px;text-align:start}
+table.data th:first-child{text-align:start}
+table.data td.n{text-align:center;direction:ltr;unicode-bidi:plaintext}
 table.data tr:hover td{background:var(--paper-2)}
 table.data td:first-child{padding-inline-start:0}
 table.data td.dim{color:var(--ink-3)}
@@ -377,6 +452,8 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <div class="topbar">
     <div class="wrap">
       <img src="__LOGO__" alt="מרכז ידע אזורי גליל מזרחי | מערבי">
+      <button class="dbtn" id="editToggle" type="button" aria-pressed="false"
+              style="margin-inline-start:14px" title="עריכת כל הטקסטים בעמוד">✎ עריכת טקסט</button>
       <div class="tb-meta">
         מקור: <b>הלשכה המרכזית לסטטיסטיקה</b><br>
         עיבוד: <b>מרכז הידע האזורי גליל מזרחי | מערבי</b>
@@ -387,8 +464,8 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <header class="head">
     <div class="wrap">
       <div class="kicker"><span class="mk"><i></i><i></i><i></i><i></i></span>שכר ותעסוקה · שנת 2024</div>
-      <h1>שכר, שכירים וחודשי עבודה<br>באשכול גליל מזרחי</h1>
-      <p class="lede">
+      <h1 data-t="page.title">שכר, שכירים וחודשי עבודה<br>באשכול גליל מזרחי</h1>
+      <p class="lede" data-t="page.lede">
         השוואה בין 18 הרשויות המקומיות באשכול גליל מזרחי, ובין 51 קבוצות של ענפי כלכלה —
         באשכול ובכלל הארץ, תמיד לצד הממוצע הארצי. בחרו מדד בסרגל שלהלן; כל הגרפים והמדדים מתעדכנים יחד.
       </p>
@@ -410,20 +487,27 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 
   <div class="wrap">
     <div class="brief" id="pageBrief">
-      <p><b>מה יש במסמך הזה.</b> תמונת השכר והתעסוקה של 18 הרשויות באשכול גליל מזרחי,
+      <p data-t="page.brief"><b>מה יש במסמך הזה.</b> תמונת השכר והתעסוקה של 18 הרשויות באשכול גליל מזרחי,
         משני מקורות נפרדים. <b>חלק א׳</b> — עיבוד מיוחד של הלמ"ס לשנת 2024: שכר לפי רשות
         ולפי 51 קבוצות של ענפי כלכלה, והשינוי מאז 2022. <b>חלק ב׳</b> — לוחות המוסד
         לביטוח לאומי לשנים 2016–2024: מי עובד באזור (שכירים מול עצמאים), איך השכר מתפלג,
         ואיך הכול זז לאורך תשע שנים.</p>
       <ul class="qs">
-        <li>לפני כל גרף כתוב במפורש אילו נתונים הוא מכיל, על מי הם, ולאילו שאלות אפשר לענות בעזרתו.</li>
-        <li>סרגלי הבחירה מחליפים את מה שמוצג בכל הגרפים שמתחתיהם — לא רק בגרף אחד.</li>
-        <li>לכל גרף יש תצוגת טבלה עם המספרים המדויקים, ובריחוף מעל כל עמודה מוצגים הפרטים.</li>
+        <li data-t="page.q1">לפני כל גרף כתוב במפורש אילו נתונים הוא מכיל, על מי הם, ולאילו שאלות אפשר לענות בעזרתו.</li>
+        <li data-t="page.q2">סרגלי הבחירה מחליפים את מה שמוצג בכל הגרפים שמתחתיהם — לא רק בגרף אחד.</li>
+        <li data-t="page.q3">לכל גרף יש תצוגת טבלה עם המספרים המדויקים, ובריחוף מעל כל עמודה מוצגים הפרטים.</li>
       </ul>
-      <p class="warn"><b>שני המקורות אינם ניתנים להשוואה ישירה זה לזה.</b> הם מודדים את אותה
+      <p class="warn" data-t="page.warn"><b>שני המקורות אינם ניתנים להשוואה ישירה זה לזה.</b> הם מודדים את אותה
         אוכלוסייה, אבל מגדירים „שכר חודשי” אחרת, ולכן רמות השכר שלהם נבדלות ב-<span class="ltr">8.7%–27.2%</span>.
         לכן הם מופרדים לשני חלקים, ואין בעמוד אף גרף שמציב ערך מהאחד לצד ערך מהשני.</p>
     </div>
+    <section class="guide" id="sec-guide" aria-labelledby="guideHead">
+      <h2 id="guideHead" data-t="guide.title">מורה נבוכים — אילו שאלות אפשר לענות, ואיפה</h2>
+      <p data-t="guide.lead">הדשבורד עונה על עשרות שאלות, אבל כל שאלה נענית במקטע אחר.
+        כאן מרוכזות כולן. מצאו את השאלה שלכם, ולחצו „למקטע” כדי להגיע לגרף שעונה עליה.</p>
+      <div class="guide-grid" id="guideGrid"></div>
+    </section>
+
     <div class="kpis" id="kpis"></div>
     <p class="kpi-note" id="kpiNote"></p>
   </div>
@@ -432,16 +516,21 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-auth">
     <div class="wrap">
       <div class="block-head">
-        <h2>השוואה בין הרשויות</h2>
-        <div class="brief">
-          <p><b>מה יש כאן:</b> ערך אחד לכל רשות מ-18 רשויות האשכול — השכר החודשי הממוצע,
+        <h2 data-t="auth.title">השוואה בין הרשויות</h2>
+        <div class="drawer" data-drawer="auth">
+          <div class="drawer-bar">
+            <button class="dbtn" type="button" data-open="b-auth" aria-expanded="false"><span class="chev"></span>מה יש כאן</button>
+            <button class="dbtn ins" type="button" data-open="i-auth" aria-expanded="false"><span class="chev"></span>תובנות</button>
+          </div>
+          <div class="body" id="b-auth" hidden><div class="brief">
+          <p data-t="auth.lead"><b>מה יש כאן:</b> ערך אחד לכל רשות מ-18 רשויות האשכול — השכר החודשי הממוצע,
             מספר השכירים, או ממוצע חודשי העבודה, לפי הבחירה בסרגל שלמעלה. שני הקווים
             המקווקווים הם ממוצע האשכול והממוצע הארצי.</p>
           <ul class="qs">
-            <li>איזו רשות משתכרת הכי הרבה ואיזו הכי מעט, ומה גודל הפער ביניהן</li>
-            <li>אילו רשויות מעל ממוצע האשכול ואילו מתחתיו</li>
-            <li>כמה רשויות באשכול מגיעות לממוצע הארצי</li>
-            <li>היכן מרוכזים השכירים — מספר השכירים בכל רשות</li>
+            <li data-t="auth.q1">איזו רשות משתכרת הכי הרבה ואיזו הכי מעט, ומה גודל הפער ביניהן</li>
+            <li data-t="auth.q2">אילו רשויות מעל ממוצע האשכול ואילו מתחתיו</li>
+            <li data-t="auth.q3">כמה רשויות באשכול מגיעות לממוצע הארצי</li>
+            <li data-t="auth.q4">היכן מרוכזים השכירים — מספר השכירים בכל רשות</li>
           </ul>
           <div class="meta">
             <span><b>מקור</b>הלמ"ס · עיבוד מיוחד</span>
@@ -449,11 +538,13 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
             <span><b>אוכלוסייה</b>שכירים</span>
             <span><b>כיסוי</b>18 מתוך 18 רשויות</span>
           </div>
-          <p class="warn"><b>„שכיר” כאן הוא כל מי שהייתה לו הכנסה משכר במהלך השנה</b>, גם אם
+          <p class="warn" data-t="auth.warn1"><b>„שכיר” כאן הוא כל מי שהייתה לו הכנסה משכר במהלך השנה</b>, גם אם
             הייתה לו גם הכנסה עסקית — ונספרת רק ההכנסה משכר. עצמאים שאין להם הכנסה משכר
             אינם בחלק הזה כלל; הם מופיעים בחלק ב׳. <b>השכר אינו מתוקנן למשרה מלאה</b> —
             הוא השכר השנתי חלקי חודשי העבודה, ולכן רשות עם שיעור גבוה של משרות חלקיות
             תיראה נמוכה יותר גם אם התעריף השעתי דומה.</p>
+        </div></div>
+          <div class="body" id="i-auth" hidden></div>
         </div>
       </div>
 
@@ -490,14 +581,19 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-change">
     <div class="wrap">
       <div class="block-head">
-        <h2 id="changeHead">השינוי לפי רשות · 2022 ← 2024</h2>
-        <div class="brief">
-          <p><b>מה יש כאן:</b> אותו מדד בשתי נקודות זמן, לכל רשות — 2022 מול 2024.
+        <h2 id="changeHead" data-t="change.title">השינוי לפי רשות · 2022 ← 2024</h2>
+        <div class="drawer" data-drawer="change">
+          <div class="drawer-bar">
+            <button class="dbtn" type="button" data-open="b-change" aria-expanded="false"><span class="chev"></span>מה יש כאן</button>
+            <button class="dbtn ins" type="button" data-open="i-change" aria-expanded="false"><span class="chev"></span>תובנות</button>
+          </div>
+          <div class="body" id="b-change" hidden><div class="brief">
+          <p data-t="change.lead"><b>מה יש כאן:</b> אותו מדד בשתי נקודות זמן, לכל רשות — 2022 מול 2024.
             <b>ירוק</b> = עלייה, <b>אדום</b> = ירידה, ואורך הקו הוא גודל השינוי.</p>
           <ul class="qs">
-            <li>אילו רשויות התקדמו ואילו נסוגו, ובכמה</li>
-            <li>האם הפערים בתוך האשכול נסגרו או נפתחו</li>
-            <li>היכן גדל מספר השכירים והיכן ירד</li>
+            <li data-t="change.q1">אילו רשויות התקדמו ואילו נסוגו, ובכמה</li>
+            <li data-t="change.q2">האם הפערים בתוך האשכול נסגרו או נפתחו</li>
+            <li data-t="change.q3">היכן גדל מספר השכירים והיכן ירד</li>
           </ul>
           <div class="meta">
             <span><b>מקור</b>הלמ"ס · שני עיבודים באותה הגדרה</span>
@@ -505,8 +601,10 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
             <span><b>אוכלוסייה</b>שכירים</span>
             <span><b>כיסוי</b>18 מתוך 18 רשויות</span>
           </div>
-          <p class="warn"><b>בעיבוד של 2022 נמסרו שני מדדים בלבד</b> — מספר שכירים ושכר חודשי
+          <p class="warn" data-t="change.warn1"><b>בעיבוד של 2022 נמסרו שני מדדים בלבד</b> — מספר שכירים ושכר חודשי
             ממוצע. במדד „ממוצע חודשי עבודה” אין מה להשוות, והמקטע יאמר זאת.</p>
+        </div></div>
+          <div class="body" id="i-change" hidden></div>
         </div>
         <p id="changeLede"></p>
       </div>
@@ -544,16 +642,21 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-anaf">
     <div class="wrap">
       <div class="block-head">
-        <h2>השוואה בין ענפי כלכלה</h2>
-        <div class="brief">
-          <p><b>מה יש כאן:</b> אותם נתונים, אבל חתוכים לפי <b>ענף כלכלה</b> ולא לפי רשות —
+        <h2 data-t="anaf.title">השוואה בין ענפי כלכלה</h2>
+        <div class="drawer" data-drawer="anaf">
+          <div class="drawer-bar">
+            <button class="dbtn" type="button" data-open="b-anaf" aria-expanded="false"><span class="chev"></span>מה יש כאן</button>
+            <button class="dbtn ins" type="button" data-open="i-anaf" aria-expanded="false"><span class="chev"></span>תובנות</button>
+          </div>
+          <div class="body" id="b-anaf" hidden><div class="brief">
+          <p data-t="anaf.lead"><b>מה יש כאן:</b> אותם נתונים, אבל חתוכים לפי <b>ענף כלכלה</b> ולא לפי רשות —
             51 קבוצות ענפים. בבורר „אזור” אפשר לבחור את האשכול, את כלל הארץ, או
             <b>רשות בודדת</b>, ובמדד השכר כל ענף מוצג לצד <b>אותו ענף בכלל הארץ</b>.</p>
           <ul class="qs">
-            <li>אילו ענפים משלמים הכי הרבה באזור, ואילו הכי מעט</li>
-            <li>באילו ענפים האזור קרוב לרמה הארצית ובאילו הוא רחוק ממנה</li>
-            <li>אילו ענפים מעסיקים הכי הרבה אנשים באזור</li>
-            <li>ממה מורכבת הכלכלה של רשות מסוימת, וכמה משלמים בה בכל ענף</li>
+            <li data-t="anaf.q1">אילו ענפים משלמים הכי הרבה באזור, ואילו הכי מעט</li>
+            <li data-t="anaf.q2">באילו ענפים האזור קרוב לרמה הארצית ובאילו הוא רחוק ממנה</li>
+            <li data-t="anaf.q3">אילו ענפים מעסיקים הכי הרבה אנשים באזור</li>
+            <li data-t="anaf.q4">ממה מורכבת הכלכלה של רשות מסוימת, וכמה משלמים בה בכל ענף</li>
           </ul>
           <div class="meta">
             <span><b>מקור</b>הלמ"ס · עיבוד מיוחד</span>
@@ -562,20 +665,22 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
             <span><b>חתך</b>51 קבוצות ענפים</span>
             <span><b>רזולוציה</b>אשכול · ארצי · רשות בודדת</span>
           </div>
-          <p class="warn"><b>המספר אינו למשרה מלאה.</b> „שכר חודשי ממוצע” כאן הוא השכר
+          <p class="warn" data-t="anaf.warn1"><b>המספר אינו למשרה מלאה.</b> „שכר חודשי ממוצע” כאן הוא השכר
             השנתי חלקי <b>חודשי העבודה</b> — ולא חלקי היקף המשרה. בענפים שבהם רבים עובדים
             במשרה חלקית, כמו מסעדות או רווחה וסעד, הממוצע יוצא נמוך משכר המינימום למשרה
             מלאה. זה אינו שיבוש בנתונים אלא תוצאה של ההגדרה: אלה שכר בפועל, לא שכר לשעה.
             מאותה סיבה ענף שבו רוב העובדים במשרה מלאה ייראה גבוה יותר גם אם התעריף השעתי דומה.</p>
-          <p class="warn"><b>שתי הערות נוספות.</b> ההשוואה לארצי קיימת <b>רק במדד השכר</b>:
+          <p class="warn" data-t="anaf.warn2"><b>שתי הערות נוספות.</b> ההשוואה לארצי קיימת <b>רק במדד השכר</b>:
             במספר השכירים הערך הארצי גדול בשני סדרי גודל, וחודשי העבודה כמעט זהים.
             ו<b>אין כאן השוואה בין שנים</b> — קיבוץ הענפים הוגדר אחרת ב-2022 וב-2024,
             ולכן השוואה ברמת הענף עלולה להשוות קבוצות שאינן זהות.
             הרשימה ארוכה — צמצמו אותה בפקדים שלהלן.</p>
-          <p class="warn"><b>ברשות בודדת הכיסוי חלקי.</b> הלמ"ס אינה מדווחת תא עם פחות מ-10
+          <p class="warn" data-t="anaf.warn3"><b>ברשות בודדת הכיסוי חלקי.</b> הלמ"ס אינה מדווחת תא עם פחות מ-10
             עובדים, ובחיתוך ענף×רשות תאים רבים נופלים מתחת לסף. ברשויות הגדולות מכוסים
             85%–95% מהשכירים; ברשויות הקטנות לעיתים פחות משליש. הכיסוי נכתב מתחת לכל גרף,
             וכשהוא נמוך מ-70% מופיעה אזהרה בגוף הגרף.</p>
+        </div></div>
+          <div class="body" id="i-anaf" hidden></div>
         </div>
       </div>
 
@@ -616,7 +721,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
       <div class="sb-in">
         <div class="sb-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="sb-txt">
-          <h2>מכאן ואילך — נתוני המוסד לביטוח לאומי</h2>
+          <h2 data-t="break.title">מכאן ואילך — נתוני המוסד לביטוח לאומי</h2>
           <p id="sbNote"></p>
         </div>
       </div>
@@ -648,14 +753,25 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-mix">
     <div class="wrap">
       <div class="block-head">
-        <h2>תמהיל התעסוקה</h2>
-        <div class="brief" id="mixBrief"></div>
+        <h2 data-t="mix.title">תמהיל התעסוקה</h2>
+        <div class="drawer" data-drawer="mix">
+          <div class="drawer-bar">
+            <button class="dbtn" type="button" data-open="b-mix" aria-expanded="false"><span class="chev"></span>מה יש כאן</button>
+            <button class="dbtn ins" type="button" data-open="i-mix" aria-expanded="false"><span class="chev"></span>תובנות</button>
+          </div>
+          <div class="body" id="b-mix" hidden><div class="brief" id="mixBrief"></div></div>
+          <div class="body" id="i-mix" hidden></div>
+        </div>
       </div>
       <div class="figure">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="mixTitle">—</div>
             <div class="fig-sub" id="mixSub">—</div>
+          </div>
+          <div class="ctl-group" id="mixMetricWrap">
+            <label id="mixMetricLab">מציג</label>
+            <div class="seg sm" id="mixMetric" role="group" aria-labelledby="mixMetricLab"></div>
           </div>
           <div class="ctl-group">
             <label id="mixViewLab" class="sr-only">תצוגה</label>
@@ -672,8 +788,15 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-dist">
     <div class="wrap">
       <div class="block-head">
-        <h2>התפלגות השכר</h2>
-        <div class="brief" id="distBrief"></div>
+        <h2 data-t="dist.title">התפלגות השכר</h2>
+        <div class="drawer" data-drawer="dist">
+          <div class="drawer-bar">
+            <button class="dbtn" type="button" data-open="b-dist" aria-expanded="false"><span class="chev"></span>מה יש כאן</button>
+            <button class="dbtn ins" type="button" data-open="i-dist" aria-expanded="false"><span class="chev"></span>תובנות</button>
+          </div>
+          <div class="body" id="b-dist" hidden><div class="brief" id="distBrief"></div></div>
+          <div class="body" id="i-dist" hidden></div>
+        </div>
       </div>
       <div class="figure">
         <div class="fig-head">
@@ -696,8 +819,15 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
   <section class="block" id="sec-trend">
     <div class="wrap">
       <div class="block-head">
-        <h2 id="trendHead">מגמת השכר</h2>
-        <div class="brief" id="trendBrief"></div>
+        <h2 id="trendHead" data-t="trend.title">מגמת השכר</h2>
+        <div class="drawer" data-drawer="trend">
+          <div class="drawer-bar">
+            <button class="dbtn" type="button" data-open="b-trend" aria-expanded="false"><span class="chev"></span>מה יש כאן</button>
+            <button class="dbtn ins" type="button" data-open="i-trend" aria-expanded="false"><span class="chev"></span>תובנות</button>
+          </div>
+          <div class="body" id="b-trend" hidden><div class="brief" id="trendBrief"></div></div>
+          <div class="body" id="i-trend" hidden></div>
+        </div>
       </div>
       <div class="figure">
         <div class="fig-head">
@@ -715,6 +845,14 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
       </div>
     </div>
   </section>
+
+  <div class="editbar" id="editbar" hidden role="region" aria-label="מצב עריכת טקסט">
+    <b>מצב עריכה</b>
+    <span><span id="editCount">0</span> שינויים</span>
+    <button type="button" id="editCopy">העתקת JSON</button>
+    <button type="button" id="editSave">הורדה</button>
+    <button type="button" id="editDone" class="go">סיום</button>
+  </div>
 
   <footer class="foot">
     <div class="wrap">
@@ -759,7 +897,7 @@ const state = {
            query:"", view:"chart"},
   change: {sort:"pct", view:"chart"},
   /* חלק ב׳ — הקשר אחד: אוכלוסייה × תצוגה. המקור קבוע (ביטוח לאומי) וכתוב על המסך. */
-  btl:    {pop:"emp", mode:"year", view:"chart", auth:"__cluster__"}
+  btl:    {pop:"emp", mode:"year", view:"chart", auth:"__cluster__", mixMetric:"mix"}
 };
 
 /* ---------------- עזרי פורמט ---------------- */
@@ -794,6 +932,11 @@ const textW = (s, size) => String(s).length * size * 0.53;
 function capTop(x, y, w, h, r) {
   r = Math.max(0, Math.min(r, w/2, h));
   return `M${x},${y+h} L${x},${y+r} Q${x},${y} ${x+r},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h} Z`;
+}
+function capEnd(xStart, y, w, h, r) {           /* גדל שמאלה→ימינה; קצה מעוגל בימין */
+  const x2 = xStart + w;
+  r = Math.max(0, Math.min(r, w, h/2));
+  return `M${xStart},${y} L${x2-r},${y} Q${x2},${y} ${x2},${y+r} L${x2},${y+h-r} Q${x2},${y+h} ${x2-r},${y+h} L${xStart},${y+h} Z`;
 }
 function capStart(xEnd, y, w, h, r) {           /* גדל ימינה→שמאלה; קצה מעוגל בשמאל */
   const x = xEnd - w;
@@ -1033,7 +1176,8 @@ function barChart(host, rows, opt) {
   const H = rows.length ? pad + (rows.length - 1) * rowH + lastBottom + 12 : pad * 2 + 34;
   const maxV = Math.max(...items.map(d => d.value),
                         ...items.map(d => d.peer).filter(v => v != null)) || 1;
-  const scale = v => (v / (maxV * 1.16)) * W;      /* 16% אוויר משמאל לתוויות ערך */
+  /* ציר הערכים רץ משמאל לימין — הנמוך משמאל. 16% אוויר בימין לתוויות הערך. */
+  const scale = v => (v / (maxV * 1.16)) * W;
 
   const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img",
                         "aria-label":`${m.label} לפי ענף כלכלי`, style:"min-width:520px"});
@@ -1060,13 +1204,13 @@ function barChart(host, rows, opt) {
     const lastY = paired ? by + bh + 4 + bh : by + bh;
     svg.appendChild(S("line", {x1:0, x2:W, y1:lastY + 5, y2:lastY + 5,
       stroke:"var(--line)", "stroke-width":1}));
-    svg.appendChild(S("path", {d: capStart(W, by, bw, bh, 4), fill:"var(--s-bar)"}));
+    svg.appendChild(S("path", {d: capEnd(0, by, bw, bh, 4), fill:"var(--s-bar)"}));
     if (d.peer != null) {
       const pw = Math.max(2, scale(d.peer)), py = by + bh + 4;
-      svg.appendChild(S("path", {d: capStart(W, py, pw, bh, 4), fill:"var(--s-nat)"}));
+      svg.appendChild(S("path", {d: capEnd(0, py, pw, bh, 4), fill:"var(--s-nat)"}));
       const ptxt = fmt(d.peer, id), pin = pw > textW(ptxt, 12) + 22;
-      const pt = S("text", {x: pin ? W - pw + 10 : W - pw - 8, y: py + bh - 3,
-        "text-anchor": pin ? "start" : "end",
+      const pt = S("text", {x: pin ? pw - 10 : pw + 8, y: py + bh - 3,
+        "text-anchor": pin ? "end" : "start",
         style:`font:700 12px var(--font-head);fill:${pin ? "#fff" : "var(--ink-2)"};direction:ltr`});
       pt.textContent = ptxt;
       svg.appendChild(pt);
@@ -1080,8 +1224,8 @@ function barChart(host, rows, opt) {
 
     /* ערך בקצה העמודה — בפנים אם נכנס בנוחות, אחרת מחוצה לה */
     const txt = fmt(d.value, id), inside = bw > textW(txt, 12) + 22;
-    const t = S("text", {x: inside ? W - bw + 10 : W - bw - 8, y: by + bh - 3,
-      "text-anchor": inside ? "start" : "end",
+    const t = S("text", {x: inside ? bw - 10 : bw + 8, y: by + bh - 3,
+      "text-anchor": inside ? "end" : "start",
       style:`font:700 12px var(--font-head);fill:${inside ? "#fff" : "var(--ink-2)"};direction:ltr`});
     t.textContent = txt;
     svg.appendChild(t);
@@ -1109,7 +1253,8 @@ function dumbbell(host, rows, opt) {
   const plotR = W - labelW, plotL = changeW;
   const vals = rows.flatMap(r => [r.from, r.to]);
   const ax = niceRange(Math.min(...vals), Math.max(...vals), 5);
-  const X = v => plotR - (v - ax.lo) / (ax.hi - ax.lo) * (plotR - plotL);
+  /* ציר הערכים רץ משמאל לימין — הנמוך משמאל */
+  const X = v => plotL + (v - ax.lo) / (ax.hi - ax.lo) * (plotR - plotL);
 
   const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:660px",
                         "aria-label":`שינוי ב${M[id].label} בין ${opt.fromLabel} ל-${opt.toLabel}`});
@@ -1388,13 +1533,13 @@ const absentNote = () => ABSENT.length
 function stackedChart(host, rows, segs, opt) {
   const W = 1040, mT = 22, mR = 288, mL = 30, rowH = opt.rowH || 30;
   const H = mT + rows.length * rowH + 34, right = W - mR;
-  const plotW = right - mL;
+  const plotW = right - mL;   /* אזור הציור: mL משמאל, right מימין (טור התוויות) */
   const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", "aria-label":opt.aria,
                         style:"min-width:660px"});
   clear(host).appendChild(svg);
 
   for (let v = 0; v <= 100; v += 25) {
-    const x = right - v / 100 * plotW;
+    const x = mL + v / 100 * plotW;      /* 0% משמאל */
     svg.appendChild(S("line", {x1:x, x2:x, y1:mT, y2:mT + rows.length * rowH,
       stroke: v === 0 ? "var(--line-2)" : "var(--line)", "stroke-width":1}));
     const t = S("text", {x, y:H - 12, "text-anchor":"middle",
@@ -1416,7 +1561,7 @@ function stackedChart(host, rows, segs, opt) {
       const pct = r.pct[sg.key];
       if (!(pct > 0)) return;
       const w = pct / 100 * plotW;
-      const x = right - (acc + pct) / 100 * plotW;
+      const x = mL + acc / 100 * plotW;
       /* רווח של 2px בין מקטעים — נדרש כדי שהגבול ייקרא גם בהדפסה */
       svg.appendChild(S("rect", {x:x + 1, y, width:Math.max(0, w - 2), height:h,
         fill:sg.color, opacity: r.dim && !sg.on ? .3 : 1}));
@@ -1668,18 +1813,294 @@ function seriesChart(host, years, series, opt) {
 }
 
 
+
+
+/* ============================================================
+   חתימת מותג וייצוא תמונה בכל גרף
+   ה-SVG משתמש במשתני CSS, שאינם קיימים בקובץ מיוצא — ולכן לפני
+   הסריאליזציה כל צבע מוחלף בערך המחושב בפועל.
+   ============================================================ */
+const LOGO_SRC = document.querySelector(".topbar img") ? document.querySelector(".topbar img").src : "";
+const PAINT = ["fill", "stroke", "stop-color", "color", "opacity", "stroke-width",
+               "stroke-dasharray", "stroke-linecap", "stroke-linejoin", "font", "font-size",
+               "font-weight", "font-family", "direction", "text-anchor", "unicode-bidi"];
+
+function inlineStyles(src, dst) {
+  const cs = getComputedStyle(src);
+  let css = "";
+  PAINT.forEach(k => {
+    const v = cs.getPropertyValue(k);
+    if (v && v !== "none" && v !== "normal") css += `${k}:${v};`;
+  });
+  dst.setAttribute("style", css);
+  const a = src.children, b = dst.children;
+  for (let i = 0; i < a.length; i++) inlineStyles(a[i], b[i]);
+}
+
+async function exportFigure(fig, name) {
+  const svg = fig.querySelector(".chart svg");
+  if (!svg) return null;
+  const vb = svg.viewBox.baseVal;
+  const W = vb.width, H = vb.height, PADB = 46, SCALE = 2;
+
+  const clone = svg.cloneNode(true);
+  inlineStyles(svg, clone);
+  clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  clone.setAttribute("width", W); clone.setAttribute("height", H);
+
+  const canvas = el("canvas");
+  canvas.width = W * SCALE; canvas.height = (H + PADB) * SCALE;
+  const ctx = canvas.getContext("2d");
+  ctx.scale(SCALE, SCALE);
+  ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--card") || "#fff";
+  ctx.fillRect(0, 0, W, H + PADB);
+
+  const blob = new Blob([new XMLSerializer().serializeToString(clone)],
+                        {type:"image/svg+xml;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  await new Promise((res, rej) => {
+    const im = new Image();
+    im.onload = () => { ctx.drawImage(im, 0, 0, W, H); URL.revokeObjectURL(url); res(); };
+    im.onerror = e => { URL.revokeObjectURL(url); rej(e); };
+    im.src = url;
+  });
+
+  /* כותרת הגרף וחתימת המרכז נצרבות בתמונה, כדי שלא תנדוד בלי הקשר */
+  const title = (fig.querySelector(".fig-title") || {}).textContent || "";
+  ctx.direction = "rtl";
+  ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--ink") || "#14273F";
+  ctx.font = "600 13px Rubik, sans-serif";
+  ctx.textAlign = "right";
+  ctx.fillText(title, W - 8, H + 18);
+  ctx.fillStyle = getComputedStyle(document.body).getPropertyValue("--ink-3") || "#74879A";
+  ctx.font = "400 11px Assistant, sans-serif";
+  ctx.fillText("מרכז הידע האזורי גליל מזרחי | מערבי · " + DATA.meta.source, W - 8, H + 34);
+
+  if (LOGO_SRC) {
+    await new Promise(res => {
+      const lg = new Image();
+      lg.onload = () => {
+        const h = 26, w = lg.width * h / lg.height;
+        ctx.drawImage(lg, 8, H + 8, w, h);
+        res();
+      };
+      lg.onerror = res;
+      lg.src = LOGO_SRC;
+    });
+  }
+  return new Promise(res => canvas.toBlob(res, "image/png"));
+}
+
+function addFigureFooters() {
+  document.querySelectorAll(".figure").forEach(fig => {
+    if (fig.querySelector(".fig-foot")) return;
+    const foot = el("div", {class:"fig-foot"});
+    if (LOGO_SRC) foot.appendChild(el("img", {src:LOGO_SRC, alt:"מרכז הידע האזורי גליל מזרחי | מערבי"}));
+    foot.appendChild(el("div", {class:"cred"}, "מרכז הידע האזורי גליל מזרחי | מערבי"));
+    foot.appendChild(el("span", {class:"sp"}));
+    const btn = el("button", {class:"expbtn", type:"button"}, "ייצוא תמונה");
+    btn.addEventListener("click", async () => {
+      btn.disabled = true; const was = btn.textContent; btn.textContent = "מייצא…";
+      try {
+        const png = await exportFigure(fig, "chart");
+        if (!png) throw new Error("no svg");
+        const fname = ((fig.querySelector(".fig-title") || {}).textContent || "גרף")
+          .replace(/[\\/:*?"<>|]/g, "").slice(0, 60) + ".png";
+        let saved = false;
+        try {
+          /* הדרך שעובדת בקובץ המקומי */
+          const a = el("a", {href:URL.createObjectURL(png), download:fname});
+          document.body.appendChild(a); a.click(); a.remove();
+          saved = true;
+        } catch (e) { saved = false; }
+        /* בתצוגת Artifact ההורדה חסומה — מעתיקים ללוח במקומה */
+        if (navigator.clipboard && window.ClipboardItem) {
+          try {
+            await navigator.clipboard.write([new ClipboardItem({"image/png": png})]);
+            btn.textContent = saved ? "ירד · והועתק ✓" : "הועתק ללוח ✓";
+          } catch (e) { btn.textContent = saved ? "ירד ✓" : "לא ניתן לייצא"; }
+        } else btn.textContent = saved ? "ירד ✓" : "לא ניתן לייצא";
+      } catch (e) {
+        btn.textContent = "לא ניתן לייצא";
+      }
+      setTimeout(() => { btn.textContent = was; btn.disabled = false; }, 2800);
+    });
+    foot.appendChild(btn);
+    fig.appendChild(foot);
+  });
+}
+
+/* ============================================================
+   טקסט ניתן לעריכה
+   כל מחרוזת שמוצגת נושאת מזהה. ברירת המחדל חיה בקוד; content.json
+   מחזיק אך ורק את מה שנערך בפועל, ולכן שינוי בקוד אינו נמחק בטעות.
+   ============================================================ */
+const TEXT = DATA.text || {};
+const T = (id, def) => (TEXT[id] != null ? TEXT[id] : def);
+/* עוטף מחרוזת שנוצרת ב-JS כך שתהיה ניתנת לעריכה בעמוד */
+const te = (id, def) => `<span data-t="${id}">${T(id, def)}</span>`;
+
+/* מחיל את ההעדפות על טקסט שכתוב ישירות ב-HTML */
+function applyText(root) {
+  (root || document).querySelectorAll("[data-t]").forEach(n => {
+    const id = n.getAttribute("data-t");
+    if (TEXT[id] != null && n.innerHTML !== TEXT[id]) n.innerHTML = TEXT[id];
+  });
+}
+
+/* ============================================================
+   מגירות: „מה יש כאן” ו„תובנות” סגורות כברירת מחדל
+   ============================================================ */
+function wireDrawers() {
+  document.querySelectorAll("button.dbtn[data-open]").forEach(b => {
+    if (b.dataset.wired) return;
+    b.dataset.wired = "1";
+    b.addEventListener("click", () => {
+      const box = document.getElementById(b.dataset.open);
+      const open = box.hidden;
+      box.hidden = !open;
+      b.setAttribute("aria-expanded", String(open));
+    });
+  });
+}
+
+/* תובנות — תוכן ידני מ-content.json, מפתוח לפי מזהה המקטע */
+const INSIGHTS = DATA.insights || [];
+function renderInsights() {
+  document.querySelectorAll("[data-drawer]").forEach(d => {
+    const sec = d.getAttribute("data-drawer");
+    const host = clear(document.getElementById("i-" + sec));
+    const mine = INSIGHTS.filter(x => x.section === sec);
+    if (!mine.length) {
+      host.appendChild(el("div", {class:"insight empty"},
+        "טרם נכתבו תובנות למקטע זה. תובנות נוספות בקובץ dashboard/content.json " +
+        "תחת „insights”, עם section=\"" + sec + "\"."));
+      return;
+    }
+    mine.forEach(x => {
+      const box = el("div", {class:"insight"});
+      if (x.title) box.appendChild(el("h4", {}, x.title));
+      const body = el("div"); body.innerHTML = x.body;
+      box.appendChild(body);
+      host.appendChild(box);
+    });
+  });
+}
+
+/* ============================================================
+   מורה נבוכים — מרכז את כל השאלות שהעמוד יודע לענות עליהן,
+   ומצביע על המקטע שבו נמצאת התשובה. נבנה מתוך הפתיחים עצמם,
+   כך שהוא אינו יכול להתיישן ביחס אליהם.
+   ============================================================ */
+const GUIDE = [
+  {sec:"auth",   part:"א", title:"השוואה בין הרשויות",     to:"sec-auth"},
+  {sec:"change", part:"א", title:"השינוי 2022 ← 2024",      to:"sec-change"},
+  {sec:"anaf",   part:"א", title:"ענפי כלכלה",             to:"sec-anaf"},
+  {sec:"mix",    part:"ב", title:"תמהיל התעסוקה",          to:"sec-mix"},
+  {sec:"dist",   part:"ב", title:"התפלגות השכר",           to:"sec-dist"},
+  {sec:"trend",  part:"ב", title:"מגמת השכר",              to:"sec-trend"}
+];
+function renderGuide() {
+  const host = clear(document.getElementById("guideGrid"));
+  GUIDE.forEach(g => {
+    const src = document.querySelector(`#b-${g.sec} ul.qs`);
+    const qs = src ? [...src.querySelectorAll("li")].map(li => li.textContent.trim()) : [];
+    if (!qs.length) return;
+    const card = el("div", {class:"guide-card"});
+    const h = el("h3");
+    h.appendChild(el("span", {class:"where" + (g.part === "ב" ? " b" : "")}, "חלק " + g.part));
+    h.appendChild(document.createTextNode(g.title));
+    card.appendChild(h);
+    const ul = el("ul");
+    qs.forEach(q => ul.appendChild(el("li", {}, q)));
+    card.appendChild(ul);
+    const a = el("a", {class:"jump", href:"#" + g.to}, "למקטע ←");
+    a.addEventListener("click", () => {
+      const b = document.querySelector(`button.dbtn[data-open="b-${g.sec}"]`);
+      if (b && b.getAttribute("aria-expanded") === "false") b.click();
+    });
+    card.appendChild(a);
+    host.appendChild(card);
+  });
+}
+
+/* ============================================================
+   מצב עריכה — כל טקסט בעמוד ניתן לעריכה, והתוצאה מיוצאת כ-JSON
+   שנשמר ב-dashboard/content.json ונכנס לבנייה הבאה.
+   ============================================================ */
+function wireEditing() {
+  const bar = document.getElementById("editbar");
+  const toggle = document.getElementById("editToggle");
+  if (!bar || !toggle) return;
+  let on = false;
+  const edited = {};
+
+  const setMode = v => {
+    on = v;
+    document.body.classList.toggle("editing", on);
+    bar.hidden = !on;
+    toggle.setAttribute("aria-pressed", String(on));
+    document.querySelectorAll("[data-t]").forEach(n => {
+      if (on) { n.setAttribute("contenteditable", "true"); n.setAttribute("spellcheck", "false"); }
+      else n.removeAttribute("contenteditable");
+    });
+  };
+  toggle.addEventListener("click", () => setMode(!on));
+  document.getElementById("editDone").addEventListener("click", () => setMode(false));
+
+  document.addEventListener("input", e => {
+    const n = e.target.closest && e.target.closest("[data-t]");
+    if (!on || !n) return;
+    edited[n.getAttribute("data-t")] = n.innerHTML.trim();
+    document.getElementById("editCount").textContent = Object.keys(edited).length;
+  });
+
+  const payload = () => JSON.stringify(
+    {text: {...TEXT, ...edited}, insights: INSIGHTS}, null, 2);
+
+  document.getElementById("editCopy").addEventListener("click", async () => {
+    const btn = document.getElementById("editCopy");
+    try {
+      await navigator.clipboard.writeText(payload());
+      btn.textContent = "הועתק ✓";
+    } catch (err) {
+      /* דפדפן ללא הרשאת הדבקה — נופלים לחלון בחירה ידנית */
+      const ta = el("textarea");
+      ta.value = payload();
+      ta.style.cssText = "position:fixed;inset-block-start:5vh;inset-inline-start:5vw;width:90vw;height:80vh;z-index:400";
+      document.body.appendChild(ta); ta.select();
+      btn.textContent = "בחרו והעתיקו";
+      ta.addEventListener("blur", () => ta.remove());
+    }
+    setTimeout(() => { btn.textContent = "העתקת JSON"; }, 2600);
+  });
+
+  document.getElementById("editSave").addEventListener("click", () => {
+    /* הורדה עובדת בקובץ המקומי; בתצוגת Artifact היא חסומה, ואז ההעתקה היא הדרך */
+    const blob = new Blob([payload()], {type:"application/json"});
+    const a = el("a", {href:URL.createObjectURL(blob), download:"content.json"});
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+}
+
+
 /* ============================================================
    „מה אפשר להוציא מכאן” — נבנה מחדש בכל שינוי הקשר, כי הוא מצהיר
    על ההקשר הפעיל: מקור, אוכלוסייה, שנים וכיסוי.
    ============================================================ */
 function brief(id, spec) {
   const host = clear(document.getElementById(id));
-  const lead = el("p");
-  lead.innerHTML = spec.lead;
+  const k = id.replace("Brief", "");          /* בסיס המזהה לעריכה */
+  const lead = el("p", {"data-t": k + ".lead"});
+  lead.innerHTML = T(k + ".lead", spec.lead);
   host.appendChild(lead);
   if (spec.qs) {
     const ul = el("ul", {class:"qs"});
-    spec.qs.forEach(q => ul.appendChild(el("li", {}, q)));
+    spec.qs.forEach((q, i) => {
+      const li = el("li", {"data-t": `${k}.q${i + 1}`});
+      li.innerHTML = T(`${k}.q${i + 1}`, q);
+      ul.appendChild(li);
+    });
     host.appendChild(ul);
   }
   const meta = el("div", {class:"meta"});
@@ -1691,8 +2112,8 @@ function brief(id, spec) {
   });
   host.appendChild(meta);
   if (spec.warn) {
-    const w = el("p", {class:"warn"});
-    w.innerHTML = spec.warn;
+    const w = el("p", {class:"warn", "data-t": k + ".warn"});
+    w.innerHTML = T(k + ".warn", spec.warn);
     host.appendChild(w);
   }
 }
@@ -1755,6 +2176,52 @@ function renderMix() {
     tb.appendChild(tbody);
     wrap.appendChild(tb); body.appendChild(wrap);
     document.getElementById("mixNote").textContent = note;
+    return;
+  }
+
+  if (time && state.btl.mixMetric === "count" && state.btl.view !== "table") {
+    /* „כמה עובדים” — מדד 2016=100. ערכים מוחלטים היו בלתי-קריאים: הרשויות
+       נעות בין 228 ל-14,000 עובדים. המדד מעמיד את כולן על אותו קנה מידה
+       ועונה על השאלה האמיתית — מי גדל ומי הצטמצם. */
+    const key = state.btl.auth;
+    const entName = key === "__cluster__" ? CLUSTER : key;
+    const base = a => {
+      const v = a.n[pid];
+      const b = v.find(x => x != null);
+      return b ? v.map(x => x == null ? null : x / b * 100) : null;
+    };
+    document.getElementById("mixTitle").textContent =
+      `מספר ${POP[pid].label} · מדד 2016=100 · 2016–2024`;
+    const sel = key === "__cluster__" ? cl : (AUTH_BY_NAME[key] || cl);
+    const selIdx = base(sel), natIdx = base(nat);
+    const lastV = selIdx ? selIdx[selIdx.length - 1] : null;
+    document.getElementById("mixSub").textContent = lastV
+      ? `${entName}: ${nf0.format(sel.n[pid][sel.n[pid].length - 1])} עובדים ב-${LAST} — ` +
+        `${lastV >= 100 ? "+" : "−"}${nf1.format(Math.abs(lastV - 100))}% מאז 2016 · ` +
+        `ארצית ${natIdx[natIdx.length - 1] >= 100 ? "+" : "−"}${nf1.format(Math.abs(natIdx[natIdx.length - 1] - 100))}%`
+      : "אין נתון ליחידה שנבחרה";
+
+    /* שאר הרשויות כקווי רקע — נותנות את פיזור האזור בלי להסתיר את הנבחרת */
+    const ctx = SHOWN.filter(a => a.name !== key).map(a => ({
+      name:a.name, color:"var(--ink-3)", thin:true, values:base(a)
+    })).filter(x => x.values);
+    const series = ctx.concat([
+      {name:"ממוצע ארצי", color:"var(--s-nat)", values:natIdx},
+      {name:entName, color:"var(--s-bar)", values:selIdx}
+    ]);
+    const lg = el("div", {class:"legend legend-lead"});
+    [[entName, "var(--s-bar)"], ["ממוצע ארצי", "var(--s-nat)"],
+     ["שאר רשויות האשכול", "var(--ink-3)"]].forEach(([nm, c]) => {
+      const it = el("span", {class:"item"});
+      const sw = el("span", {class:"sw line"}); sw.style.background = c;
+      it.appendChild(sw); it.appendChild(document.createTextNode(nm));
+      lg.appendChild(it);
+    });
+    body.appendChild(lg);
+    const chart = el("div", {class:"chart"}); body.appendChild(chart);
+    seriesChart(chart, BYEARS, series, {pct:false, aria:"מספר העובדים לאורך זמן, מדד 2016=100"});
+    document.getElementById("mixNote").textContent =
+      `${note} כל סדרה מתחילה ב-100 בשנת 2016, ולכן הגרף משווה קצב גידול ולא גודל.`;
     return;
   }
 
@@ -2074,7 +2541,7 @@ function renderTrend() {
   const W = 1040, mT = 22, mR = 288, mL = 30, rowH = 30;
   const H = mT + rows.length * rowH + 34, right = W - mR, plotW = right - mL;
   const ax = niceAxis(maxV, 5);
-  const X = v => right - v / ax.hi * plotW;
+  const X = v => mL + v / ax.hi * plotW;   /* הנמוך משמאל */
   const svg = S("svg", {viewBox:`0 0 ${W} ${H}`, role:"img", style:"min-width:660px",
                         "aria-label":"ממוצע מול חציון לפי רשות"});
   clear(chart).appendChild(svg);
@@ -2126,6 +2593,9 @@ function renderBtl() {
   document.getElementById("sbNote").innerHTML = B.meta.note.replace(
     /(8\.7%–27\.2%)/, '<b style="unicode-bidi:isolate;display:inline-block">$1</b>');
   renderMix(); renderDist(); renderTrend();
+  applyText();                       /* הפתיחים נבנים מחדש — ההעדפות חלות שוב */
+  if (document.body.classList.contains("editing"))
+    document.querySelectorAll("[data-t]").forEach(n => n.setAttribute("contenteditable", "true"));
 }
 
 const RANGES = [
@@ -2585,6 +3055,12 @@ function init() {
   wireBtl();
   renderAll();
   renderBtl();
+  applyText();
+  addFigureFooters();
+  wireDrawers();
+  renderInsights();
+  renderGuide();
+  wireEditing();
   wireContextBars();
   renderMeta();
   renderKpiNote();
@@ -2667,6 +3143,13 @@ function wireBtl() {
     sel.disabled = state.btl.mode !== "time";
     sel.onchange = () => { state.btl.auth = sel.value; renderBtl(); };
   }
+
+  const mm = document.getElementById("mixMetricWrap");
+  if (mm) mm.style.display = state.btl.mode === "time" ? "" : "none";
+  segment(document.getElementById("mixMetric"), [
+    {id:"mix",   label:"הרכב",         title:"חלוקה לשכירים, עצמאים ומשולבים"},
+    {id:"count", label:"מספר עובדים",  title:"כמה עובדים יש, במדד 2016=100"}
+  ], state.btl.mixMetric, id => { state.btl.mixMetric = id; draw(); });
 
   ["mix", "dist", "trend"].forEach(k => {
     segment(document.getElementById(k + "View"), [

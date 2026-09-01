@@ -17,6 +17,8 @@ SRC_DIC  = os.path.join(ROOT, "dicAnaf4SfarotMaster 2.xlsx")
 SRC_2022 = os.path.join(ROOT, "עיבוד לפי ענף ורשות 2022.xlsx")
 SRC_BTL  = os.path.join(ROOT, "שכר ממוצע לחודש עבודה של כלל העובדים, לפי מחוז ונפה, 2022-2016.xlsx")
 SRC_ANAF_AUTH = os.path.join(ROOT, "ענף כלכלי ורשות 1גליל מזרחי.xlsx")
+# טקסטים שנערכו בעמוד עצמו. קובץ אופציונלי: {מזהה: HTML}. ראו dashboard/README.md.
+SRC_TEXT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "content.json")
 
 # --- שמות תצוגה קצרים לקבוצות הענפים (54 קודים דו-ספרתיים ב-51 קבוצות) -------
 # נגזרו ממילון ענפי הכלכלה של הלמ"ס; קוצרו כדי שייקראו היטב על גבי גרף.
@@ -318,6 +320,36 @@ def read_authorities(wb):
 
 
 
+def read_text_overrides():
+    """טקסטים שנערכו בעמוד. המקור לאמת הוא הקוד; הקובץ מחזיק רק את מה ששונה."""
+    if not os.path.exists(SRC_TEXT):
+        return {}
+    with open(SRC_TEXT, encoding="utf-8") as fh:
+        data = json.load(fh)
+    text = data.get("text", data if isinstance(data, dict) else {})
+    if not isinstance(text, dict):
+        sys.exit("content.json: המפתח „text” חייב להיות אובייקט של {מזהה: טקסט}")
+    return {k: v for k, v in text.items() if isinstance(v, str)}
+
+
+def read_insights():
+    """תובנות שנכתבות ידנית. רשימה של {section, title, body}."""
+    if not os.path.exists(SRC_TEXT):
+        return []
+    with open(SRC_TEXT, encoding="utf-8") as fh:
+        data = json.load(fh)
+    items = data.get("insights", [])
+    if not isinstance(items, list):
+        sys.exit("content.json: המפתח „insights” חייב להיות רשימה")
+    out = []
+    for i, it in enumerate(items):
+        if not isinstance(it, dict) or "body" not in it:
+            sys.exit(f"content.json: תובנה {i} חייבת להכיל „body”")
+        out.append({"section": it.get("section", ""), "title": it.get("title", ""),
+                    "body": it["body"]})
+    return out
+
+
 def read_anaf_by_auth(anafim, authorities):
     """ענף × רשות בתוך האשכול — הקובץ המשלים.
 
@@ -424,6 +456,8 @@ def main():
         "authorities": authorities,
         "anafim": anafim,
         "anafByAuth": anaf_by_auth,
+        "text": read_text_overrides(),
+        "insights": read_insights(),
         "clusters": [{"id": c, "label": l, "codes": codes} for c, l, codes in CLUSTERS],
         "change": change,
         "btl": btl,
@@ -455,6 +489,9 @@ def main():
         f"{k} {v['coverage']*100:.0f}%" for k, v in cov[:3]))
     print(f"    כיסוי גבוה ביותר: " + " · ".join(
         f"{k} {v['coverage']*100:.0f}%" for k, v in cov[-3:]))
+    txt, ins = read_text_overrides(), read_insights()
+    print(f"  טקסטים שנערכו ידנית: {len(txt)} · תובנות: {len(ins)}"
+          + ("" if txt or ins else "  (אין content.json — נעשה שימוש בברירות המחדל)"))
     for d in meta["definitions"]:
         print(f"  הגדרה מהמקור · {d['term']}: {d['text'][:60]}…")
 
