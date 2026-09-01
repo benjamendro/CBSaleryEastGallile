@@ -1,0 +1,7 @@
+node_modules/
+.test-cache/
+__pycache__/
+*.pyc
+.coverage
+coverage/
+htmlcov/
