@@ -206,6 +206,72 @@ def shift_share():
     return d
 
 
+# ------------------------------------------------------- 7. per-authority profile
+def authority_profile():
+    """One row per authority across every dimension the source supports."""
+    from scipy import stats
+    ALLP, ANY = ['כלל העובדים'], ['כל מקורות ההכנסה']
+
+    def piv(pop, con, keys, years, gender='סה"כ'):
+        d = M[(M.cluster == 'גליל מזרחי') & M.population.isin(pop) & M.concept.isin(con) &
+              (M.gender == gender) & M.mkey.isin(keys) & M.year.isin(years)]
+        d = d[((d.level == 'יישוב') & (~d.entity.isin(RC))) |
+              ((d.level == 'מועצה אזורית') & (d.entity.isin(RC)))]
+        return d.pivot_table(index='eshkol_name', columns=['mkey', 'year'], values='value', aggfunc='mean')
+
+    c = piv(ALLP, ANY, ['n_workers', 'wage_work_mean', 'wage_work_med', 'months_avg', 'dur_12',
+                        'dur_1_2', 'inc_minwage', 'inc_le3x', 'inc_le4x', 'inc_gt4x'],
+            [2016, 2022, 2023, 2024])
+    P = pd.DataFrame(index=c.index)
+    P['מועסקים'] = c[('n_workers', 2024)]
+    P['שכר_ממוצע'] = c[('wage_work_mean', 2024)]
+    P['שכר_חציוני'] = c[('wage_work_med', 2024)]
+    P['מדד_ממוצע'] = 100 * c[('wage_work_mean', 2024)] / NAT24['mean']
+    P['מדד_חציון'] = 100 * c[('wage_work_med', 2024)] / NAT24['med']
+    P['חציון_חלקי_ממוצע'] = 100 * c[('wage_work_med', 2024)] / c[('wage_work_mean', 2024)]
+    P['עד_שכר_מינימום'] = c[('inc_minwage', 2024)]
+    P['מעל_פי2_מהממוצע'] = c[('inc_le3x', 2024)] + c[('inc_le4x', 2024)] + c[('inc_gt4x', 2024)]
+    P['שעבדו_12_חודשים'] = c[('dur_12', 2024)]
+    P['עבדו_1-2_חודשים'] = c[('dur_1_2', 2024)]
+    for g in ('גברים', 'נשים'):
+        gg = piv(ALLP, ANY, ['wage_work_mean', 'n_workers'], [2023, 2024], gender=g)
+        P['שכר_' + g] = gg[('wage_work_mean', 2024)]
+        P['n_' + g] = gg[('n_workers', 2024)]
+        P['שינוי_' + g] = 100 * (gg[('n_workers', 2024)] / gg[('n_workers', 2023)] - 1)
+    P['יחס_מגדרי'] = 100 * P['שכר_נשים'] / P['שכר_גברים']
+    P['שיעור_נשים'] = 100 * P['n_נשים'] / (P['n_נשים'] + P['n_גברים'])
+    e = piv(['שכירים'], ['מעבודה שכירה בלבד'], ['wage_work_mean', 'n_workers'], [2024])
+    s = piv(['עצמאים'], ['מעבודה עצמאית בלבד'], ['wage_work_mean', 'n_workers'], [2024])
+    P['שיעור_עצמאים'] = 100 * s[('n_workers', 2024)] / P['מועסקים']
+    P['יחס_עצמאי_לשכיר'] = 100 * s[('wage_work_mean', 2024)] / e[('wage_work_mean', 2024)]
+    P['שינוי_מועסקים_23_24'] = 100 * (c[('n_workers', 2024)] / c[('n_workers', 2023)] - 1)
+    P['שינוי_שכר_23_24'] = 100 * (c[('wage_work_mean', 2024)] / c[('wage_work_mean', 2023)] - 1)
+    P['שינוי_חציון_23_24'] = 100 * (c[('wage_work_med', 2024)] / c[('wage_work_med', 2023)] - 1)
+    P['צמיחת_שכר_16_24'] = 100 * (c[('wage_work_mean', 2024)] / c[('wage_work_mean', 2016)] - 1)
+    u = M[(M.year == 2024) & (M.gender == 'סה"כ') & (M.population == 'כלל העובדים') &
+          (M.concept == 'כל מקורות ההכנסה') & (M.mkey == 'wage_work_mean') &
+          M.level.isin(['יישוב', 'מועצה אזורית'])]
+    u = u[~u.entity.astype(str).str.contains('סה"כ|סך הכל', na=False)]
+    uni = u.groupby(['level', 'entity']).value.mean()
+    P['מקום_ארצי'] = P.שכר_ממוצע.map(lambda v: int((uni > v).sum() + 1))
+    save(P.sort_values('מדד_ממוצע', ascending=False).round(1), 'authority_profile.csv')
+
+    # the 2024 wage rise is a composition effect: where employment fell, pay rose
+    x, y, ym = P.שינוי_מועסקים_23_24, P.שינוי_שכר_23_24, P.שינוי_חציון_23_24
+    for lab, v in (('mean', y), ('median', ym)):
+        r, pv = stats.pearsonr(x, v)
+        print('  Δemployment vs Δ%s wage: r=%+.3f (p=%.5f)' % (lab, r, pv))
+    sl, ic, r, pv, _ = stats.linregress(x, y)
+    print('  slope %.2f%% wage per 1%% employment lost (R2=%.2f)' % (-sl, r ** 2))
+    # rank stability, and whether the cluster converges internally
+    w16 = c[('wage_work_mean', 2016)].dropna()
+    rs, ps = stats.spearmanr(w16, c[('wage_work_mean', 2024)][w16.index])
+    rc, pc = stats.pearsonr(w16, 100 * (c[('wage_work_mean', 2024)][w16.index] / w16 - 1))
+    print('  rank stability 2016->2024 Spearman=%.3f (p=%.4f) | convergence r=%+.3f (p=%.3f, n=%d)'
+          % (rs, ps, rc, pc, len(w16)))
+    return P
+
+
 if __name__ == '__main__':
     c, n = wage_level()
     volumes(c, n)
@@ -213,4 +279,5 @@ if __name__ == '__main__':
     gender()
     low_pay()
     shift_share()
+    authority_profile()
     print('wrote %d tables to %s' % (len(os.listdir(OUT)), os.path.abspath(OUT)))
