@@ -83,28 +83,68 @@ function chart1(){
       D.cluster.auth[i]]));
 }
 
-/* ---------- 2. mean vs median grouped bars ---------- */
-function chart2_unused(){
+/* ---------- 2. one gap, two rulers: index flat / shekels widening ---------- */
+/* Two stacked panels on a shared year axis rather than one frame with two y-scales:
+   the whole point is that the same gap reads as "unchanged" on one ruler and
+   "growing" on the other, and a dual axis would let the reader blame the scales. */
+function chart2(){
   const c=S(),svg=clear('c2'); if(!svg)return;
-  const W=560,H=330,m={t:22,r:14,b:52,l:40};
-  const rows=[['נפת צפת',84.2,93.3],['נפת גולן',78.8,83.7],['מחוז הצפון',81.6,86.9],
-              ['המרכז',113.7,113.4],['תל־אביב',121.4,114.3]];
-  const hi=130,y=v=>m.t+(hi-v)*(H-m.t-m.b)/hi, bw=(W-m.l-m.r)/rows.length;
-  [0,25,50,75,100,125].forEach(v=>{svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),
-      stroke:v===100?c.ink3:c.rule2,'stroke-width':v===100?1.5:1}));
-    svg.appendChild(txt(v,{x:m.l-8,y:y(v),'text-anchor':'end','font-size':11}));});
-  rows.forEach((r,i)=>{
-    const cx=m.l+bw*i+bw/2;
-    [[r[1],c.s1,-1,'ממוצע'],[r[2],c.s2,1,'חציון']].forEach(([v,col,dir,lab])=>{
-      const w=bw*0.26,bx=cx+(dir<0?-w-3:3),h=Math.max(2,y(0)-y(v));
-      const b=el('rect',{x:bx,y:y(v),width:w,height:h,fill:col,rx:4});
-      hover(b,`<b>${r[0]}</b><i>מדד ${lab}</i> <b style="display:inline">${v}</b>`);
-      svg.appendChild(b);
-      svg.appendChild(txt(v,{x:bx+w/2,y:y(v)-9,'text-anchor':'middle','font-size':10,
-        'font-weight':700,fill:col}));});
-    const t=txt(r[0],{x:cx,y:H-30,'text-anchor':'middle','font-size':11.5,fill:c.ink2});
-    svg.appendChild(t);});
-  legend('lg2',[['מדד ממוצע',c.s1],['מדד חציון',c.s2]]);
+  const W=1000,H=430,m={t:34,r:92,b:34,l:56};
+  const ys=D.years, idx=D.idx_year['אשכול גליל מזרחי'],
+        gap=ys.map((_,i)=>D.wage_abs['ארצי'][i]-D.wage_abs['אשכול גליל מזרחי'][i]);
+  // inset the x range by half a bar so the end bars sit inside the frame and the
+  // right-hand axis labels stay legible; the line panel shares the same positions.
+  const step=(W-m.l-m.r)/ys.length, pad=step/2,
+        x=i=>m.l+pad+i*(W-m.l-m.r-2*pad)/(ys.length-1);
+  /* panel A — the index */
+  const aT=m.t, aB=196, alo=70, ahi=106, ay=v=>aB-(v-alo)*(aB-aT)/(ahi-alo);
+  /* panel B — the same gap in shekels */
+  const bT=254, bB=H-m.b, bhi=3000, by=v=>bB-v*(bB-bT)/bhi;
+
+  svg.appendChild(txt('מדד השכר · ארצי = 100',{x:m.l,y:aT-16,'text-anchor':'start',
+    'font-size':12.5,'font-weight':700,fill:c.ink}));
+  svg.appendChild(txt('אותו פער, מדד יציב',{x:W-m.r,y:aT-16,'text-anchor':'end','font-size':11,fill:c.ink3}));
+  // the band the cluster never leaves — annotation, not a data series
+  svg.appendChild(el('rect',{x:m.l,y:ay(82),width:W-m.l-m.r,height:ay(78)-ay(82),
+    fill:c.s1,opacity:.10}));
+  svg.appendChild(txt('הטווח שהאשכול לא יצא ממנו — 78% עד 82%',{x:(m.l+W-m.r)/2,y:ay(81.4),
+    'text-anchor':'middle','font-size':10.5,fill:c.ink3}));
+  [70,80,90,100].forEach(v=>{
+    svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:ay(v),y2:ay(v),stroke:v===100?c.ink3:c.rule2,
+      'stroke-width':v===100?1.5:1}));
+    svg.appendChild(txt(v+'%',{x:W-m.r+10,y:ay(v),fill:v===100?c.ink2:c.ink3,
+      'font-weight':v===100?700:400}));});
+  svg.appendChild(el('path',{d:idx.map((v,i)=>(i?'L':'M')+x(i)+' '+ay(v)).join(' '),
+    fill:'none',stroke:c.s1,'stroke-width':2,'stroke-linejoin':'round'}));
+  idx.forEach((v,i)=>{
+    svg.appendChild(el('circle',{cx:x(i),cy:ay(v),r:4,fill:c.s1,stroke:c.card,'stroke-width':2}));});
+  [0,ys.length-1].forEach(i=>svg.appendChild(txt(idx[i].toFixed(1)+'%',
+    {x:x(i),y:ay(idx[i])-14,'text-anchor':'middle','font-size':12,'font-weight':700,fill:c.ink})));
+
+  svg.appendChild(txt('הפער החודשי בשקלים מול הממוצע הארצי',{x:m.l,y:bT-16,'text-anchor':'start',
+    'font-size':12.5,'font-weight':700,fill:c.ink}));
+  svg.appendChild(txt('אותו פער, מרחק גדל',{x:W-m.r,y:bT-16,'text-anchor':'end','font-size':11,fill:c.ink3}));
+  [0,1000,2000,3000].forEach(v=>{
+    svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:by(v),y2:by(v),stroke:v?c.rule2:c.ink3,
+      'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(v?fmt(v):'0',{x:W-m.r+10,y:by(v),fill:c.ink3}));});
+  const bw=step*0.52, peak=gap.indexOf(Math.max(...gap));
+  gap.forEach((v,i)=>{
+    svg.appendChild(el('rect',{x:x(i)-bw/2,y:by(v),width:bw,height:by(0)-by(v),fill:c.s1,rx:4}));
+    if(i===0||i===peak||i===gap.length-1)
+      svg.appendChild(txt(fmt(v),{x:x(i),y:by(v)-11,'text-anchor':'middle','font-size':12,
+        'font-weight':700,fill:c.ink}));});
+
+  ys.forEach((yr,i)=>{
+    svg.appendChild(txt(yr,{x:x(i),y:H-14,'text-anchor':'middle','font-size':11.5,fill:c.ink2}));
+    const hit=el('rect',{x:x(i)-step/2,y:aT-10,width:step,height:bB-aT+10,fill:'transparent'});
+    hover(hit,`<b>${yr}</b><i>מדד השכר</i> <b style="display:inline">${idx[i].toFixed(1)}%</b>`+
+      `<i>פער חודשי מול הארצי</i> <b style="display:inline">${fmt(gap[i])} ש״ח</b>`+
+      `<i>שכר ממוצע באשכול</i> ${fmt(D.wage_abs['אשכול גליל מזרחי'][i])} ש״ח`);
+    svg.appendChild(hit);});
+  table('t2',['שנה','מדד השכר','שכר באשכול','שכר ארצי','פער בשקלים'],
+    ys.map((yr,i)=>[yr,idx[i].toFixed(1)+'%',fmt(D.wage_abs['אשכול גליל מזרחי'][i]),
+                    fmt(D.wage_abs['ארצי'][i]),fmt(gap[i])]));
 }
 
 /* ---------- 3. income distribution: cluster vs national ---------- */
@@ -447,7 +487,7 @@ function branchTable(){
     D.big.map(r=>[r.name,r.s_eg+'%',r.s_nat+'%',fmt(r.w_nat),fmt(r.w_eg),r.wr+'%']));
 }
 
-function drawAll(){ [chart1,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,branchTable]
+function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,branchTable]
   .forEach(f=>{try{f()}catch(e){console.error(f.name,e)}}); }
 drawAll();
 matchMedia('(prefers-color-scheme:dark)').addEventListener('change',drawAll);
