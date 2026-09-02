@@ -1,0 +1,1267 @@
+<title>שכר באשכול גליל מזרחי</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;800&family=Assistant:wght@300;400;600;700&family=Heebo:wght@400;500;700;800&display=swap">
+<style>
+:root{
+  --paper:#F2F5F7; --card:#FFFFFF; --card-2:#FAFCFD;
+  --ink:#14273F; --ink-2:#41566B; --ink-3:#74879A;
+  --rule:#D6E1E8; --rule-2:#E8EEF2;
+  --accent:#1C548C; --accent-soft:#E3EBF3;
+  --s1:#1C548C; --s2:#B0701A; --s3:#8C1C8C; --s4:#5E7F14;
+  --warm:#B0701A; --neg:#9E2B2B; --pos:#2F6B3A;
+  --shadow:0 1px 2px rgba(20,39,63,.06), 0 8px 24px -12px rgba(20,39,63,.18);
+  --f-disp:"Frank Ruhl Libre",Georgia,"Times New Roman",serif;
+  --f-body:"Assistant","Segoe UI",system-ui,sans-serif;
+  --f-num:"Heebo","Segoe UI",system-ui,sans-serif;
+  --wrap:1160px; --prose:68ch;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --paper:#0D1822; --card:#14232F; --card-2:#182936;
+  --ink:#E4EDF4; --ink-2:#A7BCCC; --ink-3:#7A93A6;
+  --rule:#24384A; --rule-2:#1C2E3D;
+  --accent:#6BA7DE; --accent-soft:#1B3247;
+  --s1:#3D8FD8; --s2:#B87818; --s3:#BC5CBC; --s4:#74991F;
+  --warm:#D0913A; --neg:#D2726B; --pos:#79B487;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --paper:#0D1822; --card:#14232F; --card-2:#182936;
+  --ink:#E4EDF4; --ink-2:#A7BCCC; --ink-3:#7A93A6;
+  --rule:#24384A; --rule-2:#1C2E3D;
+  --accent:#6BA7DE; --accent-soft:#1B3247;
+  --s1:#3D8FD8; --s2:#B87818; --s3:#BC5CBC; --s4:#74991F;
+  --warm:#D0913A; --neg:#D2726B; --pos:#79B487;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);
+     font-size:17px;line-height:1.7;direction:rtl;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--f-disp);margin:0;line-height:1.18;text-wrap:balance;font-weight:700}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:24px}
+.prose{max-width:var(--prose)}
+.stack{display:flex;flex-direction:column}
+
+/* ---- top bar ---- */
+.bar{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--paper) 88%,transparent);
+     backdrop-filter:blur(10px);border-block-end:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:54px}
+.bar .mark{font-family:var(--f-disp);font-weight:800;font-size:15px;letter-spacing:.01em;white-space:nowrap}
+.bar nav{display:flex;gap:2px;overflow-x:auto;margin-inline-start:auto;scrollbar-width:none}
+.bar nav::-webkit-scrollbar{display:none}
+.bar a{font-family:var(--f-num);font-size:13px;font-weight:500;color:var(--ink-3);text-decoration:none;
+       padding:6px 10px;border-radius:6px;white-space:nowrap}
+.bar a:hover{color:var(--ink);background:var(--rule-2)}
+
+/* ---- hero ---- */
+.hero{padding:72px 0 40px;border-block-end:1px solid var(--rule)}
+.kicker{font-family:var(--f-num);font-size:12.5px;font-weight:700;letter-spacing:.09em;
+        color:var(--accent);text-transform:none;display:flex;gap:10px;align-items:center}
+.kicker::after{content:"";height:1px;flex:1;background:var(--rule);max-width:120px}
+h1{font-size:clamp(38px,6vw,64px);font-weight:800;letter-spacing:-.02em;margin-block:18px 0}
+.lede{font-size:clamp(19px,2.1vw,23px);line-height:1.55;color:var(--ink-2);max-width:60ch;margin-block-start:22px;font-weight:300}
+.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-block-start:28px;font-family:var(--f-num);
+      font-size:13px;color:var(--ink-3)}
+.meta b{color:var(--ink-2);font-weight:600}
+
+/* ---- kpis ---- */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:1px;
+      background:var(--rule);border:1px solid var(--rule);border-radius:12px;overflow:hidden;margin-block-start:44px}
+.kpi{background:var(--card);padding:20px 18px 18px}
+.kpi .n{font-family:var(--f-num);font-weight:800;font-size:38px;line-height:1;letter-spacing:-.02em;
+        font-variant-numeric:tabular-nums;color:var(--ink)}
+.kpi .n small{font-size:19px;font-weight:700;color:var(--ink-3);margin-inline-start:2px}
+.kpi .l{font-size:14px;color:var(--ink-2);margin-block-start:9px;line-height:1.45}
+.kpi.hi .n{color:var(--accent)}
+
+/* ---- sections ---- */
+section{padding-block:56px;border-block-end:1px solid var(--rule)}
+section:last-of-type{border:0}
+.sechead{display:flex;flex-direction:column;gap:14px;margin-block-end:30px}
+h2{font-size:clamp(27px,3.4vw,38px);letter-spacing:-.015em}
+h3{font-size:20px;font-weight:700;margin-block-start:34px}
+h4{font-size:16px;font-weight:700;margin-block-start:26px;color:var(--ink-2)}
+.sechead .k{font-family:var(--f-num);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3)}
+.body p+p{margin-block-start:16px}
+.body{color:var(--ink-2)}
+.body strong{color:var(--ink);font-weight:600}
+.explain{background:var(--accent-soft);border-radius:10px;padding:14px 18px;margin-block-start:18px;
+        font-size:15.5px;line-height:1.6;color:var(--ink-2)}
+.explain b{color:var(--ink);font-weight:700}
+.fine{font-size:14.5px;color:var(--ink-3);line-height:1.6;border-inline-start:2px solid var(--rule);
+      padding-inline-start:14px;margin-block-start:18px!important}
+.fine b{color:var(--ink-2);font-weight:600}
+
+/* ---- figure ---- */
+figure{margin:34px 0 0;background:var(--card);border:1px solid var(--rule);border-radius:12px;
+       padding:22px 22px 16px;box-shadow:var(--shadow)}
+figcaption{font-size:14px;color:var(--ink-3);line-height:1.55;margin-block-start:14px;
+           padding-block-start:12px;border-block-start:1px solid var(--rule-2)}
+figcaption b{color:var(--ink-2);font-weight:600}
+.figtitle{font-family:var(--f-disp);font-weight:700;font-size:18px;margin-block-end:3px}
+.figsub{font-family:var(--f-num);font-size:13px;color:var(--ink-3);margin-block-end:16px}
+.chartbox{overflow-x:auto}
+svg{display:block;max-width:100%;height:auto;direction:ltr}
+.sw{display:inline-block}
+.kpi .n,.meta b,td.num{direction:ltr;unicode-bidi:isolate}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-block-end:14px;font-family:var(--f-num);font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.sw{width:11px;height:11px;border-radius:3px;flex:none}
+.sw.line{height:3px;width:16px;border-radius:2px}
+
+/* ---- tables ---- */
+details{margin-block-start:12px}
+summary{font-family:var(--f-num);font-size:13px;color:var(--ink-3);cursor:pointer;font-weight:500}
+summary:hover{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-family:var(--f-num);font-size:13.5px;margin-block-start:12px}
+th,td{text-align:right;padding:7px 10px;border-block-end:1px solid var(--rule-2);font-variant-numeric:tabular-nums}
+th{font-weight:700;color:var(--ink-3);font-size:12px;letter-spacing:.03em;border-block-end:1px solid var(--rule)}
+tbody tr:hover{background:var(--card-2)}
+td.name{font-family:var(--f-body);font-size:14.5px;font-weight:600;color:var(--ink);text-align:right}
+td.num{font-weight:500}
+.tw{overflow-x:auto}
+
+/* ---- callout ---- */
+.call{margin-block-start:30px;background:var(--card);border:1px solid var(--rule);
+      border-inline-start:3px solid var(--accent);border-radius:10px;padding:20px 22px}
+.call .t{font-family:var(--f-disp);font-weight:700;font-size:17px;margin-block-end:8px}
+.call p{font-size:15.5px;color:var(--ink-2);line-height:1.65}
+.call.warn{border-inline-start-color:var(--warm)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-block-start:30px}
+.pull{font-family:var(--f-disp);font-size:clamp(22px,2.8vw,29px);line-height:1.35;color:var(--ink);
+      font-weight:700;margin-block:34px;padding-inline-start:20px;border-inline-start:3px solid var(--accent);max-width:34ch}
+
+ul.pts{margin:18px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:13px}
+ul.pts li{position:relative;padding-inline-start:22px;color:var(--ink-2);font-size:16px;line-height:1.6}
+ul.pts li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:7px;height:7px;
+                  border-radius:2px;background:var(--accent)}
+ul.pts li b{color:var(--ink);font-weight:600}
+
+footer{padding:44px 0 64px;color:var(--ink-3);font-family:var(--f-num);font-size:13.5px;line-height:1.7}
+footer b{color:var(--ink-2)}
+.tip{position:fixed;pointer-events:none;background:var(--card);border:1px solid var(--rule);
+     border-radius:8px;padding:9px 12px;font-family:var(--f-num);font-size:12.5px;color:var(--ink);
+     box-shadow:var(--shadow);opacity:0;transition:opacity .12s;z-index:80;white-space:nowrap;
+     font-variant-numeric:tabular-nums}
+.tip.on{opacity:1}
+.tip b{display:block;font-size:13px;margin-block-end:4px;font-family:var(--f-body)}
+.tip i{font-style:normal;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media(max-width:640px){ .hero{padding-block-start:44px} section{padding-block:40px} figure{padding:16px 14px 12px} }
+</style>
+<div class="bar"><div class="wrap">
+  <span class="mark">שכר באשכול גליל מזרחי</span>
+  <nav>
+    <a href="#position">המיקום</a><a href="#spread">ההתפלגות</a><a href="#who">17 הרשויות</a><a href="#profile">פרופיל רשותי</a>
+    <a href="#quality">איכות התעסוקה</a><a href="#shock">2024</a><a href="#why">מקור הפער</a><a href="#anafresh">ענף × רשות</a>
+    <a href="#method">מתודולוגיה</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker prose">מרכז הידע האזורי גליל מזרחי · ניתוח שכר ותעסוקה · 2016–2024</div>
+  <h1>עשרים אחוז חסרים, תשע שנים בלי לזוז</h1>
+  <p class="lede">השכר הממוצע באשכול עומד על 80% מהארצי ולא זז מאז 2016 — אך הפער בשקלים
+     גדל בינתיים מ־2,008 ל־2,578 ש״ח לחודש. מה שנראה כשתי בעיות — שכר נמוך <em>וגם</em>
+     התפלגות עקומה — הוא כמעט תמיד אחת: מול רשויות באותה רמת שכר, הקצה העליון של האשכול
+     רגיל לחלוטין. יוצא הדופן היחיד הוא ריכוז משתכרי שכר המינימום, בעיקר ביישובי הדרוזים
+     ברמת הגולן.</p>
+  <div class="meta">
+    <span><b>92,419</b> מועסקים ב־17 רשויות (2024)</span>
+    <span><b>175</b> לוחות מקור עובדו</span>
+    <span><b>655,347</b> תצפיות</span>
+    <span><b>2</b> מקורות — נשמרים בנפרד</span>
+  </div>
+  <div class="kpis">
+    <div class="kpi hi"><div class="n">82<small>%</small></div><div class="l">מהשכר הממוצע הארצי לחודש עבודה · 2024</div></div>
+    <div class="kpi"><div class="n">35<small>%</small></div><div class="l">משתכרים עד שכר מינימום — מול 29.9% ארצית</div></div>
+    <div class="kpi"><div class="n">+1.9<small> נק׳</small></div><div class="l">עודף משתכרי שכר מינימום — מול רשויות באותה רמת שכר</div></div>
+    <div class="kpi"><div class="n">77<small>%</small></div><div class="l">מפער השכר <b>נטו</b> תורמים 4 ענפי ידע (למ״ס)</div></div>
+    <div class="kpi"><div class="n">−4.0<small>%</small></div><div class="l">מועסקים ב־2024 — מול <b>+0.9%</b> ארצית</div></div>
+  </div>
+  <div class="call" style="margin-block-start:32px">
+    <div class="t">איך לקרוא את הדוח</div>
+    <p>הדוח נשען על שני מקורות שאינם מחושבים באותה שיטה, ולכן <b>אינם מוצגים זה לצד זה</b>.
+      פרקים 1–5 מבוססים על נתוני המוסד לביטוח לאומי; פרק 6 בלבד מבוסס על העיבוד המיוחד של הלמ״ס.
+      לכל מקור נקודת הייחוס הארצית שלו. הסבר מלא בפרק המתודולוגיה.</p>
+  </div>
+</div></header>
+
+<main>
+<section id="position"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 1 · המיקום · מקור: ביטוח לאומי</span>
+    <h2>תשע שנים של יציבות בפער היחסי — והתרחבות בשקלים</h2></div>
+  <div class="body prose">
+    <p>האשכול הוא סכום של 17 רשויות שיש להן נתונים (מתוך 18; יסוד המעלה קטנה מסף הפרסום).
+       בין 2016 ל־2024 השכר הממוצע בהן טיפס מ־7,565 ל־10,266 ש״ח לחודש־בשנה — עלייה נומינלית של
+       <strong>35.7%</strong>, מול 34.2% ארצית. במונחי מדד: <strong>האשכול נע במקביל לארצי, לא לעברו</strong>,
+       ונשאר בטווח 78–82% לאורך כל התקופה.</p>
+    <div class="explain"><b>איך קוראים את המדד:</b> מדד 80 פירושו שעל כל 100 ש״ח שמרוויח עובד
+       ממוצע בישראל, עובד באשכול מרוויח 80 ש״ח. מדד 100 = בדיוק כמו הממוצע הארצי.
+       מדד 124 של תל אביב = 24% מעל הממוצע הארצי.</div>
+    <p><strong>ועכשיו הנקודה החשובה: היחס נשאר, אבל המרחק בשקלים גדל.</strong> ב־2016 חסרו לעובד
+       באשכול 2,008 ש״ח בחודש כדי להגיע לממוצע הארצי. ב־2024 חסרו לו 2,578 ש״ח — למרות שהמדד
+       כמעט לא זז. הסיבה פשוטה: כשהשכר בכל הארץ עולה, אותם 20% חסרים שווים יותר כסף.</p>
+    <p>מול תל אביב הפער גדל מ־3,592 ל־5,671 ש״ח לחודש — <strong>תוספת של 2,079 ש״ח בחודש,
+       כ־25,000 ש״ח בשנה</strong>, בתוך תשע שנים.</p>
+    <p class="fine">כל הסכומים נומינליים, ללא ניכוי מדד המחירים. משום כך ההשוואה המרכזית בדוח היא
+       תמיד <em>יחסית לארצי</em> — מדד שאינו מושפע מאינפלציה.</p>
+  </div>
+  <figure>
+    <div class="figtitle">מדד שכר ממוצע לחודש בשנה · ארצי = 100</div>
+    <div class="figsub">כלל העובדים · ביטוח לאומי · האשכול = סכום משוקלל של רשויותיו</div>
+    <div class="legend" id="lg1"></div>
+    <div class="chartbox"><svg id="c1" viewBox="0 0 1000 380" role="img"
+      aria-label="מדד שכר: תל אביב עולה מ־117 ל־124, האשכול נשאר סביב 79"></svg></div>
+    <figcaption><b>הקו ב־100 הוא הממוצע הארצי.</b> תל אביב מתרחקת כלפי מעלה; האשכול והצפון נעים במקביל
+      לארצי בלי לצמצם.</figcaption>
+    <details><summary>הצג טבלת נתונים</summary><div class="tw" id="t1"></div></details>
+  </figure>
+  <figure>
+    <div class="figtitle">פער אחד, שני סרגלים</div>
+    <div class="figsub">אותו פער בדיוק, נמדד פעם באחוזים ופעם בשקלים · כלל העובדים · ביטוח לאומי</div>
+    <div class="chartbox"><svg id="c2" viewBox="0 0 1000 350" role="img"
+      aria-label="הפער באחוזים מול השכר הארצי כמעט לא זז בתשע שנים, 21.0 אחוז ב־2016 מול 20.1 אחוז ב־2024, בעוד אותו פער בשקלים גדל מ־2,008 ל־2,578 ש״ח לחודש"></svg></div>
+    <figcaption><b>שני הפאנלים מציגים את אותו פער בדיוק, בשני סרגלים.</b> מימין — באחוזים:
+      לאשכול חסרים כ־20% מהשכר הארצי, וזה כמעט לא זז בתשע שנים (21.0% ל־20.1%). משמאל —
+      אותו פער בשקלים: כשהשכר בכל הארץ עולה, אותם כ־20% שווים יותר כסף, והמרחק החודשי גדל
+      מ־2,008 ל־2,578 ש״ח.
+      הירידה ב־2024 מ־2,666 ל־2,578 ש״ח אינה שיפור אמיתי — היא אפקט הרכב (ראו ממצא 4).
+      מול תל אביב הפער גדל באותה תקופה מ־3,592 ל־5,671 ש״ח לחודש.</figcaption>
+    <details><summary>הצג טבלת נתונים</summary><div class="tw" id="t2"></div></details>
+  </figure>
+  <p class="pull">אותו פער יחסי — פי 1.3 יותר שקלים מול הארצי, פי 1.6 מול תל אביב.</p>
+</div></section>
+
+<section id="spread"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 2 · ההתפלגות · מקור: ביטוח לאומי</span>
+    <h2>הקצה העליון מוסבר ברמת השכר. הקצה התחתון — לא לגמרי</h2></div>
+  <div class="body prose">
+    <p>התפלגות קבוצות ההכנסה מאפשרת לפרק את הממוצע. חיברנו את 17 הרשויות במשקל מספר המועסקים
+       וקיבלנו התפלגות אמיתית של האשכול (הסכום 100.0%). מול הארצי היא נראית כך:</p>
+    <ul class="pts">
+      <li><b>למטה:</b> 35.0% מהמועסקים באשכול משתכרים עד שכר המינימום, מול 29.9% ארצית.</li>
+      <li><b>למעלה:</b> 6.6% משתכרים מעל פי שניים מהשכר הממוצע, מול 11.4% ארצית.
+          מעל פי ארבעה: 0.9% מול 2.2%.</li>
+      <li><b>באמצע:</b> שיעור המשתכרים עד השכר הממוצע הוא 72.1% מול 66.2% ארצית.</li>
+    <h3>ואז בדקנו את זה מול רשויות באותה רמת שכר</h3>
+    <p>מפתה להסיק מהמספרים האלה שההתפלגות באשכול היא בעיה בפני עצמה. אבל ההשוואה לממוצע
+       הארצי אינה הוגנת: הממוצע הארצי מאגד את הרצליה ואת רהט יחד. ההשוואה הנכונה היא
+       <b>לרשויות אחרות שנמצאות באותה רמת שכר בדיוק</b>. לכל אחת מ־17 הרשויות מצאנו את
+       הרשויות מחוץ לאשכול שמדד השכר שלהן בטווח ‎±3 נקודות ממנה — בין 12 ל־35 רשויות
+       השוואה לכל אחת, מתוך 341 — והשווינו מולן.</p>
+    <ul class="pts">
+      <li><b>בקצה העליון — אין הבדל.</b> שיעור המשתכרים מעל פי שניים מהממוצע גבוה ב־0.12
+        נקודת אחוז בלבד מרשויות ההשוואה (10 מתוך 17 מעל, p=0.51). "חסרים לנו משתכרים
+        גבוהים" אינה עובדה נפרדת — <b>היא בדיוק אותה עובדה כמו "השכר נמוך"</b>. המתאם בין
+        רמת השכר ברשות לשיעור המשתכרים הגבוהים בה הוא ‎+0.98 על פני 341 רשויות.</li>
+      <li><b>בקצה התחתון — יש הבדל, קטן אך אמיתי.</b> שיעור המשתכרים עד שכר המינימום גבוה
+        ב־<b>1.9 נקודות אחוז</b> מרשויות באותה רמת שכר (13 מתוך 17 מעל, p=0.014;
+        משוקלל לפי מספר מועסקים ‎+1.6). זהו עודף שרמת השכר <em>אינה</em> מסבירה.</li>
+      <li><b>העודף מרוכז.</b> ארבעת יישובי הדרוזים ברמת הגולן: מג'דל שמס ‎+6.2 נקודות,
+        בוקעתא ‎+5.4, מסעדה ‎+5.0, עין קיניה ‎+3.4. לצידם מטולה ‎+4.5, ראש פינה ‎+4.4
+        וצפת ‎+3.4. בחצור הגלילית (‎−2.2) ובטובא־זנגריה (‎−3.1) התמונה הפוכה.</li>
+    </ul>
+    <div class="explain"><b>הערה על תיקון:</b> גרסה קודמת של דוח זה הציגה את הפער בקצה
+      העליון כממצא נפרד — הבדיקה מול 341 הרשויות שללה זאת. גרסה שלאחריה קבעה שגם הקצה
+      התחתון מוסבר לגמרי ברמת השכר — ומבחן רשויות ההשוואה מראה שגם זה לא מדויק. הניסוח
+      שלמעלה הוא המתוקן: הקצה העליון מוסבר, התחתון לא לגמרי.
+      <span class="fine">הבדיקה חזרה ברוחב ‎±2, ‎±5 ו־‎±8 נקודות מדד. העודף בקצה התחתון
+      נשאר ‎+1.7 עד ‎+1.9 נקודות (p בין 0.012 ל־0.050); הקצה העליון נשאר אפסי בכל
+      הרוחבים (p≥0.39).</span></div>
+  </div>
+  <figure>
+    <div class="figtitle">התפלגות קבוצות הכנסה, 2024</div>
+    <div class="figsub">% מהמועסקים לפי שכר לחודש עבודה ביחס לשכר הממוצע במשק · אשכול = 17 רשויות</div>
+    <div class="legend" id="lg3"></div>
+    <div class="chartbox"><svg id="c3" viewBox="0 0 1000 340" role="img"
+      aria-label="באשכול 35% משתכרים עד שכר מינימום מול 29.9% ארצית; מעל פי 4 רק 0.9% מול 2.2%"></svg></div>
+    <figcaption><b>הקבוצות אינן חופפות — כל אחת מתחילה היכן שקודמתה נגמרת</b>, ולכן כל עמודה
+      (אשכול, ארצי) מסתכמת ב־100%. "75%–100% מהממוצע" = מי שמרוויח יותר מ־75% מהשכר הממוצע
+      במשק אך פחות מהממוצע עצמו. המספרים בסוגריים הם ההפרש בנקודות אחוז מול הארצי:
+      <b>+</b> = באשכול יש יותר מועסקים בקבוצה הזו, <b>−</b> = פחות.</figcaption>
+    <details><summary>הצג טבלת נתונים</summary><div class="tw" id="t4"></div></details>
+  </figure>
+  <div class="call"><div class="t">מה זה משנה למדיניות</div>
+    <p><b>שתי מסקנות שונות לשני הקצוות.</b> אין טעם לרדוף אחרי "הזנב העליון החסר" כיעד
+      נפרד — הוא ייסגר מעצמו כשרמת השכר תעלה, כפי שקורה בכל 341 הרשויות. לעומת זאת
+      <strong>ריכוז שכר המינימום ביישובי הדרוזים ברמת הגולן הוא כן תופעה בפני עצמה</strong>,
+      שרמת השכר הכללית אינה מסבירה, ומצדיק בדיקה ממוקדת. השאלה הגדולה נשארת
+      <strong>למה רמת השכר נמוכה</strong> — ולה עונים פרקי הענפים.</p></div>
+</div></section>
+
+<section id="who"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 3 · 17 הרשויות · מקור: ביטוח לאומי</span>
+    <h2>פי 1.79 בין הרשות הגבוהה לנמוכה</h2></div>
+  <div class="body prose">
+    <p><strong>עובד במועצה אזורית גליל עליון מרוויח בממוצע 15,578 ש״ח לחודש עבודה. עובד במסעדה
+       מרוויח 8,699 ש״ח.</strong> פי 1.79 — כמעט כפול. שתי הרשויות נמצאות באותו אשכול, במרחק
+       של פחות משעת נסיעה זו מזו.</p>
+    <p>ברמה הארצית: גליל עליון במקום 124 מתוך 341 יישובים ומועצות אזוריות בארץ — כלומר בשליש
+       העליון. מסעדה במקום 327 — כלומר בין 15 הרשויות בעלות השכר הנמוך בישראל.
+       <strong>47% ממועסקי האשכול — כמעט אחד מכל שניים — נמצאים בתשע רשויות שבהן השכר נמוך
+       מ־80% מהממוצע הארצי.</strong></p>
+    <p>הפילוח חוצה מגזרים: ארבע המועצות האזוריות והיישובים הכפריים־יהודיים בראש; צפת — הרשות הגדולה
+       באשכול — במקום 274; וחמשת יישובי הדרוזים ברמת הגולן בתחתית הארצית.</p>
+    <p>אורך הקו בתרשים הוא המרחק בין מדד הממוצע למדד החציון. בקרית שמונה הוא 13.5 נקודות — סימן
+       מובהק ל"פסגה חסרה". <strong>אבל ביישובי הדרוזים ברמת הגולן הקו כמעט נעלם</strong> (מסעדה 0.8,
+       מג'דל שמס 1.0): שם גם הממוצע וגם החציון נמוכים, כלומר מדובר בשכר נמוך רוחבי ולא בהיעדר פסגה.
+       זו הבחנה שחשוב לא לטשטש — היא מצביעה על שני סוגי בעיה שדורשים שני סוגי מענה.</p>
+  </div>
+  <figure>
+    <div class="figtitle">רשויות האשכול, 2024 — מדד ממוצע מול מדד חציון</div>
+    <div class="figsub">שכר לחודש עבודה · ארצי = 100 · כלל העובדים · דירוג מתוך 341 (287 יישובים + 54 מועצות אזוריות)</div>
+    <div class="legend" id="lg5"></div>
+    <div class="chartbox"><svg id="c5" viewBox="0 0 1000 580" role="img"
+      aria-label="דירוג 17 רשויות האשכול לפי מדד שכר, מגליל עליון 105.6 עד מסעדה 59"></svg></div>
+    <figcaption><b>יסוד המעלה אינה מופיעה</b> — פחות מ־2,000 תושבים, ולכן אינה נכללת בלוחות היישוביים של
+      ביטוח לאומי. בעיבוד הלמ״ס לשנת 2024 היא מדורגת שנייה באשכול (865 שכירים, כ־1% מתעסוקת האשכול).</figcaption>
+    <details><summary>הצג טבלת נתונים מלאה</summary><div class="tw" id="t3"></div></details>
+  </figure>
+</div></section>
+
+<section id="profile"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 4 · פרופיל רשותי · מקור: ביטוח לאומי</span>
+    <h2>מה שרואים רק כשיורדים לרמת הרשות</h2></div>
+  <div class="body prose">
+    <p>הממוצע האשכולי מסתיר שבע תופעות שאינן נראות מעליו. כולן נבדקו על כל 17 הרשויות ואומתו
+       מול הנתון הגולמי.</p>
+
+    <h3>1 · הדירוג הפנימי קפוא — אף רשות לא שינתה את מקומה באמת</h3>
+    <p>דירגנו את 16 הרשויות שיש להן נתונים בשתי השנים לפי שכר, ב־2016 ושוב ב־2024, והשווינו
+       את שתי הרשימות. התוצאה חד־משמעית:</p>
+    <ul class="pts">
+      <li><b>שמונה רשויות מתוך 16 נשארו בדיוק באותו מקום.</b></li>
+      <li><b>14 מתוך 16 זזו לכל היותר מקום אחד.</b></li>
+      <li><b>השינוי הגדול ביותר בכל התקופה הוא שני מקומות</b> (גולן עלתה מ־4 ל־2, ראש פינה
+        ירדה מ־1 ל־3).</li>
+      <li>שלוש הנמוכות ב־2016 — מג'דל שמס, מסעדה, בוקעתא — הן אותן שלוש ב־2024.</li>
+    </ul>
+    <p>תשע שנים, מגפה ומלחמה — ואף רשות לא שינתה את מעמדה היחסי בתוך האשכול.
+       בדקנו גם אם הרשויות החלשות מדביקות את החזקות, ולא מצאנו לכך ראיה: הקשר בין רמת השכר
+       ב־2016 לקצב הצמיחה עד 2024 אינו מובהק סטטיסטית (p=0.20, 16 רשויות), כלומר הנתונים
+       אינם תומכים לא בהתכנסות ולא בהתרחקות. הפער בין הגבוהה לנמוכה נשאר סביב פי 1.7–1.8.</p>
+    <p class="fine">המשמעות המעשית: אם רשות נמצאת היום בתחתית הדירוג הפנימי, ההיסטוריה של תשע
+       השנים האחרונות אומרת שהיא לא תעלה ממנו מעצמה. שינוי מעמד ידרוש התערבות ולא מגמה.</p>
+
+    <h3>2 · זעזוע 2024 הוא סיפור של קו העימות בלבד</h3>
+    <p>הירידה של 4.0% במועסקים אינה תופעה אשכולית. חמש רשויות סמוכות לגבול —
+       עג'ר, קרית שמונה, מטולה, גליל עליון ומבואות החרמון — <strong>איבדו 10.3% ממועסקיהן (3,238 איש)</strong>.
+       שתים־עשרה הרשויות האחרות איבדו 0.9% בסך הכול (578 איש), ושלוש מהן אף גדלו.
+       קרית שמונה לבדה מסבירה 1,923 מתוך האובדן.</p>
+    <p>אותן חמש רשויות דווקא צמחו בעקביות קודם לכן: עג'ר ‎+41% במועסקים בין 2016 ל־2022,
+       גליל עליון ‎+17%, מבואות החרמון ‎+11%.</p>
+
+    <h3>3 · "שיפור" השכר ב־2024 הוא אפקט הרכב — וכעת ניתן להוכיח זאת</h3>
+    <p>ברמת האשכול אפשר היה רק להעלות את החשד. ברמת הרשות התמונה חד־משמעית:
+       <strong>ככל שרשות איבדה יותר מועסקים, כך "עלה" בה השכר יותר</strong> —
+       מתאם ‎−0.96 עם השכר החציוני (p&lt;0.0001) ו־‎−0.84 עם הממוצע. הרגרסיה: כל 1% ירידה בתעסוקה
+       מלווה בעלייה של 0.47% בשכר הממוצע (R²=0.70).</p>
+    <p>מטולה, שאיבדה 12.1% מהמועסקים, "השתפרה" ב־9.6 נקודות מדד; צפת, שאיבדה 2.3%, ב־0.2 נקודות.
+       העובדה שהמתאם חזק יותר עם <em>החציון</em> מאשר עם הממוצע מלמדת שכל ההתפלגות זזה, ולא רק זנב אחד.</p>
+    <h4>הראיה הישירה: ספירת ראשים לפי קבוצת הכנסה</h4>
+    <p>מתאם אינו הוכחה. אפשר לספור ישירות: מספר המועסקים בכל קבוצת הכנסה מתקבל מהכפלת שיעור
+       הקבוצה ברשות במספר המועסקים בה, וסכימה על 17 הרשויות. <strong>האשכול איבד 3,818
+       מועסקים ב־2024. 3,631 מהם — 95% — היו משתכרים מתחת לשכר הממוצע במשק. מספר המשתכרים
+       מעל פי שניים מהממוצע לא ירד כלל, אלא גדל ב־256.</strong></p>
+    <div class="tw"><table><thead><tr><th style="text-align:right">קבוצת הכנסה</th>
+      <th>2023</th><th>2024</th><th>שינוי</th><th>% מכלל האבדן</th></tr></thead><tbody>
+      <tr><td class="name">עד שכר מינימום</td><td class="num">36,860</td><td class="num">35,432</td><td class="num">−1,429</td><td class="num">37.4%</td></tr>
+      <tr><td class="name">מינימום–75% מהממוצע</td><td class="num">22,171</td><td class="num">20,659</td><td class="num">−1,511</td><td class="num">39.6%</td></tr>
+      <tr><td class="name">75%–100% מהממוצע</td><td class="num">11,919</td><td class="num">11,228</td><td class="num">−691</td><td class="num">18.1%</td></tr>
+      <tr><td class="name">פי 1–2 מהממוצע</td><td class="num">19,580</td><td class="num">19,138</td><td class="num">−443</td><td class="num">11.6%</td></tr>
+      <tr><td class="name">פי 2–3</td><td class="num">3,999</td><td class="num">4,090</td><td class="num">+92</td><td class="num">−2.4%</td></tr>
+      <tr><td class="name">פי 3–4</td><td class="num">1,013</td><td class="num">1,071</td><td class="num">+58</td><td class="num">−1.5%</td></tr>
+      <tr><td class="name">מעל פי 4</td><td class="num">693</td><td class="num">799</td><td class="num">+106</td><td class="num">−2.8%</td></tr>
+      <tr><td class="name"><b>סה״כ</b></td><td class="num"><b>96,237</b></td><td class="num"><b>92,419</b></td><td class="num"><b>−3,818</b></td><td class="num"><b>100%</b></td></tr>
+      </tbody></table></div>
+    <p>כמה מהעלייה זה מסביר? מדד השכר של האשכול עלה מ־79.8 ל־82.3 — ‎+2.5 נקודות. חישבנו את
+       תרומת שינוי ההרכב בלי להניח שכר ממוצע לאף קבוצה, אלא בהצבת <b>גבולות</b> הקבוצה
+       (קבוצת "פי 2–3" שווה לכל היותר פי 3 ולכל הפחות פי 2). התוצאה היא טווח:
+       <strong>בין ‎+1.3 ל־‎+2.8 נקודות — כלומר בין 54% ל־110% מהעלייה כולה.</strong>
+       <b>אין לקרוא את 2024 כשנת שיפור.</b></p>
+    <div class="explain"><b>מה זה לא מוכיח:</b> הנתונים סופרים מלאי בשתי נקודות זמן, לא
+      אנשים. איננו רואים מי עזב. תיאורטית הירידה בקבוצות התחתונות יכולה לנבוע גם ממי
+      ש<em>עלה</em> קבוצה — אך זה חסום מספרית: שלוש הקבוצות העליונות גדלו ב־256 בלבד בעוד
+      שלוש התחתונות ירדו ב־3,631, כך שמעבר כלפי מעלה יכול להסביר לכל היותר 7% מהירידה.
+      <span class="fine">בדיקה נוספת: התרחיש הנגדי של שכר 2024 עם משקלות התעסוקה של 2023
+      נותן 12,171 ש״ח מול 12,142 בפועל — הפרש של ‎−0.25 נקודות בלבד. כלומר האפקט אינו מעבר
+      בין רשויות אלא מתרחש בתוכן.</span></div>
+  </div>
+  <figure>
+    <div class="figtitle">שינוי בתעסוקה מול שינוי בשכר, 2023→2024</div>
+    <div class="figsub">כל נקודה = רשות · שכר חציוני לחודש עבודה · מתאם ‎−0.96</div>
+    <div class="legend" id="lg9"></div>
+    <div class="chartbox"><svg id="c9" viewBox="0 0 1000 430" role="img"
+      aria-label="ככל שרשות איבדה יותר מועסקים כך עלה בה השכר החציוני יותר; מתאם מינוס 0.96"></svg></div>
+    <figcaption>הקו הוא רגרסיה לינארית על 17 הרשויות. רשויות קו העימות מרוכזות בקצה השמאלי־עליון:
+      איבדו הכי הרבה מועסקים ו"השתפרו" הכי הרבה בשכר.</figcaption>
+  </figure>
+  <div class="body prose">
+    <h3>4 · עג'ר — החריג הקיצוני באשכול</h3>
+    <p>עג'ר חורגת יותר מכל רשות אחרת, וברוב המדדים בבת אחת. ב־2024 ירדה בה התעסוקה ב־21.4% —
+       החדה באשכול — אבל הפילוח המגדרי חושף משהו נוסף: <strong>תעסוקת הנשים צנחה ב־33.8%
+       מול 12.5% אצל הגברים</strong> (610 → 404 מול 851 → 745). במקביל שיעור העובדים 12 חודשים מלאים
+       קפץ מ־50.0% ל־63.4% — הזינוק הגדול באשכול, המעיד שמי שיצאו היו בעיקר עובדים חלקיים.</p>
+    <p>גם ללא המלחמה עג'ר חריגה: יחס שכר נשים/גברים 48.7% (הנמוך באשכול, ארצי 65.7%),
+       ושיעור נשים מכלל המועסקים 35.2% (ארצי 49.4%) — הנמוך באשכול בפער ניכר.</p>
+
+    <h3>5 · צפת — הפוך ממה שמצפים</h3>
+    <p>הרשות הגדולה באשכול (15,758 מועסקים) היא גם בעלת השכר הנמוך מבין היישובים היהודיים
+       (מדד 68.3, מקום 274 מתוך 341). אבל דווקא בה <strong>היחס המגדרי הטוב באשכול — 72.6%</strong>,
+       הרבה מעל הארצי (65.7%), <strong>ושיעור הנשים הגבוה ביותר — 52.1%</strong> (ארצי 49.4%).
+       זהו פרופיל של עיר שמנוע התעסוקה שלה הוא חינוך, בריאות ומינהל: שכר נמוך יחסית, אך שוויוני
+       ופתוח לנשים. שוויון בשכר נמוך אינו אותו דבר כמו שוויון בשכר גבוה — אבל הוא נתון שראוי
+       לשים לב אליו בתכנון.</p>
+
+    <h3>6 · ראש פינה מול גליל עליון — אותו מדד, מבנה הפוך</h3>
+    <p>שתיהן עומדות סביב 100% מהשכר הארצי, ושם הדמיון נגמר. <strong>ראש פינה היא הקוטבית ביותר
+       באשכול</strong>: יחס חציון/ממוצע 73.5%, 35.8% מהמועסקים עד שכר מינימום (מעל הארצי 29.9%)
+       — ובד בבד 12.0% מעל פי שניים מהשכר הממוצע (מעל הארצי 11.4%). שני הקצוות בעת ובעונה אחת.</p>
+    <p><strong>גליל עליון היא הרשות היחידה באשכול שמנצחת את הארצי בשני הקצוות</strong>:
+       29.4% עד שכר מינימום (מתחת ל־29.9% הארצי) ו־12.2% מעל פי שניים (מעל 11.4%).</p>
+
+    <h3>7 · יישובי הדרוזים ברמת הגולן — לא רק נמוך, גם לא שוויוני</h3>
+    <p>מסעדה, מג'דל שמס, בוקעתא ועין קיניה נמצאים כולם בין 48% ל־53% משתכרים עד שכר מינימום —
+       כמעט פי שניים מהארצי. אך הממצא החד יותר מתגלה רק מול תקן הוגן.</p>
+    <p>ברשויות עניות ההתפלגות שוויונית יותר כמעט תמיד — זו תכונה מתמטית, לא מעלה. לכן השווינו
+       כל רשות למה ש<em>מצופה</em> ממנה לפי רמת השכר שלה, על בסיס כל 341 הרשויות בארץ.
+       והתוצאה הפוכה למה שנראה במבט ראשון: <strong>מסעדה חורגת ב־‎9.7 נקודות מתחת למצופה,
+       מג'דל שמס ב־‎9.2 ובוקעתא ב־‎7.4</strong> — יותר מפי שתיים מסטיית התקן הארצית (4.2 נקודות).
+       כלומר הן <strong>פחות שוויוניות ממה שמצופה מרשויות בשכר כזה</strong>: גם עניות וגם
+       מקוטבות בתוכן.</p>
+    <p>לעומתן, טובא־זנגריה היא ההפך הגמור — חריגה של ‎+5.0 נקודות <em>מעל</em> המצופה, כלומר
+       שוויונית במיוחד. שתי הקבוצות נמצאות באותה רמת שכר בערך, ודורשות מענה שונה לחלוטין.</p>
+    <p class="fine">בגרסה קודמת של דוח זה נכתב שביישובי הדרוזים מדובר ב"שכר נמוך רוחבי ולא בפסגה
+       חסרה". השוואה מול התקן הארצי מראה שההפך הוא הנכון, והניסוח תוקן.</p>
+
+    <h3>8 · היפוך העצמאות</h3>
+    <p>שיעור העצמאים באשכול הוא 17.6% מול 13.2% ארצית. אבל המעניין הוא מה זה שווה:
+       ארצית עצמאי מרוויח 79% משכיר. באשכול היחס <em>מתהפך לפי רמת השכר המקומית</em> —
+       ברשויות עתירות שכר העצמאות היא פעילות דלת־הכנסה (ראש פינה 55%, גליל עליון 59%, גולן 61%),
+       ואילו ביישובים שבהם השכר השכיר נמוך היא חלופה שקולה (טובא־זנגריה 94%, מג'דל שמס 87%,
+       מסעדה 87%). כלומר עצמאות באשכול אינה מסלול קידום אלא, ברוב המקרים, תחליף למשרה שאינה קיימת.</p>
+  </div>
+  <figure>
+    <div class="figtitle">האם רשות שוויונית יותר או פחות ממה שמצופה מרמת השכר שלה?</div>
+    <div class="figsub">2024 · כל 341 היישובים והמועצות האזוריות בארץ · הקו הוא הרגרסיה הארצית (R²=0.45)</div>
+    <div class="legend" id="lg10"></div>
+    <div class="chartbox"><svg id="c10" viewBox="0 0 1000 470" role="img"
+      aria-label="מול התקן הארצי, יישובי הדרוזים ברמת הגולן פחות שוויוניים מהמצופה לרמת השכר שלהם"></svg></div>
+    <figcaption><b>איך לקרוא:</b> ככל שרשות ימינה — השכר בה גבוה יותר. ככל שהיא גבוהה — ההתפלגות
+      בה שוויונית יותר. הענן האפור הוא 341 הרשויות בארץ, והקו הכהה הוא <b>הקשר הארצי</b>:
+      ברשויות עניות ההתפלגות שוויונית יותר, בהכרח. לכן ההשוואה הנכונה אינה לקו האופקי אלא
+      <b>למרחק מהקו</b> — כמה רשות חורגת ממה שמצופה מרמת השכר שלה. הקווים המקווקווים הם סטיית
+      תקן אחת (4.2 נקודות).<br>
+      <b>האשכול כמכלול יושב בדיוק על הקו</b> (חריגה ממוצעת ‎−1.0 נקודות, p=0.41) — אין בו
+      ייחוד. אבל בתוכו יש חריגים אמיתיים לשני הכיוונים.</figcaption>
+    <details><summary>הצג טבלת חריגות מלאה</summary><div class="tw" id="t5"></div></details>
+  </figure>
+</div></section>
+
+<section id="quality"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 5 · איכות התעסוקה · מקור: ביטוח לאומי</span>
+    <h2>פחות חודשי עבודה, יותר עצמאים, פחות נשים בשוק</h2></div>
+  <div class="body prose">
+    <p><strong>66.6%</strong> מהמועסקים באשכול עבדו 12 חודשים מלאים ב־2024, מול 70.7% ארצית ו־74.2%
+       בתל אביב. ממוצע חודשי העבודה: 10.15 מול 10.45 ארצית. חלקן הגדול של החקלאות והתיירות
+       בתעסוקה המקומית מסביר חלק ניכר מכך — ומכיוון שהשכר החודשי מחושב לחודש עבודה,
+       ההשפעה על ההכנסה השנתית גדולה עוד יותר מהפער בשכר החודשי.</p>
+    <h3>שכר מינימום — מגמת ירידה, פער יציב</h3>
+    <p>בין 2016 ל־2022 ירד שיעור המשתכרים עד שכר המינימום בכל 12 היישובים שיש להם נתונים —
+       אבל <em>הפער</em> מול הארצי כמעט לא השתנה. במסעדה השיעור עמד על 51.9% ב־2022, במג'דל שמס 48.5%
+       ובבוקעתא 47.6%, מול 30.5% בכלל יישובי הארץ.</p>
+    <h3>עצמאים — רצפה, לא סולם</h3>
+    <p><strong>17.6% ממועסקי האשכול הם עצמאים, לעומת 13.2% ארצית</strong> — כל עובד שישי לעומת
+       כל עובד שמיני. אבל המספר הזה לבדו לא מספר את הסיפור.</p>
+    <div class="explain"><b>שימו לב למדידה:</b> השכר החודשי מחושב לחודש <em>עבודה</em>. עצמאים
+      באשכול עובדים בממוצע 11.9 חודשים בשנה; שכירים — 9.7. לכן השוואה חודשית מטעה, וצריך
+      להסתכל על ההכנסה השנתית.</div>
+    <p>ואז התמונה מתהפכת. <strong>חודשית</strong> העצמאים באשכול מרוויחים 55%–94% משכר השכירים.
+       <strong>שנתית</strong> — 68%–115%. וב־שלוש רשויות העצמאים מרוויחים בשנה <em>יותר</em>
+       מהשכירים: טובא־זנגריה 115%, מג'דל שמס 111%, מסעדה 108%. ארצית היחס השנתי הוא 92%,
+       לא 79% כפי שנראה במדידה החודשית.</p>
+    <p>הממצא המרכזי הוא בפיזור: <strong>הכנסת העצמאים כמעט זהה בכל רחבי האשכול, בעוד ששכר
+       השכירים משתנה מאוד.</strong> עצמאי מרוויח בין 6,719 ל־9,969 ש״ח לחודש עבודה בכל רשות
+       שהיא (פי 1.48 בין הקצוות); שכיר — בין 8,644 ל־15,940 (פי 1.84). במונחי פיזור סטטיסטי:
+       11.3% אצל העצמאים מול 20.6% אצל השכירים.</p>
+    <p>מכאן נובע קשר חזק ומובהק: <strong>ככל שהשכר השכיר ברשות גבוה יותר, כך העצמאות בה
+       משתלמת פחות</strong> (מתאם ‎−0.84, p&lt;0.0001). לא מפני שהעצמאים שם מרוויחים פחות — אלא
+       מפני שהחלופה השכירה שם טובה יותר.</p>
+    <ul class="pts">
+      <li><b>ברשויות עתירות שכר</b> — ראש פינה, גליל עליון, גולן — עצמאי מרוויח 68%–74%
+        משכיר בשנה. כאן העצמאות היא ויתור.</li>
+      <li><b>ברשויות דלות שכר</b> — טובא־זנגריה, מג'דל שמס, מסעדה, בוקעתא, צפת — עצמאי מרוויח
+        96%–115%. כאן העצמאות היא החלופה הטובה יותר, או היחידה.</li>
+    </ul>
+    <div class="call"><div class="t">המשמעות: העצמאות באשכול היא רצפת הכנסה, לא מסלול קידום</div>
+      <p>הכנסת העצמאים באשכול מרוכזת סביב 100 אלף ש״ח בשנה כמעט בכל רשות, ללא קשר למקום.
+        זו התנהגות של <em>רצפה</em>: רמת הכנסה שאפשר להגיע אליה בכל מקום, גם היכן שאין מעסיקים.
+        לכן ביישובים החלשים שיעור העצמאים גבוה והיא משתלמת — ובחזקים היא נתפסת כוויתור.
+        מדיניות שמעודדת עצמאות באשכול תעלה את התחתית, אך לא תיצור את הפסגה שחסרה.</p></div>
+    <h3>מגדר</h3>
+    <p>ב־2024 יחס שכר נשים/גברים באשכול עמד על <strong>65.9%</strong> — כמעט זהה לארצי (65.7%).
+       הפער המגדרי בשכר אינו חריג. מה שכן חריג הוא <strong>שיעור ההשתתפות</strong>: נשים הן 48.6%
+       מהמועסקים באשכול מול 49.4% ארצית, ובמגמה ארוכת טווח הפער היה גדול יותר (46.6% ב־2016).</p>
+    <p class="fine">אזהרה: נתוני המגדר ל־2016–2022 קיימים רק ברמת היישוב — 12 מתוך 17 הרשויות, ללא
+       המועצות האזוריות — ונקודת הייחוס שלהם היא "כלל יישובי הארץ" ולא כלל המשק. אין לקרוא את
+       2016–2022 ואת 2023–2024 כסדרה רציפה אחת.</p>
+  </div>
+  <div class="grid2">
+    <figure style="margin-block-start:0">
+      <div class="figtitle">משך העבודה בשנה, 2024</div>
+      <div class="figsub">% מהמועסקים לפי מספר חודשי עבודה</div>
+      <div class="legend" id="lg6"></div>
+      <div class="chartbox"><svg id="c6" viewBox="0 0 520 300" role="img"
+        aria-label="66.6% באשכול עבדו 12 חודשים מול 70.7% ארצית ו־74.2% בתל אביב"></svg></div>
+      <figcaption>ההפרש מתורגם לכ־0.3 חודשי עבודה פחות בשנה לעובד.</figcaption>
+    </figure>
+    <figure style="margin-block-start:0">
+      <div class="figtitle">שיעור המשתכרים עד שכר מינימום</div>
+      <div class="figsub">% מהמועסקים ביישוב · שכר לחודש עבודה · 2016–2022</div>
+      <div class="legend" id="lg7"></div>
+      <div class="chartbox"><svg id="c7" viewBox="0 0 520 300" role="img"
+        aria-label="שיעור המשתכרים עד שכר מינימום יורד בכל היישובים אך הפער מול הארצי נשמר"></svg></div>
+      <figcaption>ברמת יישוב בלבד — המועצות האזוריות אינן מפורסמות בלוח זה.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<section id="shock"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 6 · שנת 2024 · מקור: ביטוח לאומי</span>
+    <h2>ירידה של 4% במועסקים — בזמן שהמשק גדל</h2></div>
+  <div class="body prose">
+    <p>ב־2024 ירד מספר המועסקים באשכול ב־<strong>4.0%</strong> (מ־96,237 ל־92,419), בעוד שארצית הוא
+       <em>עלה</em> ב־0.9%, בתל אביב ב־0.7% ובמחוז הצפון כולו נותר ללא שינוי. זהו הזעזוע התעסוקתי החד
+       ביותר בכל תשע השנים שנבדקו — חד יותר מקורונה (2020: −1.9%), ובכיוון מנוגד לכלל המשק.</p>
+  </div>
+  <figure>
+    <div class="figtitle">שינוי שנתי במספר המועסקים</div>
+    <div class="figsub">% · כלל העובדים · האשכול = 17 רשויות (16 עד 2022)</div>
+    <div class="legend" id="lg8"></div>
+    <div class="chartbox"><svg id="c8" viewBox="0 0 1000 340" role="img"
+      aria-label="ב־2024 האשכול יורד ב־4% בעוד הארצי עולה ב־0.9%"></svg></div>
+    <figcaption>2020 היא שנת הקורונה; 2024 היא השנה הראשונה המלאה של המלחמה ופינוי יישובי הגבול.
+      המעבר מ־16 ל־17 רשויות ב־2023 (הצטרפות מטולה) מוסיף כ־1.2% למדרגת 2023 ואינו משנה את תמונת 2024.</figcaption>
+  </figure>
+  <div class="call warn"><div class="t">אין לקרוא את עליית השכר ב־2024 כשיפור</div>
+    <p>באותה שנה שבה נשרו 3,818 מועסקים, מדד השכר לחודש עבודה של האשכול עלה מ־79.8 ל־82.3.
+      מפתה לקרוא זאת כשיפור — <b>וזו טעות</b>. פרק "פרופיל רשותי" מראה זאת במפורש: ככל שרשות
+      איבדה יותר מועסקים, כך "עלה" בה השכר יותר (מתאם ‎−0.96 עם השכר החציוני). כלומר השכר הממוצע
+      עלה מפני שעובדים בשכר נמוך יצאו משוק העבודה, לא מפני שמי שנשאר מרוויח יותר.</p>
+    <p>נותרו הסברים משלימים שאי־אפשר להכריע ביניהם בנתונים שבידינו — תשלומי מילואים ופיצויי
+      פינוי הנספרים כשכר. <b>מומלץ שלא להציג את 2024 כשנת שיפור עד לפרסום נתוני 2025.</b></p></div>
+</div></section>
+
+<section id="why"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 7 · מקור הפער · מקור: למ״ס — מקור נפרד</span>
+    <h2>ארבעה ענפי ידע מסבירים 77% מהפער</h2></div>
+  <div class="body prose">
+    <p class="fine">פרק זה מבוסס כולו על העיבוד המיוחד של הלמ״ס לשנת 2024 (שכירים בלבד), שאינו מחושב
+       באותה שיטה כמו נתוני ביטוח לאומי. הממוצע הארצי כאן הוא 12,922 ש״ח ולא 14,751 — <b>שני המספרים
+       נכונים, כל אחד בשיטתו</b>. אין להשוות מספר מפרק זה למספר מהפרקים הקודמים; ההשוואות כאן פנימיות בלבד.</p>
+    <p>העיבוד מאפשר לפרק את הפער לשני מרכיבים: <strong>הרכב ענפי</strong> (באשכול יש יותר ענפים
+       שמשלמים פחות) ו<strong>שכר בתוך ענף</strong> (אותו ענף משלם פחות באשכול). השתמשנו בפירוק סימטרי,
+       שבו שני המרכיבים מסתכמים בדיוק בפער ללא שארית: הרכב ענפי <strong>31%</strong>,
+       שכר בתוך ענף <strong>69%</strong>.</p>
+    <div class="explain"><b>שתי שאלות "מה היה קורה אילו":</b> השכר הממוצע באשכול הוא 10,354 ש״ח
+       והארצי 12,922 — פער של 2,569 ש״ח. שאלנו מה היה קורה אילו נטרלנו כל אחד מהגורמים בנפרד.</div>
+    <ul class="pts">
+      <li><b>שאלה א׳ — מה אם היו באשכול אותם ענפים כמו בארץ?</b> כלומר אותו שיעור הייטק, אותו
+        שיעור חקלאות וכו׳, אבל כל ענף ממשיך לשלם את השכר שהוא משלם היום באשכול.
+        התשובה: <b>10,913 ש״ח</b> — רק 22% מהפער נסגר.</li>
+      <li><b>שאלה ב׳ — מה אם כל ענף באשכול היה משלם כמו בארץ?</b> כלומר תמהיל הענפים נשאר
+        כפי שהוא, אבל השכר בכל ענף מטפס לרמה הארצית.
+        התשובה: <b>11,888 ש״ח</b> — 60% מהפער נסגר.</li>
+    </ul>
+    <p>המסקנה: <strong>הבעיה הגדולה יותר אינה אילו ענפים יש באשכול, אלא כמה משלמים בו באותם
+       ענפים.</strong> אבל שימו לב שאף אחד משני התיקונים לבדו אינו מספיק — גם בתרחיש הטוב יותר
+       האשכול נשאר 8% מתחת לממוצע הארצי.</p>
+    <p>הצומת שבו שני המרכיבים נפגשים הוא כלכלת הידע. תכנות ושירותי מחשב, שירותים פיננסיים,
+       מחקר ופיתוח וייצור אלקטרוניקה מעסיקים באשכול <strong>5.6%</strong> מהשכירים מול
+       <strong>10.9%</strong> ארצית — <em>וגם</em> משלמים בו 60%–78% מהשכר הארצי באותם ענפים.
+       יחד הם מסבירים <strong>77%</strong> מהפער; תכנות ושירותי מחשב לבדו מסביר 47%.</p>
+  </div>
+  <figure>
+    <div class="figtitle">תרומת הענפים לפער השכר, 2024</div>
+    <div class="figsub">ש״ח לחודש · שכירים · פירוק סימטרי · מקור: עיבוד מיוחד של הלמ״ס</div>
+    <div class="legend" id="lg4"></div>
+    <div class="chartbox"><svg id="c4" viewBox="0 0 1000 430" role="img"
+      aria-label="תכנות ושירותי מחשב תורמים מינוס 1219 שקלים לפער, הגדול מכולם"></svg></div>
+    <figcaption><b>הרכב ענפי</b> = כמה עולה לאשכול שיש בו פחות מהענף הזה. <b>שכר בתוך ענף</b> = כמה עולה לו
+      שהענף משלם בו פחות. סכום שני המרכיבים על פני כל הענפים = הפער הכולל, −2,569 ש״ח, ללא שארית.</figcaption>
+  </figure>
+  <div class="body prose"><h3>ובמקום שבו האשכול משלם כמו הארץ</h3>
+    <p>לא כל התמונה שלילית, ודווקא הענפים הגדולים באשכול הם אלה שבהם השכר המקומי קרוב לארצי או
+       עולה עליו. אלה עמוד השדרה של התעסוקה המקומית.</p></div>
+  <div class="tw" id="t2"></div>
+  <div class="call"><div class="t">חינוך הוא המעסיק הגדול — ומשלם מעל הארצי</div>
+    <p>14.3% מהשכירים באשכול מועסקים בחינוך (11.1% ארצית), בשכר של 103% מהשכר הארצי בענף.
+      חקלאות מועסקת פי חמישה מהמשקל הארצי ומשלמת 97%. הבסיס התעסוקתי המקומי אינו "זול" —
+      הוא פשוט אינו כולל את הענפים שמושכים את הממוצע הארצי כלפי מעלה.</p></div>
+</div></section>
+
+<section id="anafresh"><div class="wrap">
+  <div class="sechead prose"><span class="k">ממצא 8 · ענף × רשות · מקור: למ״ס — עיבוד משלים</span>
+    <h2>איפה בדיוק נמצאת כלכלת הידע של האשכול</h2></div>
+  <div class="body prose">
+    <p class="fine">עיבוד משלים של הלמ״ס: 369 תאים של ענף כלכלי × רשות, שכירים בלבד.
+      השנה אינה מצוינת בקובץ ונקבעה באימות — השכר המשוקלל לכל רשות משחזר את קובץ הלמ״ס לשנת
+      <b>2024</b> בסטייה של 0.3%–3% ברשויות בעלות כיסוי גבוה. כמו הפרק הקודם, גם כאן נקודת
+      הייחוס הארצית היא של הלמ״ס (12,976 ₪) ולא של ביטוח לאומי.</p>
+
+    <h3>קודם כול — מה שההשמטה עצמה מגלה</h3>
+    <p>הלמ״ס משמיטה תאים קטנים מדי לפרסום, ולכן כל רשות מופיעה רק עם ענפיה הגדולים:
+      מ־26% מהשכירים ביסוד המעלה ועד 95% בצפת. אפשר לחשב מה חייבים התאים החסרים לשלם כדי
+      שהסך הכול המפורסם יתקיים, והתשובה עקבית להפליא: <strong>ב־18 מתוך 18 הרשויות השכר
+      בתאים שהושמטו גבוה מזה שבתאים שפורסמו — חציון 123%</strong>. בצפת 746 השכירים החסרים
+      משתכרים כ־12,750 ₪ מול 8,195 ₪ אצל 13,000 המפורסמים.</p>
+    <p>זו אינה רק אזהרה מתודולוגית אלא ראיה עצמאית לממצא המרכזי של הדוח:
+      <strong>ענפי השכר הגבוה באשכול קטנים מכדי להתפרסם</strong>. הזנב העליון החסר אינו
+      מסקנה סטטיסטית — הוא נראה בכך שהלמ״ס אינה יכולה לפרסם אותו.</p>
+
+    <h3>כלכלת הידע אינה נעדרת — היא מרוכזת</h3>
+    <p>ברמת האשכול ענפי הידע (אלקטרוניקה, תכנות, מו״פ, פיננסים) הם 5.6% מהשכירים מול 11.1% ארצית.
+      ברמת הרשות מתגלה שהממוצע הזה מסתיר פער עצום: <strong>בגליל עליון 9.3%, במבואות החרמון 8.0%,
+      בקריית שמונה 7.7% ובקצרין 7.6%</strong> — קרוב לשיעור הארצי. ובצפת, הרשות הגדולה באשכול,
+      <strong>2.0% בלבד</strong>.</p>
+    <p>חלק ענפי הידע מנבא היטב את מדד השכר הרשותי: <strong>מתאם ‎+0.74</strong> (p=0.024, n=9).
+      לעומת זאת הוא <em>אינו</em> מנבא את קצב הצמיחה — לא לפני המלחמה (r=+0.36, p=0.34) ולא אחריה
+      (r=+0.55, p=0.12). עם תשע רשויות בלבד לבדיקה כמעט אין עוצמה סטטיסטית, ולכן אין להסיק מכך
+      דבר לכאן או לכאן.</p>
+  </div>
+  <figure>
+    <div class="figtitle">חלק ענפי הידע מהשכירים מול מדד השכר, לפי רשות</div>
+    <div class="figsub">2024 · שכירים · רשויות בעלות כיסוי מספיק · הקו האנכי הוא השיעור הארצי (11.1%)</div>
+    <div class="legend" id="lg11"></div>
+    <div class="chartbox"><svg id="c11" viewBox="0 0 1000 430" role="img"
+      aria-label="ככל שחלק ענפי הידע ברשות גבוה יותר כך מדד השכר שלה גבוה יותר, מתאם 0.74"></svg></div>
+    <figcaption>גליל עליון וקריית שמונה מגיעות לשלושה־רבעים מהשיעור הארצי של ענפי הידע;
+      צפת לחמישית ממנו. הקו המקווקו הוא רגרסיה על תשע הרשויות.</figcaption>
+  </figure>
+  <div class="body prose">
+    <h3>תושבי המועצות האזוריות המועסקים באלקטרוניקה משתכרים מעל הממוצע הארצי בענף</h3>
+    <div class="explain"><b>קודם כול — דיוק שחשוב מאוד:</b> הנתונים מסווגים את העובד לפי
+      <b>מקום המגורים שלו, לא לפי מקום עבודתו</b>. אימתנו זאת: ספירות הלמ״ס תואמות את ספירות
+      ביטוח לאומי (שהן לפי מגורים) בטווח של ‎±12%. אילו הסיווג היה לפי מקום עבודה, מועצה אזורית
+      המארחת פארק תעשייה הייתה מציגה פי כמה יותר מועסקים מתושביה. לכן כל אמירה כאן היא על
+      <b>מי שגר ברשות</b>, ולא על מה שמשולם בשטחה.</div>
+    <p>ובניסוח מדויק: <strong>114 מתושבי מ.א. גליל עליון מועסקים בייצור מחשבים, מכשור אלקטרוני
+      ואופטי, ומשתכרים בממוצע 30,198 ש״ח לחודש עבודה. הממוצע הארצי של המועסקים באותו ענף הוא
+      25,982 ש״ח — כלומר הם משתכרים 116% מהממוצע הארצי בענף.</strong> באופן דומה: תושבי
+      הגולן 30,081 ש״ח (116%), מבואות החרמון 28,849 (111%), מרום הגליל 26,930 (104%).</p>
+    <p>ובאותו ענף ממש, בשלוש רשויות אחרות באשכול, התמונה הפוכה: תושבי קריית שמונה 16,325 ש״ח
+      (63% מהארצי), חצור הגלילית 14,031 (54%), קצרין 10,550 (41%).</p>
+    <p class="fine"><b>סייגים:</b> מדובר בבסיס קטן — 748 מועסקים בענף בכל האשכול, מתוכם 297
+      בארבע המועצות האזוריות; בשאר 11 הרשויות הענף אינו מתפרסם כלל. הנתון אינו אומר היכן
+      מועסקים אותם תושבים, ואינו מאפשר להסיק מה משולם בפארקי התעשייה שבשטח האשכול.</p>
+  </div>
+  <div class="tw" id="t6"></div>
+  <div class="body prose">
+    <h3>חינוך — הענף היחיד שמופיע בכל 18 הרשויות</h3>
+    <p>חינוך הוא המעסיק הגדול באשכול, והתמונה בו מפתיעה: <strong>רוב הרשויות משלמות מעל השכר
+      הארצי בענף</strong> (חציון 114%). ג'ש 138%, בוקעתא 129%, ע'ג'ר 129%, גולן 127%.</p>
+    <p>ואז יש את צפת. היא מעסיקה <strong>2,974 שכירים בחינוך — 21.6% מכלל שכיריה</strong>,
+      כמעט פי שניים מהשיעור הארצי (11.1%) — ומשלמת להם <strong>80.5% מהשכר הארצי בענף</strong>,
+      הנמוך באשכול. לו שילמה צפת בחינוך את השכר הארצי, השכר הממוצע בה היה עולה ב־6.1%
+      מענף אחד בלבד.</p>
+  </div>
+  <figure>
+    <div class="figtitle">שכר בענף החינוך, לפי רשות</div>
+    <div class="figsub">2024 · הקו הוא השכר הארצי בענף (11,163 ₪) · המספר מעל כל עמודה = מספר השכירים</div>
+    <div class="legend" id="lg12"></div>
+    <div class="chartbox"><svg id="c12" viewBox="0 0 1000 400" role="img"
+      aria-label="רוב רשויות האשכול משלמות בחינוך מעל השכר הארצי; צפת משלמת 80.5% והיא המעסיקה הגדולה"></svg></div>
+    <figcaption>שתי הרשויות שמעסיקות הכי הרבה מורים — צפת (2,974) וגולן (1,732) — נמצאות בשני
+      קצוות הסולם: 80.5% ו־126.7% מהשכר הארצי בענף.</figcaption>
+  </figure>
+  <div class="body prose">
+    <h3>פירוק הפער לכל רשות בנפרד</h3>
+    <p>אפשר לחזור על פירוק ההרכב מול השכר־בתוך־ענף לכל רשות בנפרד, מול תקן ארצי שמנורמל
+      לענפים שאותה רשות מפרסמת. התוצאה משנה את התמונה בשתי רשויות:</p>
+    <ul class="pts">
+      <li><b>גליל עליון: פער חיובי של ‎+341 ₪.</b> בהינתן תמהיל הענפים שלה, היא משלמת
+        <em>מעל</em> התקן הארצי. אין לה בעיית שכר — יש לה שאלה של אילו ענפים נמצאים בשטחה.</li>
+      <li><b>גולן: הפער כולו הרכב ענפי.</b> ‎−588 ₪ מהרכב, ו‎־131+ ₪ <em>לטובתה</em> מהשכר בתוך ענף.</li>
+      <li><b>צפת ומג'דל שמס — הפערים הגדולים באשכול</b> (‎−4,068 ו‎־4,408 ₪), ובשתיהן כ־70%
+        מהפער הוא שכר נמוך <em>בתוך</em> הענפים ולא הרכבם.</li>
+    </ul>
+    <p>בצפת הענף התורם ביותר הוא תכנות ושירותי מחשב: 147 שכירים (1.1% מול 5.9% ארצית),
+      בשכר של 55.8% מהארצי — יחד 41% מכלל הפער של צפת.</p>
+  </div>
+  <figure>
+    <div class="figtitle">פירוק פער השכר לכל רשות: הרכב ענפי מול שכר בתוך ענף</div>
+    <div class="figsub">2024 · ₪ לחודש מול תקן ארצי מנורמל · רק רשויות עם כיסוי ≥80%</div>
+    <div class="legend" id="lg13"></div>
+    <div class="chartbox"><svg id="c13" viewBox="0 0 1000 400" role="img"
+      aria-label="בצפת ומגדל שמס הפער הוא בעיקר שכר בתוך ענף; בגליל עליון הפער חיובי"></svg></div>
+    <figcaption>שני המרכיבים מסתכמים בפער בדיוק (פירוק סימטרי, ללא שארית).
+      תשע רשויות בלבד עומדות בסף הכיסוי; יסוד המעלה, מטולה, ראש פינה, ע'ג'ר ועין קנייא
+      מכוסות ב־26%–54% ואינן ניתנות לניתוח כזה.</figcaption>
+    <details><summary>הצג טבלת פירוק ופיזור ענפי</summary><div class="tw" id="t7"></div></details>
+  </figure>
+</div></section>
+
+<section id="method"><div class="wrap">
+  <div class="sechead prose"><span class="k">מתודולוגיה · אימות · מגבלות</span>
+    <h2>מה נבדק, ומה לא ניתן לומר</h2></div>
+  <div class="body prose">
+    <h3>כיצד חושב "האשכול"</h3>
+    <p>כל נתון אשכול בדוח הוא סכום משוקלל של רשויות האשכול עצמן — 13 יישובים וארבע מועצות אזוריות —
+       ולא קירוב גאוגרפי כלשהו. ממוצעים חושבו מחדש מתוך הסכומים ולא מוצעו נאיבית:
+       סך התשלום = שכר־לחודש־בשנה × מועסקים × 12; סך חודשי העבודה = סך התשלום ÷ שכר־לחודש־עבודה.
+       כך מתקבל יחס מצרפי זהה לזה שביטוח לאומי מחשב בעצמו. שיעורים (התפלגות הכנסה, משך עבודה)
+       שוקללו לפי מספר המועסקים; סכומי ההתפלגות שנבדקו הסתכמו ב־100.0%.</p>
+    <h3>כיסוי</h3>
+    <ul class="pts">
+      <li><b>2023–2024: 17 מתוך 18 רשויות.</b> חסרה יסוד המעלה — פחות מ־2,000 תושבים, ולכן אינה
+          מתפרסמת בלוחות ביטוח לאומי. לפי עיבוד הלמ״ס היא מונה 865 שכירים, כ־1% מתעסוקת האשכול.</li>
+      <li><b>2016–2022: 16 רשויות.</b> גם מטולה אינה מתפרסמת בשנים אלה. יחד עם יסוד המעלה מדובר
+          בכ־2% מהתעסוקה. המדרגה בין 16 ל־17 רשויות ב־2023 מצוינת בכל תרשים רלוונטי.</li>
+      <li><b>חציוני שכר</b> קיימים ל־17 הרשויות רק ב־2023–2024. ב־2016–2022 הם קיימים ל־12 היישובים
+          בלבד ולא למועצות האזוריות, ולכן <b>לא חושב חציון אחד לאשכול</b> — לא לשנה כלשהי. כל אמירה
+          על חציונים בדוח היא ברמת הרשות, או יחס חציון/ממוצע משוקלל, ומסומנת ככזו.</li>
+    </ul>
+    <h3>שלושה קבצים, שני מקורות</h3>
+    <p>הדוח נשען על שלושה קבצים משני מקורות: לוחות ביטוח לאומי 2016–2024 (פרקים 1–6);
+      העיבוד המיוחד של הלמ״ס לפי ענף כלכלי, 2024 (פרק 7); והעיבוד המשלים של הלמ״ס לפי
+      ענף × רשות, 2024 (פרק 8). שני קובצי הלמ״ס עקביים זה עם זה ומשתמשים באותה נקודת ייחוס
+      ארצית; קובצי ביטוח לאומי נפרדים מהם לחלוטין.</p>
+    <p class="fine"><b>קביעת שנת העיבוד המשלים:</b> הקובץ אינו מציין שנה. השכר המשוקלל שחושב
+      מ־369 תאי ענף×רשות משחזר את הסך הכול הרשותי בעיבוד הלמ״ס לשנת 2024 בסטייה של 0.3%–3%
+      בכל הרשויות בעלות כיסוי גבוה, ולכן נקבע שהקובץ הוא 2024. אין בו נתוני 2022.</p>
+    <p class="fine"><b>השמטת תאים בעיבוד המשלים:</b> תאים קטנים מושמטים במקור, והכיסוי נע בין
+      26% מהשכירים ברשות (יסוד המעלה) ל־95% (צפת). בכל 18 הרשויות התאים המושמטים חייבים לשלם
+      <em>יותר</em> מהמפורסמים כדי שהסך הכול יתקיים (חציון 123%), כלומר ההשמטה מוטה כלפי ענפים
+      עתירי שכר. פירוק שיפט־שייר רשותי הוגבל לתשע רשויות עם כיסוי ≥80%, וכל נתון מוצג עם הכיסוי שלו.</p>
+
+    <h3>שני מקורות, שתי שיטות ממוצע</h3>
+    <p>הצלבנו את עיבוד הלמ״ס מול נתוני ביטוח לאומי ל־2024 ברמת הרשות. מספרי המועסקים תואמים
+       (מתאם 0.996, סטייה ממוצעת 5.3%), וכך גם ממוצע חודשי העבודה — לרוב בהפרש קטן מ־0.05 חודש.
+       <strong>אך רמת השכר שונה ב־14% באופן שיטתי</strong>, וביטוח לאומי גבוה תמיד. ההסבר העקבי עם
+       הנתונים: ביטוח לאומי מחשב יחס מצרפי (סך השכר ÷ סך חודשי העבודה), והלמ״ס ממוצע פר־אדם;
+       ממוצע משוקלל־חודשים גבוה משמעותית כשעובדים בעלי שכר גבוה עובדים גם יותר חודשים.</p>
+    <p>המסקנה המעשית: <b>אין להשוות רמות שכר בין שני המקורות.</b> מדדים יחסיים לארצי כן ניתנים
+       להשוואה — מתאם 0.979 ומתאם דירוגים 0.980 ברמת הרשות. בדוח זה כל השוואה נעשית בתוך מקור אחד,
+       והפרק הענפי (6) מופרד במפורש.</p>
+    <p class="fine">הערה על הפרק הענפי: העיבוד הענפי של הלמ״ס מוגש ברזולוציה של נפות צפת וגולן.
+       הוא שימש כאן כנתון אשכול משום שבאותו קובץ עצמו, 18 רשויות האשכול מסתכמות ב־83,774 שכירים —
+       בדיוק סכום שתי הנפות (57,776 + 25,998). זהו זיהוי חשבונאי מלא, לא קירוב.</p>
+    <h3>הנתונים עובדו מחדש מהמקור</h3>
+    <p>קובץ ה־<code>unified_all.csv</code> שסופק אינו משמש כאן כבסיס, בשל שני פגמים שנמצאו בבדיקה:
+       בכל לוחות "מחוז ונפה" נכתב שם הנפה בעמודת המגדר והפילוח גברים/נשים אבד; ובנוסף חסרות בו
+       28 מ־180 טבלאות המקור. במקומו נכתב מנתח שמשחזר את הגיליונות מטווחי התאים הממוזגים (openpyxl),
+       כך שהיררכיית הכותרות ותאי הגאוגרפיה המאוחדים מדויקים ולא משוערים. שוחזרו <b>175 מתוך 180</b>
+       לוחות: 152 ישירות מה־xlsx ו־23 מ־<code>unified_all.csv</code> לאחר החזרת עמודות הגאוגרפיה למקומן.</p>
+    <h3>שגיאות שנמצאו בנתוני המקור</h3>
+    <ul class="pts">
+      <li><b>עמודת מספר המועסקים לשנת 2019</b> בלוח "שכר ממוצע לחודש עבודה של כלל העובדים, לפי יישוב,
+          2022-2016" פגומה: ב־50 מתוך 271 יישובים היא נושאת ערך השייך ליישוב אחר (מסעדה מופיעה עם
+          12,652 בין 1,765 ל־1,842; הלוח התאום מדווח 1,794). עמודות השכר באותו לוח תקינות.
+          נוספה בדיקת שפיות אוטומטית שפוסלת ערך החורג פי 2 מהממוצע ההנדסי של שכנותיו כששכנותיו
+          עקביות — היא סימנה 35 תאים, כולם בעמודה זו, והם הוסרו. ללא התיקון האשכול היה מציג
+          זינוף מדומה של 12% במועסקים ב־2019.</li>
+      <li><b>סיווג עמודות ב־<code>unified_all.csv</code></b>: בלוחות "קבוצת ההכנסה" הוא מצרף את הסיומת
+          " - מספר עובדים" לכל תווית עמודה, כולל עמודות שכר, כך שעמודת שכר עלולה להיקרא כמספר מועסקים.
+          תוקן בשלב הנרמול.</li>
+      <li><b>5 לוחות אבדו לגמרי</b> — פגומים בארכיון וגם חסרים ב־unified_all: סוג המבוטחים לפי מועצה
+          אזורית 2019, סוג המבוטחים לפי מחוז ונפה 2017 ו־2021, ושכר ממוצע וחציוני לפי יישוב 2017 ו־2019.</li>
+    </ul>
+    <h3>אזהרות לשימוש חוזר</h3>
+    <ul class="pts">
+      <li><b>התנגשות שמות:</b> "צפת" ו"גולן" קיימים גם כרשות וגם כיחידה גאוגרפית רחבה יותר. בכל חישוב
+          נקבעה רמת הישות במפורש; ללא זה מתקבל ניפוח של כ־38% במספר המועסקים בצפת.</li>
+      <li><b>אין סמלי למ״ס בקובצי ביטוח לאומי</b> — הצימוד נעשה לפי שם בלבד, בניגוד לכלל הצימוד הכפול
+          שבמסמך ההנחיות. 17 ההתאמות אומתו ידנית; שתיים הן התאמות כתיב (קריית/קרית שמונה,
+          טובא זנגרייה/טובא־זנגריה).</li>
+      <li><b>נומינלי:</b> אין ניכוי מדד מחירים. כל אמירה על צמיחה נאמרת ביחס לארצי.</li>
+      <li><b>לא נבדקו כאן:</b> השכלה, גיל, מקום עבודה מול מקום מגורים ונסועה — משתנים שעשויים להסביר
+          חלק מהשארית שאינה מוסברת בהרכב הענפי.</li>
+    </ul>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap prose">
+  <p><b>מקורות:</b> הלשכה המרכזית לסטטיסטיקה, אגף מיקרו־כלכלה — עיבוד מיוחד מורכב לפי ענף כלכלי ורשות,
+     קובצי הכנסה מנהליים, שנת 2024 · המוסד לביטוח לאומי — 180 לוחות שכר ותעסוקה לפי יישוב, מועצה אזורית
+     ומחוז/נפה, 2016–2024 · מילון סיווג ענפי כלכלה של הלמ״ס (ISIC rev.4).</p>
+  <p style="margin-block-start:14px"><b>שחזור:</b> צינור העיבוד, קטלוג הלוחות
+     (<code>btl-table-catalog.csv</code>) וכל טבלאות התוצאה נמצאים בתיקיית <code>analysis/</code>
+     במאגר וניתנים להרצה חוזרת מהמקור.</p>
+</div></footer>
+<div class="tip" id="tip"></div>
+
+<script>window.__D__={"years": [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "idx_year": {"ארצי": [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "תל־אביב": [116.5, 116.7, 118.5, 118.3, 118.9, 122.0, 124.2, 123.7, 124.1], "המרכז": [113.9, 113.9, 113.6, 113.8, 114.5, 114.9, 115.6, 115.3, 115.3], "הצפון": [82.0, 82.3, 82.2, 82.0, 81.3, 80.7, 79.7, 80.2, 80.4], "אשכול גליל מזרחי": [79.0, 79.5, 79.4, 79.8, 79.7, 79.1, 78.0, 78.3, 79.9]}, "idx_work": {"ארצי": [100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0, 100.0], "תל־אביב": [114.0, 114.4, 116.1, 115.9, 117.0, 119.3, 121.4, 121.1, 121.4], "המרכז": [112.4, 112.5, 112.3, 112.4, 112.7, 113.1, 114.1, 113.9, 113.7], "הצפון": [83.4, 83.5, 83.3, 83.3, 82.9, 82.2, 80.8, 81.2, 81.6], "אשכול גליל מזרחי": [80.0, 80.5, 80.6, 81.0, 80.4, 80.2, 78.9, 79.8, 82.3]}, "wage_abs": {"ארצי": [9573, 9827, 10146, 10473, 10169, 10884, 11657, 12288, 12844], "תל־אביב": [11157, 11470, 12020, 12393, 12088, 13283, 14481, 15199, 15937], "אשכול גליל מזרחי": [7565, 7809, 8058, 8358, 8104, 8611, 9096, 9622, 10266]}, "cluster": {"n": [80805, 84116, 86323, 88203, 86555, 88875, 92448, 96237, 92419], "auth": [16, 16, 16, 16, 16, 16, 16, 17, 17], "months": [10.2, 10.2, 10.3, 10.3, 9.7, 9.9, 10.3, 10.3, 10.1]}, "workers_yoy": {"ארצי": [null, 4.0, 2.6, 2.2, -0.5, 2.5, 3.9, 1.7, 0.9], "תל־אביב": [null, 2.6, 1.5, 1.9, -1.1, 1.6, 3.1, 0.3, 0.7], "הצפון": [null, 5.3, 3.2, 2.4, -0.4, 2.7, 4.4, 2.1, 0.0], "אשכול": [null, 4.1, 2.6, 2.2, -1.9, 2.7, 4.0, 4.1, -4.0]}, "auth": [{"name": "גליל עליון", "n": 9285, "mean": 15578, "med": 12179, "idx": 105.6, "idxm": 117.1, "rank": 124}, {"name": "גולן", "n": 10198, "mean": 14775, "med": 11472, "idx": 100.2, "idxm": 110.3, "rank": 146}, {"name": "ראש פינה", "n": 1758, "mean": 14575, "med": 10714, "idx": 98.8, "idxm": 103.0, "rank": 153}, {"name": "מבואות חרמון", "n": 4588, "mean": 14255, "med": 11000, "idx": 96.6, "idxm": 105.8, "rank": 158}, {"name": "מטולה", "n": 1185, "mean": 13561, "med": 9948, "idx": 91.9, "idxm": 95.6, "rank": 175}, {"name": "גוש חלב(ג'ש)", "n": 1836, "mean": 12973, "med": 10053, "idx": 87.9, "idxm": 96.7, "rank": 189}, {"name": "מרום הגליל", "n": 8250, "mean": 12691, "med": 10139, "idx": 86.0, "idxm": 97.5, "rank": 196}, {"name": "קרית שמונה", "n": 12017, "mean": 12578, "med": 10276, "idx": 85.3, "idxm": 98.8, "rank": 200}, {"name": "קצרין", "n": 4494, "mean": 11578, "med": 9493, "idx": 78.5, "idxm": 91.3, "rank": 223}, {"name": "עג'ר", "n": 1149, "mean": 11507, "med": 9410, "idx": 78.0, "idxm": 90.5, "rank": 227}, {"name": "חצור הגלילית", "n": 5454, "mean": 11487, "med": 9398, "idx": 77.9, "idxm": 90.4, "rank": 228}, {"name": "צפת", "n": 15758, "mean": 10074, "med": 7849, "idx": 68.3, "idxm": 75.5, "rank": 274}, {"name": "טובא-זנגריה", "n": 3475, "mean": 9552, "med": 8169, "idx": 64.8, "idxm": 78.5, "rank": 291}, {"name": "עין קיניה", "n": 1147, "mean": 9392, "med": 7129, "idx": 63.7, "idxm": 68.5, "rank": 302}, {"name": "בוקעתא", "n": 3553, "mean": 9238, "med": 6777, "idx": 62.6, "idxm": 65.2, "rank": 309}, {"name": "מג'דל שמס", "n": 6165, "mean": 9127, "med": 6539, "idx": 61.9, "idxm": 62.9, "rank": 312}, {"name": "מסעדה", "n": 2107, "mean": 8699, "med": 6218, "idx": 59.0, "idxm": 59.8, "rank": 327}], "rank_of": 341, "inc_rows": ["עד שכר המינימום", "מינימום – 75% מהממוצע", "75%–100% מהממוצע", "פי 1–2 מהממוצע", "פי 2–3", "פי 3–4", "מעל פי 4"], "inc": {"אשכול 2023": [35.2, 24.7, 13.1, 21.0, 4.2, 1.1, 0.7], "ארצי 2023": [29.9, 23.4, 12.9, 22.3, 6.7, 2.7, 2.2], "אשכול 2024": [35.0, 24.2, 12.9, 21.3, 4.5, 1.2, 0.9], "ארצי 2024": [29.9, 23.5, 12.8, 22.4, 6.6, 2.6, 2.2]}, "dur_rows": ["1-2 חודשים", "3-5 חודשים", "6-8 חודשים", "9-11 חודשים", "12 חודשים", "ממוצע חודשים"], "dur": {"אשכול": [5.51, 7.49, 9.47, 10.88, 66.64, 10.15], "ארצי": [4.2, 6.4, 8.1, 10.6, 70.7, 10.45], "תל־אביב": [3.4, 5.4, 7.2, 9.9, 74.2, 10.68]}, "mw_years": [2016, 2017, 2018, 2019, 2020, 2021, 2022], "mw": {"בוקעתא": [51.2, 52.1, 55.1, 53.0, 53.3, 49.2, 47.6], "גוש חלב(ג'ש)": [31.9, 32.3, 30.8, 31.7, 32.4, 28.6, 27.1], "חצור הגלילית": [37.4, 37.1, 37.4, 36.0, 37.3, 34.8, 34.5], "טובא-זנגריה": [41.0, 41.2, 41.6, 42.7, 43.8, 38.5, 35.7], "מג'דל שמס": [53.6, 53.9, 55.6, 53.8, 55.3, 50.0, 48.5], "מסעדה": [56.0, 56.6, 57.3, 55.8, 55.9, 52.1, 51.9], "עג'ר": [37.9, 38.5, 44.3, 42.6, 45.4, 38.6, 37.0], "עין קיניה": [49.2, 51.1, 50.6, 49.4, 51.8, 49.0, 48.8], "צפת": [46.0, 46.5, 47.6, 45.0, 45.9, 44.6, 42.7], "קצרין": [36.1, 36.9, 38.0, 34.9, 36.4, 34.6, 32.2], "קרית שמונה": [33.1, 33.7, 34.0, 32.3, 34.0, 32.2, 30.9], "ראש פינה": [37.1, 37.7, 38.1, 37.7, 37.2, 34.8, 33.1], "— כלל יישובי הארץ —": [32.8, 33.4, 34.4, 33.1, 34.5, 32.0, 30.5]}, "gender": {"years": [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024], "eg": [66.0, 66.4, 66.7, 66.5, 66.6, 66.9, 66.9, 67.4, 65.9], "nat": [64.5, 65.3, 65.3, 65.6, 65.8, 65.8, 65.8, 66.4, 65.7], "share": [46.6, 46.9, 47.2, 47.5, 47.3, 47.4, 47.9, 48.7, 48.6], "basis": ["יישובי האשכול בלבד · ארצי = יישובים 2,000+", "יישובי האשכול בלבד · ארצי = יישובים 2,000+", "יישובי האשכול בלבד · ארצי = יישובים 2,000+", "יישובי האשכול בלבד · ארצי = יישובים 2,000+", "יישובי האשכול בלבד · ארצי = יישובים 2,000+", "יישובי האשכול בלבד · ארצי = יישובים 2,000+", "יישובי האשכול בלבד · ארצי = יישובים 2,000+", "כל רשויות האשכול · ארצי = כלל המשק", "כל רשויות האשכול · ארצי = כלל המשק"]}, "self": [{"name": "גולן", "year": 2016, "self": 12.4}, {"name": "גולן", "year": 2022, "self": 14.6}, {"name": "גליל עליון", "year": 2016, "self": 6.4}, {"name": "גליל עליון", "year": 2022, "self": 8.4}, {"name": "מבואות חרמון", "year": 2016, "self": 16.0}, {"name": "מבואות חרמון", "year": 2022, "self": 17.7}, {"name": "מרום הגליל", "year": 2016, "self": 18.4}, {"name": "מרום הגליל", "year": 2022, "self": 18.7}, {"name": "— כלל המועצות האזוריות —", "year": 2016, "self": 10.3}, {"name": "— כלל המועצות האזוריות —", "year": 2022, "self": 11.2}], "shift": [{"name": "תכנות ושירותי מחשב", "s_eg": 2.1, "s_nat": 5.4, "wr": 76, "mix": -925, "pay": -294}, {"name": "שירותים פיננסיים", "s_eg": 1.3, "s_nat": 2.8, "wr": 72, "mix": -274, "pay": -123}, {"name": "מסחר סיטוני", "s_eg": 2.4, "s_nat": 4.1, "wr": 83, "mix": -229, "pay": -83}, {"name": "שירותי בריאות", "s_eg": 3.1, "s_nat": 4.4, "wr": 85, "mix": -203, "pay": -89}, {"name": "מחקר ופיתוח", "s_eg": 1.0, "s_nat": 1.2, "wr": 60, "mix": -50, "pay": -151}, {"name": "ייצור אלקטרוניקה ומחשבים", "s_eg": 1.1, "s_nat": 1.5, "wr": 78, "mix": -92, "pay": -73}, {"name": "מסחר קמעונאי", "s_eg": 7.2, "s_nat": 8.3, "wr": 86, "mix": -79, "pay": -82}, {"name": "תחבורה, אחסנה ודואר", "s_eg": 0.6, "s_nat": 1.3, "wr": 79, "mix": -103, "pay": -37}], "big": [{"name": "חינוך", "s_eg": 14.3, "s_nat": 11.1, "wr": 103, "w_eg": 11550, "w_nat": 11163}, {"name": "שירותי סעד ורווחה", "s_eg": 7.2, "s_nat": 7.7, "wr": 89, "w_eg": 4606, "w_nat": 5177}, {"name": "מסחר קמעונאי", "s_eg": 7.2, "s_nat": 8.3, "wr": 86, "w_eg": 6587, "w_nat": 7652}, {"name": "חקלאות — גידולים צמחיים", "s_eg": 5.7, "s_nat": 1.1, "wr": 97, "w_eg": 8268, "w_nat": 8514}, {"name": "מינהל מקומי", "s_eg": 5.7, "s_nat": 5.0, "wr": 89, "w_eg": 10262, "w_nat": 11536}, {"name": "מסעדות ובתי אוכל", "s_eg": 5.7, "s_nat": 6.0, "wr": 96, "w_eg": 5066, "w_nat": 5301}, {"name": "ארגוני חברים", "s_eg": 3.3, "s_nat": 2.7, "wr": 93, "w_eg": 6495, "w_nat": 7018}, {"name": "שירותי בריאות", "s_eg": 3.1, "s_nat": 4.4, "wr": 85, "w_eg": 13715, "w_nat": 16108}, {"name": "מסחר סיטוני", "s_eg": 2.4, "s_nat": 4.1, "wr": 83, "w_eg": 12135, "w_nat": 14656}, {"name": "מינהל ציבורי וביטחון", "s_eg": 2.4, "s_nat": 2.1, "wr": 97, "w_eg": 18906, "w_nat": 19488}], "ss": {"nat": 12922, "eg": 10354, "gap": -2569, "mix": -797, "pay": -1772, "mixpct": 31, "paypct": 69, "cfmix": 10913, "cfpay": 11888, "know": 77, "know_eg": 5.6, "know_nat": 10.9, "ict": 47}, "prof": [{"name": "גליל עליון", "n": 9285, "idx": 105.6, "idxm": 117.1, "mm": 78.2, "minw": 29.4, "top": 12.2, "d12": 68.4, "gr": 63.4, "fs": 50.6, "se": 15.4, "ses": 59.0, "dn": -5.7, "dw": 10.3, "dm": 9.7, "dnm": -4.7, "dnf": -6.7, "rank": 124, "band": true}, {"name": "גולן", "n": 10198, "idx": 100.2, "idxm": 110.3, "mm": 77.6, "minw": 31.4, "top": 11.1, "d12": 70.1, "gr": 60.2, "fs": 50.0, "se": 23.5, "ses": 60.7, "dn": 1.1, "dw": 8.9, "dm": 5.9, "dnm": 0.7, "dnf": 1.5, "rank": 146, "band": false}, {"name": "ראש פינה", "n": 1758, "idx": 98.8, "idxm": 103.0, "mm": 73.5, "minw": 35.8, "top": 12.0, "d12": 72.4, "gr": 64.3, "fs": 50.7, "se": 24.3, "ses": 55.4, "dn": -2.7, "dw": 8.0, "dm": 7.5, "dnm": -4.6, "dnf": -0.7, "rank": 153, "band": false}, {"name": "מבואות חרמון", "n": 4588, "idx": 96.6, "idxm": 105.8, "mm": 77.2, "minw": 32.2, "top": 10.2, "d12": 71.8, "gr": 66.5, "fs": 49.5, "se": 24.5, "ses": 66.1, "dn": -5.7, "dw": 8.6, "dm": 10.0, "dnm": -6.3, "dnf": -5.1, "rank": 158, "band": true}, {"name": "מטולה", "n": 1185, "idx": 91.9, "idxm": 95.6, "mm": 73.4, "minw": 37.8, "top": 8.8, "d12": 60.3, "gr": 64.6, "fs": 49.5, "se": 19.4, "ses": 72.0, "dn": -12.1, "dw": 16.8, "dm": 17.8, "dnm": -11.1, "dnf": -13.0, "rank": 175, "band": true}, {"name": "גוש חלב(ג'ש)", "n": 1836, "idx": 87.9, "idxm": 96.7, "mm": 77.5, "minw": 33.0, "top": 7.5, "d12": 71.2, "gr": 69.8, "fs": 47.8, "se": 18.4, "ses": 74.4, "dn": -1.0, "dw": 5.3, "dm": 5.7, "dnm": -0.2, "dnf": -1.8, "rank": 189, "band": false}, {"name": "מרום הגליל", "n": 8250, "idx": 86.0, "idxm": 97.5, "mm": 79.9, "minw": 35.1, "top": 6.8, "d12": 71.1, "gr": 66.8, "fs": 47.8, "se": 25.3, "ses": 64.2, "dn": 0.1, "dw": 5.2, "dm": 5.2, "dnm": 0.2, "dnf": 0.1, "rank": 196, "band": false}, {"name": "קרית שמונה", "n": 12017, "idx": 85.3, "idxm": 98.8, "mm": 81.7, "minw": 35.3, "top": 5.9, "d12": 63.9, "gr": 66.0, "fs": 48.5, "se": 11.6, "ses": 71.8, "dn": -13.8, "dw": 12.5, "dm": 14.2, "dnm": -12.1, "dnf": -15.5, "rank": 200, "band": true}, {"name": "קצרין", "n": 4494, "idx": 78.5, "idxm": 91.3, "mm": 82.0, "minw": 34.6, "top": 4.9, "d12": 68.0, "gr": 68.5, "fs": 49.7, "se": 13.1, "ses": 78.6, "dn": -2.0, "dw": 5.6, "dm": 4.0, "dnm": -1.7, "dnf": -2.4, "rank": 223, "band": false}, {"name": "עג'ר", "n": 1149, "idx": 78.0, "idxm": 90.5, "mm": 81.8, "minw": 37.8, "top": 4.2, "d12": 63.4, "gr": 48.7, "fs": 35.2, "se": 16.7, "ses": 63.5, "dn": -21.4, "dw": 13.9, "dm": 21.6, "dnm": -12.5, "dnf": -33.8, "rank": 227, "band": true}, {"name": "חצור הגלילית", "n": 5454, "idx": 77.9, "idxm": 90.4, "mm": 81.8, "minw": 34.2, "top": 4.6, "d12": 69.4, "gr": 67.3, "fs": 50.6, "se": 11.8, "ses": 75.6, "dn": -3.1, "dw": 6.1, "dm": 5.3, "dnm": -3.4, "dnf": -2.7, "rank": 228, "band": false}, {"name": "צפת", "n": 15758, "idx": 68.3, "idxm": 75.5, "mm": 77.9, "minw": 45.9, "top": 3.6, "d12": 63.3, "gr": 72.6, "fs": 52.1, "se": 13.2, "ses": 79.5, "dn": -2.3, "dw": 4.9, "dm": 7.2, "dnm": -3.5, "dnf": -1.2, "rank": 274, "band": false}, {"name": "טובא-זנגריה", "n": 3475, "idx": 64.8, "idxm": 78.5, "mm": 85.5, "minw": 41.2, "top": 1.6, "d12": 59.8, "gr": 64.6, "fs": 46.3, "se": 9.5, "ses": 93.9, "dn": 0.5, "dw": 5.2, "dm": 5.4, "dnm": 1.4, "dnf": -0.6, "rank": 291, "band": false}, {"name": "עין קיניה", "n": 1147, "idx": 63.7, "idxm": 68.5, "mm": 75.9, "minw": 48.4, "top": 2.0, "d12": 63.9, "gr": 58.4, "fs": 40.7, "se": 23.7, "ses": 70.4, "dn": -2.3, "dw": 7.5, "dm": 9.3, "dnm": -1.9, "dnf": -2.9, "rank": 302, "band": false}, {"name": "בוקעתא", "n": 3553, "idx": 62.6, "idxm": 65.2, "mm": 73.4, "minw": 50.8, "top": 2.8, "d12": 63.2, "gr": 53.2, "fs": 41.9, "se": 17.7, "ses": 79.5, "dn": -0.4, "dw": 5.4, "dm": 5.6, "dnm": -0.8, "dnf": 0.1, "rank": 309, "band": false}, {"name": "מג'דל שמס", "n": 6165, "idx": 61.9, "idxm": 62.9, "mm": 71.6, "minw": 52.0, "top": 3.1, "d12": 64.5, "gr": 61.5, "fs": 43.0, "se": 26.2, "ses": 86.7, "dn": -0.0, "dw": 6.7, "dm": 5.0, "dnm": -0.3, "dnf": 0.3, "rank": 312, "band": false}, {"name": "מסעדה", "n": 2107, "idx": 59.0, "idxm": 59.8, "mm": 71.5, "minw": 53.4, "top": 2.7, "d12": 65.3, "gr": 59.6, "fs": 41.8, "se": 23.0, "ses": 86.5, "dn": 1.5, "dw": 6.4, "dm": 4.8, "dnm": 1.1, "dnf": 2.1, "rank": 327, "band": false}], "band": {"n24": 28224, "loss": 3238, "pct": -10.3, "o_n24": 64195, "o_loss": 578, "o_pct": -0.9}, "stats": {"r_mean": -0.835, "r_med": -0.956, "slope": 0.47, "r2": 0.7, "spear": 0.979, "conv_r": 0.339, "conv_p": 0.199}, "natprof": {"idx": 100, "mm": 70.5, "minw": 29.9, "top": 11.4, "d12": 70.7, "gr": 65.7, "fs": 49.4, "se": 13.2, "ses": 79}, "anaf": {"cov": [{"name": "צפת", "cov": 94.6, "wcov": 8195, "wmiss": 12752, "ratio": 156.0}, {"name": "קריית שמונה", "cov": 93.4, "wcov": 10020, "wmiss": 13009, "ratio": 130.0}, {"name": "הגליל העליון", "cov": 92.5, "wcov": 13366, "wmiss": 15237, "ratio": 114.0}, {"name": "גולן", "cov": 92.5, "wcov": 12149, "wmiss": 15472, "ratio": 127.0}, {"name": "מג'דל שמס", "cov": 86.6, "wcov": 8043, "wmiss": 8484, "ratio": 106.0}, {"name": "מרום הגליל", "cov": 85.7, "wcov": 10661, "wmiss": 14051, "ratio": 132.0}, {"name": "קצרין", "cov": 84.1, "wcov": 9282, "wmiss": 11546, "ratio": 124.0}, {"name": "חצור הגלילית", "cov": 83.6, "wcov": 9431, "wmiss": 12492, "ratio": 132.0}, {"name": "טובא-זנגרייה", "cov": 83.4, "wcov": 8633, "wmiss": 8686, "ratio": 101.0}, {"name": "בוקעאתא", "cov": 76.0, "wcov": 8006, "wmiss": 8928, "ratio": 112.0}, {"name": "מבואות החרמון", "cov": 74.6, "wcov": 12003, "wmiss": 13109, "ratio": 109.0}, {"name": "מסעדה", "cov": 71.6, "wcov": 7258, "wmiss": 8781, "ratio": 121.0}, {"name": "ג'ש (גוש חלב)", "cov": 59.9, "wcov": 11793, "wmiss": 12087, "ratio": 102.0}, {"name": "ראש פינה", "cov": 54.1, "wcov": 10734, "wmiss": 15245, "ratio": 142.0}, {"name": "מטולה", "cov": 50.0, "wcov": 8133, "wmiss": 13631, "ratio": 168.0}, {"name": "עין קנייא", "cov": 41.4, "wcov": 7864, "wmiss": 8597, "ratio": 109.0}, {"name": "ע'ג'ר", "cov": 41.0, "wcov": 9982, "wmiss": 10209, "ratio": 102.0}, {"name": "יסוד המעלה", "cov": 26.4, "wcov": 9759, "wmiss": 14931, "ratio": 153.0}], "know": [{"name": "גליל עליון", "share": 9.3, "idx": 104.1, "n": 787, "cov": 92.5}, {"name": "מבואות חרמון", "share": 8.0, "idx": 94.7, "n": 347, "cov": 74.6}, {"name": "קרית שמונה", "share": 7.7, "idx": 78.8, "n": 844, "cov": 93.4}, {"name": "קצרין", "share": 7.6, "idx": 74.3, "n": 319, "cov": 84.1}, {"name": "גולן", "share": 6.4, "idx": 95.6, "n": 631, "cov": 92.5}, {"name": "מרום הגליל", "share": 4.0, "idx": 85.9, "n": 273, "cov": 85.7}, {"name": "חצור הגלילית", "share": 3.9, "idx": 76.6, "n": 187, "cov": 83.6}, {"name": "מג'דל שמס", "share": 2.9, "idx": 62.4, "n": 142, "cov": 86.6}, {"name": "צפת", "share": 2.0, "idx": 65.1, "n": 275, "cov": 94.6}], "edu": [{"name": "גוש חלב(ג'ש)", "n": 123, "wage": 15455, "ratio": 138.4, "share": 7.3}, {"name": "בוקעתא", "n": 247, "wage": 14444, "ratio": 129.4, "share": 7.9}, {"name": "עג'ר", "n": 122, "wage": 14442, "ratio": 129.4, "share": 10.9}, {"name": "גולן", "n": 1732, "wage": 14145, "ratio": 126.7, "share": 17.6}, {"name": "טובא-זנגריה", "n": 130, "wage": 13724, "ratio": 122.9, "share": 3.8}, {"name": "מג'דל שמס", "n": 450, "wage": 13074, "ratio": 117.1, "share": 9.2}, {"name": "עין קיניה", "n": 85, "wage": 13018, "ratio": 116.6, "share": 8.1}, {"name": "ראש פינה", "n": 205, "wage": 12884, "ratio": 115.4, "share": 13.0}, {"name": "גליל עליון", "n": 1208, "wage": 12883, "ratio": 115.4, "share": 14.3}, {"name": "יסוד המעלה", "n": 91, "wage": 12543, "ratio": 112.4, "share": 10.5}, {"name": "מבואות חרמון", "n": 514, "wage": 12312, "ratio": 110.3, "share": 11.8}, {"name": "קצרין", "n": 544, "wage": 12029, "ratio": 107.8, "share": 13.0}, {"name": "מסעדה", "n": 143, "wage": 11902, "ratio": 106.6, "share": 8.0}, {"name": "מטולה", "n": 162, "wage": 11084, "ratio": 99.3, "share": 14.3}, {"name": "קרית שמונה", "n": 1180, "wage": 10978, "ratio": 98.3, "share": 10.8}, {"name": "מרום הגליל", "n": 971, "wage": 10774, "ratio": 96.5, "share": 14.1}, {"name": "חצור הגלילית", "n": 653, "wage": 10492, "ratio": 94.0, "share": 13.8}, {"name": "צפת", "n": 2974, "wage": 8991, "ratio": 80.5, "share": 21.6}], "ss": [{"name": "מג'דל שמס", "gap": -4408, "mix": -1356, "pay": -3051, "cov": 86.6, "wage": 8043}, {"name": "צפת", "gap": -4068, "mix": -1228, "pay": -2839, "cov": 94.6, "wage": 8195}, {"name": "קצרין", "gap": -3089, "mix": -543, "pay": -2546, "cov": 84.1, "wage": 9282}, {"name": "חצור הגלילית", "gap": -3008, "mix": -1028, "pay": -1980, "cov": 83.6, "wage": 9431}, {"name": "קרית שמונה", "gap": -2822, "mix": -584, "pay": -2238, "cov": 93.4, "wage": 10020}, {"name": "מרום הגליל", "gap": -1754, "mix": -549, "pay": -1204, "cov": 85.7, "wage": 10661}, {"name": "טובא-זנגריה", "gap": -1544, "mix": -261, "pay": -1282, "cov": 83.4, "wage": 8633}, {"name": "גולן", "gap": -457, "mix": -587, "pay": 131, "cov": 92.5, "wage": 12149}, {"name": "גליל עליון", "gap": 341, "mix": -20, "pay": 361, "cov": 92.5, "wage": 13366}], "spread": [{"name": "עבודות בנייה מיוחדות", "n_auth": 13, "n": 1728, "lo": 5133, "hi": 13770, "x": 2.7, "ratio": 94.0}, {"name": "מסחר סיטוני, פרט לכלי רכב מנועיים ולאופנועים", "n_auth": 12, "n": 1782, "lo": 7381, "hi": 17893, "x": 2.4, "ratio": 66.0}, {"name": "מינהל ציבורי וביטחון; ביטוח לאומי חובה", "n_auth": 11, "n": 1773, "lo": 15295, "hi": 32498, "x": 2.1, "ratio": 100.0}, {"name": "מגורים טיפוליים +", "n_auth": 17, "n": 5751, "lo": 3253, "hi": 6306, "x": 1.9, "ratio": 89.0}, {"name": "גידולים צמחיים", "n_auth": 17, "n": 4555, "lo": 5731, "hi": 10929, "x": 1.9, "ratio": 96.0}, {"name": "מכירה קמעונית, פרט לכלי רכב מנועיים ולאופנועים", "n_auth": 17, "n": 5725, "lo": 4745, "hi": 9036, "x": 1.9, "ratio": 88.0}, {"name": "מינהל מקומי", "n_auth": 16, "n": 4523, "lo": 8105, "hi": 14787, "x": 1.8, "ratio": 90.0}, {"name": "שירותי אירוח", "n_auth": 10, "n": 1378, "lo": 6351, "hi": 11392, "x": 1.8, "ratio": 81.0}], "hi": [{"anaf": "ייצור אלקטרוניקה", "name": "חצור הגלילית", "n": 57, "wage": 14031, "ratio": 54.0}, {"anaf": "ייצור אלקטרוניקה", "name": "קריית שמונה", "n": 282, "wage": 16325, "ratio": 63.0}, {"anaf": "ייצור אלקטרוניקה", "name": "קצרין", "n": 112, "wage": 10549, "ratio": 41.0}, {"anaf": "ייצור אלקטרוניקה", "name": "הגליל העליון", "n": 114, "wage": 30198, "ratio": 116.0}, {"anaf": "ייצור אלקטרוניקה", "name": "מרום הגליל", "n": 61, "wage": 26930, "ratio": 104.0}, {"anaf": "ייצור אלקטרוניקה", "name": "מבואות החרמון", "n": 54, "wage": 28848, "ratio": 111.0}, {"anaf": "ייצור אלקטרוניקה", "name": "גולן", "n": 68, "wage": 30080, "ratio": 116.0}, {"anaf": "תכנות ושירותי מחשב", "name": "חצור הגלילית", "n": 63, "wage": 21158, "ratio": 66.0}, {"anaf": "תכנות ושירותי מחשב", "name": "קריית שמונה", "n": 250, "wage": 20543, "ratio": 64.0}, {"anaf": "תכנות ושירותי מחשב", "name": "קצרין", "n": 84, "wage": 22121, "ratio": 69.0}, {"anaf": "תכנות ושירותי מחשב", "name": "מג'דל שמס", "n": 76, "wage": 20667, "ratio": 65.0}, {"anaf": "תכנות ושירותי מחשב", "name": "הגליל העליון", "n": 348, "wage": 28539, "ratio": 89.0}, {"anaf": "תכנות ושירותי מחשב", "name": "מרום הגליל", "n": 124, "wage": 25543, "ratio": 80.0}, {"anaf": "תכנות ושירותי מחשב", "name": "מבואות החרמון", "n": 127, "wage": 23032, "ratio": 72.0}, {"anaf": "תכנות ושירותי מחשב", "name": "גולן", "n": 288, "wage": 27962, "ratio": 87.0}, {"anaf": "תכנות ושירותי מחשב", "name": "צפת", "n": 147, "wage": 17842, "ratio": 56.0}, {"anaf": "מחקר ופיתוח", "name": "קריית שמונה", "n": 121, "wage": 18455, "ratio": 54.0}, {"anaf": "מחקר ופיתוח", "name": "קצרין", "n": 65, "wage": 17553, "ratio": 52.0}, {"anaf": "מחקר ופיתוח", "name": "הגליל העליון", "n": 194, "wage": 21323, "ratio": 63.0}, {"anaf": "מחקר ופיתוח", "name": "מבואות החרמון", "n": 87, "wage": 22580, "ratio": 66.0}, {"anaf": "מחקר ופיתוח", "name": "גולן", "n": 150, "wage": 22708, "ratio": 67.0}, {"anaf": "שירותים פיננסיים", "name": "חצור הגלילית", "n": 67, "wage": 16326, "ratio": 75.0}, {"anaf": "שירותים פיננסיים", "name": "קריית שמונה", "n": 191, "wage": 14315, "ratio": 65.0}, {"anaf": "שירותים פיננסיים", "name": "קצרין", "n": 58, "wage": 11696, "ratio": 53.0}, {"anaf": "שירותים פיננסיים", "name": "מג'דל שמס", "n": 66, "wage": 7614, "ratio": 35.0}, {"anaf": "שירותים פיננסיים", "name": "הגליל העליון", "n": 131, "wage": 21023, "ratio": 96.0}, {"anaf": "שירותים פיננסיים", "name": "מרום הגליל", "n": 88, "wage": 18430, "ratio": 84.0}, {"anaf": "שירותים פיננסיים", "name": "מבואות החרמון", "n": 79, "wage": 19490, "ratio": 89.0}, {"anaf": "שירותים פיננסיים", "name": "גולן", "n": 125, "wage": 18162, "ratio": 83.0}, {"anaf": "שירותים פיננסיים", "name": "צפת", "n": 128, "wage": 13137, "ratio": 60.0}], "nat_know": 10.9, "edu_nat": 11163, "stats": {"r": 0.735, "p": 0.024, "n": 9, "r1622": 0.358, "p1622": 0.344, "r2224": 0.552, "p2224": 0.123}}, "ratio": {"cluster": [{"name": "טובא-זנגריה", "idx": 64.8, "ratio": 85.5, "exp": 80.5, "resid": 5.0, "n": 3475}, {"name": "קרית שמונה", "idx": 85.3, "ratio": 81.7, "exp": 78.0, "resid": 3.6, "n": 12017}, {"name": "קצרין", "idx": 78.5, "ratio": 82.0, "exp": 78.9, "resid": 3.1, "n": 4494}, {"name": "חצור הגלילית", "idx": 77.9, "ratio": 81.8, "exp": 78.9, "resid": 2.9, "n": 5454}, {"name": "עג'ר", "idx": 78.0, "ratio": 81.8, "exp": 78.9, "resid": 2.9, "n": 1149}, {"name": "גליל עליון", "idx": 105.6, "ratio": 78.2, "exp": 75.6, "resid": 2.6, "n": 9285}, {"name": "מרום הגליל", "idx": 86.0, "ratio": 79.9, "exp": 78.0, "resid": 1.9, "n": 8250}, {"name": "גולן", "idx": 100.2, "ratio": 77.6, "exp": 76.3, "resid": 1.4, "n": 10198}, {"name": "מבואות חרמון", "idx": 96.6, "ratio": 77.2, "exp": 76.7, "resid": 0.5, "n": 4588}, {"name": "גוש חלב(ג'ש)", "idx": 88.0, "ratio": 77.5, "exp": 77.7, "resid": -0.2, "n": 1836}, {"name": "צפת", "idx": 68.3, "ratio": 77.9, "exp": 80.1, "resid": -2.2, "n": 15758}, {"name": "ראש פינה", "idx": 98.8, "ratio": 73.5, "exp": 76.4, "resid": -2.9, "n": 1758}, {"name": "מטולה", "idx": 91.9, "ratio": 73.4, "exp": 77.2, "resid": -3.9, "n": 1185}, {"name": "עין קיניה", "idx": 63.7, "ratio": 75.9, "exp": 80.6, "resid": -4.7, "n": 1147}, {"name": "בוקעתא", "idx": 62.6, "ratio": 73.4, "exp": 80.8, "resid": -7.4, "n": 3553}, {"name": "מג'דל שמס", "idx": 61.9, "ratio": 71.6, "exp": 80.8, "resid": -9.2, "n": 6165}, {"name": "מסעדה", "idx": 59.0, "ratio": 71.5, "exp": 81.2, "resid": -9.7, "n": 2107}], "others": [[71.8, 85.6], [70.9, 78.4], [68.5, 88.4], [57.6, 87.5], [59.0, 84.4], [156.4, 62.6], [111.4, 83.0], [89.0, 83.9], [60.2, 72.4], [54.1, 80.8], [84.2, 80.5], [90.3, 77.6], [88.8, 78.8], [137.9, 73.6], [99.1, 77.3], [118.1, 83.5], [80.7, 79.8], [88.7, 81.9], [68.7, 73.4], [67.1, 81.4], [85.0, 80.9], [106.3, 73.7], [91.2, 80.6], [64.5, 76.9], [116.7, 74.8], [120.2, 74.9], [135.2, 74.4], [63.8, 77.5], [119.7, 73.5], [93.2, 80.0], [86.7, 75.8], [87.2, 78.4], [69.4, 78.2], [113.7, 76.0], [120.0, 80.2], [92.0, 75.7], [63.4, 73.6], [64.3, 80.5], [49.0, 86.7], [81.7, 78.3], [110.2, 80.0], [75.7, 76.7], [106.1, 75.9], [146.1, 74.9], [170.7, 62.5], [79.6, 84.7], [72.2, 74.2], [55.9, 79.5], [64.2, 78.5], [81.7, 82.8], [150.4, 67.3], [61.9, 76.7], [61.7, 83.0], [60.3, 77.5], [129.8, 79.6], [89.2, 73.2], [115.8, 79.0], [73.2, 85.0], [126.0, 75.1], [78.9, 80.4], [66.5, 78.9], [81.5, 81.5], [59.3, 80.7], [56.3, 87.5], [76.7, 78.1], [79.5, 82.8], [114.0, 76.9], [131.3, 74.4], [87.2, 77.9], [140.9, 71.2], [150.7, 72.2], [119.7, 77.7], [114.7, 76.1], [108.9, 81.4], [75.5, 72.1], [153.6, 70.2], [78.2, 78.0], [69.6, 78.2], [72.9, 77.1], [71.9, 74.6], [94.0, 77.1], [156.4, 65.2], [150.9, 70.5], [150.6, 68.1], [144.7, 64.8], [146.8, 61.5], [69.7, 76.9], [64.7, 80.9], [92.7, 76.9], [96.2, 75.2], [67.0, 82.3], [85.5, 82.3], [107.5, 66.2], [88.9, 82.3], [112.2, 67.1], [72.8, 79.5], [65.2, 76.6], [64.1, 77.8], [69.5, 82.8], [69.7, 77.5], [95.6, 77.9], [102.9, 79.7], [63.6, 78.5], [79.2, 86.0], [69.3, 72.7], [109.2, 76.8], [103.8, 66.2], [120.1, 70.0], [64.7, 76.0], [67.0, 77.9], [120.6, 77.0], [118.5, 73.8], [90.3, 80.1], [78.9, 72.0], [73.1, 79.8], [65.0, 76.7], [71.2, 78.2], [90.5, 78.7], [161.7, 69.0], [71.6, 79.4], [68.5, 84.7], [77.0, 88.8], [63.5, 82.1], [121.8, 80.0], [68.7, 78.2], [159.5, 74.3], [138.4, 69.2], [149.1, 64.9], [84.6, 79.8], [74.9, 73.9], [113.9, 75.1], [88.3, 81.2], [59.2, 73.5], [56.3, 72.9], [64.3, 82.6], [130.6, 68.1], [62.7, 80.7], [73.3, 77.7], [227.1, 49.2], [130.3, 76.5], [89.7, 78.5], [171.2, 75.0], [78.4, 81.8], [147.9, 68.8], [65.2, 80.8], [93.3, 78.8], [123.6, 72.9], [64.0, 80.0], [73.8, 78.4], [87.0, 77.1], [79.0, 82.5], [53.6, 80.6], [144.2, 74.1], [65.5, 80.0], [141.9, 73.8], [69.7, 80.3], [153.9, 79.3], [98.8, 77.4], [102.5, 74.9], [100.5, 72.9], [95.4, 83.0], [97.1, 79.3], [61.5, 73.9], [87.5, 81.0], [90.5, 80.9], [73.8, 78.7], [114.3, 83.1], [59.2, 76.8], [151.6, 72.9], [67.3, 79.0], [96.5, 78.8], [116.3, 74.7], [127.1, 69.2], [77.5, 77.4], [176.5, 69.7], [101.0, 83.8], [133.3, 76.3], [63.7, 76.9], [71.5, 81.8], [127.3, 77.5], [100.8, 76.4], [137.8, 71.5], [115.1, 81.7], [69.1, 73.4], [104.7, 74.1], [78.7, 81.2], [93.2, 72.6], [80.1, 81.0], [242.1, 46.8], [71.2, 76.0], [69.2, 74.3], [68.4, 82.7], [69.9, 78.7], [57.8, 74.0], [156.8, 70.0], [81.7, 74.0], [56.3, 80.0], [58.3, 77.1], [61.0, 83.0], [78.7, 82.7], [92.8, 74.2], [140.0, 80.7], [56.9, 83.4], [79.1, 76.6], [81.3, 81.5], [96.6, 78.3], [71.7, 71.0], [75.0, 78.0], [67.2, 76.8], [67.2, 82.0], [142.9, 71.7], [122.7, 76.7], [63.1, 82.1], [96.8, 79.2], [86.0, 78.5], [76.9, 77.0], [110.5, 71.3], [137.8, 71.4], [109.4, 73.0], [118.1, 74.8], [130.0, 81.1], [136.6, 79.0], [148.8, 71.6], [99.7, 76.6], [136.3, 67.3], [161.8, 62.2], [67.0, 80.5], [110.0, 74.2], [62.5, 89.0], [153.0, 69.8], [75.1, 82.0], [92.7, 76.6], [97.4, 76.0], [79.8, 80.4], [126.5, 68.6], [80.6, 78.8], [75.2, 72.5], [100.0, 75.6], [75.0, 82.6], [85.7, 82.4], [102.3, 78.6], [78.4, 78.3], [115.7, 76.7], [107.6, 74.6], [109.7, 80.6], [65.2, 80.1], [70.2, 77.5], [113.0, 73.7], [63.6, 74.7], [59.5, 80.2], [80.0, 83.5], [129.7, 71.0], [166.6, 60.0], [132.8, 76.1], [144.2, 65.0], [68.8, 83.1], [62.4, 85.6], [94.2, 81.3], [154.5, 73.5], [66.8, 81.8], [87.0, 78.8], [102.3, 78.6], [163.4, 68.5], [61.8, 78.0], [111.9, 73.0], [109.3, 79.6], [68.8, 76.3], [104.0, 77.8], [140.9, 65.5], [162.1, 65.7], [53.8, 84.4], [61.6, 79.8], [55.8, 73.1], [94.2, 78.0], [65.8, 80.4], [61.5, 77.8], [123.3, 59.7], [111.8, 78.3], [116.4, 73.6], [68.2, 80.2], [130.6, 78.9], [139.8, 71.8], [159.8, 66.9], [101.4, 76.2], [131.6, 72.7], [144.8, 70.2], [140.6, 70.2], [90.7, 76.2], [108.4, 76.7], [104.8, 77.7], [99.8, 82.9], [112.1, 66.7], [103.2, 78.4], [116.7, 74.6], [126.7, 68.3], [115.5, 77.2], [136.6, 67.2], [152.3, 61.9], [131.1, 73.6], [128.1, 67.9], [113.5, 77.5], [121.0, 70.3], [101.8, 84.7], [113.8, 74.3], [95.8, 75.2], [112.1, 72.8], [119.1, 69.7], [101.1, 78.2], [102.2, 80.0], [122.1, 70.2], [58.4, 86.2], [101.4, 70.7], [98.9, 80.3], [100.6, 81.2], [132.9, 69.7], [134.3, 71.4], [98.8, 80.1], [113.5, 79.6], [103.0, 73.2], [105.7, 79.3], [109.7, 77.2], [118.8, 78.2], [101.4, 80.2], [104.2, 74.1]], "slope": -0.1201, "intercept": 88.29, "r2": 0.45, "sd": 4.18, "n": 341, "mean_resid": -0.96, "p": 0.407}};</script>
+<script>
+const D = window.__D__;
+const S = () => { const c = getComputedStyle(document.documentElement);
+  return { s1:c.getPropertyValue('--s1').trim(), s2:c.getPropertyValue('--s2').trim(),
+           s3:c.getPropertyValue('--s3').trim(), s4:c.getPropertyValue('--s4').trim(),
+           ink:c.getPropertyValue('--ink').trim(), ink2:c.getPropertyValue('--ink-2').trim(),
+           ink3:c.getPropertyValue('--ink-3').trim(), rule:c.getPropertyValue('--rule').trim(),
+           rule2:c.getPropertyValue('--rule-2').trim(), card:c.getPropertyValue('--card').trim(),
+           accent:c.getPropertyValue('--accent').trim() }; };
+const SHORT={'62+63':'תכנות ושירותי מחשב','64+65+66':'שירותים פיננסיים','46':'מסחר סיטוני',
+ '86':'שירותי בריאות','72':'מחקר ופיתוח','26':'ייצור אלקטרוניקה ומחשבים','47':'מסחר קמעונאי',
+ '50+51+52+53':'תחבורה, אחסנה ודואר','85':'חינוך','87+88':'שירותי סעד ורווחה','1':'חקלאות — גידולים צמחיים',
+ '83':'מינהל מקומי','56':'מסעדות ובתי אוכל','94':'ארגוני חברים','84':'מינהל ציבורי וביטחון',
+ '41':'בניית מבנים','10':'ייצור מוצרי מזון'};
+const short=(code,name)=>SHORT[String(code)]||name;
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a={})=>{const n=document.createElementNS(NS,t);for(const k in a)n.setAttribute(k,a[k]);return n;};
+// unicode-bidi:plaintext lets each label take its base direction from its own first
+// strong character, so Hebrew labels read right-to-left inside an LTR <svg> while
+// signed numbers keep their leading minus.
+const txt=(s,a={})=>{const n=el('text',Object.assign({'font-family':'Heebo,sans-serif','font-size':12,
+  fill:S().ink3,'dominant-baseline':'middle',style:'unicode-bidi:plaintext'},a));n.textContent=s;return n;};
+const fmt=n=>n.toLocaleString('he-IL').replace('-','\u2212');
+const sgn=n=>(n>0?'+':n<0?'\u2212':'')+Math.abs(n).toFixed(1);
+const tip=document.getElementById('tip');
+function hover(node,html){
+  node.style.cursor='default';
+  node.addEventListener('pointerenter',e=>{tip.innerHTML=html;tip.classList.add('on');});
+  node.addEventListener('pointermove',e=>{
+    const w=tip.offsetWidth,h=tip.offsetHeight;
+    tip.style.left=Math.min(Math.max(8,e.clientX-w/2),innerWidth-w-8)+'px';
+    tip.style.top=Math.max(8,e.clientY-h-14)+'px';});
+  node.addEventListener('pointerleave',()=>tip.classList.remove('on'));
+}
+function legend(id,items){
+  const box=document.getElementById(id); if(!box)return; box.innerHTML='';
+  items.forEach(([label,color,line])=>{const s=document.createElement('span');
+    s.innerHTML=`<i class="sw${line?' line':''}" style="background:${color}"></i>${label}`;box.appendChild(s);});
+}
+function table(id,head,rows){
+  const box=document.getElementById(id); if(!box)return;
+  box.innerHTML='<table><thead><tr>'+head.map((h,i)=>`<th${i?'':' style="text-align:right"'}>${h}</th>`).join('')+
+    '</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map((c,i)=>
+      i? `<td class="num">${c}</td>` : `<td class="name">${c}</td>`).join('')+'</tr>').join('')+'</tbody></table>';
+}
+const clear=id=>{const s=document.getElementById(id);if(s)while(s.firstChild)s.removeChild(s.firstChild);return s;};
+
+/* ---------- 1. index line chart ---------- */
+function chart1(){
+  const c=S(),svg=clear('c1'); if(!svg)return;
+  const W=1000,H=380,m={t:26,r:84,b:34,l:56};
+  const ys=D.years, series=[['אשכול גליל מזרחי',D.idx_year['אשכול גליל מזרחי'],c.s1],
+    ['תל־אביב',D.idx_year['תל־אביב'],c.s3],['מחוז הצפון',D.idx_year['הצפון'],c.s4]];
+  const lo=70,hi=130, x=i=>m.l+i*(W-m.l-m.r)/(ys.length-1), y=v=>m.t+(hi-v)*(H-m.t-m.b)/(hi-lo);
+  [70,80,90,100,110,120,130].forEach(v=>{
+    svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:v===100?c.ink3:c.rule2,
+      'stroke-width':v===100?1.5:1,'stroke-dasharray':v===100?'':''}));
+    svg.appendChild(txt(v+'%',{x:W-m.r+10,y:y(v),fill:v===100?c.ink2:c.ink3,'font-weight':v===100?700:400}));});
+  svg.appendChild(txt('ארצי = 100% (הקו המודגש)',{x:m.l+6,y:y(100)-13,fill:c.ink2,'font-size':11,'font-weight':700,'text-anchor':'start'}));
+  svg.appendChild(txt('% מהשכר הממוצע הארצי',{x:m.l+6,y:m.t+10,fill:c.ink2,'font-size':11.5,'text-anchor':'start'}));
+  ys.forEach((yr,i)=>svg.appendChild(txt(yr,{x:x(i),y:H-14,'text-anchor':'middle'})));
+  series.forEach(([nm,vals,col])=>{
+    const pts=vals.map((v,i)=>v==null?null:[x(i),y(v)]).filter(Boolean);
+    svg.appendChild(el('path',{d:pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' '),fill:'none',
+      stroke:col,'stroke-width':2.5,'stroke-linejoin':'round','stroke-linecap':'round'}));
+    const last=pts[pts.length-1];
+    svg.appendChild(el('circle',{cx:last[0],cy:last[1],r:4.5,fill:col,stroke:c.card,'stroke-width':2}));
+  });
+  ys.forEach((yr,i)=>{
+    const g=el('g'); const r=el('rect',{x:x(i)-24,y:m.t,width:48,height:H-m.t-m.b,fill:'transparent'});
+    g.appendChild(r);
+    series.forEach(([nm,vals,col])=>{ if(vals[i]==null)return;
+      g.appendChild(el('circle',{cx:x(i),cy:y(vals[i]),r:3.2,fill:col,opacity:.9}));});
+    hover(g,`<b>${yr}</b>`+series.map(([nm,v,col])=>v[i]==null?'':
+      `<i style="color:${col}">■</i> ${nm} <b style="display:inline;font-weight:700">${v[i]}%</b>`+
+      (nm==='אשכול גליל מזרחי'?` <i>(${fmt(D.wage_abs['אשכול גליל מזרחי'][i])} ₪ · ארצי ${fmt(D.wage_abs['ארצי'][i])} ₪)</i>`:'')
+      ).filter(Boolean).join('<br>'));
+    svg.appendChild(g);});
+  legend('lg1',[['אשכול גליל מזרחי',c.s1,1],['תל־אביב',c.s3,1],['מחוז הצפון',c.s4,1]]);
+  table('t1',['שנה','מדד אשכול','מדד תל־אביב','מדד הצפון','שכר אשכול ₪','שכר ארצי ₪','רשויות באשכול'],
+    ys.map((yr,i)=>[yr,D.idx_year['אשכול גליל מזרחי'][i]??'—',D.idx_year['תל־אביב'][i]??'—',
+      D.idx_year['הצפון'][i]??'—',fmt(D.wage_abs['אשכול גליל מזרחי'][i]),fmt(D.wage_abs['ארצי'][i]),
+      D.cluster.auth[i]]));
+}
+
+/* ---------- 2. one gap, two rulers: percent flat / shekels widening ---------- */
+/* Two small multiples side by side (RTL: percent first, on the right), same mark,
+   same color, same nine years — so "flat" and "rising" are read off identical
+   geometry. Not one frame with two y-scales: a dual axis would let the reader
+   blame the scales for the divergence, which is the whole finding. */
+function chart2(){
+  const c=S(),svg=clear('c2'); if(!svg)return;
+  const W=1000,H=350,T=64,B=H-40;
+  const ys=D.years, nat=D.wage_abs['ארצי'], eg=D.wage_abs['אשכול גליל מזרחי'],
+        pct=ys.map((_,i)=>100*(nat[i]-eg[i])/nat[i]), gap=ys.map((_,i)=>nat[i]-eg[i]);
+  function panel(x0,x1,vals,hi,ticks,title,sub,fmtv,fmtt){
+    svg.appendChild(txt(title,{x:x1,y:T-30,'text-anchor':'end','font-size':13,'font-weight':700,fill:c.ink}));
+    svg.appendChild(txt(sub,{x:x1,y:T-13,'text-anchor':'end','font-size':11,fill:c.ink3}));
+    const y=v=>B-v*(B-T)/hi, step=(x1-x0)/ys.length, bw=step*0.62;
+    ticks.forEach(v=>{
+      svg.appendChild(el('line',{x1:x0,x2:x1,y1:y(v),y2:y(v),stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
+      svg.appendChild(txt((fmtt||fmtv)(v),{x:x1+8,y:y(v),'text-anchor':'start','font-size':10.5,fill:c.ink3}));});
+    vals.forEach((v,i)=>{
+      const cx=x0+step*i+step/2;
+      svg.appendChild(el('rect',{x:cx-bw/2,y:y(v),width:bw,height:y(0)-y(v),fill:c.s1,rx:3}));
+      if(i===0||i===vals.length-1)
+        svg.appendChild(txt(fmtv(v),{x:cx,y:y(v)-10,'text-anchor':'middle','font-size':11.5,
+          'font-weight':700,fill:c.ink}));
+      svg.appendChild(txt(ys[i],{x:cx,y:B+16,'text-anchor':'middle','font-size':9.5,fill:c.ink3}));
+      const hit=el('rect',{x:cx-step/2,y:T-14,width:step,height:B-T+14,fill:'transparent'});
+      hover(hit,`<b>${ys[i]}</b><i>הפער באחוזים</i> <b style="display:inline">${pct[i].toFixed(1)}%</b>`+
+        `<i>הפער בשקלים</i> <b style="display:inline">${fmt(gap[i])} ש״ח</b>`+
+        `<i>שכר ארצי / אשכול</i> ${fmt(nat[i])} / ${fmt(eg[i])} ש״ח`);
+      svg.appendChild(hit);});
+  }
+  panel(560,948,pct,26,[0,10,20],'הפער באחוזים','כמה אחוזים חסרים לאשכול מהשכר הארצי',
+        v=>v.toFixed(1)+'%', v=>v+'%');
+  panel(52,440,gap,3000,[0,1000,2000,3000],'הפער בשקלים','אותו פער, במונחי שקלים לחודש',
+        v=>fmt(Math.round(v)));
+  svg.appendChild(el('line',{x1:498,x2:498,y1:T-34,y2:B+6,stroke:c.rule2}));
+  table('t2',['שנה','שכר אשכול','שכר ארצי','הפער באחוזים','הפער בשקלים'],
+    ys.map((yr,i)=>[yr,fmt(eg[i]),fmt(nat[i]),pct[i].toFixed(1)+'%',fmt(gap[i])]));
+}
+
+/* ---------- 3. income distribution: cluster vs national ---------- */
+/* Paired bars per income group. A 100% stacked bar hides the thing that matters
+   here — the group-by-group gap — so each group gets its own pair plus the
+   explicit difference in percentage points. */
+function chart3(){
+  const c=S(),svg=clear('c3'); if(!svg)return;
+  const W=1000,H=340,m={t:28,r:130,b:34,l:200};
+  const keys=D.inc_rows, eg=D.inc['אשכול 2024'], nat=D.inc['ארצי 2024'];
+  const hi=40, x=v=>m.l+v*(W-m.l-m.r)/hi, bh=(H-m.t-m.b)/keys.length;
+  [0,10,20,30,40].forEach(v=>{
+    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t-8,y2:H-m.b,stroke:v?c.rule2:c.ink3,
+      'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(v+'%',{x:x(v),y:H-18,'text-anchor':'middle','font-size':11}));});
+  svg.appendChild(txt('הפרש בנק׳ אחוז',{x:W-m.r+118,y:m.t-16,'text-anchor':'end','font-size':10.5,
+    fill:c.ink3}));
+  svg.appendChild(txt('% מהמועסקים',{x:m.l+6,y:m.t-16,'text-anchor':'start','font-size':10.5,fill:c.ink3}));
+  keys.forEach((k,i)=>{
+    const y0=m.t+bh*i+4, h=(bh-14)/2, mid=y0+h+1;
+    if(i)svg.appendChild(el('line',{x1:10,x2:W-10,y1:y0-5,y2:y0-5,stroke:c.rule2}));
+    [[eg[i],c.s1,'אשכול גליל מזרחי'],[nat[i],c.s3,'ארצי']].forEach(([v,col,lab],j)=>{
+      const yy=y0+j*(h+2);
+      const b=el('rect',{x:m.l+1,y:yy,width:Math.max(1,x(v)-m.l-1),height:h,fill:col,rx:2});
+      hover(b,`<b>${lab}</b><i>${k}</i> <b style="display:inline">${v}%</b> מהמועסקים`);
+      svg.appendChild(b);
+      svg.appendChild(txt(v.toFixed(1)+'%',{x:x(v)+7,y:yy+h/2,'text-anchor':'start','font-size':11,
+        'font-weight':j?400:700,fill:j?c.ink3:c.ink}));});
+    const d=+(eg[i]-nat[i]).toFixed(1);
+    svg.appendChild(txt('('+sgn(d)+')',{x:W-m.r+118,y:mid,'text-anchor':'end','font-size':13,
+      'font-weight':700,fill:d>0?c.s1:c.s3}));
+    svg.appendChild(txt(k,{x:m.l-12,y:mid,'text-anchor':'end','font-size':12.5,fill:c.ink,
+      'font-family':'Assistant,sans-serif','font-weight':600}));});
+  legend('lg3',[['אשכול גליל מזרחי',c.s1],['ארצי',c.s3]]);
+  table('t4',['קבוצת הכנסה','אשכול 2024','ארצי 2024','הפרש 2024','אשכול 2023','ארצי 2023'],
+    keys.map((k,jx)=>[k,D.inc['אשכול 2024'][jx]+'%',D.inc['ארצי 2024'][jx]+'%',
+                        sgn(+(D.inc['אשכול 2024'][jx]-D.inc['ארצי 2024'][jx]).toFixed(1)),
+                        D.inc['אשכול 2023'][jx]+'%',D.inc['ארצי 2023'][jx]+'%']));
+}
+
+/* ---------- 4. shift-share ---------- */
+function chart4(){
+  const c=S(),svg=clear('c4'); if(!svg)return;
+  const W=1000,H=430,m={t:14,r:24,b:44,l:286};
+  const rows=D.shift, lo=Math.min(...rows.map(r=>r.mix+r.pay))*1.28;
+  const x=v=>m.l+(W-m.l-m.r)*(1-v/lo), bh=(H-m.t-m.b)/rows.length;
+  [0,-400,-800,-1200,-1600].forEach(v=>{ if(v<lo)return;
+    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t,y2:H-m.b,stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(v?fmt(v):'0',{x:x(v),y:H-24,'text-anchor':'middle','font-size':11}));});
+  rows.forEach((r,i)=>{
+    const yy=m.t+bh*i+5,h=bh-12; let acc=0;
+    [[r.mix,c.s1,'הרכב ענפי'],[r.pay,c.s2,'שכר בתוך ענף']].forEach(([v,col,lab])=>{
+      const x0=x(acc),x1=x(acc+v);
+      const b=el('rect',{x:Math.min(x0,x1)+1,y:yy,width:Math.max(0,Math.abs(x1-x0)-2),height:h,fill:col,rx:3});
+      hover(b,`<b>${r.name}</b><i>${lab}</i> <b style="display:inline">${fmt(v)} ש״ח</b>`);
+      svg.appendChild(b); acc+=v;});
+    const tot=r.mix+r.pay;
+    svg.appendChild(txt(fmt(tot),{x:x(tot)-8,y:yy+h/2,'text-anchor':'end','font-size':11.5,
+      'font-weight':700,fill:c.ink}));
+    const nm=r.name;
+    svg.appendChild(txt(nm,{x:m.l-12,y:yy+h/2-6,'text-anchor':'end','font-size':12.5,fill:c.ink}));
+    svg.appendChild(txt(`באשכול ${r.s_eg}% · ארצית ${r.s_nat}% · שכר ${r.wr}% מהארצי`,
+      {x:m.l-12,y:yy+h/2+9,'text-anchor':'end','font-size':10.5,fill:c.ink3}));});
+  legend('lg4',[['הרכב ענפי — פחות מהענף הזה באשכול',c.s1],['שכר בתוך ענף — הענף משלם פחות באשכול',c.s2]]);
+}
+
+/* ---------- 5. authority dumbbell ---------- */
+function chart5(){
+  const c=S(),svg=clear('c5'); if(!svg)return;
+  const rows=D.auth, W=1000,H=580,m={t:24,r:118,b:40,l:186};
+  const lo=50,hi=125, x=v=>m.l+(v-lo)*(W-m.l-m.r)/(hi-lo), bh=(H-m.t-m.b)/rows.length;
+  [50,60,70,80,90,100,110,120].forEach(v=>{
+    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t,y2:H-m.b,stroke:v===100?c.ink3:c.rule2,
+      'stroke-width':v===100?1.5:1}));
+    svg.appendChild(txt(v,{x:x(v),y:H-22,'text-anchor':'middle','font-size':11,
+      fill:v===100?c.ink2:c.ink3,'font-weight':v===100?700:400}));});
+  svg.appendChild(txt('ארצי = 100%',{x:x(100),y:m.t-2,'text-anchor':'middle','font-size':11,
+    'font-weight':700,fill:c.ink2}));
+  rows.forEach((r,i)=>{
+    const yy=m.t+bh*i+bh/2;
+    svg.appendChild(el('line',{x1:x(Math.min(r.idx,r.idxm)),x2:x(Math.max(r.idx,r.idxm)),y1:yy,y2:yy,
+      stroke:c.rule,'stroke-width':3,'stroke-linecap':'round'}));
+    [[r.idx,c.s1],[r.idxm,c.s2]].forEach(([v,col])=>{
+      const d=el('circle',{cx:x(v),cy:yy,r:5.5,fill:col,stroke:c.card,'stroke-width':1.8});
+      hover(d,`<b>${r.name}</b><i>מדד ממוצע</i> <b style="display:inline">${r.idx}</b> · `+
+        `<i>מדד חציון</i> <b style="display:inline">${r.idxm}</b><br>`+
+        `<i>${fmt(r.n)} מועסקים · ממוצע ${fmt(r.mean)} ₪ · חציון ${fmt(r.med)} ₪ · מקום ${r.rank} מתוך ${D.rank_of}</i>`);
+      svg.appendChild(d);});
+    svg.appendChild(txt(r.name,{x:m.l-14,y:yy-5,'text-anchor':'end','font-size':13,fill:c.ink,
+      'font-family':'Assistant,sans-serif','font-weight':600}));
+    svg.appendChild(txt(`${fmt(r.n)} מועסקים · מקום ${r.rank}`,{x:m.l-14,y:yy+9,'text-anchor':'end','font-size':10.5}));
+    svg.appendChild(txt(`${fmt(r.mean)} ₪`,{x:W-m.r+12,y:yy,'font-size':11.5,fill:c.ink2,'font-weight':500}));});
+  legend('lg5',[['מדד שכר ממוצע',c.s1],['מדד שכר חציוני',c.s2]]);
+  table('t3',['רשות','מועסקים','ממוצע ₪','חציון ₪','מדד ממוצע','מדד חציון','מקום ארצי'],
+    rows.map(r=>[r.name,fmt(r.n),fmt(r.mean),fmt(r.med),r.idx,r.idxm,r.rank+' / '+D.rank_of]));
+}
+
+/* ---------- 6. duration ---------- */
+function chart6(){
+  const c=S(),svg=clear('c6'); if(!svg)return;
+  const W=520,H=300,m={t:16,r:16,b:52,l:46};
+  const cols=['תל־אביב','ארצי','אשכול'], i12=D.dur_rows.indexOf('12 חודשים');
+  const hi=80,y=v=>m.t+(hi-v)*(H-m.t-m.b)/hi, bw=(W-m.l-m.r)/cols.length;
+  [0,20,40,60,80].forEach(v=>{svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:c.rule2}));
+    svg.appendChild(txt(v+'%',{x:m.l-8,y:y(v),'text-anchor':'end','font-size':11}));});
+  cols.forEach((k,i)=>{
+    const v=D.dur[k][i12], cx=m.l+bw*i+bw/2, w=bw*0.46;
+    const b=el('rect',{x:cx-w/2,y:y(v),width:w,height:y(0)-y(v),fill:k==='אשכול'?c.s1:c.ink3,rx:4});
+    hover(b,`<b>${k}</b><i>עבדו 12 חודשים</i> <b style="display:inline">${v}%</b><br>`+
+      `<i>ממוצע ${D.dur[k][D.dur_rows.length-1]} חודשי עבודה</i>`);
+    svg.appendChild(b);
+    svg.appendChild(txt(v.toFixed(1)+'%',{x:cx,y:y(v)-11,'text-anchor':'middle','font-size':12.5,'font-weight':700,fill:c.ink}));
+    svg.appendChild(txt(k,{x:cx,y:H-30,'text-anchor':'middle','font-size':12,fill:c.ink2}));
+    svg.appendChild(txt(D.dur[k][D.dur_rows.length-1]+' חוד׳ בממוצע',{x:cx,y:H-14,'text-anchor':'middle','font-size':10.5}));});
+  legend('lg6',[['אשכול גליל מזרחי',c.s1],['השוואה',c.ink3]]);
+}
+
+/* ---------- 7. minimum wage lines ---------- */
+function chart7(){
+  const c=S(),svg=clear('c7'); if(!svg)return;
+  const W=520,H=300,m={t:14,r:96,b:38,l:38};
+  const pick=[['מסעדה',c.s3],['צפת',c.s1],['קרית שמונה',c.s4],['— כלל יישובי הארץ —',c.ink3]];
+  const ys=D.mw_years, lo=25,hi=60;
+  const x=i=>m.l+i*(W-m.l-m.r)/(ys.length-1), y=v=>m.t+(hi-v)*(H-m.t-m.b)/(hi-lo);
+  [30,40,50,60].forEach(v=>{svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:c.rule2}));
+    svg.appendChild(txt(v+'%',{x:m.l-6,y:y(v),'text-anchor':'end','font-size':11}));});
+  ys.forEach((yr,i)=>{ if(i%2===0) svg.appendChild(txt(yr,{x:x(i),y:H-16,'text-anchor':'middle','font-size':10.5}));});
+  const placed=[];
+  pick.forEach(([nm,col])=>{
+    const vals=D.mw[nm]; if(!vals)return;
+    const pts=vals.map((v,i)=>v==null?null:[x(i),y(v)]).filter(Boolean);
+    svg.appendChild(el('path',{d:pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' '),fill:'none',stroke:col,
+      'stroke-width':nm.startsWith('—')?2:2.5,'stroke-dasharray':nm.startsWith('—')?'5 4':'','stroke-linecap':'round'}));
+    const last=pts[pts.length-1];
+    svg.appendChild(el('circle',{cx:last[0],cy:last[1],r:3.5,fill:col}));
+    let ly=last[1];
+    while(placed.some(p=>Math.abs(p-ly)<13)) ly+=13;   // keep end labels from stacking
+    placed.push(ly);
+    if(Math.abs(ly-last[1])>2)
+      svg.appendChild(el('line',{x1:last[0]+4,x2:W-m.r+4,y1:last[1],y2:ly,stroke:col,'stroke-width':1,opacity:.5}));
+    svg.appendChild(txt(nm.startsWith('—')?'כלל הארץ':nm,{x:W-m.r+8,y:ly,'font-size':11,fill:col,'font-weight':600}));
+    pts.forEach((p,i)=>{const h=el('circle',{cx:p[0],cy:p[1],r:9,fill:'transparent'});
+      hover(h,`<b>${nm.startsWith('—')?'כלל יישובי הארץ':nm} · ${ys[i]}</b><b style="display:inline">${vals[i]}%</b> עד שכר מינימום`);
+      svg.appendChild(h);});});
+  legend('lg7',pick.map(([nm,col])=>[nm.startsWith('—')?'כלל יישובי הארץ':nm,col,1]));
+}
+
+/* ---------- 8. employment change ---------- */
+function chart8(){
+  const c=S(),svg=clear('c8'); if(!svg)return;
+  const W=1000,H=340,m={t:20,r:20,b:44,l:52};
+  const ys=D.years.slice(1), keys=[['אשכול','אשכול',c.s1],['ארצי','ארצי',c.s2],['תל־אביב','תל־אביב',c.s3]];
+  const lo=-6,hi=6, x=i=>m.l+i*(W-m.l-m.r)/ys.length, y=v=>m.t+(hi-v)*(H-m.t-m.b)/(hi-lo);
+  const gw=(W-m.l-m.r)/ys.length;
+  [-6,-4,-2,0,2,4,6].forEach(v=>{svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),
+      stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(v+'%',{x:m.l-8,y:y(v),'text-anchor':'end','font-size':11}));});
+  ys.forEach((yr,i)=>{
+    svg.appendChild(txt(yr,{x:x(i)+gw/2,y:H-18,'text-anchor':'middle','font-size':11.5}));
+    keys.forEach(([lab,k,col],j)=>{
+      const v=D.workers_yoy[k][i+1]; if(v==null)return;
+      const bw=gw*0.24, bx=x(i)+gw/2+(j-1)*(bw+3)-bw/2;
+      const b=el('rect',{x:bx,y:Math.min(y(v),y(0)),width:bw,height:Math.max(2,Math.abs(y(v)-y(0))),fill:col,rx:3});
+      hover(b,`<b>${lab} · ${yr}</b><b style="display:inline">${v>0?'+':''}${v}%</b> שינוי במספר המועסקים`);
+      svg.appendChild(b);
+      if(yr===2024)svg.appendChild(txt(sgn(v)+'%',{x:bx+bw/2,y:v<0?y(v)+15:y(v)-12-(j===2?13:0),
+        'text-anchor':'middle','font-size':11,'font-weight':700,fill:col}));});});
+  legend('lg8',keys.map(([lab,k,col])=>[lab,col]));
+}
+
+
+/* ---------- 9. composition effect: Δemployment vs Δmedian wage ---------- */
+function chart9(){
+  const c=S(),svg=clear('c9'); if(!svg)return;
+  const W=1000,H=430,m={t:22,r:26,b:56,l:70}, P=D.prof;
+  const xs=P.map(p=>p.dn), ys=P.map(p=>p.dm);
+  const xlo=-24,xhi=4, ylo=0,yhi=24;
+  const X=v=>m.l+(v-xlo)*(W-m.l-m.r)/(xhi-xlo), Y=v=>H-m.b-(v-ylo)*(H-m.t-m.b)/(yhi-ylo);
+  for(let v=-24;v<=4;v+=4){svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,
+      stroke:v===0?c.ink3:c.rule2,'stroke-width':v===0?1.5:1}));
+    svg.appendChild(txt(v+'%',{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':11}));}
+  for(let v=0;v<=24;v+=4){svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:c.rule2}));
+    svg.appendChild(txt(v+'%',{x:m.l-8,y:Y(v),'text-anchor':'end','font-size':11}));}
+  svg.appendChild(txt('שינוי במספר המועסקים',{x:(m.l+W-m.r)/2,y:H-14,'text-anchor':'middle','font-size':12,fill:c.ink2}));
+  svg.appendChild(txt('שינוי בשכר החציוני ↑',{x:m.l+10,y:H-m.b-14,'text-anchor':'start','font-size':12,fill:c.ink2}));
+  // least-squares line over the 17 authorities
+  const n=xs.length, mx=xs.reduce((a,b)=>a+b)/n, my=ys.reduce((a,b)=>a+b)/n;
+  let sxy=0,sxx=0; for(let i=0;i<n;i++){sxy+=(xs[i]-mx)*(ys[i]-my);sxx+=(xs[i]-mx)**2;}
+  const sl=sxy/sxx, ic=my-sl*mx;
+  svg.appendChild(el('line',{x1:X(xlo),y1:Y(sl*xlo+ic),x2:X(xhi),y2:Y(sl*xhi+ic),
+    stroke:c.ink3,'stroke-width':2,'stroke-dasharray':'6 5',opacity:.7}));
+  P.forEach(p=>{
+    const col=p.band?c.s2:c.s1;
+    const d=el('circle',{cx:X(p.dn),cy:Y(p.dm),r:6,fill:col,stroke:c.card,'stroke-width':2});
+    hover(d,`<b>${p.name}</b><i>מועסקים</i> <b style="display:inline">${p.dn>0?'+':''}${p.dn}%</b> · `+
+      `<i>שכר חציוני</i> <b style="display:inline">+${p.dm}%</b><br><i>${fmt(p.n)} מועסקים ב-2024</i>`);
+    svg.appendChild(d);});
+  [['עג\'ר',8,-14],['קרית שמונה',10,-12],['מטולה',-4,-16],['צפת',10,14],['גולן',-8,16],['גליל עליון',12,-10]]
+    .forEach(([nm,dx,dy])=>{const p=P.find(q=>q.name===nm); if(!p)return;
+      svg.appendChild(txt(nm,{x:X(p.dn)+dx,y:Y(p.dm)+dy,'font-size':11.5,fill:c.ink,'font-weight':600,
+        'font-family':'Assistant,sans-serif','text-anchor':dx<0?'end':'start'}));});
+  svg.appendChild(txt('r = \u22120.96',{x:W-m.r-8,y:m.t+12,'text-anchor':'end','font-size':13,
+    'font-weight':700,fill:c.ink2}));
+  legend('lg9',[['רשויות קו העימות',c.s2],['שאר רשויות האשכול',c.s1]]);
+}
+
+/* ---------- 10. equality relative to what the wage level predicts ---------- */
+function chart10(){
+  const c=S(),svg=clear('c10'); if(!svg)return; const R=D.ratio;
+  const W=1000,H=470,m={t:26,r:30,b:60,l:74};
+  const xlo=40,xhi=175, ylo=44,yhi=92;
+  const X=v=>m.l+(v-xlo)*(W-m.l-m.r)/(xhi-xlo), Y=v=>H-m.b-(v-ylo)*(H-m.t-m.b)/(yhi-ylo);
+  for(let v=50;v<=175;v+=25){svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:c.rule2}));
+    svg.appendChild(txt(v,{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':11}));}
+  for(let v=50;v<=90;v+=10){svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:c.rule2}));
+    svg.appendChild(txt(v+'%',{x:m.l-8,y:Y(v),'text-anchor':'end','font-size':11}));}
+  svg.appendChild(txt('מדד שכר ממוצע ברשות (ארצי = 100)',{x:(m.l+W-m.r)/2,y:H-16,'text-anchor':'middle','font-size':12,fill:c.ink2}));
+  svg.appendChild(txt('חציון ÷ ממוצע — ככל שגבוה יותר, שוויוני יותר ↑',{x:m.l+10,y:m.t+12,'text-anchor':'start','font-size':11.5,fill:c.ink2}));
+  // the other 324 authorities, as the national cloud
+  R.others.forEach(([x,y])=>svg.appendChild(el('circle',{cx:X(x),cy:Y(y),r:2.6,fill:c.ink3,'fill-opacity':.28})));
+  // national trend: what the wage level predicts
+  const f=v=>R.intercept+R.slope*v;
+  [[R.sd,'+1 ס״ת'],[-R.sd,'\u22121 ס״ת']].forEach(([d])=>
+    svg.appendChild(el('line',{x1:X(xlo),y1:Y(f(xlo)+d),x2:X(xhi),y2:Y(f(xhi)+d),
+      stroke:c.ink3,'stroke-width':1,'stroke-dasharray':'3 4',opacity:.45})));
+  svg.appendChild(el('line',{x1:X(xlo),y1:Y(f(xlo)),x2:X(xhi),y2:Y(f(xhi)),stroke:c.ink2,'stroke-width':2.2}));
+  svg.appendChild(txt('הקו הארצי: מה שמצופה מרמת השכר',{x:X(xhi)-6,y:Y(f(xhi))-10,'text-anchor':'end',
+    'font-size':11.5,'font-weight':700,fill:c.ink2}));
+  R.cluster.forEach(p=>{
+    const col=p.resid>=2?c.s4:(p.resid<=-2?c.s3:c.s1);
+    const d=el('circle',{cx:X(p.idx),cy:Y(p.ratio),r:6.5,fill:col,stroke:c.card,'stroke-width':2});
+    hover(d,`<b>${p.name}</b><i>מדד שכר</i> <b style="display:inline">${p.idx}</b> · `+
+      `<i>חציון/ממוצע</i> <b style="display:inline">${p.ratio}%</b><br>`+
+      `<i>מצופה לרמת שכר זו: ${p.exp}% — חריגה של ${p.resid>0?'+':''}${p.resid} נק׳</i><br>`+
+      `<i>${fmt(p.n)} מועסקים</i>`);
+    svg.appendChild(d);});
+  [['מסעדה',-14,20],["מג'דל שמס",26,20],['בוקעתא',-20,-12],['טובא-זנגריה',0,-14],
+   ['ראש פינה',0,17],['גליל עליון',0,-14],['צפת',-6,-14],['קרית שמונה',0,-14]]
+   .forEach(([nm,dx,dy])=>{const p=R.cluster.find(q=>q.name===nm); if(!p)return;
+     svg.appendChild(txt(nm,{x:X(p.idx)+dx,y:Y(p.ratio)+dy,'text-anchor':'middle','font-size':11.5,
+       fill:c.ink,'font-weight':600,'font-family':'Assistant,sans-serif'}));});
+  legend('lg10',[['שוויונית מהמצופה (מעל +2 נק׳)',c.s4],['כמצופה',c.s1],
+                 ['פחות שוויונית מהמצופה (מתחת ‎−2 נק׳)',c.s3],['341 הרשויות בארץ',c.ink3]]);
+  table('t5',['רשות','מועסקים','מדד שכר','חציון/ממוצע','מצופה לרמה זו','חריגה (נק׳)'],
+    R.cluster.map(p=>[p.name,fmt(p.n),p.idx,p.ratio+'%',p.exp+'%',(p.resid>0?'+':'')+p.resid]));
+}
+
+/* ---------- 11. knowledge share vs wage index ---------- */
+function chart11(){
+  const c=S(),svg=clear('c11'); if(!svg)return; const K=D.anaf.know;
+  const W=1000,H=430,m={t:24,r:28,b:56,l:70};
+  const xlo=0,xhi=12, ylo=55,yhi=112;
+  const X=v=>m.l+(v-xlo)*(W-m.l-m.r)/(xhi-xlo), Y=v=>H-m.b-(v-ylo)*(H-m.t-m.b)/(yhi-ylo);
+  for(let v=0;v<=12;v+=2){svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:c.rule2}));
+    svg.appendChild(txt(v+'%',{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':11}));}
+  for(let v=60;v<=110;v+=10){svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:c.rule2}));
+    svg.appendChild(txt(v,{x:m.l-8,y:Y(v),'text-anchor':'end','font-size':11}));}
+  svg.appendChild(el('line',{x1:X(D.anaf.nat_know),x2:X(D.anaf.nat_know),y1:m.t,y2:H-m.b,
+    stroke:c.ink3,'stroke-width':1.5,'stroke-dasharray':'5 4'}));
+  svg.appendChild(txt('שיעור ארצי '+D.anaf.nat_know+'%',{x:X(D.anaf.nat_know)-8,y:m.t+12,
+    'text-anchor':'end','font-size':11,'font-weight':600,fill:c.ink2}));
+  svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(100),y2:Y(100),stroke:c.ink3,'stroke-width':1.5,'stroke-dasharray':'5 4'}));
+  svg.appendChild(txt('שכר ארצי',{x:W-m.r-6,y:Y(100)-9,'text-anchor':'end','font-size':11,'font-weight':600,fill:c.ink2}));
+  svg.appendChild(txt('חלק ענפי הידע מהשכירים',{x:(m.l+W-m.r)/2,y:H-14,'text-anchor':'middle','font-size':12,fill:c.ink2}));
+  svg.appendChild(txt('מדד שכר (ארצי = 100) ↑',{x:m.l+10,y:H-m.b-14,'text-anchor':'start','font-size':12,fill:c.ink2}));
+  const xs=K.map(k=>k.share), ys=K.map(k=>k.idx), n=xs.length;
+  const mx=xs.reduce((a,b)=>a+b)/n,my=ys.reduce((a,b)=>a+b)/n;
+  let sxy=0,sxx=0; for(let i=0;i<n;i++){sxy+=(xs[i]-mx)*(ys[i]-my);sxx+=(xs[i]-mx)**2;}
+  const sl=sxy/sxx, ic=my-sl*mx;
+  svg.appendChild(el('line',{x1:X(1.5),y1:Y(sl*1.5+ic),x2:X(9.8),y2:Y(sl*9.8+ic),
+    stroke:c.ink3,'stroke-width':2,'stroke-dasharray':'6 5',opacity:.7}));
+  K.forEach(k=>{
+    const d=el('circle',{cx:X(k.share),cy:Y(k.idx),r:7,fill:c.s1,stroke:c.card,'stroke-width':2});
+    hover(d,`<b>${k.name}</b><i>ענפי ידע</i> <b style="display:inline">${k.share}%</b> (${fmt(k.n)} שכירים) · `+
+      `<i>מדד שכר</i> <b style="display:inline">${k.idx}</b><br><i>כיסוי הקובץ ${k.cov}%</i>`);
+    svg.appendChild(d);
+    svg.appendChild(txt(k.name,{x:X(k.share),y:Y(k.idx)-16,'text-anchor':'middle','font-size':11.5,
+      fill:c.ink,'font-weight':600,'font-family':'Assistant,sans-serif'}));});
+  svg.appendChild(txt('r = +0.74',{x:W-m.r-8,y:m.t+12,'text-anchor':'end','font-size':13,'font-weight':700,fill:c.ink2}));
+  legend('lg11',[['רשות באשכול',c.s1]]);
+  const HI=D.anaf.hi, by={};
+  HI.forEach(h=>{(by[h.name]=by[h.name]||{})[h.anaf]=h;});
+  const cols=['ייצור אלקטרוניקה','תכנות ושירותי מחשב','מחקר ופיתוח','שירותים פיננסיים'];
+  table('t6',['רשות',...cols.map(x=>x+' — שכירים / % מהארצי')],
+    Object.keys(by).sort((a,b)=>{const s=x=>cols.reduce((t,cc)=>t+(by[x][cc]?by[x][cc].n:0),0);return s(b)-s(a);})
+      .map(nm=>[nm,...cols.map(cc=>by[nm][cc]?`${fmt(by[nm][cc].n)} · ${by[nm][cc].ratio}%`:'—')]));
+}
+
+/* ---------- 12. education wage by authority ---------- */
+function chart12(){
+  const c=S(),svg=clear('c12'); if(!svg)return; const E=D.anaf.edu;
+  const W=1000,H=400,m={t:26,r:24,b:96,l:62}, natw=D.anaf.edu_nat;
+  const hi=16500, y=v=>m.t+(hi-v)*(H-m.t-m.b)/hi, bw=(W-m.l-m.r)/E.length;
+  [0,4000,8000,12000,16000].forEach(v=>{svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:c.rule2}));
+    svg.appendChild(txt(fmt(v),{x:m.l-8,y:y(v),'text-anchor':'end','font-size':11}));});
+  E.forEach((e,i)=>{
+    const x=m.l+bw*i+bw*0.12, w=bw*0.76;
+    const b=el('rect',{x,y:y(e.wage),width:w,height:y(0)-y(e.wage),fill:e.ratio<100?c.s3:c.s1,rx:3});
+    hover(b,`<b>${e.name}</b><i>שכר בחינוך</i> <b style="display:inline">${fmt(e.wage)} ₪</b> (${e.ratio}% מהארצי)<br>`+
+      `<i>${fmt(e.n)} שכירים · ${e.share}% מכלל שכירי הרשות</i>`);
+    svg.appendChild(b);
+    svg.appendChild(txt(fmt(e.n),{x:x+w/2,y:y(e.wage)-9,'text-anchor':'middle','font-size':9.5,fill:c.ink3}));
+    svg.appendChild(txt(e.name,{x:x+w/2,y:H-m.b+10,'font-size':10.5,fill:c.ink2,
+      'font-family':'Assistant,sans-serif','text-anchor':'end',
+      transform:`rotate(-45 ${x+w/2} ${H-m.b+10})`}));});
+  svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:y(natw),y2:y(natw),stroke:c.s2,'stroke-width':2,'stroke-dasharray':'6 4'}));
+  svg.appendChild(txt('שכר ארצי בענף '+fmt(natw)+' ₪',{x:m.l+6,y:y(natw)-10,'text-anchor':'start',
+    'font-size':11.5,'font-weight':700,fill:c.s2}));
+  legend('lg12',[['משלמת מעל הארצי בענף',c.s1],['משלמת מתחת לארצי',c.s3]]);
+}
+
+/* ---------- 13. per-authority shift-share ---------- */
+function chart13(){
+  const c=S(),svg=clear('c13'); if(!svg)return; const A=D.anaf.ss;
+  const W=1000,H=400,m={t:24,r:30,b:44,l:150};
+  const lo=-4800,hi=800, X=v=>m.l+(v-lo)*(W-m.l-m.r)/(hi-lo), bh=(H-m.t-m.b)/A.length;
+  [-4800,-4000,-3200,-2400,-1600,-800,0,800].forEach(v=>{
+    svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(fmt(v),{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':10.5}));});
+  A.forEach((a,i)=>{
+    const yy=m.t+bh*i+4,h=bh-10; let acc=0;
+    [[a.mix,c.s1,'הרכב ענפי'],[a.pay,c.s2,'שכר בתוך ענף']].forEach(([v,col,lab])=>{
+      const x0=X(acc),x1=X(acc+v);
+      const b=el('rect',{x:Math.min(x0,x1),y:yy,width:Math.max(1,Math.abs(x1-x0)-1),height:h,fill:col,rx:2});
+      hover(b,`<b>${a.name}</b><i>${lab}</i> <b style="display:inline">${fmt(v)} ₪</b><br>`+
+        `<i>פער כולל ${fmt(a.gap)} ₪ · שכר ${fmt(a.wage)} ₪ · כיסוי ${a.cov}%</i>`);
+      svg.appendChild(b); acc+=v;});
+    svg.appendChild(txt(fmt(a.gap),{x:X(a.gap)+(a.gap<0?-6:6),y:yy+h/2,
+      'text-anchor':a.gap<0?'end':'start','font-size':11.5,'font-weight':700,fill:c.ink}));
+    svg.appendChild(txt(a.name,{x:m.l-12,y:yy+h/2,'text-anchor':'end','font-size':12.5,fill:c.ink,
+      'font-family':'Assistant,sans-serif','font-weight':600}));});
+  legend('lg13',[['הרכב ענפי',c.s1],['שכר בתוך ענף',c.s2]]);
+  table('t7',['רשות','שכר מכוסה ₪','פער מהתקן ₪','הרכב ענפי','שכר בתוך ענף','כיסוי'],
+    A.map(a=>[a.name,fmt(a.wage),fmt(a.gap),fmt(a.mix),fmt(a.pay),a.cov+'%']));
+}
+
+/* ---------- branch table ---------- */
+function branchTable(){
+  table('t2',['ענף','% מהמועסקים באשכול','% ארצית','שכר ארצי ₪','שכר באשכול ₪','יחס'],
+    D.big.map(r=>[r.name,r.s_eg+'%',r.s_nat+'%',fmt(r.w_nat),fmt(r.w_eg),r.wr+'%']));
+}
+
+function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,branchTable]
+  .forEach(f=>{try{f()}catch(e){console.error(f.name,e)}}); }
+drawAll();
+matchMedia('(prefers-color-scheme:dark)').addEventListener('change',drawAll);
+new MutationObserver(drawAll).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+</script>
