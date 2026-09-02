@@ -204,9 +204,12 @@ def test_should_pin_the_four_authorities_that_are_spelled_two_ways(data, btl):
 @pytest.mark.xfail(
     strict=True,
     reason=(
-        "KNOWN DEFECT: btl.json carries \"ג'ש )גוש חלב(\" with the parentheses "
-        "mirrored — a right-to-left rendering artefact written into the data. It "
-        "reaches the reader as-is in the unit selector."
+        "KNOWN DEFECT, and the fix belongs upstream: the mirrored parentheses in "
+        "\"ג'ש )גוש חלב(\" originate in eshkol_mapping.xlsx, column 'שם רשמי בלמס'. "
+        "btl.json labels its authorities from that column and carries the artefact "
+        "through to the unit selector. The National Insurance tables themselves "
+        "spell it \"ג'ש (גוש חלב)\" correctly, so nothing downstream introduced it — "
+        "correct the mapping workbook, not the pipeline."
     ),
 )
 def test_should_never_publish_an_authority_name_with_mirrored_brackets(data, btl):
