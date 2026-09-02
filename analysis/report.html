@@ -81,6 +81,7 @@ section:last-of-type{border:0}
 .sechead{display:flex;flex-direction:column;gap:14px;margin-block-end:30px}
 h2{font-size:clamp(27px,3.4vw,38px);letter-spacing:-.015em}
 h3{font-size:20px;font-weight:700;margin-block-start:34px}
+h4{font-size:16px;font-weight:700;margin-block-start:26px;color:var(--ink-2)}
 .sechead .k{font-family:var(--f-num);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3)}
 .body p+p{margin-block-start:16px}
 .body{color:var(--ink-2)}
@@ -161,10 +162,12 @@ footer b{color:var(--ink-2)}
 
 <header class="hero"><div class="wrap">
   <div class="kicker prose">מרכז הידע האזורי גליל מזרחי · ניתוח שכר ותעסוקה · 2016–2024</div>
-  <h1>שני קצוות, לא אחד</h1>
-  <p class="lede">השכר הממוצע באשכול עומד על 80% מהארצי ולא זז תשע שנים. מאחורי הממוצע הזה
-     עומדות שתי עובדות נפרדות: הקצה התחתון צפוף ב־17% מהארצי — והקצה העליון דליל ב־42%.
-     הענפים שמושכים את הממוצע הארצי כלפי מעלה כמעט אינם קיימים כאן.</p>
+  <h1>עשרים אחוז חסרים, תשע שנים בלי לזוז</h1>
+  <p class="lede">השכר הממוצע באשכול עומד על 80% מהארצי ולא זז מאז 2016 — אך הפער בשקלים
+     גדל בינתיים מ־2,008 ל־2,578 ש״ח לחודש. מה שנראה כשתי בעיות — שכר נמוך <em>וגם</em>
+     התפלגות עקומה — הוא כמעט תמיד אחת: מול רשויות באותה רמת שכר, הקצה העליון של האשכול
+     רגיל לחלוטין. יוצא הדופן היחיד הוא ריכוז משתכרי שכר המינימום, בעיקר ביישובי הדרוזים
+     ברמת הגולן.</p>
   <div class="meta">
     <span><b>92,419</b> מועסקים ב־17 רשויות (2024)</span>
     <span><b>175</b> לוחות מקור עובדו</span>
@@ -174,8 +177,8 @@ footer b{color:var(--ink-2)}
   <div class="kpis">
     <div class="kpi hi"><div class="n">82<small>%</small></div><div class="l">מהשכר הממוצע הארצי לחודש עבודה · 2024</div></div>
     <div class="kpi"><div class="n">35<small>%</small></div><div class="l">משתכרים עד שכר מינימום — מול 29.9% ארצית</div></div>
-    <div class="kpi"><div class="n">0.9<small>%</small></div><div class="l">משתכרים מעל פי 4 מהממוצע — מול 2.2% ארצית</div></div>
-    <div class="kpi"><div class="n">77<small>%</small></div><div class="l">מפער השכר מוסבר ב־4 ענפי ידע (למ״ס)</div></div>
+    <div class="kpi"><div class="n">+1.9<small> נק׳</small></div><div class="l">עודף משתכרי שכר מינימום — מול רשויות באותה רמת שכר</div></div>
+    <div class="kpi"><div class="n">77<small>%</small></div><div class="l">מפער השכר <b>נטו</b> תורמים 4 ענפי ידע (למ״ס)</div></div>
     <div class="kpi"><div class="n">−4.0<small>%</small></div><div class="l">מועסקים ב־2024 — מול <b>+0.9%</b> ארצית</div></div>
   </div>
   <div class="call" style="margin-block-start:32px">
@@ -218,12 +221,13 @@ footer b{color:var(--ink-2)}
   </figure>
   <figure>
     <div class="figtitle">פער אחד, שני סרגלים</div>
-    <div class="figsub">אותו נתון בדיוק, נמדד פעם ביחס לארצי ופעם בשקלים · כלל העובדים · ביטוח לאומי</div>
-    <div class="chartbox"><svg id="c2" viewBox="0 0 1000 430" role="img"
-      aria-label="מדד השכר באשכול נשאר בטווח 78 עד 82 אחוז לאורך תשע שנים, בעוד הפער החודשי בשקלים מול הארצי גדל מ־2,008 ל־2,578 ש״ח"></svg></div>
-    <figcaption><b>שתי הפאנלים מציגים את אותם הנתונים.</b> למעלה — יחס: האשכול לא יצא מטווח
-      78–82% מהשכר הארצי באף שנה. למטה — אותו יחס בשקלים: כשהשכר בכל הארץ עולה, אותם
-      כ־20% חסרים שווים יותר כסף, והמרחק החודשי גדל מ־2,008 ל־2,578 ש״ח.
+    <div class="figsub">אותו פער בדיוק, נמדד פעם באחוזים ופעם בשקלים · כלל העובדים · ביטוח לאומי</div>
+    <div class="chartbox"><svg id="c2" viewBox="0 0 1000 350" role="img"
+      aria-label="הפער באחוזים מול השכר הארצי כמעט לא זז בתשע שנים, 21.0 אחוז ב־2016 מול 20.1 אחוז ב־2024, בעוד אותו פער בשקלים גדל מ־2,008 ל־2,578 ש״ח לחודש"></svg></div>
+    <figcaption><b>שני הפאנלים מציגים את אותו פער בדיוק, בשני סרגלים.</b> מימין — באחוזים:
+      לאשכול חסרים כ־20% מהשכר הארצי, וזה כמעט לא זז בתשע שנים (21.0% ל־20.1%). משמאל —
+      אותו פער בשקלים: כשהשכר בכל הארץ עולה, אותם כ־20% שווים יותר כסף, והמרחק החודשי גדל
+      מ־2,008 ל־2,578 ש״ח.
       הירידה ב־2024 מ־2,666 ל־2,578 ש״ח אינה שיפור אמיתי — היא אפקט הרכב (ראו ממצא 4).
       מול תל אביב הפער גדל באותה תקופה מ־3,592 ל־5,671 ש״ח לחודש.</figcaption>
     <details><summary>הצג טבלת נתונים</summary><div class="tw" id="t2"></div></details>
@@ -233,7 +237,7 @@ footer b{color:var(--ink-2)}
 
 <section id="spread"><div class="wrap">
   <div class="sechead prose"><span class="k">ממצא 2 · ההתפלגות · מקור: ביטוח לאומי</span>
-    <h2>ההתפלגות אינה בעיה נפרדת — הרמה היא</h2></div>
+    <h2>הקצה העליון מוסבר ברמת השכר. הקצה התחתון — לא לגמרי</h2></div>
   <div class="body prose">
     <p>התפלגות קבוצות ההכנסה מאפשרת לפרק את הממוצע. חיברנו את 17 הרשויות במשקל מספר המועסקים
        וקיבלנו התפלגות אמיתית של האשכול (הסכום 100.0%). מול הארצי היא נראית כך:</p>
@@ -242,26 +246,31 @@ footer b{color:var(--ink-2)}
       <li><b>למעלה:</b> 6.6% משתכרים מעל פי שניים מהשכר הממוצע, מול 11.4% ארצית.
           מעל פי ארבעה: 0.9% מול 2.2%.</li>
       <li><b>באמצע:</b> שיעור המשתכרים עד השכר הממוצע הוא 72.1% מול 66.2% ארצית.</li>
-    </ul>
-
-    <h3>ואז בדקנו אם זה בכלל מיוחד לאשכול — והתשובה שלילית</h3>
-    <p>מפתה להסיק מהמספרים האלה ש"חסר לאשכול זנב עליון" כתופעה בפני עצמה, הדורשת הסבר משלה.
-       בדקנו את הטענה מול <strong>כל 341 היישובים והמועצות האזוריות בישראל</strong>, והיא אינה
-       עומדת במבחן:</p>
+    <h3>ואז בדקנו את זה מול רשויות באותה רמת שכר</h3>
+    <p>מפתה להסיק מהמספרים האלה שההתפלגות באשכול היא בעיה בפני עצמה. אבל ההשוואה לממוצע
+       הארצי אינה הוגנת: הממוצע הארצי מאגד את הרצליה ואת רהט יחד. ההשוואה הנכונה היא
+       <b>לרשויות אחרות שנמצאות באותה רמת שכר בדיוק</b>. לכל אחת מ־17 הרשויות מצאנו את
+       הרשויות מחוץ לאשכול שמדד השכר שלהן בטווח ‎±3 נקודות ממנה — בין 12 ל־35 רשויות
+       השוואה לכל אחת, מתוך 341 — והשווינו מולן.</p>
     <ul class="pts">
-      <li><b>הקשר בין רמת השכר ברשות לשיעור המשתכרים הגבוהים בה הוא כמעט מכני — מתאם ‎+0.98</b>
-        על פני 341 הרשויות. ברגע שידוע השכר הממוצע ברשות, שיעור המשתכרים הגבוהים בה כמעט קבוע
-        מראש. אלה אינן שתי עובדות אלא אחת, בשתי צורות.</li>
-      <li><b>כשמשווים רשות באשכול לרשויות אחרות באותה רמת שכר — ההבדל נעלם.</b> חילקנו את
-        341 הרשויות לארבע קבוצות לפי מדד השכר; בכל אחת מהן שיעור המשתכרים מעל פי שניים
-        ושיעור המשתכרים עד שכר מינימום ברשויות האשכול אינם נבדלים סטטיסטית מהמקבילות בשאר
-        הארץ (p בין 0.07 ל־0.76).</li>
-      <li>גם הטענה ש"בכל 17 הרשויות ההתפלגות שוויונית יותר מהארצית" — נכונה, אך חסרת משמעות:
-        <b>כך ב־296 מתוך 341 הרשויות בארץ (87%).</b> הסיבה טכנית: הממוצע הארצי מאגד רשויות
-        שונות מאוד זו מזו, ולכן הוא "מתוח" יותר מכל רשות בודדת.</li>
+      <li><b>בקצה העליון — אין הבדל.</b> שיעור המשתכרים מעל פי שניים מהממוצע גבוה ב־0.12
+        נקודת אחוז בלבד מרשויות ההשוואה (10 מתוך 17 מעל, p=0.51). "חסרים לנו משתכרים
+        גבוהים" אינה עובדה נפרדת — <b>היא בדיוק אותה עובדה כמו "השכר נמוך"</b>. המתאם בין
+        רמת השכר ברשות לשיעור המשתכרים הגבוהים בה הוא ‎+0.98 על פני 341 רשויות.</li>
+      <li><b>בקצה התחתון — יש הבדל, קטן אך אמיתי.</b> שיעור המשתכרים עד שכר המינימום גבוה
+        ב־<b>1.9 נקודות אחוז</b> מרשויות באותה רמת שכר (13 מתוך 17 מעל, p=0.014;
+        משוקלל לפי מספר מועסקים ‎+1.6). זהו עודף שרמת השכר <em>אינה</em> מסבירה.</li>
+      <li><b>העודף מרוכז.</b> ארבעת יישובי הדרוזים ברמת הגולן: מג'דל שמס ‎+6.2 נקודות,
+        בוקעתא ‎+5.4, מסעדה ‎+5.0, עין קיניה ‎+3.4. לצידם מטולה ‎+4.5, ראש פינה ‎+4.4
+        וצפת ‎+3.4. בחצור הגלילית (‎−2.2) ובטובא־זנגריה (‎−3.1) התמונה הפוכה.</li>
     </ul>
-    <div class="explain"><b>הערה על תיקון:</b> בגרסה קודמת של דוח זה הוצג הפער בקצה העליון
-      כממצא נפרד. הבדיקה מול 341 הרשויות מראה שאין לו קיום עצמאי, והניסוח תוקן בהתאם.</div>
+    <div class="explain"><b>הערה על תיקון:</b> גרסה קודמת של דוח זה הציגה את הפער בקצה
+      העליון כממצא נפרד — הבדיקה מול 341 הרשויות שללה זאת. גרסה שלאחריה קבעה שגם הקצה
+      התחתון מוסבר לגמרי ברמת השכר — ומבחן רשויות ההשוואה מראה שגם זה לא מדויק. הניסוח
+      שלמעלה הוא המתוקן: הקצה העליון מוסבר, התחתון לא לגמרי.
+      <span class="fine">הבדיקה חזרה ברוחב ‎±2, ‎±5 ו־‎±8 נקודות מדד. העודף בקצה התחתון
+      נשאר ‎+1.7 עד ‎+1.9 נקודות (p בין 0.012 ל־0.050); הקצה העליון נשאר אפסי בכל
+      הרוחבים (p≥0.39).</span></div>
   </div>
   <figure>
     <div class="figtitle">התפלגות קבוצות הכנסה, 2024</div>
@@ -276,10 +285,11 @@ footer b{color:var(--ink-2)}
     <details><summary>הצג טבלת נתונים</summary><div class="tw" id="t4"></div></details>
   </figure>
   <div class="call"><div class="t">מה זה משנה למדיניות</div>
-    <p>המסקנה חשובה דווקא משום שהיא <em>שוללת</em> כיוון פעולה: אין באשכול בעיית התפלגות נפרדת
-      שדורשת טיפול משלה. ברגע שרמת השכר תעלה, צורת ההתפלגות תעקוב אחריה מעצמה — כפי שקורה בכל
-      341 הרשויות. נשארת שאלה אחת בלבד: <strong>למה רמת השכר נמוכה</strong> — ולה עונים
-      פרקי הענפים.</p></div>
+    <p><b>שתי מסקנות שונות לשני הקצוות.</b> אין טעם לרדוף אחרי "הזנב העליון החסר" כיעד
+      נפרד — הוא ייסגר מעצמו כשרמת השכר תעלה, כפי שקורה בכל 341 הרשויות. לעומת זאת
+      <strong>ריכוז שכר המינימום ביישובי הדרוזים ברמת הגולן הוא כן תופעה בפני עצמה</strong>,
+      שרמת השכר הכללית אינה מסבירה, ומצדיק בדיקה ממוקדת. השאלה הגדולה נשארת
+      <strong>למה רמת השכר נמוכה</strong> — ולה עונים פרקי הענפים.</p></div>
 </div></section>
 
 <section id="who"><div class="wrap">
@@ -347,11 +357,38 @@ footer b{color:var(--ink-2)}
     <h3>3 · "שיפור" השכר ב־2024 הוא אפקט הרכב — וכעת ניתן להוכיח זאת</h3>
     <p>ברמת האשכול אפשר היה רק להעלות את החשד. ברמת הרשות התמונה חד־משמעית:
        <strong>ככל שרשות איבדה יותר מועסקים, כך "עלה" בה השכר יותר</strong> —
-       מתאם ‎−0.96 עם השכר החציוני (p&lt;0.0001) ו‎־0.84 עם הממוצע. הרגרסיה: כל 1% ירידה בתעסוקה
+       מתאם ‎−0.96 עם השכר החציוני (p&lt;0.0001) ו־‎−0.84 עם הממוצע. הרגרסיה: כל 1% ירידה בתעסוקה
        מלווה בעלייה של 0.47% בשכר הממוצע (R²=0.70).</p>
     <p>מטולה, שאיבדה 12.1% מהמועסקים, "השתפרה" ב־9.6 נקודות מדד; צפת, שאיבדה 2.3%, ב־0.2 נקודות.
-       העובדה שהמתאם חזק יותר עם <em>החציון</em> מאשר עם הממוצע מלמדת שכל ההתפלגות זזה, ולא רק זנב אחד —
-       כלומר יצאו משוק העבודה בעיקר בעלי שכר נמוך. <b>אין לקרוא את 2024 כשנת שיפור.</b></p>
+       העובדה שהמתאם חזק יותר עם <em>החציון</em> מאשר עם הממוצע מלמדת שכל ההתפלגות זזה, ולא רק זנב אחד.</p>
+    <h4>הראיה הישירה: ספירת ראשים לפי קבוצת הכנסה</h4>
+    <p>מתאם אינו הוכחה. אפשר לספור ישירות: מספר המועסקים בכל קבוצת הכנסה מתקבל מהכפלת שיעור
+       הקבוצה ברשות במספר המועסקים בה, וסכימה על 17 הרשויות. <strong>האשכול איבד 3,818
+       מועסקים ב־2024. 3,631 מהם — 95% — היו משתכרים מתחת לשכר הממוצע במשק. מספר המשתכרים
+       מעל פי שניים מהממוצע לא ירד כלל, אלא גדל ב־256.</strong></p>
+    <div class="tw"><table><thead><tr><th style="text-align:right">קבוצת הכנסה</th>
+      <th>2023</th><th>2024</th><th>שינוי</th><th>% מכלל האבדן</th></tr></thead><tbody>
+      <tr><td class="name">עד שכר מינימום</td><td class="num">36,860</td><td class="num">35,432</td><td class="num">−1,429</td><td class="num">37.4%</td></tr>
+      <tr><td class="name">מינימום–75% מהממוצע</td><td class="num">22,171</td><td class="num">20,659</td><td class="num">−1,511</td><td class="num">39.6%</td></tr>
+      <tr><td class="name">75%–100% מהממוצע</td><td class="num">11,919</td><td class="num">11,228</td><td class="num">−691</td><td class="num">18.1%</td></tr>
+      <tr><td class="name">פי 1–2 מהממוצע</td><td class="num">19,580</td><td class="num">19,138</td><td class="num">−443</td><td class="num">11.6%</td></tr>
+      <tr><td class="name">פי 2–3</td><td class="num">3,999</td><td class="num">4,090</td><td class="num">+92</td><td class="num">−2.4%</td></tr>
+      <tr><td class="name">פי 3–4</td><td class="num">1,013</td><td class="num">1,071</td><td class="num">+58</td><td class="num">−1.5%</td></tr>
+      <tr><td class="name">מעל פי 4</td><td class="num">693</td><td class="num">799</td><td class="num">+106</td><td class="num">−2.8%</td></tr>
+      <tr><td class="name"><b>סה״כ</b></td><td class="num"><b>96,237</b></td><td class="num"><b>92,419</b></td><td class="num"><b>−3,818</b></td><td class="num"><b>100%</b></td></tr>
+      </tbody></table></div>
+    <p>כמה מהעלייה זה מסביר? מדד השכר של האשכול עלה מ־79.8 ל־82.3 — ‎+2.5 נקודות. חישבנו את
+       תרומת שינוי ההרכב בלי להניח שכר ממוצע לאף קבוצה, אלא בהצבת <b>גבולות</b> הקבוצה
+       (קבוצת "פי 2–3" שווה לכל היותר פי 3 ולכל הפחות פי 2). התוצאה היא טווח:
+       <strong>בין ‎+1.3 ל־‎+2.8 נקודות — כלומר בין 54% ל־110% מהעלייה כולה.</strong>
+       <b>אין לקרוא את 2024 כשנת שיפור.</b></p>
+    <div class="explain"><b>מה זה לא מוכיח:</b> הנתונים סופרים מלאי בשתי נקודות זמן, לא
+      אנשים. איננו רואים מי עזב. תיאורטית הירידה בקבוצות התחתונות יכולה לנבוע גם ממי
+      ש<em>עלה</em> קבוצה — אך זה חסום מספרית: שלוש הקבוצות העליונות גדלו ב־256 בלבד בעוד
+      שלוש התחתונות ירדו ב־3,631, כך שמעבר כלפי מעלה יכול להסביר לכל היותר 7% מהירידה.
+      <span class="fine">בדיקה נוספת: התרחיש הנגדי של שכר 2024 עם משקלות התעסוקה של 2023
+      נותן 12,171 ש״ח מול 12,142 בפועל — הפרש של ‎−0.25 נקודות בלבד. כלומר האפקט אינו מעבר
+      בין רשויות אלא מתרחש בתוכן.</span></div>
   </div>
   <figure>
     <div class="figtitle">שינוי בתעסוקה מול שינוי בשכר, 2023→2024</div>
@@ -843,68 +880,43 @@ function chart1(){
       D.cluster.auth[i]]));
 }
 
-/* ---------- 2. one gap, two rulers: index flat / shekels widening ---------- */
-/* Two stacked panels on a shared year axis rather than one frame with two y-scales:
-   the whole point is that the same gap reads as "unchanged" on one ruler and
-   "growing" on the other, and a dual axis would let the reader blame the scales. */
+/* ---------- 2. one gap, two rulers: percent flat / shekels widening ---------- */
+/* Two small multiples side by side (RTL: percent first, on the right), same mark,
+   same color, same nine years — so "flat" and "rising" are read off identical
+   geometry. Not one frame with two y-scales: a dual axis would let the reader
+   blame the scales for the divergence, which is the whole finding. */
 function chart2(){
   const c=S(),svg=clear('c2'); if(!svg)return;
-  const W=1000,H=430,m={t:34,r:92,b:34,l:56};
-  const ys=D.years, idx=D.idx_year['אשכול גליל מזרחי'],
-        gap=ys.map((_,i)=>D.wage_abs['ארצי'][i]-D.wage_abs['אשכול גליל מזרחי'][i]);
-  // inset the x range by half a bar so the end bars sit inside the frame and the
-  // right-hand axis labels stay legible; the line panel shares the same positions.
-  const step=(W-m.l-m.r)/ys.length, pad=step/2,
-        x=i=>m.l+pad+i*(W-m.l-m.r-2*pad)/(ys.length-1);
-  /* panel A — the index */
-  const aT=m.t, aB=196, alo=70, ahi=106, ay=v=>aB-(v-alo)*(aB-aT)/(ahi-alo);
-  /* panel B — the same gap in shekels */
-  const bT=254, bB=H-m.b, bhi=3000, by=v=>bB-v*(bB-bT)/bhi;
-
-  svg.appendChild(txt('מדד השכר · ארצי = 100',{x:m.l,y:aT-16,'text-anchor':'start',
-    'font-size':12.5,'font-weight':700,fill:c.ink}));
-  svg.appendChild(txt('אותו פער, מדד יציב',{x:W-m.r,y:aT-16,'text-anchor':'end','font-size':11,fill:c.ink3}));
-  // the band the cluster never leaves — annotation, not a data series
-  svg.appendChild(el('rect',{x:m.l,y:ay(82),width:W-m.l-m.r,height:ay(78)-ay(82),
-    fill:c.s1,opacity:.10}));
-  svg.appendChild(txt('הטווח שהאשכול לא יצא ממנו — 78% עד 82%',{x:(m.l+W-m.r)/2,y:ay(81.4),
-    'text-anchor':'middle','font-size':10.5,fill:c.ink3}));
-  [70,80,90,100].forEach(v=>{
-    svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:ay(v),y2:ay(v),stroke:v===100?c.ink3:c.rule2,
-      'stroke-width':v===100?1.5:1}));
-    svg.appendChild(txt(v+'%',{x:W-m.r+10,y:ay(v),fill:v===100?c.ink2:c.ink3,
-      'font-weight':v===100?700:400}));});
-  svg.appendChild(el('path',{d:idx.map((v,i)=>(i?'L':'M')+x(i)+' '+ay(v)).join(' '),
-    fill:'none',stroke:c.s1,'stroke-width':2,'stroke-linejoin':'round'}));
-  idx.forEach((v,i)=>{
-    svg.appendChild(el('circle',{cx:x(i),cy:ay(v),r:4,fill:c.s1,stroke:c.card,'stroke-width':2}));});
-  [0,ys.length-1].forEach(i=>svg.appendChild(txt(idx[i].toFixed(1)+'%',
-    {x:x(i),y:ay(idx[i])-14,'text-anchor':'middle','font-size':12,'font-weight':700,fill:c.ink})));
-
-  svg.appendChild(txt('הפער החודשי בשקלים מול הממוצע הארצי',{x:m.l,y:bT-16,'text-anchor':'start',
-    'font-size':12.5,'font-weight':700,fill:c.ink}));
-  svg.appendChild(txt('אותו פער, מרחק גדל',{x:W-m.r,y:bT-16,'text-anchor':'end','font-size':11,fill:c.ink3}));
-  [0,1000,2000,3000].forEach(v=>{
-    svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:by(v),y2:by(v),stroke:v?c.rule2:c.ink3,
-      'stroke-width':v?1:1.5}));
-    svg.appendChild(txt(v?fmt(v):'0',{x:W-m.r+10,y:by(v),fill:c.ink3}));});
-  const bw=step*0.52, peak=gap.indexOf(Math.max(...gap));
-  gap.forEach((v,i)=>{
-    svg.appendChild(el('rect',{x:x(i)-bw/2,y:by(v),width:bw,height:by(0)-by(v),fill:c.s1,rx:4}));
-    if(i===0||i===peak||i===gap.length-1)
-      svg.appendChild(txt(fmt(v),{x:x(i),y:by(v)-11,'text-anchor':'middle','font-size':12,
-        'font-weight':700,fill:c.ink}));});
-
-  ys.forEach((yr,i)=>{
-    svg.appendChild(txt(yr,{x:x(i),y:H-14,'text-anchor':'middle','font-size':11.5,fill:c.ink2}));
-    const hit=el('rect',{x:x(i)-step/2,y:aT-10,width:step,height:bB-aT+10,fill:'transparent'});
-    hover(hit,`<b>${yr}</b><i>מדד השכר</i> <b style="display:inline">${idx[i].toFixed(1)}%</b>`+
-      `<i>פער חודשי מול הארצי</i> <b style="display:inline">${fmt(gap[i])} ש״ח</b>`+
-      `<i>שכר ממוצע באשכול</i> ${fmt(D.wage_abs['אשכול גליל מזרחי'][i])} ש״ח`);
-    svg.appendChild(hit);});
-  table('t2',['שנה','מדד השכר','שכר באשכול','שכר ארצי','פער בשקלים'],
-    ys.map((yr,i)=>[yr,idx[i].toFixed(1)+'%',fmt(D.wage_abs['אשכול גליל מזרחי'][i]),
-                    fmt(D.wage_abs['ארצי'][i]),fmt(gap[i])]));
+  const W=1000,H=350,T=64,B=H-40;
+  const ys=D.years, nat=D.wage_abs['ארצי'], eg=D.wage_abs['אשכול גליל מזרחי'],
+        pct=ys.map((_,i)=>100*(nat[i]-eg[i])/nat[i]), gap=ys.map((_,i)=>nat[i]-eg[i]);
+  function panel(x0,x1,vals,hi,ticks,title,sub,fmtv,fmtt){
+    svg.appendChild(txt(title,{x:x1,y:T-30,'text-anchor':'end','font-size':13,'font-weight':700,fill:c.ink}));
+    svg.appendChild(txt(sub,{x:x1,y:T-13,'text-anchor':'end','font-size':11,fill:c.ink3}));
+    const y=v=>B-v*(B-T)/hi, step=(x1-x0)/ys.length, bw=step*0.62;
+    ticks.forEach(v=>{
+      svg.appendChild(el('line',{x1:x0,x2:x1,y1:y(v),y2:y(v),stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
+      svg.appendChild(txt((fmtt||fmtv)(v),{x:x1+8,y:y(v),'text-anchor':'start','font-size':10.5,fill:c.ink3}));});
+    vals.forEach((v,i)=>{
+      const cx=x0+step*i+step/2;
+      svg.appendChild(el('rect',{x:cx-bw/2,y:y(v),width:bw,height:y(0)-y(v),fill:c.s1,rx:3}));
+      if(i===0||i===vals.length-1)
+        svg.appendChild(txt(fmtv(v),{x:cx,y:y(v)-10,'text-anchor':'middle','font-size':11.5,
+          'font-weight':700,fill:c.ink}));
+      svg.appendChild(txt(ys[i],{x:cx,y:B+16,'text-anchor':'middle','font-size':9.5,fill:c.ink3}));
+      const hit=el('rect',{x:cx-step/2,y:T-14,width:step,height:B-T+14,fill:'transparent'});
+      hover(hit,`<b>${ys[i]}</b><i>הפער באחוזים</i> <b style="display:inline">${pct[i].toFixed(1)}%</b>`+
+        `<i>הפער בשקלים</i> <b style="display:inline">${fmt(gap[i])} ש״ח</b>`+
+        `<i>שכר ארצי / אשכול</i> ${fmt(nat[i])} / ${fmt(eg[i])} ש״ח`);
+      svg.appendChild(hit);});
+  }
+  panel(560,948,pct,26,[0,10,20],'הפער באחוזים','כמה אחוזים חסרים לאשכול מהשכר הארצי',
+        v=>v.toFixed(1)+'%', v=>v+'%');
+  panel(52,440,gap,3000,[0,1000,2000,3000],'הפער בשקלים','אותו פער, במונחי שקלים לחודש',
+        v=>fmt(Math.round(v)));
+  svg.appendChild(el('line',{x1:498,x2:498,y1:T-34,y2:B+6,stroke:c.rule2}));
+  table('t2',['שנה','שכר אשכול','שכר ארצי','הפער באחוזים','הפער בשקלים'],
+    ys.map((yr,i)=>[yr,fmt(eg[i]),fmt(nat[i]),pct[i].toFixed(1)+'%',fmt(gap[i])]));
 }
 
 /* ---------- 3. income distribution: cluster vs national ---------- */
