@@ -21,7 +21,7 @@
 
   /* רקע לבן; ההיררכיה נשענת על מסגרות וצללים ולא על גוון הרקע */
   --paper:#FFFFFF; --paper-2:#F2F6F9; --card:#FFFFFF;
-  --ink:#14273F; --ink-2:#41566B; --ink-3:#74879A;
+  --ink:#14273F; --ink-2:#41566B; --ink-3:#5C6E80;
   --line:#DCE5EC; --line-2:#C3D2DC;
   --accent:#1C70A8; --accent-2:#1CA8C4; --accent-soft:#DBEEF4;
 
@@ -247,6 +247,7 @@ button.dbtn.ins:hover{border-color:var(--s-nat);color:var(--s-nat);
   box-shadow:var(--sh-3);font-size:13px}
 .editbar[hidden]{display:none}
 .editbar b{font-family:var(--font-head);font-weight:600;margin-inline-end:4px}
+.editbar .hint{font-size:12px;opacity:.8;max-width:34ch;line-height:1.4}
 .editbar button{font-family:var(--font-body);font-size:12.5px;font-weight:700;cursor:pointer;border:0;
   border-radius:100px;padding:5px 12px;background:rgba(255,255,255,.16);color:#fff}
 .editbar button:hover{background:rgba(255,255,255,.3)}
@@ -255,6 +256,9 @@ button.dbtn.ins:hover{border-color:var(--s-nat);color:var(--s-nat);
 body.editing [data-t]{outline:1px dashed color-mix(in srgb,var(--accent) 55%,transparent);
   outline-offset:2px;cursor:text}
 body.editing [data-t]:focus{outline:2px solid var(--accent);background:var(--accent-soft)}
+/* הפקדים קופאים בזמן עריכה במכוון: פתיחי חלק ב׳ נכתבים מחדש בכל שינוי בורר,
+   ועריכה של פתיח תוך כדי החלפת הקשר הייתה נשמרת תחת ההקשר הלא נכון. הסיבה
+   נאמרת בסרגל העריכה — פקד מעומעם בלי הסבר נקרא כתקלה. */
 body.editing .seg button,body.editing select.ctl{pointer-events:none;opacity:.55}
 
 /* ---------- אזהרת כיסוי נמוך ---------- */
@@ -884,6 +888,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 
   <div class="editbar" id="editbar" hidden role="region" aria-label="מצב עריכת טקסט">
     <b>מצב עריכה</b>
+  <span class="hint">הבוררים מוקפאים עד ל„סיום” — כדי שטקסט שנערך לא יישמר תחת הקשר אחר</span>
     <span><span id="editCount">0</span> שינויים</span>
     <button type="button" id="editCopy">העתקת JSON</button>
     <button type="button" id="editSave">הורדה</button>
@@ -2015,7 +2020,12 @@ function addFigureFooters() {
    מחזיק אך ורק את מה שנערך בפועל, ולכן שינוי בקוד אינו נמחק בטעות.
    ============================================================ */
 const TEXT = DATA.text || {};
-const T = (id, def) => (TEXT[id] != null ? TEXT[id] : def);
+/* עריכות הסשן הנוכחי. T קורא מהן לפני content.json — בלי זה כל ציור מחדש
+   של מקטע (פתיחי חלק ב׳ נבנים מחדש בכל שינוי בורר) מוחק את מה שהמשתמש
+   הרגע כתב, והמונה ממשיך לספור עריכה שכבר אינה על המסך. */
+const EDITED = {};
+const T = (id, def) => (EDITED[id] != null ? EDITED[id]
+                      : TEXT[id] != null ? TEXT[id] : def);
 /* עוטף מחרוזת שנוצרת ב-JS כך שתהיה ניתנת לעריכה בעמוד */
 const te = (id, def) => `<span data-t="${id}">${T(id, def)}</span>`;
 
@@ -2029,7 +2039,8 @@ const credit = () => te("meta.credit", CREDIT_DEF);
 function applyText(root) {
   (root || document).querySelectorAll("[data-t]").forEach(n => {
     const id = n.getAttribute("data-t");
-    if (TEXT[id] != null && n.innerHTML !== TEXT[id]) n.innerHTML = TEXT[id];
+    const v = EDITED[id] != null ? EDITED[id] : TEXT[id];
+    if (v != null && n.innerHTML !== v) n.innerHTML = v;
   });
 }
 
@@ -2118,7 +2129,6 @@ function wireEditing() {
   const toggle = document.getElementById("editToggle");
   if (!bar || !toggle) return;
   let on = false;
-  const edited = {};
 
   const setMode = v => {
     on = v;
@@ -2136,12 +2146,12 @@ function wireEditing() {
   document.addEventListener("input", e => {
     const n = e.target.closest && e.target.closest("[data-t]");
     if (!on || !n) return;
-    edited[n.getAttribute("data-t")] = n.innerHTML.trim();
-    document.getElementById("editCount").textContent = Object.keys(edited).length;
+    EDITED[n.getAttribute("data-t")] = n.innerHTML.trim();
+    document.getElementById("editCount").textContent = Object.keys(EDITED).length;
   });
 
   const payload = () => JSON.stringify(
-    {text: {...TEXT, ...edited}, insights: INSIGHTS}, null, 2);
+    {text: {...TEXT, ...EDITED}, insights: INSIGHTS}, null, 2);
 
   document.getElementById("editCopy").addEventListener("click", async () => {
     const btn = document.getElementById("editCopy");
