@@ -1,0 +1,14 @@
+{
+  "name": "cbsalery-east-galilee-tests",
+  "private": true,
+  "type": "module",
+  "description": "Browser-side reliability tests for the East Galilee salary dashboard.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^30.0.1",
+    "vitest": "^4.1.11"
+  }
+}
