@@ -160,30 +160,46 @@ function chart3(){
                         D.inc['אשכול 2023'][jx]+'%',D.inc['ארצי 2023'][jx]+'%']));
 }
 
-/* ---------- 4. shift-share ---------- */
+/* ---------- 4. shift-share, per industry ---------- */
+/* Was a signed stacked bar on a reversed axis — two unknowns at once, and readers
+   could not tell which segment was which. Now: magnitudes only, two plain bars per
+   industry growing the same way, with the sign carried in the labels and the
+   caption. Same paired-bar pattern as chart 3. */
 function chart4(){
   const c=S(),svg=clear('c4'); if(!svg)return;
-  const W=1000,H=430,m={t:14,r:24,b:44,l:286};
-  const rows=D.shift, lo=Math.min(...rows.map(r=>r.mix+r.pay))*1.28;
-  const x=v=>m.l+(W-m.l-m.r)*(1-v/lo), bh=(H-m.t-m.b)/rows.length;
-  [0,-400,-800,-1200,-1600].forEach(v=>{ if(v<lo)return;
-    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t,y2:H-m.b,stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
-    svg.appendChild(txt(v?fmt(v):'0',{x:x(v),y:H-24,'text-anchor':'middle','font-size':11}));});
+  const rows=D.shift, W=1000,rowH=44,m={t:38,r:104,b:30,l:250},H=m.t+rows.length*rowH+m.b;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  const hi=Math.max(...rows.map(r=>Math.max(-r.mix,-r.pay)))*1.16;
+  const x=v=>m.l+v*(W-m.l-m.r)/hi;
+  [0,250,500,750,1000].forEach(v=>{ if(v>hi)return;
+    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t-10,y2:H-m.b,stroke:v?c.rule2:c.ink3,
+      'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(v?'−'+fmt(v):'0',{x:x(v),y:H-14,'text-anchor':'middle','font-size':11}));});
+  svg.appendChild(txt('ש״ח שהענף גורע מהשכר הממוצע באשכול',{x:m.l,y:m.t-20,'text-anchor':'start',
+    'font-size':11,fill:c.ink3}));
   rows.forEach((r,i)=>{
-    const yy=m.t+bh*i+5,h=bh-12; let acc=0;
-    [[r.mix,c.s1,'הרכב ענפי'],[r.pay,c.s2,'שכר בתוך ענף']].forEach(([v,col,lab])=>{
-      const x0=x(acc),x1=x(acc+v);
-      const b=el('rect',{x:Math.min(x0,x1)+1,y:yy,width:Math.max(0,Math.abs(x1-x0)-2),height:h,fill:col,rx:3});
-      hover(b,`<b>${r.name}</b><i>${lab}</i> <b style="display:inline">${fmt(v)} ש״ח</b>`);
-      svg.appendChild(b); acc+=v;});
-    const tot=r.mix+r.pay;
-    svg.appendChild(txt(fmt(tot),{x:x(tot)-8,y:yy+h/2,'text-anchor':'end','font-size':11.5,
-      'font-weight':700,fill:c.ink}));
-    const nm=r.name;
-    svg.appendChild(txt(nm,{x:m.l-12,y:yy+h/2-6,'text-anchor':'end','font-size':12.5,fill:c.ink}));
-    svg.appendChild(txt(`באשכול ${r.s_eg}% · ארצית ${r.s_nat}% · שכר ${r.wr}% מהארצי`,
-      {x:m.l-12,y:yy+h/2+9,'text-anchor':'end','font-size':10.5,fill:c.ink3}));});
-  legend('lg4',[['הרכב ענפי — פחות מהענף הזה באשכול',c.s1],['שכר בתוך ענף — הענף משלם פחות באשכול',c.s2]]);
+    const y0=m.t+rowH*i+5, h=(rowH-16)/2;
+    if(i)svg.appendChild(el('line',{x1:10,x2:W-10,y1:y0-5,y2:y0-5,stroke:c.rule2}));
+    [[-r.mix,c.s1,'הרכב ענפי — יש כאן פחות מהענף הזה'],
+     [-r.pay,c.s2,'שכר בתוך הענף — משלמים כאן פחות']].forEach(([v,col,lab],j)=>{
+      const yy=y0+j*(h+2);
+      const bar=el('rect',{x:m.l+1,y:yy,width:Math.max(1,x(v)-m.l-1),height:h,fill:col,rx:2});
+      hover(bar,`<b>${r.name}</b><i>${lab}</i> <b style="display:inline">−${fmt(v)} ש״ח</b>`);
+      svg.appendChild(bar);
+      svg.appendChild(txt('−'+fmt(v),{x:x(v)+7,y:yy+h/2,'text-anchor':'start','font-size':11,
+        'font-weight':j?400:700,fill:j?c.ink3:c.ink}));});
+    svg.appendChild(txt(r.name,{x:m.l-14,y:y0+h-2,'text-anchor':'end','font-size':12.5,fill:c.ink,
+      'font-family':'Assistant,sans-serif','font-weight':600}));
+    svg.appendChild(txt(`${r.s_eg}% מהשכירים כאן · ${r.s_nat}% ארצית · משלם ${r.wr}%`,
+      {x:m.l-14,y:y0+h+13,'text-anchor':'end','font-size':10.5,fill:c.ink3}));
+    svg.appendChild(txt('−'+fmt(-(r.mix+r.pay)),{x:W-14,y:y0+rowH/2-6,
+      'text-anchor':'end','font-size':12.5,'font-weight':700,fill:c.ink}));});
+  svg.appendChild(txt('סה״כ',{x:W-14,y:m.t-20,'text-anchor':'end','font-size':11,fill:c.ink3}));
+  legend('lg4',[['הרכב ענפי — יש כאן פחות מהענף הזה',c.s1],
+                ['שכר בתוך הענף — משלמים כאן פחות',c.s2]]);
+  table('t_c4',['ענף','% מהשכירים באשכול','% ארצית','שכר ביחס לארצי','הרכב ענפי','שכר בענף','סה״כ'],
+    rows.map(r=>[r.name,r.s_eg+'%',r.s_nat+'%',r.wr+'%','−'+fmt(-r.mix),'−'+fmt(-r.pay),
+                 '−'+fmt(-(r.mix+r.pay))]));
 }
 
 /* ---------- 5. authority dumbbell ---------- */
@@ -432,28 +448,76 @@ function chart12(){
 }
 
 /* ---------- 13. per-authority shift-share ---------- */
+/* Unstacked: each component drawn from zero in its own direction, so size and
+   sign are read directly instead of decoded from an accumulated stack. */
 function chart13(){
   const c=S(),svg=clear('c13'); if(!svg)return; const A=D.anaf.ss;
-  const W=1000,H=400,m={t:24,r:30,b:44,l:150};
-  const lo=-4800,hi=800, X=v=>m.l+(v-lo)*(W-m.l-m.r)/(hi-lo), bh=(H-m.t-m.b)/A.length;
-  [-4800,-4000,-3200,-2400,-1600,-800,0,800].forEach(v=>{
-    svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:v?c.rule2:c.ink3,'stroke-width':v?1:1.5}));
-    svg.appendChild(txt(fmt(v),{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':10.5}));});
+  const W=1000,rowH=42,m={t:44,r:118,b:34,l:150},H=m.t+A.length*rowH+m.b;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  const lo=-3300,hi=700, X=v=>m.l+(v-lo)*(W-m.l-m.r)/(hi-lo);
+  [-3000,-2000,-1000,0].forEach(v=>{
+    svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t-12,y2:H-m.b,stroke:v?c.rule2:c.ink3,
+      'stroke-width':v?1:1.6}));
+    svg.appendChild(txt(fmt(v),{x:X(v),y:H-14,'text-anchor':'middle','font-size':10.5}));});
+  svg.appendChild(txt('גורע מהשכר ←',{x:X(-1000),y:m.t-24,'text-anchor':'middle','font-size':10.5,fill:c.ink3}));
+  svg.appendChild(txt('← מוסיף',{x:X(350),y:m.t-24,'text-anchor':'middle','font-size':10.5,fill:c.ink3}));
+  svg.appendChild(txt('סה״כ',{x:W-14,y:m.t-24,'text-anchor':'end','font-size':10.5,fill:c.ink3}));
   A.forEach((a,i)=>{
-    const yy=m.t+bh*i+4,h=bh-10; let acc=0;
-    [[a.mix,c.s1,'הרכב ענפי'],[a.pay,c.s2,'שכר בתוך ענף']].forEach(([v,col,lab])=>{
-      const x0=X(acc),x1=X(acc+v);
-      const b=el('rect',{x:Math.min(x0,x1),y:yy,width:Math.max(1,Math.abs(x1-x0)-1),height:h,fill:col,rx:2});
-      hover(b,`<b>${a.name}</b><i>${lab}</i> <b style="display:inline">${fmt(v)} ₪</b><br>`+
-        `<i>פער כולל ${fmt(a.gap)} ₪ · שכר ${fmt(a.wage)} ₪ · כיסוי ${a.cov}%</i>`);
-      svg.appendChild(b); acc+=v;});
-    svg.appendChild(txt(fmt(a.gap),{x:X(a.gap)+(a.gap<0?-6:6),y:yy+h/2,
-      'text-anchor':a.gap<0?'end':'start','font-size':11.5,'font-weight':700,fill:c.ink}));
-    svg.appendChild(txt(a.name,{x:m.l-12,y:yy+h/2,'text-anchor':'end','font-size':12.5,fill:c.ink,
-      'font-family':'Assistant,sans-serif','font-weight':600}));});
-  legend('lg13',[['הרכב ענפי',c.s1],['שכר בתוך ענף',c.s2]]);
+    const y0=m.t+rowH*i+5, h=(rowH-16)/2;
+    if(i)svg.appendChild(el('line',{x1:10,x2:W-10,y1:y0-5,y2:y0-5,stroke:c.rule2}));
+    [[a.mix,c.s1,'הרכב ענפי — אילו ענפים יש כאן'],
+     [a.pay,c.s2,'שכר בתוך ענף — כמה משלמים בהם']].forEach(([v,col,lab],j)=>{
+      const yy=y0+j*(h+2), x0=X(0), x1=X(v);
+      const bar=el('rect',{x:Math.min(x0,x1),y:yy,width:Math.max(1,Math.abs(x1-x0)),height:h,
+        fill:col,rx:2});
+      hover(bar,`<b>${a.name}</b><i>${lab}</i> <b style="display:inline">${fmt(v)} ₪</b>`+
+        `<i>פער כולל</i> ${fmt(a.gap)} ₪<i>כיסוי ענפי</i> ${a.cov}%`);
+      svg.appendChild(bar);
+      svg.appendChild(txt(fmt(v),{x:x1+(v<0?-6:6),y:yy+h/2,'text-anchor':v<0?'end':'start',
+        'font-size':11,'font-weight':j?400:700,fill:j?c.ink3:c.ink}));});
+    svg.appendChild(txt(a.name,{x:m.l-12,y:y0+rowH/2-6,'text-anchor':'end','font-size':12.5,fill:c.ink,
+      'font-family':'Assistant,sans-serif','font-weight':600}));
+    svg.appendChild(txt(fmt(a.gap),{x:W-14,y:y0+rowH/2-6,'text-anchor':'end','font-size':12.5,
+      'font-weight':700,fill:a.gap<0?c.ink:c.s4}));});
+  legend('lg13',[['הרכב ענפי — אילו ענפים יש כאן',c.s1],
+                 ['שכר בתוך ענף — כמה משלמים בהם',c.s2]]);
   table('t7',['רשות','שכר מכוסה ₪','פער מהתקן ₪','הרכב ענפי','שכר בתוך ענף','כיסוי'],
     A.map(a=>[a.name,fmt(a.wage),fmt(a.gap),fmt(a.mix),fmt(a.pay),a.cov+'%']));
+}
+
+/* ---------- 14. each authority against its socio-economic peers ---------- */
+/* Dumbbell: hollow circle = the average of authorities in the same CBS
+   socio-economic cluster, filled circle = this authority. The line between them
+   is the finding. Sorted by the gap, worst first. */
+function chart14(){
+  const c=S(),svg=clear('c14'); if(!svg)return;
+  const R=D.ses.rows, W=1000,rowH=24,m={t:34,r:210,b:26,l:64},H=m.t+R.length*rowH+m.b;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  const lo=50,hi=125, x=v=>m.l+(v-lo)*(W-m.l-m.r)/(hi-lo);
+  [50,60,70,80,90,100,110,120].forEach(v=>{
+    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t-10,y2:H-m.b,stroke:v===100?c.ink3:c.rule2,
+      'stroke-width':v===100?1.5:1}));
+    svg.appendChild(txt(v+'%',{x:x(v),y:m.t-18,'text-anchor':'middle','font-size':10.5}));});
+  svg.appendChild(txt('ארצי',{x:x(100),y:H-10,'text-anchor':'middle','font-size':10.5,
+    'font-weight':700,fill:c.ink2}));
+  R.forEach((r,i)=>{
+    const y=m.t+rowH*i+rowH/2, up=r.d>0, col=up?c.s4:c.s2;
+    svg.appendChild(el('line',{x1:x(r.idx),x2:x(r.idx_p),y1:y,y2:y,stroke:col,
+      'stroke-width':3,'stroke-linecap':'round'}));
+    svg.appendChild(el('circle',{cx:x(r.idx_p),cy:y,r:4.6,fill:c.card,stroke:c.ink3,'stroke-width':2}));
+    const dot=el('circle',{cx:x(r.idx),cy:y,r:4.6,fill:col});
+    hover(dot,`<b>${r.name}</b><i>אשכול חברתי-כלכלי</i> ${r.ses} (מתוך 10)`+
+      `<i>מדד השכר שלה</i> <b style="display:inline">${r.idx}%</b>`+
+      `<i>ממוצע ${r.peers} רשויות באותו אשכול</i> <b style="display:inline">${r.idx_p}%</b>`+
+      `<i>הפרש</i> <b style="display:inline">${sgn(r.d)} נק׳</b>`);
+    svg.appendChild(dot);
+    svg.appendChild(txt(r.name,{x:W-m.r+10,y,'text-anchor':'start','font-size':12,fill:c.ink}));
+    svg.appendChild(txt('אשכול '+r.ses,{x:W-m.r+118,y,'text-anchor':'start','font-size':10.5,fill:c.ink3}));
+    svg.appendChild(txt(sgn(r.d),{x:m.l-10,y,'text-anchor':'end','font-size':12,'font-weight':700,fill:col}));});
+  legend('lg14',[['הרשות — מתחת לדומות לה',c.s2],['הרשות — מעליהן',c.s4],
+    ['ממוצע הרשויות באותו אשכול חברתי-כלכלי',c.ink3]]);
+  table('t14',['רשות','אשכול חב״כ','רשויות השוואה','מדד השכר שלה','ממוצע ההשוואה','הפרש'],
+    R.map(r=>[r.name,r.ses,r.peers,r.idx+'%',r.idx_p+'%',sgn(r.d)]));
 }
 
 /* ---------- branch table ---------- */
@@ -462,7 +526,7 @@ function branchTable(){
     D.big.map(r=>[r.name,r.s_eg+'%',r.s_nat+'%',fmt(r.w_nat),fmt(r.w_eg),r.wr+'%']));
 }
 
-function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,branchTable]
+function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,chart14,branchTable]
   .forEach(f=>{try{f()}catch(e){console.error(f.name,e)}}); }
 drawAll();
 matchMedia('(prefers-color-scheme:dark)').addEventListener('change',drawAll);
