@@ -1,0 +1,1154 @@
+<title>קונסולת BI · שכר ותעסוקה · אשכול גליל מזרחי</title>
+<meta name="description" content="קונסולת BI — שכר ותעסוקה ב-18 רשויות אשכול גליל מזרחי, למ״ס 2024 וביטוח לאומי 2016–2024">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Assistant:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* =============================================================
+   מרכז הידע האזורי גליל מזרחי | מערבי — קונסולת BI
+   גרסת „מסך אחד” של הדשבורד: גריד פאנלים, סרגל פילטרים גלובלי,
+   שורת KPI. הדו"ח הנרטיבי המלא הוא קובץ נפרד (index.html).
+   ============================================================= */
+:root{
+  color-scheme:light;
+  --bg-app:#F2F6F9; --bg-surface:#FFFFFF; --bg-subtle:#F2F6F9;
+  --bg-filter-a:#F2F6F9; --bg-filter-b:#F4F1EA;
+  --bg-warn:#FBEFEC; --bg-note:#DBEEF4;
+  --ink:#14273F; --ink-2:#41566B; --ink-3:#74879A;
+  --line:#DCE5EC; --line-strong:#C3D2DC; --line-warn:#E4B7B1;
+  --data-region:#1C70A8; --data-ref:#6E8CA8; --data-nat:#A8823A; --data-navy:#14273F;
+  --up:#16794A; --down:#C0342B;
+  --mix-emp:#1C70A8; --mix-both:#8C1C5A; --mix-self:#A8823A;
+  --font-head:'Rubik',system-ui,sans-serif;
+  --font-body:'Assistant',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg-app);color:var(--ink);direction:rtl;
+  font:15px/1.55 var(--font-body);-webkit-font-smoothing:antialiased}
+button,select,input{font-family:var(--font-body)}
+::selection{background:var(--bg-note);color:var(--ink)}
+
+/* ---------- header ---------- */
+.hd{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:9px 20px;
+  background:var(--bg-surface);border-bottom:1px solid var(--line)}
+.hd img{height:42px;width:auto;display:block}
+.hd .ttl{border-inline-start:1px solid var(--line);padding-inline-start:16px}
+.hd h1{margin:0;font:700 18px/1.2 var(--font-head);letter-spacing:-.025em}
+.hd .sub{font-size:12.5px;color:var(--ink-3)}
+.hd .acts{margin-inline-start:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.pill{font:700 12.5px var(--font-head);color:var(--ink-2);background:var(--bg-surface);
+  border:1px solid var(--line-strong);border-radius:100px;padding:6px 14px;cursor:pointer;
+  text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .15s}
+.pill:hover{border-color:var(--data-region);color:var(--data-region)}
+.pill.gold{color:var(--ink);background:#FBF6EA;border-color:#D9C79A}
+.pill.gold:hover{border-color:var(--data-nat);color:var(--data-nat)}
+.pill[aria-pressed="true"]{background:var(--data-region);border-color:var(--data-region);color:#fff}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;align-items:stretch;background:var(--bg-surface);
+  border-bottom:1px solid var(--line);padding:0 20px;flex-wrap:wrap}
+.tabs button{font:700 14px var(--font-head);background:transparent;border:0;
+  border-bottom:3px solid transparent;color:var(--ink-3);padding:11px 18px;cursor:pointer;text-align:start}
+.tabs button span{display:block;font:600 11.5px var(--font-body);color:var(--ink-3)}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--data-region)}
+.tabs button.b[aria-selected="true"]{border-bottom-color:var(--data-navy)}
+.tabs .ctx{margin-inline-start:auto;display:flex;align-items:center;gap:8px;padding:8px 0;flex-wrap:wrap}
+.tag{font-size:12px;color:var(--ink-2);background:var(--bg-subtle);border:1px solid var(--line);
+  border-radius:100px;padding:3px 11px}
+.tag.src{font:700 11px var(--font-head);color:#fff;border:0;padding:4px 12px;background:var(--data-region)}
+.tag.src.b{background:var(--data-navy)}
+
+/* ---------- filter bar ---------- */
+.fbar{display:flex;align-items:center;gap:10px 18px;flex-wrap:wrap;padding:9px 20px;
+  border-bottom:1px solid var(--line);background:var(--bg-filter-a)}
+.fbar.b{background:var(--bg-filter-b)}
+.fg{display:flex;align-items:center;gap:8px}
+.fg > label{font:600 12px var(--font-head);color:var(--ink-3)}
+.seg{display:inline-flex;background:var(--bg-surface);border:1px solid var(--line-strong);
+  border-radius:100px;padding:2px;gap:2px}
+.seg button{font:700 13px var(--font-body);border:0;border-radius:100px;padding:5px 14px;
+  background:transparent;color:var(--ink-3);cursor:pointer;transition:all .14s}
+.seg button[aria-pressed="true"]{background:var(--data-region);color:#fff}
+select.ctl{font:600 13.5px var(--font-body);color:var(--ink);background:var(--bg-surface);
+  border:1px solid var(--line-strong);border-radius:10px;padding:6px 10px;max-width:220px;cursor:pointer}
+.fdef{margin-inline-start:auto;font-size:12px;color:var(--ink-3);max-width:46ch;line-height:1.45}
+
+/* ---------- KPI ---------- */
+.kpis{display:flex;gap:10px;flex-wrap:wrap;padding:12px 20px 0}
+.kpi{flex:1 1 200px;background:var(--bg-surface);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 1px 3px rgba(20,39,63,.06);padding:12px 15px;position:relative;overflow:hidden}
+.kpi i{position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px}
+.kpi .k{font:600 12.5px var(--font-body);color:var(--ink-3)}
+.kpi .v{font:700 28px/1.15 var(--font-head);letter-spacing:-.02em;margin-top:4px;
+  direction:ltr;text-align:right;unicode-bidi:isolate}
+.kpi .n{font-size:12px;color:var(--ink-3);margin-top:2px}
+
+/* ---------- panels ---------- */
+.grid{display:flex;gap:10px;flex-wrap:wrap;padding:10px 20px 20px;align-items:flex-start}
+.panel{background:var(--bg-surface);border:1px solid var(--line);border-radius:14px;
+  box-shadow:0 1px 3px rgba(20,39,63,.06);padding:14px 16px 10px;display:flex;flex-direction:column}
+.p-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.p-head h2{margin:0;font:700 15px var(--font-head);color:var(--ink)}
+.p-head .psub{font-size:12.5px;color:var(--ink-3);margin-top:2px}
+.p-ctl{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+select.loc{font:600 12.5px var(--font-body);color:var(--ink);background:var(--bg-surface);
+  border:1px solid var(--line-strong);border-radius:8px;padding:4px 8px;max-width:190px;cursor:pointer}
+.vtog{display:inline-flex;background:var(--bg-subtle);border:1px solid var(--line-strong);
+  border-radius:100px;padding:2px;gap:2px}
+.vtog button{font:700 12px var(--font-body);border:0;border-radius:100px;padding:4px 11px;
+  background:transparent;color:var(--ink-3);cursor:pointer}
+.vtog button[aria-pressed="true"]{background:var(--bg-surface);color:var(--ink)}
+.p-body{position:relative;margin-top:10px;overflow-y:auto;overflow-x:hidden}
+.p-empty{padding:44px 10px;text-align:center;color:var(--ink-3);font-size:14.5px;line-height:1.6}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px}
+.legend .it{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--font-body);color:var(--ink-2)}
+.legend .sw{width:12px;height:12px;border-radius:3px;flex:0 0 auto}
+.warn{display:flex;gap:9px;align-items:flex-start;margin-top:9px;background:var(--bg-warn);
+  border:1px solid var(--line-warn);border-radius:10px;padding:9px 12px;
+  font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.warn b.m{flex:0 0 auto;width:17px;height:17px;border-radius:50%;background:var(--down);color:#fff;
+  font:800 11px/17px var(--font-head);text-align:center;margin-top:1px}
+.p-foot{display:flex;gap:10px;align-items:center;margin-top:9px;padding-top:8px;border-top:1px solid var(--line)}
+.p-foot .src{font-size:11.5px;color:var(--ink-3);line-height:1.4;flex:1}
+.p-foot button{font:700 11.5px var(--font-body);border:1px solid var(--line-strong);background:var(--bg-surface);
+  color:var(--ink-2);border-radius:100px;padding:4px 12px;white-space:nowrap;cursor:pointer}
+.p-foot button:hover{border-color:var(--data-region);color:var(--data-region)}
+.p-foot button:disabled{opacity:.5;cursor:default}
+
+/* הערת עורך — אותו רעיון כמו בדו"ח: שורה חופשית שאינה מושפעת מהפילטרים */
+.p-anno{margin-top:9px;padding:8px 12px;border-inline-start:3px solid var(--data-region);
+  background:var(--bg-note);border-radius:0 8px 8px 0;font-size:13px;line-height:1.55;color:var(--ink-2)}
+.p-anno:empty{display:none}
+body.editing .p-anno:empty{display:block;background:transparent;border:1px dashed var(--line-strong);
+  border-inline-start:3px solid var(--data-region)}
+body.editing .p-anno:empty::before{content:"הערת עורך — כתבו כאן הסבר משלכם לפאנל.";
+  color:var(--ink-3);font-style:italic}
+
+/* ---------- tables ---------- */
+table.d{width:100%;border-collapse:collapse;font-size:13px}
+table.d th{font:700 12px var(--font-head);color:var(--ink-3);text-align:center;padding:0 8px 8px;
+  border-bottom:2px solid var(--line-strong);position:sticky;top:0;background:var(--bg-surface)}
+table.d th:first-child,table.d td:first-child{text-align:start}
+table.d td{padding:7px 8px;border-bottom:1px solid var(--line);color:var(--ink-2);
+  text-align:center;unicode-bidi:isolate}
+
+/* ---------- tooltip ---------- */
+.tip{position:absolute;background:var(--data-navy);color:#fff;border-radius:8px;padding:8px 12px;
+  font-size:12.5px;line-height:1.4;box-shadow:0 18px 40px -18px rgba(20,39,63,.55);
+  min-width:170px;pointer-events:none;z-index:20}
+.tip .t{font:700 11.5px var(--font-head);color:#54C4E0;margin-bottom:3px}
+.tip .r{display:flex;justify-content:space-between;gap:16px}
+.tip .r b{font-family:var(--font-head);unicode-bidi:isolate}
+
+/* ---------- export menu ---------- */
+.menu{position:absolute;inset-inline-start:20px;top:6px;width:266px;background:var(--bg-surface);
+  border:1px solid var(--line-strong);border-radius:10px;
+  box-shadow:0 20px 50px -20px rgba(20,39,63,.42);padding:8px;z-index:40}
+.menu button{display:block;width:100%;text-align:start;font:700 13.5px var(--font-body);color:var(--ink);
+  background:transparent;border:0;border-radius:6px;padding:8px 10px;cursor:pointer}
+.menu button:hover{background:var(--bg-subtle)}
+.menu .hint{font-size:11.5px;color:var(--ink-3);padding:6px 10px 2px;border-top:1px solid var(--line);margin-top:6px}
+
+/* ---------- edit bar ---------- */
+.editbar{position:fixed;inset-block-end:0;inset-inline:0;z-index:300;background:var(--data-navy);
+  color:#fff;display:flex;align-items:center;gap:12px;padding:10px 20px;flex-wrap:wrap;
+  box-shadow:0 -6px 24px rgba(20,39,63,.28)}
+.editbar b{font-family:var(--font-head)}
+.editbar button{font:700 12.5px var(--font-body);border:1px solid rgba(255,255,255,.45);
+  background:transparent;color:#fff;border-radius:100px;padding:5px 13px;cursor:pointer}
+.editbar button:hover{background:rgba(255,255,255,.14)}
+.editbar .sp{flex:1}
+body.editing [data-t]{outline:1px dashed var(--line-strong);outline-offset:2px;border-radius:3px}
+body.editing [data-t]:focus{outline:2px solid var(--data-region);background:#fff}
+
+/* ---------- footer ---------- */
+.ft{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:11px 20px;
+  background:var(--bg-surface);border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-3)}
+.ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+
+@media print{
+  .no-print{display:none!important}
+  body{background:#fff}
+  .panel{break-inside:avoid;box-shadow:none}
+  .p-body{overflow:visible!important;height:auto!important}
+}
+</style>
+
+<header class="hd">
+  <img src="__LOGO__" alt="מרכז הידע האזורי גליל מזרחי | מערבי">
+  <div class="ttl">
+    <h1 data-t="con.title">שכר ותעסוקה · אשכול גליל מזרחי</h1>
+    <div class="sub" data-t="con.sub">18 רשויות בנפות צפת וגולן, תמיד מול הנתון הארצי</div>
+  </div>
+  <div class="acts no-print">
+    <a class="pill gold" id="reportLink" href="__REPORT_URL__">הדו״ח המלא והתובנות ←</a>
+    <button class="pill" type="button" id="editToggle" aria-pressed="false">עריכת טקסט</button>
+    <button class="pill" type="button" id="exportToggle">ייצוא</button>
+  </div>
+</header>
+
+<div class="no-print" style="position:relative;z-index:40"><div id="exportMenu" hidden></div></div>
+
+<nav class="tabs no-print">
+  <button type="button" id="tabA" aria-selected="true">
+    חלק א׳ · הלמ"ס 2024<span>שכר · שכירים · חודשי עבודה · ענפים</span></button>
+  <button type="button" id="tabB" class="b" aria-selected="false">
+    חלק ב׳ · ביטוח לאומי 2016–2024<span>תמהיל · התפלגות שכר · מגמה</span></button>
+  <div class="ctx">
+    <span class="tag src" id="ctxSrc">מקור: הלמ"ס</span>
+    <span class="tag" id="ctxPop">אוכלוסייה: שכירים</span>
+    <span class="tag" id="ctxYear">שנה: 2024</span>
+  </div>
+</nav>
+
+<div class="fbar no-print" id="fbar"></div>
+<div class="kpis" id="kpis"></div>
+<main class="grid" id="grid"></main>
+
+<footer class="ft">
+  <div data-t="con.foot1">מרכז הידע האזורי גליל מזרחי | מערבי · עיבוד והצגה</div>
+  <div data-t="con.foot2">מקורות: הלשכה המרכזית לסטטיסטיקה, עיבוד מיוחד מקבצי הכנסה מנהליים (2024) ·
+    המוסד לביטוח לאומי, לוחות יישובים ומועצות אזוריות (2016–2024).
+    <b>שני המקורות אינם ברי-השוואה ישירה בשקלים.</b></div>
+</footer>
+
+<div class="editbar no-print" id="editbar" hidden>
+  <b>מצב עריכה</b>
+  <span>נערכו <b id="editCount">0</b> טקסטים</span>
+  <span class="sp"></span>
+  <button type="button" id="editCopy">העתקת JSON</button>
+  <button type="button" id="editSave">שמירת קובץ</button>
+  <button type="button" id="editDone">סיום</button>
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   קונסולת BI — נתונים, מנוע גרפים, ומצב.
+   הנתונים מוזרקים ב-build.py; הקובץ עצמאי ואינו פונה לרשת.
+   ============================================================ */
+const DATA = "__DATA__";
+const D = DATA, B = DATA.btl2;
+const LOGO_SRC = document.querySelector(".hd img").src;
+
+/* ---------- טקסט ניתן לעריכה (אותו מנגנון כמו בדו"ח) ---------- */
+const TEXT = DATA.text || {};
+const T  = (id, def) => (TEXT[id] != null ? TEXT[id] : def);
+const te = (id, def) => `<span data-t="${id}">${T(id, def)}</span>`;
+function applyText(root) {
+  (root || document).querySelectorAll("[data-t]").forEach(n => {
+    const id = n.getAttribute("data-t");
+    if (TEXT[id] != null && n.innerHTML !== TEXT[id]) n.innerHTML = TEXT[id];
+  });
+}
+
+/* ---------- פלטה ---------- */
+const C = {bar:"#1C70A8", ref:"#6E8CA8", nat:"#A8823A", up:"#16794A", down:"#C0342B",
+  ink:"#14273F", ink2:"#41566B", ink3:"#74879A", line:"#DCE5EC", line2:"#C3D2DC", navy:"#14273F",
+  mEmp:"#1C70A8", mBoth:"#8C1C5A", mSelf:"#A8823A"};
+const BANDS = [
+  {label:"עד שכר מינימום",   color:"#8F1D14"}, {label:"עד 75% מהממוצע", color:"#C0342B"},
+  {label:"עד השכר הממוצע",   color:"#E39189"}, {label:"עד פי 2 מהממוצע", color:"#A9DCC5"},
+  {label:"עד פי 3 מהממוצע",  color:"#5AB68B"}, {label:"עד פי 4 מהממוצע", color:"#17794A"},
+  {label:"מעל פי 4 מהממוצע", color:"#0B5233"}];
+const MIX_SEGS = [
+  {key:"emp",  label:"שכירים בלבד",      color:C.mEmp},
+  {key:"both", label:"שכירים וגם עצמאים", color:C.mBoth},
+  {key:"self", label:"עצמאים בלבד",      color:C.mSelf}];
+const POPS = {emp:"שכירים", self:"עצמאים", all:"כלל העובדים"};
+const POPC = Object.fromEntries((B.populations || []).map(p => [p.id, p.count || p.label]));
+
+/* ---------- עזרי DOM ---------- */
+function h(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  for (const k in (attrs || {})) {
+    const v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k === "style") n.style.cssText = v;
+    else if (k === "html") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2).toLowerCase(), v);
+    else n.setAttribute(k, v);
+  }
+  kids.flat().forEach(c => c != null && n.appendChild(
+    typeof c === "object" ? c : document.createTextNode(String(c))));
+  return n;
+}
+const NS = "http://www.w3.org/2000/svg";
+function s(tag, attrs) {
+  const n = document.createElementNS(NS, tag);
+  for (const k in (attrs || {})) {
+    const v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k.startsWith("on")) n.addEventListener(k.slice(2).toLowerCase(), v);
+    else n.setAttribute(k, v);
+  }
+  return n;
+}
+const clear = n => { while (n && n.firstChild) n.removeChild(n.firstChild); return n; };
+
+/* ---------- מספרים ---------- */
+const num = (v, dec) => v == null ? "—" : Number(v).toLocaleString("he-IL",
+  {minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0});
+const pct = (v, dec) => (v == null || isNaN(v)) ? "—"
+  : (v > 0 ? "+" : v < 0 ? "−" : "") + Math.abs(v).toFixed(dec == null ? 1 : dec) + "%";
+function niceNum(x, round) {
+  const exp = Math.floor(Math.log10(x || 1)), f = x / Math.pow(10, exp);
+  const nf = round ? (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10)
+                   : (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10);
+  return nf * Math.pow(10, exp);
+}
+function niceAxis(min, max, ticks) {
+  const step = niceNum((max - min || 1) / ((ticks || 5) - 1), true);
+  let lo = Math.floor(min / step) * step, hi = Math.ceil(max / step) * step;
+  if (hi === max) hi += step;
+  return {lo, hi, step};
+}
+/* טקסט ב-SVG. ה-SVG כולו direction:ltr — ולכן text-anchor מתנהג כרגיל
+   (start = הקצה השמאלי) ואין את מלכודת ה-RTL של עיגון הפוך. טקסט עברי
+   בתוך ריצה אחת עדיין נכתב מימין לשמאל כראוי. */
+function txt(x, y, anchor, size, fill, content, opt) {
+  const o = opt || {};
+  const n = s("text", {x, y, "text-anchor":anchor, style:
+    `font:${o.weight || 400} ${size}px ${o.head ? "'Rubik'" : "'Assistant'"},sans-serif;` +
+    `fill:${fill};${o.iso ? "unicode-bidi:isolate;" : ""}`});
+  n.textContent = content;
+  return n;
+}
+function svgBox(W, H) {
+  return s("svg", {viewBox:`0 0 ${W} ${H}`, style:
+    `width:100%;height:${H}px;display:block;overflow:visible;direction:ltr`});
+}
+
+/* ============================================================
+   מנוע הגרפים — חמישה טיפוסים, כולם מציירים לתוך SVG ברוחב
+   הקונטיינר בפועל (גיאומטריית 1:1), לא ל-viewBox קבוע: viewBox
+   קבוע + width:100% מקטין גם את הטקסט, והתוויות בעברית נשברות.
+   ============================================================ */
+let TIP = null;                       /* רק פאנל אחד מציג tooltip בכל רגע */
+function showTip(host, x, y, title, rows) {
+  hideTip();
+  const t = h("div", {class:"tip", style:`left:${Math.max(4, x - 90)}px;top:${Math.max(4, y - 10)}px`},
+    h("div", {class:"t"}, title),
+    ...rows.map(r => h("div", {class:"r"}, h("span", {}, r.k), h("b", {}, r.v))));
+  host.appendChild(t);
+  TIP = t;
+}
+function hideTip() { if (TIP && TIP.parentNode) TIP.parentNode.removeChild(TIP); TIP = null; }
+
+/* עמודות אנכיות — הגבוה מימין (RTL), שמות מדורגים בשתי שורות */
+function columns(host, W, H, rows, opt) {
+  const m = {t:14, r:12, b:76, l:52};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const vals = rows.map(r => r.value).concat((opt.refs || []).map(r => r.v));
+  const ax = niceAxis(0, Math.max.apply(null, vals), 6);
+  const Y = v => m.t + (1 - (v - ax.lo) / (ax.hi - ax.lo)) * ih;
+  const step = iw / rows.length, bw = Math.min(30, step * .62);
+  const cx = i => W - m.r - (i + .5) * step;
+  const g = svgBox(W, H);
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    g.appendChild(s("line", {x1:m.l, x2:W - m.r, y1:Y(v), y2:Y(v),
+      stroke:C.line, "stroke-width":1, "stroke-dasharray":"2 4"}));
+    g.appendChild(txt(m.l - 8, Y(v) + 4, "end", 11.5, C.ink3, num(v, ax.step < 1 ? 1 : 0), {iso:true}));
+  }
+  rows.forEach((r, i) => {
+    const hl = opt.highlight === r.label;
+    const bar = s("rect", {x:cx(i) - bw / 2, y:Y(r.value), width:bw,
+      height:Math.max(1, m.t + ih - Y(r.value)), rx:3,
+      fill: hl ? C.navy : (opt.color || C.bar), style:"cursor:pointer"});
+    bar.addEventListener("mouseover", () => showTip(host, cx(i), Y(r.value), r.label, opt.tip(r)));
+    bar.addEventListener("mouseout", hideTip);
+    if (opt.onPick) bar.addEventListener("click", () => opt.onPick(r));
+    g.appendChild(bar);
+    g.appendChild(txt(cx(i), m.t + ih + (i % 2 ? 32 : 17), "middle", 10.5,
+      hl ? C.ink : C.ink2, r.label, {weight: hl ? 700 : 400}));
+    if (i % 2) g.appendChild(s("line", {x1:cx(i), x2:cx(i), y1:m.t + ih, y2:m.t + ih + 21,
+      stroke:C.line, "stroke-width":1}));
+  });
+  (opt.refs || []).forEach(r => {
+    g.appendChild(s("line", {x1:m.l, x2:W - m.r, y1:Y(r.v), y2:Y(r.v),
+      stroke:r.color, "stroke-width":1.8, "stroke-dasharray":"6 4"}));
+    g.appendChild(txt(m.l + 4, Y(r.v) - 5, "start", 11, r.color, r.label, {head:true, weight:700}));
+  });
+  host.appendChild(g);
+}
+
+/* דמבל — 2022 מול 2024. הציר רץ משמאל לימין: נמוך משמאל, גבוה מימין */
+function dumbbell(host, W, rows, opt) {
+  const rowH = 24, m = {t:20, r:150, b:24, l:96};
+  const H = m.t + m.b + rows.length * rowH, iw = W - m.l - m.r;
+  const all = rows.flatMap(r => [r.a, r.b]).filter(v => v != null);
+  const ax = niceAxis(Math.min.apply(null, all) * .95, Math.max.apply(null, all), 5);
+  const X = v => m.l + ((v - ax.lo) / (ax.hi - ax.lo)) * iw;
+  const g = svgBox(W, H);
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    g.appendChild(s("line", {x1:X(v), x2:X(v), y1:m.t - 6, y2:H - m.b + 4,
+      stroke:C.line, "stroke-width":1, "stroke-dasharray":"2 4"}));
+    g.appendChild(txt(X(v), m.t - 10, "middle", 11, C.ink3, num(v, 0), {iso:true}));
+  }
+  rows.forEach((r, i) => {
+    const y = m.t + i * rowH + rowH / 2;
+    const up = r.b >= r.a, col = up ? C.up : C.down;
+    g.appendChild(s("line", {x1:X(r.a), x2:X(r.b), y1:y, y2:y,
+      stroke:col, "stroke-width":3, "stroke-linecap":"round"}));
+    g.appendChild(s("circle", {cx:X(r.a), cy:y, r:4.6, fill:"#fff", stroke:col, "stroke-width":2}));
+    g.appendChild(s("circle", {cx:X(r.b), cy:y, r:4.6, fill:col}));
+    g.appendChild(txt(W - m.r + 10, y + 4, "start", 12, C.ink, r.label));
+    /* הצבע לעולם אינו לבדו — לצדו חץ כיוון וערך באחוזים */
+    g.appendChild(txt(m.l - 10, y + 4, "end", 12, col,
+      (up ? "▲ " : "▼ ") + pct(r.pct), {head:true, weight:700, iso:true}));
+    const hit = s("rect", {x:m.l, y:y - rowH / 2, width:iw, height:rowH,
+      fill:"transparent", style:"cursor:pointer"});
+    hit.addEventListener("mouseover", () => showTip(host, (X(r.a) + X(r.b)) / 2, y, r.label, opt.tip(r)));
+    hit.addEventListener("mouseout", hideTip);
+    g.appendChild(hit);
+  });
+  host.appendChild(g);
+}
+
+/* עמודות אופקיות מקובצות — שתי סדרות לכל שורה */
+function groupedRows(host, W, rows, series, opt) {
+  const rowH = 46, m = {t:18, r:178, b:20, l:16};
+  const H = m.t + m.b + rows.length * rowH, iw = W - m.l - m.r;
+  const max = Math.max.apply(null, rows.flatMap(r => r.values)) * 1.2;
+  const g = svgBox(W, H);
+  rows.forEach((r, i) => {
+    const top = m.t + i * rowH;
+    g.appendChild(txt(W - m.r + 10, top + 15, "start", 12, C.ink, r.label));
+    r.values.forEach((v, si) => {
+      const bw = Math.max(1, (v / max) * iw), y = top + 4 + si * 15;
+      g.appendChild(s("rect", {x:m.l, y, width:bw, height:11, rx:2, fill:series[si].color}));
+      g.appendChild(txt(m.l + bw + 6, y + 10, "start", 11, series[si].color,
+        num(v, opt.dec || 0), {head:true, weight:700, iso:true}));
+    });
+    const hit = s("rect", {x:m.l, y:top, width:Math.max(1, W - m.l - 8), height:rowH, fill:"transparent"});
+    hit.addEventListener("mouseover", () => showTip(host, iw / 2, top, r.label, opt.tip(r)));
+    hit.addEventListener("mouseout", hideTip);
+    g.appendChild(hit);
+  });
+  host.appendChild(g);
+}
+
+/* עמודות מוערמות ל-100% */
+function stacked(host, W, rows, segs, opt) {
+  const rowH = 26, m = {t:22, r:150, b:18, l:16};
+  const H = m.t + m.b + rows.length * rowH, iw = W - m.l - m.r;
+  const g = svgBox(W, H);
+  [0, 25, 50, 75, 100].forEach(p => {
+    const x = m.l + iw * p / 100;
+    g.appendChild(s("line", {x1:x, x2:x, y1:m.t - 6, y2:H - m.b, stroke:C.line, "stroke-width":1}));
+    g.appendChild(txt(x, m.t - 10, "middle", 11, C.ink3, p + "%", {iso:true}));
+  });
+  rows.forEach((r, i) => {
+    const y = m.t + i * rowH + 4;
+    let acc = 0;
+    r.parts.forEach((p, si) => {
+      const w = (p.v / 100) * iw;
+      const rect = s("rect", {x:m.l + acc, y, width:Math.max(0, w), height:15,
+        fill:segs[si].color, style:"cursor:pointer"});
+      const ax = m.l + acc + w / 2;
+      rect.addEventListener("mouseover", () => showTip(host, ax, y, r.label, opt.tip(r)));
+      rect.addEventListener("mouseout", hideTip);
+      g.appendChild(rect);
+      if (w > 34) g.appendChild(txt(ax, y + 11.5, "middle", 10.5, "#fff",
+        p.v.toFixed(1) + "%", {head:true, weight:700, iso:true}));
+      acc += w;
+    });
+    g.appendChild(txt(W - m.r + 10, y + 12, "start", 12, C.ink, r.label));
+  });
+  host.appendChild(g);
+}
+
+/* התפלגות מתפצלת סביב השכר הממוצע במשק.
+   הסקאלה אינה iw/100: כל שורה מתפרשת לשני הכיוונים מקו האפס, ולכן
+   הרוחב הדרוש הוא מקסימום-מתחת + מקסימום-מעל. סקאלה נאיבית חורגת מהפאנל. */
+function diverging(host, W, rows, opt) {
+  const rowH = 26, m = {t:22, r:150, b:18, l:16};
+  const H = m.t + m.b + rows.length * rowH, iw = W - m.l - m.r;
+  const sum = (b, f, t) => b.slice(f, t).reduce((a, x) => a + x, 0);
+  const maxBelow = Math.max.apply(null, rows.map(r => sum(r.bands, 0, 3)));
+  const maxAbove = Math.max.apply(null, rows.map(r => sum(r.bands, 3)));
+  const scale = iw / (maxBelow + maxAbove), zero = m.l + maxBelow * scale;
+  const g = svgBox(W, H);
+  g.appendChild(s("line", {x1:zero, x2:zero, y1:m.t - 8, y2:H - m.b, stroke:C.ink, "stroke-width":1.6}));
+  g.appendChild(txt(zero, m.t - 12, "middle", 11, C.ink, "השכר הממוצע במשק", {head:true, weight:700}));
+  rows.forEach((r, i) => {
+    const y = m.t + i * rowH + 4;
+    const band = (b, x, w) => {
+      const rect = s("rect", {x, y, width:Math.max(0, w), height:15,
+        fill:BANDS[b].color, style:"cursor:pointer"});
+      rect.addEventListener("mouseover", () => showTip(host, x + w / 2, y, r.label, opt.tip(r)));
+      rect.addEventListener("mouseout", hideTip);
+      g.appendChild(rect);
+    };
+    let x = zero;
+    for (let b = 2; b >= 0; b--) { const w = r.bands[b] * scale; x -= w; band(b, x, w); }
+    x = zero;
+    for (let b = 3; b < 7; b++) { const w = r.bands[b] * scale; band(b, x, w); x += w; }
+    g.appendChild(txt(W - m.r + 10, y + 12, "start", 12, C.ink, r.label));
+  });
+  host.appendChild(g);
+}
+
+/* קווים לאורך זמן — הציר רץ משמאל לימין, מוקדם משמאל */
+function lines(host, W, H, series, xs, opt) {
+  const m = {t:16, r:152, b:34, l:54};
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const all = series.flatMap(x => x.values).filter(v => v != null);
+  const ax = niceAxis(Math.min.apply(null, all), Math.max.apply(null, all), 6);
+  const X = i => m.l + (i / (xs.length - 1)) * iw;
+  const Y = v => m.t + (1 - (v - ax.lo) / (ax.hi - ax.lo)) * ih;
+  const g = svgBox(W, H);
+  for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
+    g.appendChild(s("line", {x1:m.l, x2:W - m.r, y1:Y(v), y2:Y(v),
+      stroke:C.line, "stroke-width":1, "stroke-dasharray":"2 4"}));
+    g.appendChild(txt(m.l - 8, Y(v) + 4, "end", 11, C.ink3,
+      num(v, ax.step < 1 ? 1 : 0) + (opt.unit || ""), {iso:true}));
+  }
+  if (opt.rule != null && opt.rule >= ax.lo && opt.rule <= ax.hi)
+    g.appendChild(s("line", {x1:m.l, x2:W - m.r, y1:Y(opt.rule), y2:Y(opt.rule),
+      stroke:C.ink3, "stroke-width":1.6}));
+  xs.forEach((x, i) => g.appendChild(txt(X(i), H - 12, "middle", 11, C.ink3, x, {iso:true})));
+  series.forEach(sr => {
+    const pts = sr.values.map((v, i) => v == null ? null : [X(i), Y(v)]).filter(Boolean);
+    if (!pts.length) return;
+    g.appendChild(s("path", {d:"M" + pts.map(p => p.join(",")).join("L"), fill:"none",
+      stroke:sr.color, "stroke-width":sr.width || 2.4, "stroke-linecap":"round",
+      "stroke-linejoin":"round", opacity:sr.faint ? .28 : 1}));
+    if (!sr.faint) pts.forEach(p => g.appendChild(s("circle",
+      {cx:p[0], cy:p[1], r:3.4, fill:"#fff", stroke:sr.color, "stroke-width":2})));
+    if (sr.name) g.appendChild(txt(W - m.r + 8, pts[pts.length - 1][1] + 4, "start",
+      11.5, sr.color, sr.name, {head:true, weight:700}));
+  });
+  xs.forEach((x, i) => {
+    const step = iw / (xs.length - 1);
+    const hit = s("rect", {x:X(i) - step / 2, y:m.t, width:step, height:ih,
+      fill:"transparent", style:"cursor:crosshair"});
+    hit.addEventListener("mouseover", () => showTip(host, X(i), m.t + 20, String(x), opt.tip(i)));
+    hit.addEventListener("mouseout", hideTip);
+    g.appendChild(hit);
+  });
+  host.appendChild(g);
+}
+
+/* ============================================================
+   מצב
+   ============================================================ */
+const ST = {
+  part:"a",
+  metric:"salary", sortA:"value", anafScope:"region", anafRange:"top10", anafCluster:"all",
+  viewAuth:"chart", viewChange:"chart", viewAnaf:"chart",
+  pop:"emp", view:"now", unit:"cluster", timeMode:"share",
+  viewMix:"chart", viewDist:"chart", viewTrend:"chart"
+};
+const set = patch => { Object.assign(ST, patch); hideTip(); render(); };
+
+const AUTHS = D.authorities.items, REGION = D.authorities.region, NAT = D.authorities.national;
+const YEARS = B.meta.years.map(String);
+const LI = YEARS.length - 1;
+const SHOWN = B.authorities.filter(a => !a.missing);
+const metricDef = () => D.metrics.find(m => m.id === ST.metric);
+const popCount = (mix, pid) => pid === "emp" ? mix.emp + mix.both
+  : pid === "self" ? mix.self + mix.both : mix.emp + mix.self + mix.both;
+
+/* ---------- פקדים ---------- */
+function segCtl(label, options, current, onPick) {
+  const box = h("div", {class:"seg", role:"group", "aria-label":label});
+  options.forEach(o => box.appendChild(h("button", {type:"button",
+    "aria-pressed":String(o.v === current), onclick:() => o.v !== current && onPick(o.v)}, o.label)));
+  return h("div", {class:"fg"}, h("label", {}, label), box);
+}
+function selCtl(label, options, current, onPick) {
+  const sel = h("select", {class:"ctl", onchange:e => onPick(e.target.value)});
+  options.forEach(o => sel.appendChild(h("option", {value:o.v, selected:o.v === current}, o.label)));
+  return h("div", {class:"fg"}, h("label", {}, label), sel);
+}
+function viewTog(cur, onPick) {
+  const box = h("div", {class:"vtog", role:"group", "aria-label":"תצוגה"});
+  [{label:"גרף", v:"chart"}, {label:"טבלה", v:"table"}].forEach(o =>
+    box.appendChild(h("button", {type:"button", "aria-pressed":String(o.v === cur),
+      onclick:() => o.v !== cur && onPick(o.v)}, o.label)));
+  return box;
+}
+function tableOf(cols, rows) {
+  const t = h("table", {class:"d"});
+  t.appendChild(h("thead", {}, h("tr", {}, ...cols.map(c => h("th", {}, c)))));
+  t.appendChild(h("tbody", {}, ...rows.map(r => h("tr", {}, ...r.map(c => h("td", {}, c))))));
+  return t;
+}
+
+/* ============================================================
+   פאנל — המעטפת המשותפת. שומר את הערת העורך על ה-panel עצמו,
+   כך שציור מחדש של גוף הגרף אינו מוחק אותה.
+   ============================================================ */
+const RO = {};
+function panel(spec) {
+  const p = h("div", {class:"panel", style:`flex:${spec.flex}`, id:"panel-" + spec.id});
+  const head = h("div", {class:"p-head"},
+    h("div", {},
+      h("h2", {"data-t":"pan." + spec.id + ".title"}, spec.title),
+      h("div", {class:"psub"}, spec.sub)));
+  const ctl = h("div", {class:"p-ctl no-print"});
+  (spec.controls || []).forEach(c => ctl.appendChild(c));
+  ctl.appendChild(viewTog(spec.view, spec.onView));
+  head.appendChild(ctl);
+  p.appendChild(head);
+
+  const body = h("div", {class:"p-body", style:`height:${spec.height}px`});
+  p.appendChild(body);
+
+  if (spec.legend && spec.legend.length) {
+    const lg = h("div", {class:"legend"});
+    spec.legend.forEach(it => lg.appendChild(h("span", {class:"it"},
+      h("span", {class:"sw", style:`background:${it.color}`}), it.name)));
+    p.appendChild(lg);
+  }
+  if (spec.warn) p.appendChild(h("div", {class:"warn"}, h("b", {class:"m"}, "!"),
+    h("span", {}, spec.warn)));
+
+  const anno = h("div", {class:"p-anno", "data-t":"anno.c." + spec.id});
+  anno.innerHTML = T("anno.c." + spec.id, "");
+  p.appendChild(anno);
+
+  const btn = h("button", {type:"button", onclick:() => exportPanel(p, spec.title)}, "ייצוא תמונה");
+  p.appendChild(h("div", {class:"p-foot"},
+    h("div", {class:"src", "data-t":"src." + spec.id}, spec.source),
+    h("div", {class:"no-print"}, btn)));
+
+  /* הרוחב נקרא מה-DOM אחרי החיבור, ו-ResizeObserver מצייר מחדש בשינוי */
+  const paint = () => {
+    const W = Math.max(320, body.clientWidth || 560);
+    clear(body);
+    if (spec.empty) { body.appendChild(h("div", {class:"p-empty"}, spec.empty)); return; }
+    if (spec.view === "table") body.appendChild(spec.table());
+    else spec.chart(body, W);
+  };
+  requestAnimationFrame(paint);
+  if (typeof ResizeObserver !== "undefined") {
+    if (RO[spec.id]) RO[spec.id].disconnect();
+    let last = 0;
+    RO[spec.id] = new ResizeObserver(() => {
+      const w = body.clientWidth;
+      if (w && Math.abs(w - last) > 2) { last = w; paint(); }
+    });
+    RO[spec.id].observe(body);
+  }
+  return p;
+}
+
+/* ============================================================
+   חלק א׳ · הלמ"ס 2024
+   ============================================================ */
+const SRC_A = () => T("src.credit.a",
+  'מקור: הלשכה המרכזית לסטטיסטיקה — עיבוד מיוחד, אגף מיקרו כלכלה, 2024 · ' +
+  'עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי');
+
+function renderA() {
+  const md = metricDef(), mid = ST.metric, isSalary = mid === "salary";
+  const fmt = v => num(v, md.dec) + (mid === "salary" ? " ₪" : mid === "months" ? " חודשים" : "");
+
+  /* --- פילטרים --- */
+  const fbar = clear(document.getElementById("fbar"));
+  fbar.className = "fbar no-print";
+  fbar.appendChild(segCtl("מדד להצגה", D.metrics.map(m => ({label:m.short, v:m.id})),
+    mid, v => set({metric:v})));
+  fbar.appendChild(selCtl("רשות בגרף הענפים",
+    [{v:"region", label:"האשכול כולו"}].concat(AUTHS.map(a => ({v:a.name, label:a.name}))),
+    ST.anafScope, v => set({anafScope:v})));
+  fbar.appendChild(segCtl("סדר", [{label:"לפי ערך", v:"value"}, {label:"לפי שם", v:"name"}],
+    ST.sortA, v => set({sortA:v})));
+  fbar.appendChild(h("div", {class:"fdef"},
+    (D.meta.definitions && D.meta.definitions[0]) ? D.meta.definitions[0].text : ""));
+
+  /* --- תגי הקשר --- */
+  document.getElementById("ctxSrc").textContent = 'מקור: הלמ"ס';
+  document.getElementById("ctxSrc").className = "tag src";
+  document.getElementById("ctxPop").textContent = "אוכלוסייה: שכירים";
+  document.getElementById("ctxYear").textContent = "שנה: " + D.meta.year;
+
+  /* --- KPI --- */
+  const gap = (REGION[mid] / NAT[mid] - 1) * 100;
+  const kpis = [
+    {k:md.label + " · האשכול", v:fmt(REGION[mid]), n:"18 רשויות, משוקלל לפי מספר השכירים", c:C.bar},
+    {k:md.label + " · כלל הארץ", v:fmt(NAT[mid]), n:"שורת „סך כללי” בקובץ המקור", c:C.nat}];
+  if (isSalary) kpis.push({k:"הפער מהארצי", v:pct(gap),
+    n:"האשכול לעומת הממוצע הארצי — במדד השכר בלבד", c:C.ink3});
+  kpis.push({k:"שכירים באשכול", v:num(REGION.workers),
+    n:"מתוך " + num(NAT.workers) + " ארצית", c:C.ref});
+  paintKpis(kpis);
+
+  /* --- פאנל 1 · השוואה בין הרשויות --- */
+  const sorted = AUTHS.slice().sort((a, b) =>
+    ST.sortA === "name" ? a.name.localeCompare(b.name, "he") : b[mid] - a[mid]);
+  const refs = isSalary
+    ? [{v:REGION[mid], color:C.ref, label:"ממוצע האשכול"}, {v:NAT[mid], color:C.nat, label:"ממוצע ארצי"}]
+    : [];
+  const authRows = sorted.map(a => ({label:a.name, value:a[mid], w:a.workers}));
+
+  /* --- פאנל 2 · השינוי 2022←2024 --- */
+  const chRows = AUTHS.map(a => {
+    const c = D.change.byAuthority[a.name];
+    if (!c || mid === "months") return null;
+    return {label:a.name, a:c[mid], b:a[mid], pct:(a[mid] / c[mid] - 1) * 100};
+  }).filter(Boolean).sort((x, y) => y.pct - x.pct);
+
+  /* --- פאנל 3 · ענפי כלכלה --- */
+  const scopeRegion = ST.anafScope === "region";
+  const aby = scopeRegion ? null : D.anafByAuth[ST.anafScope];
+  let anafRows = D.anafim.map(an => ({
+    label:an.label, code:an.code,
+    nat: an.nat ? an.nat.salary : null,
+    reg: scopeRegion ? (an.reg ? an.reg.salary : null)
+                     : (aby && aby.cells[an.code] ? aby.cells[an.code].salary : null)
+  })).filter(r => r.reg != null && r.nat != null);
+  if (ST.anafCluster !== "all") {
+    const cl = D.clusters.find(c => c.id === ST.anafCluster);
+    if (cl) anafRows = anafRows.filter(r => cl.codes.indexOf(r.code) > -1);
+  }
+  anafRows.sort((a, b) => b.reg - a.reg);
+  if (ST.anafRange === "top10") anafRows = anafRows.slice(0, 10);
+  else if (ST.anafRange === "top15") anafRows = anafRows.slice(0, 15);
+  else if (ST.anafRange === "bottom10") anafRows = anafRows.slice(-10);
+  const anafSeries = [{name:"האשכול", color:C.bar}, {name:"כלל הארץ", color:C.nat}];
+
+  const rangeSel = h("select", {class:"loc", onchange:e => set({anafRange:e.target.value})});
+  [{v:"top10", label:"10 הגבוהים"}, {v:"top15", label:"15 הגבוהים"},
+   {v:"bottom10", label:"10 הנמוכים"}, {v:"all", label:"כל הענפים"}].forEach(o =>
+    rangeSel.appendChild(h("option", {value:o.v, selected:o.v === ST.anafRange}, o.label)));
+  const clSel = h("select", {class:"loc", onchange:e => set({anafCluster:e.target.value})});
+  [{v:"all", label:"כל הקיבוצים"}].concat(D.clusters.map(c => ({v:c.id, label:c.label})))
+    .forEach(o => clSel.appendChild(h("option", {value:o.v, selected:o.v === ST.anafCluster}, o.label)));
+
+  const grid = clear(document.getElementById("grid"));
+  grid.appendChild(panel({
+    id:"auth", flex:"1 1 100%", height:320,
+    title:"השוואה בין הרשויות",
+    sub: md.label + " · 18 רשויות" + (isSalary ? " · עם קווי ייחוס"
+      : " · ללא קווי ייחוס — ההשוואה לממוצע אינה נושאת מידע במדד זה"),
+    view:ST.viewAuth, onView:v => set({viewAuth:v}),
+    chart:(body, W) => columns(body, W, 296, authRows, {refs,
+      highlight: scopeRegion ? null : ST.anafScope,
+      onPick: r => set({anafScope:r.label}),
+      tip: r => [{k:md.label, v:fmt(r.value)}, {k:"שכירים", v:num(r.w)}]}),
+    table:() => tableOf(["רשות", "שכר חודשי ממוצע", "מספר שכירים", "ממוצע חודשי עבודה"],
+      sorted.map(a => [a.name, num(a.salary) + " ₪", num(a.workers), a.months.toFixed(2)])),
+    legend: isSalary ? [{name:"רשות", color:C.bar}, {name:"ממוצע האשכול", color:C.ref},
+      {name:"ממוצע ארצי", color:C.nat}] : [{name:"רשות", color:C.bar}],
+    source:SRC_A()
+  }));
+
+  grid.appendChild(panel({
+    id:"change", flex:"1 1 480px", height:330,
+    title:"השינוי לפי רשות · 2022 ← 2024",
+    sub: mid === "months" ? "אין נתון חודשי עבודה לשנת 2022"
+      : "נקודה חלולה = 2022, מלאה = 2024 · " + md.label,
+    view:ST.viewChange, onView:v => set({viewChange:v}),
+    empty: mid === "months" ? "קובץ 2022 כולל מספר שכירים ושכר חודשי ממוצע בלבד — " +
+      "אין בו ממוצע חודשי עבודה, ולכן אין גרף שינוי במדד זה." : null,
+    chart:(body, W) => dumbbell(body, W, chRows,
+      {tip: r => [{k:"2022", v:fmt(r.a)}, {k:"2024", v:fmt(r.b)}, {k:"שינוי", v:pct(r.pct)}]}),
+    table:() => tableOf(["רשות", "2022", "2024", "שינוי"],
+      chRows.map(r => [r.label, num(r.a, md.dec), num(r.b, md.dec), pct(r.pct)])),
+    legend: mid === "months" ? [] : [{name:"עלייה", color:C.up}, {name:"ירידה", color:C.down}],
+    warn: mid === "months" ? null
+      : `לקובץ 2022 אין שורת סיכום לרשות — הערכים נסכמו מרמת סדרי הענפים, ותאים מתחת ל-` +
+        `${D.change.floor} שכירים אינם מדווחים (חסם: עד ${num(D.change.maxMissing)} שכירים, ` +
+        `${((1 - D.change.coverage) * 100).toFixed(1)}%). אין נתון ארצי ל-2022.`,
+    source:SRC_A() + " · נתוני 2022: עיבוד מיוחד באותה הגדרה"
+  }));
+
+  grid.appendChild(panel({
+    id:"anaf", flex:"1 1 480px", height:330,
+    title:"השוואה בין ענפי כלכלה",
+    sub:(scopeRegion ? "האשכול" : ST.anafScope) + " מול אותו ענף בכלל הארץ · שכר חודשי ממוצע" +
+      (isSalary ? "" : " · אינו מושפע מבורר המדד — ההשוואה הענפית קיימת במדד השכר בלבד"),
+    controls:[rangeSel, clSel],
+    view:ST.viewAnaf, onView:v => set({viewAnaf:v}),
+    empty: anafRows.length ? null : "אין ענפים העונים לסינון הנוכחי.",
+    chart:(body, W) => groupedRows(body, W,
+      anafRows.map(r => ({label:r.label, values:[r.reg, r.nat]})), anafSeries,
+      {tip: r => [{k:"האשכול", v:num(r.values[0]) + " ₪"}, {k:"כלל הארץ", v:num(r.values[1]) + " ₪"},
+        {k:"יחס", v:(r.values[0] / r.values[1] * 100).toFixed(0) + "%"}]}),
+    table:() => tableOf(["ענף", "האשכול (₪)", "כלל הארץ (₪)", "יחס לארצי"],
+      anafRows.map(r => [r.label, num(r.reg), num(r.nat), (r.reg / r.nat * 100).toFixed(0) + "%"])),
+    legend:anafSeries.map(x => ({name:x.name, color:x.color})),
+    warn: scopeRegion ? null
+      : `ברמת רשות בודדת סף ההשמטה פוגע יותר: הפילוח הענפי מכסה ` +
+        `${((aby ? aby.coverage : 0) * 100).toFixed(0)}% משכירי ${ST.anafScope} ` +
+        `(${num(aby ? aby.workers : 0)} מתוך ${num(aby ? aby.of : 0)}).`,
+    source:SRC_A() + " · ההשוואה הענפית קיימת במדד השכר בלבד"
+  }));
+}
+
+/* ============================================================
+   חלק ב׳ · ביטוח לאומי 2016–2024
+   ============================================================ */
+const SRC_B = which => T("src.credit.b",
+  "מקור: " + B.meta.source + " · עיבוד: מרכז הידע האזורי גליל מזרחי | מערבי") +
+  " · לוחות " + B.meta.tables[which];
+
+function renderB() {
+  const pop = ST.pop, time = ST.view === "time";
+  const unitObj = ST.unit === "cluster" ? B.cluster
+    : (SHOWN.find(a => a.name === ST.unit) || B.cluster);
+  const unitName = ST.unit === "cluster" ? "אשכול גליל מזרחי" : ST.unit;
+  const Y24 = "2024";
+
+  /* --- פילטרים --- */
+  const fbar = clear(document.getElementById("fbar"));
+  fbar.className = "fbar b no-print";
+  fbar.appendChild(segCtl("אוכלוסייה", [{label:"שכירים", v:"emp"}, {label:"עצמאים", v:"self"},
+    {label:"כלל העובדים", v:"all"}], pop, v => set({pop:v})));
+  fbar.appendChild(segCtl("תצוגה", [{label:"2024", v:"now"}, {label:"לאורך זמן", v:"time"}],
+    ST.view, v => set({view:v})));
+  fbar.appendChild(selCtl("יחידה",
+    [{v:"cluster", label:"האשכול כולו"}].concat(SHOWN.map(a => ({v:a.name, label:a.name}))),
+    ST.unit, v => set({unit:v})));
+  if (time) fbar.appendChild(segCtl("בתמהיל",
+    [{label:"הרכב", v:"share"}, {label:"מספר עובדים", v:"count"}],
+    ST.timeMode, v => set({timeMode:v})));
+  fbar.appendChild(h("div", {class:"fdef"},
+    (B.populations.find(p => p.id === pop) || {}).def || ""));
+
+  document.getElementById("ctxSrc").textContent = "מקור: ביטוח לאומי";
+  document.getElementById("ctxSrc").className = "tag src b";
+  document.getElementById("ctxPop").textContent = "אוכלוסייה: " + POPS[pop];
+  document.getElementById("ctxYear").textContent = "שנה: " +
+    (time ? YEARS[0] + "–" + YEARS[LI] : Y24);
+
+  /* --- KPI — כולם מחושבים בתוך מקור אחד --- */
+  const cM = B.cluster.mix[Y24], nM = B.national.mix[Y24];
+  const selfShare = (cM.self + cM.both) / (cM.emp + cM.self + cM.both) * 100;
+  const selfNat = (nM.self + nM.both) / (nM.emp + nM.self + nM.both) * 100;
+  const below = B.cluster.dist[pop][Y24][0], belowNat = B.national.dist[pop][Y24][0];
+  const cMed = (B.cluster.medianEst && B.cluster.medianEst[pop])
+    ? B.cluster.medianEst[pop][Y24] : null;
+  const medRatio = cMed == null ? null : cMed / B.cluster.trend[pop][LI] * 100;
+  const medNat = B.national.median[pop][Y24] / B.national.trend[pop][LI] * 100;
+  const salRatio = B.cluster.trend[pop][LI] / B.national.trend[pop][LI] * 100;
+  paintKpis([
+    {k:"שכר " + POPS[pop] + " · האשכול", v:num(B.cluster.trend[pop][LI]) + " ₪",
+     n:salRatio.toFixed(0) + "% מהארצי (" + num(B.national.trend[pop][LI]) + " ₪) · ביטוח לאומי בלבד",
+     c:C.bar},
+    {k:"עד שכר מינימום", v:below.toFixed(1) + "%",
+     n:"ארצית " + belowNat.toFixed(1) + "% · רצועה תחתונה 2024", c:"#C0342B"},
+    {k:"יחס חציון/ממוצע", v:medRatio == null ? "—" : medRatio.toFixed(1) + "%",
+     n:"ארצית " + medNat.toFixed(1) + "% · חציון האשכול הוא אומדן משוקלל מהרשויות", c:C.mBoth},
+    {k:"שיעור עצמאים", v:selfShare.toFixed(1) + "%",
+     n:"ארצית " + selfNat.toFixed(1) + "% · מתוך כלל העובדים 2024", c:C.mSelf}
+  ]);
+
+  /* --- פאנל 1 · תמהיל --- */
+  const mixNow = SHOWN.filter(a => a.mix && a.mix[Y24]).map(a => {
+    const m = a.mix[Y24], tot = m.emp + m.self + m.both;
+    return {label:a.name, tot, parts:MIX_SEGS.map(x => ({v:m[x.key] / tot * 100}))};
+  }).sort((a, b) => (b.parts[1].v + b.parts[2].v) - (a.parts[1].v + a.parts[2].v));
+
+  let mixSeries = null, noBase = [];
+  if (time) {
+    if (ST.timeMode === "share" && pop === "all") {
+      /* „שיעור כלל העובדים מכלל העובדים” הוא 100% בהגדרה. באוכלוסייה הזו
+         השאלה היחידה בעלת תוכן היא איך ההרכב עצמו זז — ולכן שלוש רצועות. */
+      mixSeries = MIX_SEGS.map(sg => ({name:sg.label, color:sg.color, width:2.4,
+        values:YEARS.map(y => {
+          const m = unitObj.mix[y];
+          return m ? m[sg.key] / (m.emp + m.self + m.both) * 100 : null; })}));
+    } else if (ST.timeMode === "share") {
+      mixSeries = [
+        {name:unitName, color:C.bar, width:3, values:YEARS.map(y => {
+          const m = unitObj.mix[y]; return m ? popCount(m, pop) / (m.emp + m.self + m.both) * 100 : null; })},
+        {name:"ארצי", color:C.nat, width:3, values:YEARS.map(y => {
+          const m = B.national.mix[y]; return popCount(m, pop) / (m.emp + m.self + m.both) * 100; })}];
+    } else {
+      /* „שינוי מ-2016” — סדרה בלי בסיס 2016 אינה בת-השוואה ולכן יוצאת */
+      const rel = a => {
+        const v = a && a.n && a.n[pop];
+        return (!v || v[0] == null) ? null : v.map(x => x == null ? null : (x / v[0] - 1) * 100);
+      };
+      noBase = SHOWN.filter(a => !rel(a)).map(a => a.name);
+      mixSeries = SHOWN.filter(a => a.name !== ST.unit).map(a => {
+        const vals = rel(a);
+        return vals ? {name:null, color:C.ref, faint:true, width:1.4, values:vals} : null;
+      }).filter(Boolean).concat([
+        {name:"ארצי", color:C.nat, width:3, values:rel(B.national)},
+        {name:ST.unit === "cluster" ? "האשכול" : ST.unit, color:C.bar, width:3,
+         values:rel(ST.unit === "cluster" ? B.cluster : unitObj)}
+      ].filter(x => x.values));
+    }
+  }
+
+  /* --- פאנל 2 · התפלגות --- */
+  const distRows = SHOWN.filter(a => a.dist && a.dist[pop] && a.dist[pop][Y24])
+    .map(a => ({label:a.name, bands:a.dist[pop][Y24]}))
+    .sort((a, b) => (b.bands[0] + b.bands[1] + b.bands[2]) - (a.bands[0] + a.bands[1] + a.bands[2]));
+  const distAll = [{label:"אשכול גליל מזרחי", bands:B.cluster.dist[pop][Y24]},
+                   {label:"כלל הארץ", bands:B.national.dist[pop][Y24]}].concat(distRows);
+
+  /* --- פאנל 3 · מגמה --- */
+  const trendNow = SHOWN.filter(a => a.trend && a.trend[pop] && a.median && a.median[pop]
+      && a.trend[pop][LI] != null && a.median[pop][Y24] != null)
+    .map(a => ({label:a.name, values:[a.trend[pop][LI], a.median[pop][Y24]]}))
+    .sort((a, b) => b.values[0] - a.values[0]);
+  const trendSeries = [
+    {name:unitName, color:C.bar, width:3, values:unitObj.trend[pop]},
+    {name:"ארצי", color:C.nat, width:3, values:B.national.trend[pop]}];
+
+  const absent = B.authorities.filter(a => a.missing).map(a => a.name);
+  const grid = clear(document.getElementById("grid"));
+
+  grid.appendChild(panel({
+    id:"mix", flex:"1 1 100%", height:330,
+    title:"תמהיל התעסוקה",
+    sub: !time ? "עמודות מוערמות 100% לפי רשות · 2024"
+      : ST.timeMode === "share"
+        ? (pop === "all"
+            ? "הרכב העובדים ב" + unitName + " · " + YEARS[0] + "–" + YEARS[LI]
+            : "שיעור " + POPS[pop] + " מכלל העובדים · " + unitName + " מול הארצי · " +
+              YEARS[0] + "–" + YEARS[LI])
+        : "השינוי במספר ה" + (POPC[pop] || POPS[pop]) + " מאז " + YEARS[0] + " · קו אפס = ללא שינוי",
+    view:ST.viewMix, onView:v => set({viewMix:v}),
+    chart:(body, W) => time
+      ? lines(body, W, 306, mixSeries, YEARS,
+          {unit:"%", rule: ST.timeMode === "count" ? 0 : null,
+           tip:i => mixSeries.filter(x => x.name).map(x => ({k:x.name,
+             v:x.values[i] == null ? "אין נתון" : x.values[i].toFixed(1) + "%"}))})
+      : stacked(body, W, mixNow, MIX_SEGS,
+          {tip:r => MIX_SEGS.map((x, i) => ({k:x.label, v:r.parts[i].v.toFixed(1) + "%"}))
+            .concat([{k:'סה"כ עובדים', v:num(r.tot)}])}),
+    table:() => time
+      ? tableOf(["שנה"].concat(mixSeries.filter(x => x.name).map(x => x.name)),
+          YEARS.map((y, i) => [y].concat(mixSeries.filter(x => x.name).map(x =>
+            x.values[i] == null ? "אין נתון" : x.values[i].toFixed(1) + "%"))))
+      : tableOf(["רשות", "שכירים בלבד", "שכירים+עצמאים", "עצמאים בלבד", 'סה"כ'],
+          mixNow.map(r => [r.label, r.parts[0].v.toFixed(1) + "%", r.parts[1].v.toFixed(1) + "%",
+            r.parts[2].v.toFixed(1) + "%", num(r.tot)])),
+    legend: time
+      ? (ST.timeMode === "share"
+          ? (pop === "all" ? MIX_SEGS.map(x => ({name:x.label, color:x.color}))
+             : [{name:unitName, color:C.bar}, {name:"ארצי", color:C.nat}])
+          : [{name:ST.unit === "cluster" ? "האשכול" : ST.unit, color:C.bar},
+             {name:"ארצי", color:C.nat}, {name:"שאר רשויות האשכול", color:C.ref}])
+      : MIX_SEGS.map(x => ({name:x.label, color:x.color})),
+    /* האזהרה נאמרת רק כשהיא נוגעת למה שמוצג בפועל */
+    warn:(absent.length ? absent.join(", ") + " — אין נתון: מתחת לסף 2,000 התושבים של לוחות " +
+      "הביטוח הלאומי. " : "") + (time && ST.timeMode === "count" && noBase.length
+        ? noBase.join(", ") + " — אין סדרה מ-" + YEARS[0] + ", ולכן „שינוי מאז " + YEARS[0] +
+          "” אינו בר-חישוב ואינה מוצגת בגרף זה." : ""),
+    source:SRC_B("תמהיל התעסוקה")
+  }));
+
+  grid.appendChild(panel({
+    id:"dist", flex:"1 1 480px", height:330,
+    title:"התפלגות השכר",
+    sub:"שבע רצועות סביב השכר הממוצע במשק · " + POPS[pop] + " · 2024",
+    view:ST.viewDist, onView:v => set({viewDist:v}),
+    chart:(body, W) => diverging(body, W, distAll,
+      {tip:r => BANDS.map((b, i) => ({k:b.label, v:r.bands[i].toFixed(1) + "%"}))}),
+    table:() => tableOf(["יחידה"].concat(BANDS.map(b => b.label)),
+      distAll.map(r => [r.label].concat(r.bands.map(v => v.toFixed(1) + "%")))),
+    legend:BANDS.map(b => ({name:b.label, color:b.color})),
+    source:SRC_B("התפלגות השכר") + " · לוחות ההתפלגות קיימים ל-2023 ול-2024 בלבד"
+  }));
+
+  grid.appendChild(panel({
+    id:"trend", flex:"1 1 480px", height:330,
+    title:"מגמת השכר",
+    sub: time ? "שכר ממוצע לחודש עבודה · " + unitName + " מול הארצי · " + YEARS[0] + "–" + YEARS[LI]
+      : "ממוצע מול חציון לפי רשות · " + POPS[pop] + " · 2024",
+    view:ST.viewTrend, onView:v => set({viewTrend:v}),
+    empty:(!time && !trendNow.length) ? "אין נתוני חציון לאוכלוסייה שנבחרה." : null,
+    chart:(body, W) => time
+      ? lines(body, W, 306, trendSeries, YEARS,
+          {unit:"", tip:i => trendSeries.map(x => ({k:x.name,
+            v:x.values[i] == null ? "אין נתון" : num(x.values[i]) + " ₪"}))})
+      : groupedRows(body, W, trendNow,
+          [{name:"ממוצע", color:C.bar}, {name:"חציון", color:C.mBoth}],
+          {tip:r => [{k:"ממוצע", v:num(r.values[0]) + " ₪"}, {k:"חציון", v:num(r.values[1]) + " ₪"},
+            {k:"יחס חציון/ממוצע", v:(r.values[1] / r.values[0] * 100).toFixed(1) + "%"}]}),
+    table:() => time
+      ? tableOf(["שנה", unitName + " (₪)", "ארצי (₪)", "יחס"],
+          YEARS.map((y, i) => [y, num(trendSeries[0].values[i]), num(trendSeries[1].values[i]),
+            trendSeries[0].values[i] == null ? "—"
+              : (trendSeries[0].values[i] / trendSeries[1].values[i] * 100).toFixed(0) + "%"]))
+      : tableOf(["רשות", "ממוצע (₪)", "חציון (₪)", "חציון/ממוצע"],
+          trendNow.map(r => [r.label, num(r.values[0]), num(r.values[1]),
+            (r.values[1] / r.values[0] * 100).toFixed(1) + "%"])),
+    legend: time ? [{name:unitName, color:C.bar}, {name:"ארצי", color:C.nat}]
+      : [{name:"ממוצע", color:C.bar}, {name:"חציון", color:C.mBoth}],
+    warn:"ערכי השכר כאן הם של הביטוח הלאומי ואינם ברי-השוואה בשקלים לערכי הלמ\"ס שבחלק א׳ — " +
+      "הפרש שיטתי של 8.7%–27.2%.",
+    source:SRC_B("מגמת השכר")
+  }));
+}
+
+function paintKpis(items) {
+  const box = clear(document.getElementById("kpis"));
+  items.forEach(x => box.appendChild(h("div", {class:"kpi"},
+    h("i", {style:`background:${x.c}`}),
+    h("div", {class:"k"}, x.k), h("div", {class:"v"}, x.v), h("div", {class:"n"}, x.n))));
+}
+
+function render() {
+  document.getElementById("tabA").setAttribute("aria-selected", String(ST.part === "a"));
+  document.getElementById("tabB").setAttribute("aria-selected", String(ST.part === "b"));
+  if (ST.part === "a") renderA(); else renderB();
+  applyText();
+}
+
+/* ============================================================
+   ייצוא — PNG של פאנל, או הדפסה ל-PDF
+   ה-SVG משתמש בסגנונות מחושבים; CSS חיצוני אינו נוסע עם הסריאליזציה,
+   ולכן כל צבע מוטמע כ-style לפני ההמרה.
+   ============================================================ */
+const PAINT = ["fill", "stroke", "stop-color", "color", "opacity", "stroke-width",
+  "stroke-dasharray", "stroke-linecap", "stroke-linejoin", "font", "font-size",
+  "font-weight", "font-family", "direction", "text-anchor", "unicode-bidi"];
+function inlineStyles(src, dst) {
+  const cs = getComputedStyle(src);
+  let css = "";
+  PAINT.forEach(k => {
+    const v = cs.getPropertyValue(k);
+    if (v && v !== "none" && v !== "normal") css += `${k}:${v};`;
+  });
+  dst.setAttribute("style", css);
+  const a = src.children, b = dst.children;
+  for (let i = 0; i < a.length; i++) inlineStyles(a[i], b[i]);
+}
+async function exportPanel(p, title) {
+  const btn = p.querySelector(".p-foot button");
+  const svg = p.querySelector(".p-body svg");
+  if (!svg) { btn.textContent = "אין גרף לייצוא"; setTimeout(() => btn.textContent = "ייצוא תמונה", 2400); return; }
+  btn.disabled = true; btn.textContent = "מייצא…";
+  try {
+    const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height, PADB = 46, SC = 2;
+    const clone = svg.cloneNode(true);
+    inlineStyles(svg, clone);
+    clone.setAttribute("xmlns", NS);
+    clone.setAttribute("width", W); clone.setAttribute("height", H);
+    const cv = h("canvas");
+    cv.width = W * SC; cv.height = (H + PADB) * SC;
+    const cx = cv.getContext("2d");
+    cx.scale(SC, SC);
+    cx.fillStyle = "#FFFFFF"; cx.fillRect(0, 0, W, H + PADB);
+    const url = URL.createObjectURL(new Blob([new XMLSerializer().serializeToString(clone)],
+      {type:"image/svg+xml;charset=utf-8"}));
+    await new Promise((res, rej) => {
+      const im = new Image();
+      im.onload = () => { cx.drawImage(im, 0, 0, W, H); URL.revokeObjectURL(url); res(); };
+      im.onerror = e => { URL.revokeObjectURL(url); rej(e); };
+      im.src = url;
+    });
+    /* הכותרת והמקור נצרבים בתמונה — גרף שנודד לא ינדוד בלי ההקשר שלו */
+    const src = (p.querySelector(".p-foot .src") || {}).textContent || "";
+    cx.direction = "rtl"; cx.textAlign = "right";
+    cx.fillStyle = "#14273F"; cx.font = "600 13px Rubik, sans-serif";
+    cx.fillText(title, W - 8, H + 18);
+    cx.fillStyle = "#74879A"; cx.font = "400 11px Assistant, sans-serif";
+    cx.fillText(src.slice(0, 150), W - 8, H + 34);
+    if (LOGO_SRC) await new Promise(res => {
+      const lg = new Image();
+      lg.onload = () => { const hh = 26; cx.drawImage(lg, 8, H + 8, lg.width * hh / lg.height, hh); res(); };
+      lg.onerror = res; lg.src = LOGO_SRC;
+    });
+    const png = await new Promise(r => cv.toBlob(r, "image/png"));
+    const fname = title.replace(/[\\/:*?"<>|]/g, "").slice(0, 60) + ".png";
+    let saved = false;
+    try { const a = h("a", {href:URL.createObjectURL(png), download:fname});
+      document.body.appendChild(a); a.click(); a.remove(); saved = true; } catch (e) {}
+    /* בתצוגת Artifact ההורדה חסומה — מעתיקים ללוח במקומה */
+    if (navigator.clipboard && window.ClipboardItem) {
+      try { await navigator.clipboard.write([new ClipboardItem({"image/png": png})]);
+        btn.textContent = saved ? "ירד · והועתק ✓" : "הועתק ללוח ✓"; }
+      catch (e) { btn.textContent = saved ? "ירד ✓" : "לא ניתן לייצא"; }
+    } else btn.textContent = saved ? "ירד ✓" : "לא ניתן לייצא";
+  } catch (e) { btn.textContent = "לא ניתן לייצא"; }
+  setTimeout(() => { btn.textContent = "ייצוא תמונה"; btn.disabled = false; }, 2800);
+}
+
+function wireExportMenu() {
+  const host = document.getElementById("exportMenu");
+  const btn = document.getElementById("exportToggle");
+  const build = () => {
+    clear(host);
+    host.appendChild(h("div", {class:"menu"},
+      h("button", {type:"button", onclick:() => { host.hidden = true; setTimeout(() => window.print(), 60); }},
+        "ייצוא PDF (הדפסה) — הפאנלים כפי שמוצגים"),
+      h("button", {type:"button", onclick:() => {
+        host.hidden = true;
+        const p = document.querySelector(".panel");
+        if (p) exportPanel(p, p.querySelector("h2").textContent);
+      }}, "ייצוא תמונה (PNG) של הפאנל הראשון"),
+      h("div", {class:"hint"}, "לכל פאנל יש כפתור ייצוא משלו. התמונה נצרבת עם כותרת הגרף, " +
+        "שם המרכז ומקור הנתונים.")));
+  };
+  build();
+  btn.addEventListener("click", () => { host.hidden = !host.hidden; });
+  document.addEventListener("click", e => {
+    if (!host.hidden && !host.contains(e.target) && e.target !== btn) host.hidden = true;
+  });
+  host.hidden = true;
+}
+
+/* ============================================================
+   מצב עריכה — אותו חוזה כמו בדו"ח: ברירת המחדל חיה בקוד,
+   content.json מחזיק רק את מה שנערך בפועל.
+   ============================================================ */
+function wireEditing() {
+  const bar = document.getElementById("editbar"), toggle = document.getElementById("editToggle");
+  let on = false;
+  const edited = {};
+  const setMode = v => {
+    on = v;
+    document.body.classList.toggle("editing", on);
+    bar.hidden = !on;
+    toggle.setAttribute("aria-pressed", String(on));
+    document.querySelectorAll("[data-t]").forEach(n => {
+      if (on) { n.setAttribute("contenteditable", "true"); n.setAttribute("spellcheck", "false"); }
+      else n.removeAttribute("contenteditable");
+    });
+  };
+  toggle.addEventListener("click", () => setMode(!on));
+  document.getElementById("editDone").addEventListener("click", () => setMode(false));
+  document.addEventListener("input", e => {
+    const n = e.target.closest && e.target.closest("[data-t]");
+    if (!on || !n) return;
+    edited[n.getAttribute("data-t")] = n.innerHTML.trim();
+    document.getElementById("editCount").textContent = Object.keys(edited).length;
+  });
+  /* מצב עריכה חייב לשרוד ציור מחדש של הפאנלים */
+  window.__reapplyEdit = () => { if (on) setMode(true); };
+
+  const payload = () => JSON.stringify(
+    {text: Object.assign({}, TEXT, edited), insights: DATA.insights || []}, null, 2);
+  document.getElementById("editCopy").addEventListener("click", async () => {
+    const b = document.getElementById("editCopy");
+    try { await navigator.clipboard.writeText(payload()); b.textContent = "הועתק ✓"; }
+    catch (err) {
+      const ta = h("textarea");
+      ta.value = payload();
+      ta.style.cssText = "position:fixed;inset-block-start:5vh;inset-inline-start:5vw;" +
+        "width:90vw;height:80vh;z-index:400";
+      document.body.appendChild(ta); ta.select();
+      b.textContent = "בחרו והעתיקו";
+      ta.addEventListener("blur", () => ta.remove());
+    }
+    setTimeout(() => { b.textContent = "העתקת JSON"; }, 2600);
+  });
+  document.getElementById("editSave").addEventListener("click", () => {
+    const blob = new Blob([payload()], {type:"application/json"});
+    const a = h("a", {href:URL.createObjectURL(blob), download:"content.json"});
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+}
+
+/* ---------- הפעלה ---------- */
+document.getElementById("tabA").addEventListener("click", () => set({part:"a"}));
+document.getElementById("tabB").addEventListener("click", () => set({part:"b"}));
+wireExportMenu();
+wireEditing();
+const _render = render;
+render = function () { _render(); if (window.__reapplyEdit) window.__reapplyEdit(); };
+render();
+</script>

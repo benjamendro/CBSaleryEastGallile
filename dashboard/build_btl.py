@@ -207,7 +207,7 @@ def build():
     cluster = {"base": [a["name"] for a in base], "excluded": [
         {"name": a["name"], "why": "אין נתון בכל השנים" if not a["missing"] else "מתחת לסף 2,000 תושבים"}
         for a in authorities if a not in base],
-        "mix": {}, "n": {}, "trend": {}, "dist": {}, "median": {}}
+        "mix": {}, "n": {}, "trend": {}, "dist": {}, "median": {}, "medianEst": {}}
     for year in YEARS:
         agg = {"emp": 0, "self": 0, "both": 0}
         for a in base:
@@ -242,6 +242,20 @@ def build():
                     for j in range(7):
                         acc[j] += b[j] * w
             cluster["dist"][pid][str(year)] = [round(x / den, 1) for x in acc] if den else None
+        # חציון ברמת האשכול — **אומדן ולא חציון**. חציונים אינם מתחברים: החציון של
+        # איחוד קבוצות אינו ממוצע החציונים שלהן, וההתפלגויות הגולמיות אינן מתפרסמות.
+        # מה שכן ניתן לחשב הוא ממוצע משוקלל של חציוני הרשויות לפי מספר האנשים —
+        # אומדן טוב ליחס חציון/ממוצע, ולכן הוא נכתב בשם שאומר שהוא אומדן.
+        cluster["medianEst"][pid] = {}
+        for year in NEW_YEARS:
+            i = YEARS.index(year)
+            num = den = 0.0
+            for a in base:
+                m, w = a["median"][pid].get(str(year)), a["n"][pid][i]
+                if m and w:
+                    num += m * w
+                    den += w
+            cluster["medianEst"][pid][str(year)] = round(num / den) if den else None
 
     out = {
         "meta": {

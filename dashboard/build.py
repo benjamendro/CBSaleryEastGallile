@@ -2,9 +2,10 @@
 """
 מרכיב את הדשבורד מהתבנית + הנתונים + הלוגו.
 
-פלט:
-  dashboard/index.html     — קובץ HTML עצמאי אחד (נפתח בכל דפדפן, ללא תלות ברשת)
-  dashboard/artifact.html  — אותו תוכן ללא עטיפת <html>/<head>/<body>, לפרסום כ-Artifact
+שני פלטים, מאותם נתונים:
+
+  הדו"ח (נרטיבי, עם התובנות)      template.html          → index.html   · artifact.html
+  קונסולת BI (גרפים בלבד)          console-template.html  → console.html · console-artifact.html
 
 הרצה: python3 dashboard/build_data.py && python3 dashboard/build.py
 """
@@ -13,6 +14,11 @@ import base64, io, json, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 LOGO = os.path.join(ROOT, "design", "assets", "logo.jpg")
+
+# הקישורים ההדדיים בין שני הפלטים. בקבצים המקומיים הם יחסיים; בגרסאות
+# ה-Artifact הם חייבים להיות מוחלטים, כי שני ה-Artifacts הם דפים נפרדים.
+ART_REPORT  = "https://claude.ai/code/artifact/fe33a2c0-c0ec-4fcf-9c2b-7affa22525e5"
+ART_CONSOLE = "https://claude.ai/code/artifact/17d58cf2-00a8-43e0-9d64-3bb58d2d34eb"
 
 HEAD = """<!DOCTYPE html>
 <html lang="he" dir="rtl">
@@ -36,22 +42,35 @@ def logo_data_uri():
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
 
 
-def main():
-    with open(os.path.join(HERE, "template.html"), encoding="utf-8") as f:
+def build(template, local_name, artifact_name, data_json, logo, links):
+    """מרכיב תבנית אחת לשני פלטים: קובץ עצמאי, וגרסת Artifact בלי עטיפה."""
+    with open(os.path.join(HERE, template), encoding="utf-8") as f:
         tpl = f.read()
+    page = tpl.replace('"__DATA__"', data_json).replace("__LOGO__", logo)
+    for name, wrap, (rep, con) in (
+            (local_name, True, links["local"]),
+            (artifact_name, False, links["artifact"])):
+        body = page.replace("__REPORT_URL__", rep).replace("__CONSOLE_URL__", con)
+        out = (HEAD + body + FOOT) if wrap else body
+        p = os.path.join(HERE, name)
+        with open(p, "w", encoding="utf-8") as f:
+            f.write(out)
+        print(f"נכתב {p}  ({os.path.getsize(p):,} bytes)")
+
+
+def main():
     with open(os.path.join(HERE, "data.json"), encoding="utf-8") as f:
         data = json.load(f)
     with open(os.path.join(HERE, "btl.json"), encoding="utf-8") as f:
         data["btl2"] = json.load(f)      # חלק ב׳ — ראו build_btl.py
 
-    page = tpl.replace('"__DATA__"', json.dumps(data, ensure_ascii=False, separators=(",", ":")))
-    page = page.replace("__LOGO__", logo_data_uri())
+    data_json = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    logo = logo_data_uri()
+    links = {"local": ("index.html", "console.html"),
+             "artifact": (ART_REPORT, ART_CONSOLE)}
 
-    for name, body in (("index.html", HEAD + page + FOOT), ("artifact.html", page)):
-        p = os.path.join(HERE, name)
-        with open(p, "w", encoding="utf-8") as f:
-            f.write(body)
-        print(f"נכתב {p}  ({os.path.getsize(p):,} bytes)")
+    build("template.html", "index.html", "artifact.html", data_json, logo, links)
+    build("console-template.html", "console.html", "console-artifact.html", data_json, logo, links)
 
 
 if __name__ == "__main__":
