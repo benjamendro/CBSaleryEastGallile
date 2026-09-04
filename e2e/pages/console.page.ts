@@ -33,8 +33,32 @@ export class ConsolePage extends BasePage {
     return this.filterGroup(label).getByRole('combobox').selectOption({ label: value });
   }
   selectValue(label: string): Locator { return this.filterGroup(label).getByRole('combobox'); }
-  /** בורר „בתמהיל” קיים רק בתצוגת „לאורך זמן”. */
-  get mixModeGroup(): Locator { return this.filterGroup('בתמהיל'); }
+  /* --- פקדים שיושבים בתוך פאנל ולא בסרגל הגלובלי ---
+     „תקופה” ו„מציג” שייכים לפאנל התמהיל בלבד, ובחירת הרשות שייכת לפאנל
+     הענפים בלבד. סרגל גלובלי מחזיק רק את מה שחל על כל הפאנלים. */
+
+  /** בורר התקופה של פאנל התמהיל: 2024 · לאורך זמן. */
+  choosePeriod(option: '2024' | 'לאורך זמן'): Promise<void> {
+    return this.page.locator('#panel-mix .vtog[aria-label="תקופה"]')
+      .getByRole('button', { name: option, exact: true }).click();
+  }
+  /** בורר „מציג” — קיים רק בתצוגת „לאורך זמן”. */
+  get mixModeGroup(): Locator {
+    return this.page.locator('#panel-mix .vtog[aria-label="מציג"]');
+  }
+  chooseMixMode(option: 'הרכב' | 'מספר עובדים'): Promise<void> {
+    return this.mixModeGroup.getByRole('button', { name: option, exact: true }).click();
+  }
+  /** בורר הרשות של פאנל הענפים. */
+  get anafAuthority(): Locator {
+    return this.page.locator('#panel-anaf').getByRole('combobox', { name: 'רשות בגרף הענפים' });
+  }
+  /** בורר הענפים הידני שבתוך פאנל הענפים. */
+  get anafPicker(): Locator { return this.page.locator('#panel-anaf .picker'); }
+  get anafPickerSummary(): Locator { return this.anafPicker.locator('summary'); }
+  get anafPickerSearch(): Locator { return this.anafPicker.getByRole('searchbox'); }
+  get anafPickerOptions(): Locator { return this.anafPicker.locator('.pk-list label'); }
+  openAnafPicker(): Promise<void> { return this.anafPickerSummary.click(); }
 
   /* --- KPI --- */
   get kpiCards(): Locator  { return this.page.locator('.kpi'); }

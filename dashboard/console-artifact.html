@@ -102,6 +102,28 @@ select.loc{font:600 12.5px var(--font-body);color:var(--ink);background:var(--bg
 .vtog button{font:700 12px var(--font-body);border:0;border-radius:100px;padding:4px 11px;
   background:transparent;color:var(--ink-3);cursor:pointer}
 .vtog button[aria-pressed="true"]{background:var(--bg-surface);color:var(--ink)}
+/* בורר ענפים בתוך הפאנל — נפתח מעל הגרף ואינו דוחף אותו החוצה */
+.picker{margin-top:9px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg-subtle)}
+.picker > summary{cursor:pointer;padding:7px 12px;font:700 12.5px var(--font-body);color:var(--ink-2);
+  list-style:none;display:flex;align-items:center;gap:8px}
+.picker > summary::-webkit-details-marker{display:none}
+.picker > summary::before{content:"+";font-family:var(--font-head);font-weight:700;
+  inline-size:16px;block-size:16px;line-height:15px;text-align:center;border-radius:50%;
+  border:1.5px solid currentColor;font-size:12px}
+.picker[open] > summary::before{content:"−"}
+.picker .pk-in{padding:0 12px 10px}
+.picker input[type=search]{width:min(320px,100%);font:400 13px var(--font-body);
+  border:1px solid var(--line-strong);border-radius:8px;padding:6px 10px;background:var(--bg-surface)}
+.pk-list{max-height:190px;overflow-y:auto;margin-top:8px;display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2px 10px}
+.pk-list label{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2);
+  padding:3px 4px;border-radius:6px;cursor:pointer}
+.pk-list label:hover{background:var(--bg-surface)}
+.pk-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px;
+  font-size:12px;color:var(--ink-3)}
+.pk-foot button{font:700 12px var(--font-body);border:1px solid var(--line-strong);
+  background:var(--bg-surface);color:var(--ink-2);border-radius:100px;padding:3px 11px;cursor:pointer}
+
 .p-body{position:relative;margin-top:10px;overflow-y:auto;overflow-x:hidden}
 .p-body:focus-visible{outline:2px solid var(--data-region);outline-offset:2px}
 .p-empty{padding:44px 10px;text-align:center;color:var(--ink-3);font-size:14.5px;line-height:1.6}
@@ -350,17 +372,25 @@ function hideTip() { if (TIP && TIP.parentNode) TIP.parentNode.removeChild(TIP);
 /* עמודות אנכיות — הגבוה מימין (RTL), שמות מדורגים בשתי שורות */
 function columns(host, W, H, rows, opt) {
   const m = {t:14, r:12, b:76, l:52};
-  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const ih = H - m.t - m.b;
   const vals = rows.map(r => r.value).concat((opt.refs || []).map(r => r.v));
   const ax = niceAxis(0, Math.max.apply(null, vals), 6);
   const Y = v => m.t + (1 - (v - ax.lo) / (ax.hi - ax.lo)) * ih;
-  const step = iw / rows.length, bw = Math.min(30, step * .62);
-  const cx = i => W - m.r - (i + .5) * step;
+  /* רוחב מלא פורש 18 עמודות על פני ~1900px בעוד ההפרשים ביניהן נדחסים
+     לגובה נמוך — העין נודדת רחוק והשוואה נעשית קשה. הצעד מוגבל, והקבוצה
+     ממורכזת, כך שיחס הגובה-רוחב נשאר קריא גם על מסך רחב. */
+  const full = W - m.l - m.r;
+  const step = Math.min(full / rows.length, opt.maxStep || 56);
+  const iw = step * rows.length;
+  const pad = (full - iw) / 2;
+  const bw = Math.min(34, step * .62);
+  const cx = i => W - m.r - pad - (i + .5) * step;
   const g = svgBox(W, H);
   for (let v = ax.lo; v <= ax.hi + 1e-6; v += ax.step) {
-    g.appendChild(s("line", {x1:m.l, x2:W - m.r, y1:Y(v), y2:Y(v),
+    g.appendChild(s("line", {x1:m.l + pad, x2:W - m.r - pad, y1:Y(v), y2:Y(v),
       stroke:C.line, "stroke-width":1, "stroke-dasharray":"2 4"}));
-    g.appendChild(txt(m.l - 8, Y(v) + 4, "end", 11.5, C.ink3, num(v, ax.step < 1 ? 1 : 0), {iso:true}));
+    g.appendChild(txt(m.l + pad - 8, Y(v) + 4, "end", 11.5, C.ink3,
+      num(v, ax.step < 1 ? 1 : 0), {iso:true}));
   }
   rows.forEach((r, i) => {
     const hl = opt.highlight === r.label;
@@ -377,9 +407,10 @@ function columns(host, W, H, rows, opt) {
       stroke:C.line, "stroke-width":1}));
   });
   (opt.refs || []).forEach(r => {
-    g.appendChild(s("line", {x1:m.l, x2:W - m.r, y1:Y(r.v), y2:Y(r.v),
+    g.appendChild(s("line", {x1:m.l + pad, x2:W - m.r - pad, y1:Y(r.v), y2:Y(r.v),
       stroke:r.color, "stroke-width":1.8, "stroke-dasharray":"6 4"}));
-    g.appendChild(txt(m.l + 4, Y(r.v) - 5, "start", 11, r.color, r.label, {head:true, weight:700}));
+    g.appendChild(txt(m.l + pad + 4, Y(r.v) - 5, "start", 11, r.color, r.label,
+      {head:true, weight:700}));
   });
   host.appendChild(g);
 }
@@ -548,6 +579,7 @@ function lines(host, W, H, series, xs, opt) {
 const ST = {
   part:"a",
   metric:"salary", sortA:"value", anafScope:"region", anafRange:"top10", anafCluster:"all",
+  anafPicks:new Set(), anafQuery:"", anafPickOpen:false,
   viewAuth:"chart", viewChange:"chart", viewAnaf:"chart",
   pop:"emp", view:"now", unit:"cluster", timeMode:"share",
   viewMix:"chart", viewDist:"chart", viewTrend:"chart"
@@ -608,6 +640,8 @@ function panel(spec) {
 
   /* גוף הפאנל גולל אנכית; בלי tabindex משתמש מקלדת אינו יכול להגיע לתוכן
      שמתחת לקיפול. role+aria-label נותנים לו שם כשהוא מקבל פוקוס. */
+  if (spec.extra) p.appendChild(spec.extra);
+
   const body = h("div", {class:"p-body", style:`height:${spec.height}px`,
     tabindex:"0", role:"group", "aria-label":spec.title});
   p.appendChild(body);
@@ -667,9 +701,6 @@ function renderA() {
   fbar.className = "fbar no-print";
   fbar.appendChild(segCtl("מדד להצגה", D.metrics.map(m => ({label:m.short, v:m.id})),
     mid, v => set({metric:v})));
-  fbar.appendChild(selCtl("רשות בגרף הענפים",
-    [{v:"region", label:"האשכול כולו"}].concat(AUTHS.map(a => ({v:a.name, label:a.name}))),
-    ST.anafScope, v => set({anafScope:v})));
   fbar.appendChild(segCtl("סדר", [{label:"לפי ערך", v:"value"}, {label:"לפי שם", v:"name"}],
     ST.sortA, v => set({sortA:v})));
   fbar.appendChild(h("div", {class:"fdef"},
@@ -708,6 +739,9 @@ function renderA() {
   }).filter(Boolean).sort((x, y) => y.pct - x.pct);
 
   /* --- פאנל 3 · ענפי כלכלה --- */
+  /* בחירה ידנית גוברת על טווח ועל קיבוץ: מי שסימן ענפים במפורש רוצה
+     בדיוק אותם, ולא את החיתוך האוטומטי. */
+  const picked = ST.anafPicks.size > 0;
   const scopeRegion = ST.anafScope === "region";
   const aby = scopeRegion ? null : D.anafByAuth[ST.anafScope];
   let anafRows = D.anafim.map(an => ({
@@ -716,34 +750,95 @@ function renderA() {
     reg: scopeRegion ? (an.reg ? an.reg.salary : null)
                      : (aby && aby.cells[an.code] ? aby.cells[an.code].salary : null)
   })).filter(r => r.reg != null && r.nat != null);
-  if (ST.anafCluster !== "all") {
-    const cl = D.clusters.find(c => c.id === ST.anafCluster);
-    if (cl) anafRows = anafRows.filter(r => cl.codes.indexOf(r.code) > -1);
+  const allAnaf = anafRows.slice();               /* לפני סינון — לרשימת הבחירה */
+  if (picked) {
+    anafRows = anafRows.filter(r => ST.anafPicks.has(r.code));
+    anafRows.sort((a, b) => b.reg - a.reg);
+  } else {
+    if (ST.anafCluster !== "all") {
+      const cl = D.clusters.find(c => c.id === ST.anafCluster);
+      if (cl) anafRows = anafRows.filter(r => cl.codes.indexOf(r.code) > -1);
+    }
+    anafRows.sort((a, b) => b.reg - a.reg);
+    if (ST.anafRange === "top10") anafRows = anafRows.slice(0, 10);
+    else if (ST.anafRange === "top15") anafRows = anafRows.slice(0, 15);
+    else if (ST.anafRange === "bottom10") anafRows = anafRows.slice(-10);
   }
-  anafRows.sort((a, b) => b.reg - a.reg);
-  if (ST.anafRange === "top10") anafRows = anafRows.slice(0, 10);
-  else if (ST.anafRange === "top15") anafRows = anafRows.slice(0, 15);
-  else if (ST.anafRange === "bottom10") anafRows = anafRows.slice(-10);
   const anafSeries = [{name:"האשכול", color:C.bar}, {name:"כלל הארץ", color:C.nat}];
 
+  const authSel = h("select", {class:"loc", "aria-label":"רשות בגרף הענפים",
+    onchange:e => set({anafScope:e.target.value})});
+  [{v:"region", label:"האשכול כולו"}].concat(AUTHS.map(a => ({v:a.name, label:a.name})))
+    .forEach(o => authSel.appendChild(
+      h("option", {value:o.v, selected:o.v === ST.anafScope}, o.label)));
+
   const rangeSel = h("select", {class:"loc", "aria-label":"טווח הענפים המוצג",
+    disabled: picked, title: picked ? "לא פעיל בזמן בחירה ידנית" : null,
     onchange:e => set({anafRange:e.target.value})});
   [{v:"top10", label:"10 הגבוהים"}, {v:"top15", label:"15 הגבוהים"},
    {v:"bottom10", label:"10 הנמוכים"}, {v:"all", label:"כל הענפים"}].forEach(o =>
     rangeSel.appendChild(h("option", {value:o.v, selected:o.v === ST.anafRange}, o.label)));
   const clSel = h("select", {class:"loc", "aria-label":"קיבוץ ענפים",
+    disabled: picked, title: picked ? "לא פעיל בזמן בחירה ידנית" : null,
     onchange:e => set({anafCluster:e.target.value})});
   [{v:"all", label:"כל הקיבוצים"}].concat(D.clusters.map(c => ({v:c.id, label:c.label})))
     .forEach(o => clSel.appendChild(h("option", {value:o.v, selected:o.v === ST.anafCluster}, o.label)));
 
+  /* --- בורר ענפים: חיפוש + סימון, בתוך הפאנל --- */
+  const q = ST.anafQuery.trim();
+  const matches = q
+    ? allAnaf.filter(r => r.label.includes(q) || String(r.code).includes(q))
+    : allAnaf;
+  const pick = h("details", {class:"picker", open: ST.anafPickOpen || null});
+  pick.addEventListener("toggle", () => { ST.anafPickOpen = pick.open; });
+  pick.appendChild(h("summary", {},
+    picked ? `בחירת ענפים — ${ST.anafPicks.size} נבחרו` : "בחירת ענפים — חיפוש וסימון"));
+  const pkIn = h("div", {class:"pk-in"});
+  const search = h("input", {type:"search", placeholder:"חיפוש ענף…", "aria-label":"חיפוש ענף",
+    value:ST.anafQuery});
+  /* חיפוש מסנן את הרשימה בלבד; אין ציור מחדש של הגרף בכל הקשה. */
+  search.addEventListener("input", () => { ST.anafQuery = search.value; renderPickList(); });
+  pkIn.appendChild(search);
+  const pkList = h("div", {class:"pk-list"});
+  pkIn.appendChild(pkList);
+  const pkFoot = h("div", {class:"pk-foot"});
+  pkIn.appendChild(pkFoot);
+  pick.appendChild(pkIn);
+
+  function renderPickList() {
+    const qq = ST.anafQuery.trim();
+    const rows = qq ? allAnaf.filter(r => r.label.includes(qq) || String(r.code).includes(qq)) : allAnaf;
+    clear(pkList);
+    if (!rows.length) { pkList.appendChild(h("div", {}, "לא נמצא ענף תואם")); return; }
+    rows.forEach(r => {
+      const cb = h("input", {type:"checkbox", checked: ST.anafPicks.has(r.code) || null});
+      cb.addEventListener("change", () => {
+        if (cb.checked) ST.anafPicks.add(r.code); else ST.anafPicks.delete(r.code);
+        ST.anafPickOpen = true;
+        set({});
+      });
+      pkList.appendChild(h("label", {}, cb, h("span", {}, r.label)));
+    });
+  }
+  function renderPickFoot() {
+    clear(pkFoot);
+    pkFoot.appendChild(h("span", {}, picked
+      ? `${ST.anafPicks.size} ענפים נבחרו — הבחירה גוברת על „טווח” ועל „קיבוץ”`
+      : `${allAnaf.length} ענפים זמינים · בלי בחירה מוצג החיתוך שבבוררים`));
+    if (picked) pkFoot.appendChild(h("button", {type:"button",
+      onclick:() => { ST.anafPicks.clear(); ST.anafPickOpen = true; set({}); }}, "ניקוי הבחירה"));
+  }
+  renderPickList(); renderPickFoot();
+  void matches;
+
   const grid = clear(document.getElementById("grid"));
   grid.appendChild(panel({
-    id:"auth", flex:"1 1 100%", height:320,
+    id:"auth", flex:"1 1 100%", height:430,
     title:"השוואה בין הרשויות",
     sub: md.label + " · 18 רשויות" + (isSalary ? " · עם קווי ייחוס"
       : " · ללא קווי ייחוס — ההשוואה לממוצע אינה נושאת מידע במדד זה"),
     view:ST.viewAuth, onView:v => set({viewAuth:v}),
-    chart:(body, W) => columns(body, W, 296, authRows, {refs,
+    chart:(body, W) => columns(body, W, 404, authRows, {refs,
       highlight: scopeRegion ? null : ST.anafScope,
       onPick: r => set({anafScope:r.label}),
       tip: r => [{k:md.label, v:fmt(r.value)}, {k:"שכירים", v:num(r.w)}]}),
@@ -779,9 +874,12 @@ function renderA() {
     title:"השוואה בין ענפי כלכלה",
     sub:(scopeRegion ? "האשכול" : ST.anafScope) + " מול אותו ענף בכלל הארץ · שכר חודשי ממוצע" +
       (isSalary ? "" : " · אינו מושפע מבורר המדד — ההשוואה הענפית קיימת במדד השכר בלבד"),
-    controls:[rangeSel, clSel],
+    controls:[authSel, rangeSel, clSel],
+    extra:pick,
     view:ST.viewAnaf, onView:v => set({viewAnaf:v}),
-    empty: anafRows.length ? null : "אין ענפים העונים לסינון הנוכחי.",
+    empty: anafRows.length ? null
+      : (picked ? "לא נבחרו ענפים שיש להם נתון בהקשר הנוכחי."
+                : "אין ענפים העונים לסינון הנוכחי."),
     chart:(body, W) => groupedRows(body, W,
       anafRows.map(r => ({label:r.label, values:[r.reg, r.nat]})), anafSeries,
       {tip: r => [{k:"האשכול", v:num(r.values[0]) + " ₪"}, {k:"כלל הארץ", v:num(r.values[1]) + " ₪"},
@@ -816,22 +914,19 @@ function renderB() {
   fbar.className = "fbar b no-print";
   fbar.appendChild(segCtl("אוכלוסייה", [{label:"שכירים", v:"emp"}, {label:"עצמאים", v:"self"},
     {label:"כלל העובדים", v:"all"}], pop, v => set({pop:v})));
-  fbar.appendChild(segCtl("תצוגה", [{label:"2024", v:"now"}, {label:"לאורך זמן", v:"time"}],
-    ST.view, v => set({view:v})));
+  /* „תצוגה” ו„בתמהיל” ירדו לפאנל התמהיל: אחרי הסידור מחדש הם הפקדים
+     היחידים שנוגעים לפאנל אחד בלבד. מגמת השכר היא תמיד לאורך זמן,
+     וההתפלגות תמיד 2024 — שניהם אינם נשלטים על ידי בורר. */
   fbar.appendChild(selCtl("יחידה",
     [{v:"cluster", label:"האשכול כולו"}].concat(SHOWN.map(a => ({v:a.name, label:a.name}))),
     ST.unit, v => set({unit:v})));
-  if (time) fbar.appendChild(segCtl("בתמהיל",
-    [{label:"הרכב", v:"share"}, {label:"מספר עובדים", v:"count"}],
-    ST.timeMode, v => set({timeMode:v})));
   fbar.appendChild(h("div", {class:"fdef"},
     (B.populations.find(p => p.id === pop) || {}).def || ""));
 
   document.getElementById("ctxSrc").textContent = "מקור: ביטוח לאומי";
   document.getElementById("ctxSrc").className = "tag src b";
   document.getElementById("ctxPop").textContent = "אוכלוסייה: " + POPS[pop];
-  document.getElementById("ctxYear").textContent = "שנה: " +
-    (time ? YEARS[0] + "–" + YEARS[LI] : Y24);
+  document.getElementById("ctxYear").textContent = "שנה: " + YEARS[0] + "–" + YEARS[LI];
 
   /* --- KPI — כולם מחושבים בתוך מקור אחד --- */
   const cM = B.cluster.mix[Y24], nM = B.national.mix[Y24];
@@ -901,11 +996,9 @@ function renderB() {
   const distAll = [{label:"אשכול גליל מזרחי", bands:B.cluster.dist[pop][Y24]},
                    {label:"כלל הארץ", bands:B.national.dist[pop][Y24]}].concat(distRows);
 
-  /* --- פאנל 3 · מגמה --- */
-  const trendNow = SHOWN.filter(a => a.trend && a.trend[pop] && a.median && a.median[pop]
-      && a.trend[pop][LI] != null && a.median[pop][Y24] != null)
-    .map(a => ({label:a.name, values:[a.trend[pop][LI], a.median[pop][Y24]]}))
-    .sort((a, b) => b.values[0] - a.values[0]);
+  /* --- פאנל המגמה --- הוא הגרף שעונה על „איך השכר משתנה לאורך זמן”,
+     ולכן הוא ראשון וברוחב מלא. תצוגת „ממוצע מול חציון לפי רשות” הוסרה
+     מכאן והיא נשארת בדו״ח, שם היא יושבת לצד ההסבר שהיא דורשת. */
   const trendSeries = [
     {name:unitName, color:C.bar, width:3, values:unitObj.trend[pop]},
     {name:"ארצי", color:C.nat, width:3, values:B.national.trend[pop]}];
@@ -914,7 +1007,38 @@ function renderB() {
   const grid = clear(document.getElementById("grid"));
 
   grid.appendChild(panel({
-    id:"mix", flex:"1 1 100%", height:330,
+    id:"trend", flex:"1 1 100%", height:360,
+    title:"מגמת השכר לאורך זמן",
+    sub:"שכר ממוצע לחודש עבודה · " + POPS[pop] + " · " + unitName + " מול הארצי · " +
+        YEARS[0] + "–" + YEARS[LI],
+    view:ST.viewTrend, onView:v => set({viewTrend:v}),
+    chart:(body, W) => lines(body, W, 336, trendSeries, YEARS,
+      {unit:"", tip:i => trendSeries.map(x => ({k:x.name,
+        v:x.values[i] == null ? "אין נתון" : num(x.values[i]) + " ₪"}))}),
+    table:() => tableOf(["שנה", unitName + " (₪)", "ארצי (₪)", "יחס"],
+      YEARS.map((y, i) => [y, num(trendSeries[0].values[i]), num(trendSeries[1].values[i]),
+        trendSeries[0].values[i] == null ? "—"
+          : (trendSeries[0].values[i] / trendSeries[1].values[i] * 100).toFixed(0) + "%"])),
+    legend:[{name:unitName, color:C.bar}, {name:"ארצי", color:C.nat}],
+    warn:"ערכי השכר כאן הם של הביטוח הלאומי ואינם ברי-השוואה בשקלים לערכי הלמ\"ס שבחלק א׳ — " +
+      "הפרש שיטתי של 8.7%–27.2%.",
+    source:SRC_B("מגמת השכר")
+  }));
+
+  grid.appendChild(panel({
+    id:"mix", flex:"1 1 480px", height:330,
+    controls:[
+      (() => { const g = h("div", {class:"vtog", role:"group", "aria-label":"תקופה"});
+        [{l:"2024", v:"now"}, {l:"לאורך זמן", v:"time"}].forEach(o =>
+          g.appendChild(h("button", {type:"button", "aria-pressed":String(ST.view === o.v),
+            onclick:() => ST.view !== o.v && set({view:o.v})}, o.l)));
+        return g; })(),
+      ...(time ? [(() => { const g = h("div", {class:"vtog", role:"group", "aria-label":"מציג"});
+        [{l:"הרכב", v:"share"}, {l:"מספר עובדים", v:"count"}].forEach(o =>
+          g.appendChild(h("button", {type:"button", "aria-pressed":String(ST.timeMode === o.v),
+            onclick:() => ST.timeMode !== o.v && set({timeMode:o.v})}, o.l)));
+        return g; })()] : [])
+    ],
     title:"תמהיל התעסוקה",
     sub: !time ? "עמודות מוערמות 100% לפי רשות · 2024"
       : ST.timeMode === "share"
@@ -967,35 +1091,6 @@ function renderB() {
     source:SRC_B("התפלגות השכר") + " · לוחות ההתפלגות קיימים ל-2023 ול-2024 בלבד"
   }));
 
-  grid.appendChild(panel({
-    id:"trend", flex:"1 1 480px", height:330,
-    title:"מגמת השכר",
-    sub: time ? "שכר ממוצע לחודש עבודה · " + unitName + " מול הארצי · " + YEARS[0] + "–" + YEARS[LI]
-      : "ממוצע מול חציון לפי רשות · " + POPS[pop] + " · 2024",
-    view:ST.viewTrend, onView:v => set({viewTrend:v}),
-    empty:(!time && !trendNow.length) ? "אין נתוני חציון לאוכלוסייה שנבחרה." : null,
-    chart:(body, W) => time
-      ? lines(body, W, 306, trendSeries, YEARS,
-          {unit:"", tip:i => trendSeries.map(x => ({k:x.name,
-            v:x.values[i] == null ? "אין נתון" : num(x.values[i]) + " ₪"}))})
-      : groupedRows(body, W, trendNow,
-          [{name:"ממוצע", color:C.bar}, {name:"חציון", color:C.mBoth}],
-          {tip:r => [{k:"ממוצע", v:num(r.values[0]) + " ₪"}, {k:"חציון", v:num(r.values[1]) + " ₪"},
-            {k:"יחס חציון/ממוצע", v:(r.values[1] / r.values[0] * 100).toFixed(1) + "%"}]}),
-    table:() => time
-      ? tableOf(["שנה", unitName + " (₪)", "ארצי (₪)", "יחס"],
-          YEARS.map((y, i) => [y, num(trendSeries[0].values[i]), num(trendSeries[1].values[i]),
-            trendSeries[0].values[i] == null ? "—"
-              : (trendSeries[0].values[i] / trendSeries[1].values[i] * 100).toFixed(0) + "%"]))
-      : tableOf(["רשות", "ממוצע (₪)", "חציון (₪)", "חציון/ממוצע"],
-          trendNow.map(r => [r.label, num(r.values[0]), num(r.values[1]),
-            (r.values[1] / r.values[0] * 100).toFixed(1) + "%"])),
-    legend: time ? [{name:unitName, color:C.bar}, {name:"ארצי", color:C.nat}]
-      : [{name:"ממוצע", color:C.bar}, {name:"חציון", color:C.mBoth}],
-    warn:"ערכי השכר כאן הם של הביטוח הלאומי ואינם ברי-השוואה בשקלים לערכי הלמ\"ס שבחלק א׳ — " +
-      "הפרש שיטתי של 8.7%–27.2%.",
-    source:SRC_B("מגמת השכר")
-  }));
 }
 
 function paintKpis(items) {

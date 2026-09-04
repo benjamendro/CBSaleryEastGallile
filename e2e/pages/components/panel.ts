@@ -28,4 +28,6 @@ export class Panel {
 
   /** בוררים מקומיים בכותרת הפאנל (קיימים בפאנל הענפים בלבד). */
   localSelect(index = 0): Locator { return this.root.locator('select.loc').nth(index); }
+  get rangeSelect(): Locator   { return this.root.getByRole('combobox', { name: 'טווח הענפים המוצג' }); }
+  get clusterSelect(): Locator { return this.root.getByRole('combobox', { name: 'קיבוץ ענפים' }); }
 }
