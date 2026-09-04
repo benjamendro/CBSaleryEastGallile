@@ -586,6 +586,15 @@ body.editing .insight h4:focus,body.editing .insight .ins-body:focus{outline:2px
 
 /* קישור אל בלוק בחלק ג׳ לא ייעצר מתחת לכותרת הדביקה */
 .cblock{scroll-margin-top:96px}
+
+/* תובנה שנמחק ממנה הטקסט אינה מצוירת כלל בתצוגה רגילה, וכותרת ריקה אינה
+   תופסת שורה. במצב עריכה שתיהן חוזרות להיראות, אחרת אי אפשר למלא אותן
+   מחדש או למחוק אותן. */
+body:not(.editing) .insight.ins-blank{display:none}
+body:not(.editing) .insight.ins-notitle h4{display:none}
+body.editing .insight.ins-blank{opacity:.65}
+body.editing .insight.ins-notitle h4::before{content:"כותרת ריקה";
+  color:var(--ink-3);font-style:italic;font-weight:400}
 </style>
 
 <div class="page" dir="rtl" lang="he">
@@ -2224,16 +2233,27 @@ function renderInsights() {
 
 /* כרטיס תובנה אחד. ב„מצב עריכה” הכותרת והגוף ניתנים לעריכה במקום,
    ויש כפתור מחיקה — כדי שאפשר יהיה גם להוסיף וגם להסיר תובנות. */
+/* „ריק” = אין בו טקסט אחרי הסרת תגיות ורווחים קשיחים. מצב עריכה מייצר
+   אותו באופן טבעי — מוחקים את הטקסט של תובנה ולא את התובנה עצמה — ובלעדי
+   הבדיקה הזו נשאר על העמוד כרטיס בז׳ ריק, וכותרת ריקה שתופסת שורה. */
+const blankText = html => !String(html || "")
+  .replace(/<[^>]+>/g, "").replace(/&nbsp;|\u00a0/g, " ").trim();
+
 function insightCard(x) {
   const box = el("div", {class:"insight"});
   box.__ins = x;
+  const mark = () => {
+    box.classList.toggle("ins-blank", blankText(x.title) && blankText(x.body));
+    box.classList.toggle("ins-notitle", blankText(x.title));
+  };
   const h = el("h4", {}, x.title || "");
-  h.addEventListener("input", () => { x.title = h.textContent.trim(); bumpCount(); });
+  h.addEventListener("input", () => { x.title = h.textContent.trim(); mark(); bumpCount(); });
   box.appendChild(h);
   const body = el("div", {class:"ins-body"});
   body.innerHTML = x.body || "";
-  body.addEventListener("input", () => { x.body = body.innerHTML.trim(); bumpCount(); });
+  body.addEventListener("input", () => { x.body = body.innerHTML.trim(); mark(); bumpCount(); });
   box.appendChild(body);
+  mark();
   const del = el("button", {type:"button", class:"blk-x ins-x", title:"מחיקת התובנה"}, "✕");
   del.addEventListener("click", () => {
     const i = INSIGHTS.indexOf(x);
@@ -3535,6 +3555,11 @@ const drawPartC = (() => {
 
   renderInsights();
   renderPartC();
+  /* applyHidden חייב לרוץ *אחרי* renderPartC: הוא מסמן [data-block] שכבר
+     קיימים ב-DOM, ו-17 האיורים של חלק ג׳ נוצרים כאן. הקריאה שבתוך
+     renderInsights מקדימה אותם, ובלי השורה הזו גרף שהוסתר בחלק ג׳ נשמר
+     ב-content.json אבל חוזר ומוצג בכל טעינה. */
+  applyHidden();
   drawPartC();
   renderGuide();
   wireEditing();
