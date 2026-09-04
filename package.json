@@ -1,0 +1,20 @@
+{
+  "name": "cbsalery-east-galilee-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "description": "בדיקות ממשק לדשבורד השכר והתעסוקה של אשכול גליל מזרחי",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:list": "playwright test --list",
+    "typecheck": "tsc --noEmit",
+    "lint:e2e": "eslint e2e --ext .ts"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "1.56.1",
+    "@types/node": "^25.5.0",
+    "eslint-plugin-playwright": "^2.2.0",
+    "typescript": "^5.6.0"
+  }
+}
