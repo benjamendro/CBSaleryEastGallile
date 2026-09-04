@@ -350,6 +350,18 @@ def read_insights():
     return out
 
 
+def read_hidden():
+    """בלוקים שהמשתמש הסתיר במצב עריכה. רשימת מזהי data-block."""
+    if not os.path.exists(SRC_TEXT):
+        return []
+    with open(SRC_TEXT, encoding="utf-8") as fh:
+        data = json.load(fh)
+    items = data.get("hidden", [])
+    if not isinstance(items, list):
+        sys.exit("content.json: המפתח „hidden” חייב להיות רשימה")
+    return [x for x in items if isinstance(x, str)]
+
+
 def read_anaf_by_auth(anafim, authorities):
     """ענף × רשות בתוך האשכול — הקובץ המשלים.
 
@@ -458,6 +470,7 @@ def main():
         "anafByAuth": anaf_by_auth,
         "text": read_text_overrides(),
         "insights": read_insights(),
+        "hidden": read_hidden(),
         "clusters": [{"id": c, "label": l, "codes": codes} for c, l, codes in CLUSTERS],
         "change": change,
         "btl": btl,

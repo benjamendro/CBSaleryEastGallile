@@ -483,6 +483,31 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media print{.metricbar,.topbar{position:static}.chart{overflow:visible}}
+/* ---- עריכה: הסתרת בלוקים והוספת תובנות ---------------------------------- */
+[data-block]{position:relative}
+.blk-x{display:none;position:absolute;inset-block-start:8px;inset-inline-end:8px;z-index:6;
+  inline-size:26px;block-size:26px;padding:0;border-radius:50%;cursor:pointer;
+  border:1px solid var(--line-strong,#C3D2DC);background:#fff;color:#41566B;
+  font:700 13px/1 system-ui;box-shadow:0 1px 3px rgba(20,39,63,.14)}
+.blk-x:hover{background:#FBEFEC;border-color:#E4B7B1;color:#C0342B}
+body.editing .blk-x{display:block}
+.blk-hidden{display:none}
+body.editing .blk-hidden{display:block;opacity:.34;filter:grayscale(1);
+  outline:2px dashed var(--line-strong,#C3D2DC);outline-offset:3px;cursor:pointer}
+body.editing .blk-hidden::after{content:"הוסתר — לחצו להחזרה";position:absolute;
+  inset-block-start:8px;inset-inline-start:8px;z-index:7;background:#14273F;color:#fff;
+  font:700 11.5px/1 system-ui;padding:6px 10px;border-radius:100px}
+.blk-add{display:none;margin:10px 0 0;padding:7px 14px;border-radius:100px;cursor:pointer;
+  border:1px dashed var(--line-strong,#C3D2DC);background:#fff;color:#41566B;
+  font:700 12.5px/1 system-ui}
+.blk-add:hover{border-style:solid;background:#F2F6F9;color:#14273F}
+body.editing .blk-add{display:inline-block}
+.insight{position:relative}
+.ins-x{inset-block-start:6px;inset-inline-end:6px;inline-size:22px;block-size:22px;font-size:11px}
+body.editing .insight h4,body.editing .insight .ins-body{outline:1px dashed rgba(20,39,63,.22);
+  outline-offset:3px;border-radius:4px}
+body.editing .insight h4:focus,body.editing .insight .ins-body:focus{outline:2px solid #1C70A8}
+
 </style>
 
 <div class="page" dir="rtl" lang="he">
@@ -604,7 +629,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
         </div>
       </div>
 
-      <div class="figure">
+      <div class="figure" data-block="fig-auth">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="authTitle">—</div>
@@ -665,7 +690,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
         </div>
       </div>
 
-      <div class="figure">
+      <div class="figure" data-block="fig-change">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="changeTitle">—</div>
@@ -742,7 +767,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 
       <div id="anafPanel"></div>
 
-      <div class="figure">
+      <div class="figure" data-block="fig-anaf">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="anafTitle">—</div>
@@ -803,7 +828,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
           <div class="body" id="i-mix" hidden></div>
         </div>
       </div>
-      <div class="figure">
+      <div class="figure" data-block="fig-mix">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="mixTitle">—</div>
@@ -838,7 +863,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
           <div class="body" id="i-dist" hidden></div>
         </div>
       </div>
-      <div class="figure">
+      <div class="figure" data-block="fig-dist">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="distTitle">—</div>
@@ -869,7 +894,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
           <div class="body" id="i-trend" hidden></div>
         </div>
       </div>
-      <div class="figure">
+      <div class="figure" data-block="fig-trend">
         <div class="fig-head">
           <div>
             <div class="fig-title" id="trendTitle">—</div>
@@ -2077,7 +2102,9 @@ function wireDrawers() {
 }
 
 /* תובנות — תוכן ידני מ-content.json, מפתוח לפי מזהה המקטע */
-const INSIGHTS = DATA.insights || [];
+const INSIGHTS = (DATA.insights || []).map(x => ({...x}));
+/* בלוקים שהוסתרו — נשמרים ב-content.json ומוחלים בטעינה, כך שההסתרה שורדת בנייה מחדש */
+const HIDDEN = new Set(DATA.hidden || []);
 function renderInsights() {
   document.querySelectorAll("[data-drawer]").forEach(d => {
     const sec = d.getAttribute("data-drawer");
@@ -2089,14 +2116,43 @@ function renderInsights() {
         "תחת „insights”, עם section=\"" + sec + "\"."));
       return;
     }
-    mine.forEach(x => {
-      const box = el("div", {class:"insight"});
-      if (x.title) box.appendChild(el("h4", {}, x.title));
-      const body = el("div"); body.innerHTML = x.body;
-      box.appendChild(body);
-      host.appendChild(box);
-    });
+    mine.forEach(x => host.appendChild(insightCard(x)));
   });
+  applyHidden();
+}
+
+/* כרטיס תובנה אחד. ב„מצב עריכה” הכותרת והגוף ניתנים לעריכה במקום,
+   ויש כפתור מחיקה — כדי שאפשר יהיה גם להוסיף וגם להסיר תובנות. */
+function insightCard(x) {
+  const box = el("div", {class:"insight"});
+  box.__ins = x;
+  const h = el("h4", {}, x.title || "");
+  h.addEventListener("input", () => { x.title = h.textContent.trim(); bumpCount(); });
+  box.appendChild(h);
+  const body = el("div", {class:"ins-body"});
+  body.innerHTML = x.body || "";
+  body.addEventListener("input", () => { x.body = body.innerHTML.trim(); bumpCount(); });
+  box.appendChild(body);
+  const del = el("button", {type:"button", class:"blk-x ins-x", title:"מחיקת התובנה"}, "✕");
+  del.addEventListener("click", () => {
+    const i = INSIGHTS.indexOf(x);
+    if (i >= 0) INSIGHTS.splice(i, 1);
+    box.remove(); bumpCount();
+  });
+  box.appendChild(del);
+  return box;
+}
+
+/* מסתיר/מציג בלוקים לפי HIDDEN. נקרא בטעינה ואחרי כל שינוי. */
+function applyHidden() {
+  document.querySelectorAll("[data-block]").forEach(n => {
+    n.classList.toggle("blk-hidden", HIDDEN.has(n.getAttribute("data-block")));
+  });
+}
+
+function bumpCount() {
+  const n = document.getElementById("editCount");
+  if (n) n.textContent = Object.keys(EDITED).length + HIDDEN.size;
 }
 
 /* ============================================================
@@ -2155,7 +2211,50 @@ function wireEditing() {
       if (on) { n.setAttribute("contenteditable", "true"); n.setAttribute("spellcheck", "false"); }
       else n.removeAttribute("contenteditable");
     });
+    /* כותרות וגוף התובנות — נערכים רק במצב עריכה */
+    document.querySelectorAll(".insight h4, .insight .ins-body").forEach(n => {
+      if (on) { n.setAttribute("contenteditable", "true"); n.setAttribute("spellcheck", "false"); }
+      else n.removeAttribute("contenteditable");
+    });
   };
+
+  /* כפתור „הסתרה” על כל בלוק שניתן להסיר, וכפתור „הוספת תובנה” בכל מגירה.
+     שניהם נבנים פעם אחת ומוצגים רק במצב עריכה (CSS). */
+  document.querySelectorAll("[data-block]").forEach(n => {
+    if (n.querySelector(":scope > .blk-x")) return;
+    const id = n.getAttribute("data-block");
+    const b = el("button", {type:"button", class:"blk-x", title:"הסתרת הגרף מהדוח"}, "✕");
+    b.addEventListener("click", () => {
+      HIDDEN.has(id) ? HIDDEN.delete(id) : HIDDEN.add(id);
+      applyHidden(); bumpCount();
+    });
+    n.appendChild(b);
+  });
+  document.querySelectorAll("[data-drawer]").forEach(d => {
+    const sec = d.getAttribute("data-drawer");
+    const host = document.getElementById("i-" + sec);
+    if (!host || host.parentNode.querySelector(":scope > .blk-add")) return;
+    const add = el("button", {type:"button", class:"blk-add"}, "➕ הוספת תובנה");
+    add.addEventListener("click", () => {
+      const x = {section: sec, title: "כותרת התובנה", body: "<p>טקסט התובנה.</p>"};
+      INSIGHTS.push(x);
+      const card = insightCard(x);
+      card.querySelectorAll("h4, .ins-body").forEach(n => {
+        n.setAttribute("contenteditable", "true"); n.setAttribute("spellcheck", "false"); });
+      host.appendChild(card);
+      host.hidden = false;
+      card.querySelector("h4").focus();
+      bumpCount();
+    });
+    host.parentNode.appendChild(add);
+  });
+
+  /* גם בלוקים שהוסתרו קודם — להראות אותם שוב במצב עריכה, אחרת אי אפשר להחזירם */
+  document.body.addEventListener("click", e => {
+    if (!on) return;
+    const t = e.target.closest && e.target.closest(".blk-hidden");
+    if (t && !e.target.closest(".blk-x")) { HIDDEN.delete(t.getAttribute("data-block")); applyHidden(); bumpCount(); }
+  });
   toggle.addEventListener("click", () => setMode(!on));
   document.getElementById("editDone").addEventListener("click", () => setMode(false));
 
@@ -2163,11 +2262,11 @@ function wireEditing() {
     const n = e.target.closest && e.target.closest("[data-t]");
     if (!on || !n) return;
     EDITED[n.getAttribute("data-t")] = n.innerHTML.trim();
-    document.getElementById("editCount").textContent = Object.keys(EDITED).length;
+    bumpCount();
   });
 
   const payload = () => JSON.stringify(
-    {text: {...TEXT, ...EDITED}, insights: INSIGHTS}, null, 2);
+    {text: {...TEXT, ...EDITED}, insights: INSIGHTS, hidden: [...HIDDEN]}, null, 2);
 
   document.getElementById("editCopy").addEventListener("click", async () => {
     const btn = document.getElementById("editCopy");
