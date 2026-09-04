@@ -81,6 +81,11 @@ section:last-of-type{border:0}
 .sechead{display:flex;flex-direction:column;gap:14px;margin-block-end:30px}
 h2{font-size:clamp(27px,3.4vw,38px);letter-spacing:-.015em}
 h3{font-size:20px;font-weight:700;margin-block-start:34px}
+.smgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:12px;align-items:start;margin-block-start:14px}
+.smcard{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:12px 12px 8px}
+.smcard .t{font-family:var(--f-disp);font-size:14px;font-weight:700;color:var(--ink)}
+.smcard .s{font-size:11.5px;color:var(--ink-3);margin-block-start:2px;line-height:1.4}
 h4{font-size:16px;font-weight:700;margin-block-start:26px;color:var(--ink-2)}
 .sechead .k{font-family:var(--f-num);font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3)}
 .body p+p{margin-block-start:16px}

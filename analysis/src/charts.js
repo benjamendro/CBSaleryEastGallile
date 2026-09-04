@@ -447,42 +447,65 @@ function chart12(){
   legend('lg12',[['משלמת מעל הארצי בענף',c.s1],['משלמת מתחת לארצי',c.s3]]);
 }
 
-/* ---------- 13. per-authority shift-share ---------- */
-/* Unstacked: each component drawn from zero in its own direction, so size and
-   sign are read directly instead of decoded from an accumulated stack. */
+/* ---------- 13. per-authority: what each fix would be worth ---------- */
+/* Third attempt. The first two drew the decomposition as contributions to a gap,
+   which readers could not hold in mind. This anchors it in the wage people
+   actually earn and builds up to the national standard, so each segment answers
+   "how many shekels would this fix add". Identity: wage + fix_pay + fix_mix = standard. */
 function chart13(){
-  const c=S(),svg=clear('c13'); if(!svg)return; const A=D.anaf.ss;
-  const W=1000,rowH=42,m={t:44,r:118,b:34,l:150},H=m.t+A.length*rowH+m.b;
+  const c=S(),svg=clear('c13'); if(!svg)return; const A=D.anaf.ss2;
+  const W=1000,rowH=46,m={t:52,r:150,b:34,l:118},H=m.t+A.length*rowH+m.b;
   svg.setAttribute('viewBox','0 0 '+W+' '+H);
-  const lo=-3300,hi=700, X=v=>m.l+(v-lo)*(W-m.l-m.r)/(hi-lo);
-  [-3000,-2000,-1000,0].forEach(v=>{
-    svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t-12,y2:H-m.b,stroke:v?c.rule2:c.ink3,
-      'stroke-width':v?1:1.6}));
-    svg.appendChild(txt(fmt(v),{x:X(v),y:H-14,'text-anchor':'middle','font-size':10.5}));});
-  svg.appendChild(txt('גורע מהשכר ←',{x:X(-1000),y:m.t-24,'text-anchor':'middle','font-size':10.5,fill:c.ink3}));
-  svg.appendChild(txt('← מוסיף',{x:X(350),y:m.t-24,'text-anchor':'middle','font-size':10.5,fill:c.ink3}));
-  svg.appendChild(txt('סה״כ',{x:W-14,y:m.t-24,'text-anchor':'end','font-size':10.5,fill:c.ink3}));
+  const hi=14000, x=v=>m.l+v*(W-m.l-m.r)/hi;
+  [0,4000,8000,12000].forEach(v=>{
+    svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t-12,y2:H-m.b,stroke:v?c.rule2:c.ink3,
+      'stroke-width':v?1:1.5}));
+    svg.appendChild(txt(v?fmt(v):'0',{x:x(v),y:H-14,'text-anchor':'middle','font-size':10.5}));});
+  svg.appendChild(txt('ש״ח לחודש עבודה',{x:m.l,y:m.t-26,'text-anchor':'start','font-size':11,fill:c.ink3}));
+  svg.appendChild(txt('התקן הארצי לתמהיל שלה',{x:W-m.r+140,y:m.t-26,'text-anchor':'end',
+    'font-size':11,fill:c.ink3}));
   A.forEach((a,i)=>{
-    const y0=m.t+rowH*i+5, h=(rowH-16)/2;
-    if(i)svg.appendChild(el('line',{x1:10,x2:W-10,y1:y0-5,y2:y0-5,stroke:c.rule2}));
-    [[a.mix,c.s1,'הרכב ענפי — אילו ענפים יש כאן'],
-     [a.pay,c.s2,'שכר בתוך ענף — כמה משלמים בהם']].forEach(([v,col,lab],j)=>{
-      const yy=y0+j*(h+2), x0=X(0), x1=X(v);
-      const bar=el('rect',{x:Math.min(x0,x1),y:yy,width:Math.max(1,Math.abs(x1-x0)),height:h,
-        fill:col,rx:2});
-      hover(bar,`<b>${a.name}</b><i>${lab}</i> <b style="display:inline">${fmt(v)} ₪</b>`+
-        `<i>פער כולל</i> ${fmt(a.gap)} ₪<i>כיסוי ענפי</i> ${a.cov}%`);
-      svg.appendChild(bar);
-      svg.appendChild(txt(fmt(v),{x:x1+(v<0?-6:6),y:yy+h/2,'text-anchor':v<0?'end':'start',
-        'font-size':11,'font-weight':j?400:700,fill:j?c.ink3:c.ink}));});
-    svg.appendChild(txt(a.name,{x:m.l-12,y:y0+rowH/2-6,'text-anchor':'end','font-size':12.5,fill:c.ink,
+    const y0=m.t+rowH*i, y=y0+rowH/2-4, h=19;
+    if(i)svg.appendChild(el('line',{x1:10,x2:W-10,y1:y0-2,y2:y0-2,stroke:c.rule2}));
+    const base=el('rect',{x:x(0),y:y-h/2,width:x(a.wage)-x(0),height:h,fill:c.ink3,opacity:.55,rx:2});
+    hover(base,`<b>${a.name}</b><i>השכר בפועל</i> <b style="display:inline">${fmt(a.wage)} ש״ח</b>`+
+      `<i>התקן הארצי לתמהיל שלה</i> ${fmt(a.std)} ש״ח<i>כיסוי ענפי</i> ${a.cov}%`);
+    svg.appendChild(base);
+    // positive segments extend the bar; negative ones sit under it so they never
+    // overlap the base bar's own label
+    let acc=a.wage;
+    [[a.fix_pay,c.s2,'לשלם כמו הארץ בענפים הקיימים'],
+     [a.fix_mix,c.s1,'להחזיק את תמהיל הענפים הארצי']].forEach(([v,col,lab])=>{
+      const x0=x(acc),x1=x(acc+v), neg=v<0;
+      const yy=neg?y+h/2+7:y-h/2, hh=neg?7:h;
+      const seg=el('rect',{x:Math.min(x0,x1),y:yy,width:Math.max(2,Math.abs(x1-x0)),
+        height:hh,fill:col,rx:2});
+      hover(seg,`<b>${a.name}</b><i>${lab}</i> <b style="display:inline">${neg?'−':'+'}${fmt(Math.abs(v))} ש״ח</b>`);
+      svg.appendChild(seg);
+      if(neg)
+        svg.appendChild(txt('−'+fmt(-v),{x:Math.min(x0,x1)-6,y:yy+4,'text-anchor':'end',
+          'font-size':10,'font-weight':700,fill:col}));
+      else if(Math.abs(x1-x0)>46)
+        svg.appendChild(txt('+'+fmt(v),{x:(x0+x1)/2,y,'text-anchor':'middle',
+          'font-size':11,'font-weight':700,fill:'#fff'}));
+      acc+=v;});
+    // wage label at the START of the base bar: at the right-hand end it collides with
+    // the standard tick whenever the authority already pays above the standard
+    svg.appendChild(txt(fmt(a.wage),{x:x(0)+10,y,'text-anchor':'start','font-size':11.5,
+      'font-weight':700,fill:'#fff'}));
+    svg.appendChild(el('line',{x1:x(a.std),x2:x(a.std),y1:y-h/2-5,y2:y+h/2+5,stroke:c.ink,
+      'stroke-width':2}));
+    svg.appendChild(txt(fmt(a.std),{x:W-m.r+140,y:y-4,'text-anchor':'end','font-size':11.5,
+      'font-weight':700,fill:c.ink}));
+    svg.appendChild(txt(a.name,{x:m.l-12,y:y-4,'text-anchor':'end','font-size':12.5,fill:c.ink,
       'font-family':'Assistant,sans-serif','font-weight':600}));
-    svg.appendChild(txt(fmt(a.gap),{x:W-14,y:y0+rowH/2-6,'text-anchor':'end','font-size':12.5,
-      'font-weight':700,fill:a.gap<0?c.ink:c.s4}));});
-  legend('lg13',[['הרכב ענפי — אילו ענפים יש כאן',c.s1],
-                 ['שכר בתוך ענף — כמה משלמים בהם',c.s2]]);
-  table('t7',['רשות','שכר מכוסה ₪','פער מהתקן ₪','הרכב ענפי','שכר בתוך ענף','כיסוי'],
-    A.map(a=>[a.name,fmt(a.wage),fmt(a.gap),fmt(a.mix),fmt(a.pay),a.cov+'%']));
+    svg.appendChild(txt('כיסוי '+a.cov+'%',{x:m.l-12,y:y+12,'text-anchor':'end','font-size':10,
+      fill:c.ink3}));});
+  legend('lg13',[['השכר בפועל',c.ink3],['תוספת אילו שילמו כמו הארץ באותם ענפים',c.s2],
+                 ['תוספת אילו היה תמהיל הענפים הארצי',c.s1]]);
+  table('t7',['רשות','שכר בפועל','תוספת משכר בענפים','תוספת מתמהיל','התקן הארצי','כיסוי'],
+    A.map(a=>[a.name,fmt(a.wage),(a.fix_pay<0?'−':'+')+fmt(Math.abs(a.fix_pay)),
+              (a.fix_mix<0?'−':'+')+fmt(Math.abs(a.fix_mix)),fmt(a.std),a.cov+'%']));
 }
 
 /* ---------- 14. each authority against its socio-economic peers ---------- */
@@ -632,13 +655,48 @@ function chart16(){
       [r.name,fmt(r.n),fmt(r.med),fmt(r.mean),r.ratio,r.mm+'%']));
 }
 
+/* ---------- 17. six industries, one panel each ---------- */
+/* Small multiples: same geometry, same 100% reference, one industry per card, so
+   the reader compares authorities inside an industry and industries against each
+   other without re-learning the chart. */
+function chart17(){
+  const c=S();
+  (D.anafpick||[]).forEach((p,k)=>{
+    const svg=clear('c17_'+k); if(!svg)return;
+    const rows=p.rows, rowH=16, W=340, m={t:16,r:46,b:22,l:92},
+          H=m.t+rows.length*rowH+m.b;
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    const hi=Math.max(120,Math.ceil(Math.max(...rows.map(r=>r.ratio))/20)*20);
+    const x=v=>m.l+v*(W-m.l-m.r)/hi;
+    [0,50,100].forEach(v=>{ if(v>hi)return;
+      svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:m.t-6,y2:H-m.b,
+        stroke:v===100?c.ink:c.rule2,'stroke-width':v===100?1.4:1,
+        'stroke-dasharray':v===100?'4 3':''}));
+      svg.appendChild(txt(v+'%',{x:x(v),y:H-8,'text-anchor':'middle','font-size':9.5,
+        fill:v===100?c.ink2:c.ink3,'font-weight':v===100?700:400}));});
+    rows.forEach((r,i)=>{
+      const y=m.t+rowH*i+rowH/2, up=r.ratio>=100, col=up?c.s4:c.s1;
+      const b=el('rect',{x:m.l,y:y-5,width:Math.max(1,x(r.ratio)-m.l),height:10,fill:col,rx:2});
+      hover(b,`<b>${r.name}</b><i>${p.short}</i>`+
+        `<i>שכר תושבי הרשות בענף</i> <b style="display:inline">${fmt(r.wage)} ש״ח</b>`+
+        `<i>ארצי בענף</i> ${fmt(p.w_nat)} ש״ח<i>יחס</i> <b style="display:inline">${r.ratio}%</b>`+
+        `<i>שכירים</i> ${fmt(r.n)}`);
+      svg.appendChild(b);
+      // value labels in a fixed right-hand column: next to the bar they collide with
+      // the dashed 100% line whenever a ratio sits near it
+      svg.appendChild(txt(r.ratio+'%',{x:W-6,y,'text-anchor':'end','font-size':9.5,
+        'font-weight':up?700:400,fill:up?c.ink:c.ink3}));
+      svg.appendChild(txt(r.name,{x:m.l-6,y,'text-anchor':'end','font-size':10,fill:c.ink}));});
+  });
+}
+
 /* ---------- branch table ---------- */
 function branchTable(){
   table('t2',['ענף','% מהמועסקים באשכול','% ארצית','שכר ארצי ₪','שכר באשכול ₪','יחס'],
     D.big.map(r=>[r.name,r.s_eg+'%',r.s_nat+'%',fmt(r.w_nat),fmt(r.w_eg),r.wr+'%']));
 }
 
-function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,chart14,chart15,chart16,branchTable]
+function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,chart14,chart15,chart16,chart17,branchTable]
   .forEach(f=>{try{f()}catch(e){console.error(f.name,e)}}); }
 drawAll();
 matchMedia('(prefers-color-scheme:dark)').addEventListener('change',drawAll);
