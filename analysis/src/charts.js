@@ -520,13 +520,125 @@ function chart14(){
     R.map(r=>[r.name,r.ses,r.peers,r.idx+'%',r.idx_p+'%',sgn(r.d)]));
 }
 
+/* ---------- 15. distribution ends vs socio-economic peers ---------- */
+/* Two panels, one shared scale, same row order: a bar of a given length means the
+   same number of percentage points in both. Colour carries valence, because the
+   two measures are "worse" in opposite directions. */
+function chart15(){
+  const c=S(),svg=clear('c15'); if(!svg)return;
+  const R=D.ses.rows.slice().sort((a,b)=>b.d_minw-a.d_minw);
+  const W=1000,rowH=24,T=64,B=T+R.length*rowH,H=B+40;
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  const lo=-7,hi=11, PW=390;
+  const panels=[{x0:470,d:'d_minw',v:'minw',p:'minw_p',t:'עודף משתכרי שכר מינימום',
+                 sub:'ימינה = יותר מהדומות לה',worse:d=>d>0},
+                {x0:40, d:'d_top', v:'top', p:'top_p', t:'פער במשתכרים מעל פי שניים',
+                 sub:'שמאלה = פחות מהדומות לה',worse:d=>d<0}];
+  panels.forEach(pn=>{
+    const x=v=>pn.x0+(v-lo)*PW/(hi-lo);
+    svg.appendChild(txt(pn.t,{x:pn.x0+PW,y:T-34,'text-anchor':'end','font-size':13,
+      'font-weight':700,fill:c.ink}));
+    svg.appendChild(txt(pn.sub,{x:pn.x0+PW,y:T-18,'text-anchor':'end','font-size':11,fill:c.ink3}));
+    [-5,0,5,10].forEach(v=>{
+      svg.appendChild(el('line',{x1:x(v),x2:x(v),y1:T-8,y2:B,stroke:v?c.rule2:c.ink,
+        'stroke-width':v?1:1.6}));
+      svg.appendChild(txt(v?sgn(v).replace('.0',''):'0',{x:x(v),y:H-16,'text-anchor':'middle',
+        'font-size':10,fill:c.ink3}));});
+    R.forEach((r,i)=>{
+      const d=r[pn.d], y=T+rowH*i+rowH/2, col=pn.worse(d)?c.s2:c.s4;
+      const x0=x(0),x1=x(d), h=12;
+      const bar=el('rect',{x:Math.min(x0,x1),y:y-h/2,width:Math.max(1.5,Math.abs(x1-x0)),
+        height:h,fill:col,rx:2});
+      hover(bar,`<b>${r.name}</b><i>אשכול חברתי-כלכלי</i> ${r.ses}`+
+        `<i>היא</i> <b style="display:inline">${r[pn.v]}%</b>`+
+        `<i>ממוצע ${r.peers} הרשויות באותו אשכול</i> <b style="display:inline">${r[pn.p]}%</b>`+
+        `<i>הפרש</i> <b style="display:inline">${sgn(d)} נק׳</b>`);
+      svg.appendChild(bar);
+      svg.appendChild(txt(sgn(d),{x:x1+(d<0?-5:5),y,'text-anchor':d<0?'end':'start',
+        'font-size':10,'font-weight':700,fill:c.ink2}));});
+  });
+  R.forEach((r,i)=>svg.appendChild(txt(r.name,{x:W-10,y:T+rowH*i+rowH/2,'text-anchor':'end',
+    'font-size':11.5,fill:c.ink})));
+  svg.appendChild(txt('הרשות',{x:W-10,y:T-18,'text-anchor':'end','font-size':11,fill:c.ink3}));
+  legend('lg15',[['גרוע מהרשויות באותו אשכול חברתי-כלכלי',c.s2],['טוב מהן',c.s4]]);
+  table('t15',['רשות','אשכול חב״כ','עד מינימום — היא','ההשוואה','הפרש',
+               'מעל פי 2 — היא','ההשוואה','הפרש'],
+    R.map(r=>[r.name,r.ses,r.minw+'%',r.minw_p+'%',sgn(r.d_minw),
+              r.top+'%',r.top_p+'%',sgn(r.d_top)]));
+}
+
+/* ---------- 16. characterisation matrix: median wage x mean/median ratio ---------- */
+/* Quadrants split on the MEDIAN Israeli authority, not on the national aggregate:
+   the aggregate ratio (1.419) sits above 87% of authorities, so splitting there
+   would leave two quadrants empty and say nothing. */
+function chart16(){
+  const c=S(),svg=clear('c16'); if(!svg)return; const SC=D.scatter;
+  const W=1000,H=620,m={t:52,r:64,b:70,l:74};
+  const xlo=5500,xhi=16000, ylo=1.10,yhi=1.52;
+  const X=v=>m.l+(v-xlo)*(W-m.l-m.r)/(xhi-xlo), Y=v=>H-m.b-(v-ylo)*(H-m.t-m.b)/(yhi-ylo);
+  const cx=SC.nat_med_auth, cy=SC.nat_ratio_auth;
+  // faint tint on the quadrant that is bad on both axes
+  svg.appendChild(el('rect',{x:X(xlo),y:Y(yhi),width:X(cx)-X(xlo),height:Y(cy)-Y(yhi),
+    fill:c.s2,opacity:.07}));
+  [6000,8000,10000,12000,14000,16000].forEach(v=>{
+    svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:c.rule2}));
+    svg.appendChild(txt(fmt(v),{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':10.5}));});
+  [1.1,1.2,1.3,1.4,1.5].forEach(v=>{
+    svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),stroke:c.rule2}));
+    svg.appendChild(txt(v.toFixed(2),{x:m.l-10,y:Y(v),'text-anchor':'end','font-size':10.5}));});
+  // background: the other 324 authorities
+  SC.others.forEach(([mx,my])=>{ if(mx<xlo||mx>xhi||my<ylo||my>yhi)return;
+    svg.appendChild(el('circle',{cx:X(mx),cy:Y(my),r:2.6,fill:c.ink3,opacity:.20}));});
+  // quadrant reference lines
+  svg.appendChild(el('line',{x1:X(cx),x2:X(cx),y1:m.t,y2:H-m.b,stroke:c.ink,'stroke-width':1.6,
+    'stroke-dasharray':'6 4'}));
+  svg.appendChild(el('line',{x1:m.l,x2:W-m.r,y1:Y(cy),y2:Y(cy),stroke:c.ink,'stroke-width':1.6,
+    'stroke-dasharray':'6 4'}));
+  svg.appendChild(txt('חציון השכר החציוני ב־341 הרשויות · '+fmt(cx)+' ש״ח',
+    {x:X(cx)-8,y:m.t+12,'text-anchor':'end','font-size':10.5,'font-weight':700,fill:c.ink2}));
+  svg.appendChild(txt('חציון היחס ב־341 הרשויות · '+cy.toFixed(2),
+    {x:W-m.r-6,y:Y(cy)-7,'text-anchor':'end','font-size':10.5,'font-weight':700,fill:c.ink2}));
+  [['שכר חציוני נמוך · פחות שוויוני',X(xlo)+10,Y(yhi)+16,'start',c.s2],
+   ['שכר חציוני גבוה · פחות שוויוני',W-m.r-10,Y(yhi)+16,'end',c.ink3],
+   ['שכר חציוני נמוך · שוויוני יותר',X(xlo)+10,H-m.b-10,'start',c.ink3],
+   ['שכר חציוני גבוה · שוויוני יותר',W-m.r-10,H-m.b-10,'end',c.s4]]
+    .forEach(([t,x,y,a,col])=>svg.appendChild(txt(t,{x,y,'text-anchor':a,'font-size':11,
+      'font-weight':700,fill:col,opacity:.85})));
+  const nmax=Math.max(...SC.rows.map(r=>r.n)), R=n=>7+19*Math.sqrt(n/nmax);
+  const placed=[];
+  SC.rows.slice().sort((a,b)=>b.n-a.n).forEach(r=>{
+    const px=X(r.med),py=Y(r.ratio),rr=R(r.n);
+    const bad=r.med<cx&&r.ratio>cy, good=r.med>=cx&&r.ratio<=cy;
+    const col=bad?c.s2:good?c.s4:c.s1;
+    const dot=el('circle',{cx:px,cy:py,r:rr,fill:col,opacity:.72,stroke:c.card,'stroke-width':1.5});
+    hover(dot,`<b>${r.name}</b><i>שכר חציוני</i> <b style="display:inline">${fmt(r.med)} ש״ח</b>`+
+      `<i>שכר ממוצע</i> ${fmt(r.mean)} ש״ח<i>יחס ממוצע/חציון</i> <b style="display:inline">${r.ratio}</b>`+
+      `<i>יחס חציון/ממוצע</i> ${r.mm}%<i>מועסקים</i> ${fmt(r.n)}`);
+    svg.appendChild(dot);
+    let ly=py-rr-6, anchor='middle', lx=px;
+    if(placed.some(q=>Math.abs(q.x-lx)<58&&Math.abs(q.y-ly)<13)) ly=py+rr+13;
+    if(placed.some(q=>Math.abs(q.x-lx)<58&&Math.abs(q.y-ly)<13)){ lx=px+rr+7; ly=py+4; anchor='start'; }
+    placed.push({x:lx,y:ly});
+    svg.appendChild(txt(r.name,{x:lx,y:ly,'text-anchor':anchor,'font-size':10.5,
+      'font-weight':600,fill:c.ink}));});
+  svg.appendChild(txt('שכר חציוני לחודש עבודה, ש״ח',{x:W-m.r,y:H-14,'text-anchor':'end',
+    'font-size':11,fill:c.ink3}));
+  svg.appendChild(txt('↑ יחס ממוצע/חציון — גבוה = פחות שוויוני',{x:m.l,y:m.t-26,
+    'text-anchor':'start','font-size':11,fill:c.ink3}));
+  legend('lg16',[['נמוך ולא שוויוני',c.s2],['גבוה ושוויוני',c.s4],['ביניים',c.s1],
+                 ['341 הרשויות בארץ',c.ink3]]);
+  table('t16',['רשות','מועסקים','שכר חציוני','שכר ממוצע','ממוצע/חציון','חציון/ממוצע'],
+    SC.rows.slice().sort((a,b)=>b.med-a.med).map(r=>
+      [r.name,fmt(r.n),fmt(r.med),fmt(r.mean),r.ratio,r.mm+'%']));
+}
+
 /* ---------- branch table ---------- */
 function branchTable(){
   table('t2',['ענף','% מהמועסקים באשכול','% ארצית','שכר ארצי ₪','שכר באשכול ₪','יחס'],
     D.big.map(r=>[r.name,r.s_eg+'%',r.s_nat+'%',fmt(r.w_nat),fmt(r.w_eg),r.wr+'%']));
 }
 
-function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,chart14,branchTable]
+function drawAll(){ [chart1,chart2,chart3,chart4,chart5,chart6,chart7,chart8,chart9,chart10,chart11,chart12,chart13,chart14,chart15,chart16,branchTable]
   .forEach(f=>{try{f()}catch(e){console.error(f.name,e)}}); }
 drawAll();
 matchMedia('(prefers-color-scheme:dark)').addEventListener('change',drawAll);
