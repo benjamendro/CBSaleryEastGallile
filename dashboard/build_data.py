@@ -333,7 +333,12 @@ def read_text_overrides():
 
 
 def read_insights():
-    """תובנות שנכתבות ידנית. רשימה של {section, title, body}."""
+    """תובנות שנכתבות ידנית.
+
+    רשימה של {section, title, body} ובאופן אופציונלי גם „chart”: מזהה גרף
+    בחלק ג׳ (c1…c17). תובנה עם „chart” מוצגת ליד הגרף שלה בחלק ג׳ ואינה
+    מוצגת שוב במגירת המקטע; תובנה בלעדיו נשארת במגירה של חלק א׳/ב׳.
+    """
     if not os.path.exists(SRC_TEXT):
         return []
     with open(SRC_TEXT, encoding="utf-8") as fh:
@@ -345,8 +350,11 @@ def read_insights():
     for i, it in enumerate(items):
         if not isinstance(it, dict) or "body" not in it:
             sys.exit(f"content.json: תובנה {i} חייבת להכיל „body”")
-        out.append({"section": it.get("section", ""), "title": it.get("title", ""),
-                    "body": it["body"]})
+        rec = {"section": it.get("section", ""), "title": it.get("title", ""),
+               "body": it["body"]}
+        if it.get("chart"):
+            rec["chart"] = it["chart"]
+        out.append(rec)
     return out
 
 

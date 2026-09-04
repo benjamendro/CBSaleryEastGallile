@@ -37,6 +37,17 @@
   /* התפלגות השכר — סקאלה מתפצלת סביב השכר הממוצע במשק.
      שני רמפים מונוטוניים בבהירות (ΔL 0.11–0.20 לכל מדרגה): הכהה בקצה החיצוני.
      מתחת לממוצע = אדום · מעליו = ירוק. הגבולות כתובים במקרא. */
+  /* ---- חלק ג׳ · הניתוח המעמיק ----
+     ארבע סדרות קטגוריאליות. אומתו ב-scripts/validate_palette.js של מיומנות dataviz
+     במצב --pairs all מול רקע לבן: CVD ΔE ≥ 10.0 · ראייה רגילה ΔE ≥ 16.0 ·
+     ניגודיות ≥ 3.55:1. אין גרף שמציג יותר משלוש מהן יחד.
+     לא לשנות בלי להריץ מחדש את המאמת. */
+  --s1:#1C70A8;   /* האשכול */
+  --s2:#A8823A;   /* ארצי */
+  --s3:#8C1C5A;   /* תל אביב */
+  --s4:#5632A8;   /* מחוז הצפון · ממוצע הדומות */
+  --rule:#DCE5EC; --rule-2:#E8EEF2;
+
   --d-b1:#8F1D14; --d-b2:#C0342B; --d-b3:#E39189;
   --d-a1:#A9DCC5; --d-a2:#5AB68B; --d-a3:#17794A; --d-a4:#0B5233;
 
@@ -508,6 +519,73 @@ body.editing .insight h4,body.editing .insight .ins-body{outline:1px dashed rgba
   outline-offset:3px;border-radius:4px}
 body.editing .insight h4:focus,body.editing .insight .ins-body:focus{outline:2px solid #1C70A8}
 
+
+/* ================= חלק ג׳ · הניתוח המעמיק =================
+   מקור נפרד מחלק א׳: קבצי ההכנסה המנהליים של הלמ"ס, לא העיבוד המיוחד.
+   רמות השכר בשני הקבצים נבדלות במקדם משתנה (1.09–1.25), ולכן לחלק הזה
+   ציר משלו ותג מקור משלו — ואין מסך שבו ערך משני הקבצים יושב יחד. */
+.part-c{background:var(--paper-2);padding-block:6px 40px}
+.cblock{margin-top:30px}
+.cblock:first-child{margin-top:18px}
+.cblock > .wrap{max-width:1180px}
+.c-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.c-head h3{margin:0;font-family:var(--font-head);font-size:clamp(17px,2vw,21px);
+  font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.c-kicker{font-family:var(--font-head);font-size:11px;font-weight:700;letter-spacing:.04em;
+  color:#fff;background:var(--c-bluedeep);border-radius:100px;padding:3px 11px;flex:none}
+.c-text{font-size:15px;line-height:1.7;color:var(--ink-2);max-width:84ch}
+.c-text p{margin:.5em 0}
+.c-text b{color:var(--ink);font-weight:600}
+.c-text .fine{font-size:13.5px;color:var(--ink-3)}
+.part-c figure{margin:14px 0 0;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:16px 18px 12px;position:relative}
+.part-c figcaption{font-family:var(--font-head);font-size:13.5px;font-weight:600;
+  color:var(--ink);margin-bottom:2px}
+.part-c .csub{font-size:12.5px;color:var(--ink-3);margin-bottom:12px}
+.part-c svg{display:block;width:100%;height:auto;direction:ltr}
+.part-c .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:12px;
+  font-size:13px;color:var(--ink-2)}
+.part-c .legend span{display:inline-flex;align-items:center;gap:7px}
+.part-c .sw{width:11px;height:11px;border-radius:3px;flex:none;display:inline-block}
+.part-c .sw.line{height:3px;width:16px;border-radius:2px}
+.part-c .tbl{overflow-x:auto;margin-top:10px}
+.part-c table{border-collapse:collapse;width:100%;font-size:13.5px}
+.part-c th,.part-c td{text-align:center;padding:7px 10px;
+  border-bottom:1px solid var(--rule-2);font-variant-numeric:tabular-nums}
+.part-c th{font-family:var(--font-head);font-weight:700;color:var(--ink-3);font-size:12px;
+  letter-spacing:.03em;border-bottom:1px solid var(--line)}
+.part-c th:first-child,.part-c td.name{text-align:start}
+.part-c td.name{font-weight:600;color:var(--ink)}
+.part-c .c-src{font-size:11.5px;color:var(--ink-3);margin-top:9px;padding-top:8px;
+  border-top:1px solid var(--line)}
+.part-c .tgl{font-family:var(--font-body);font-size:12px;font-weight:700;color:var(--ink-2);
+  background:var(--paper-2);border:1px solid var(--line-2);border-radius:100px;
+  padding:4px 12px;cursor:pointer}
+.part-c .tgl:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:640px){.part-c figure{padding:12px 10px 10px}}
+
+
+/* tooltip של חלק ג׳ — מנוע הגרפים המקורי מצפה ל-.tip */
+.part-c .tip{position:fixed;pointer-events:none;background:var(--card);
+  border:1px solid var(--line-2);border-radius:9px;padding:9px 13px;font-size:12.5px;
+  line-height:1.5;color:var(--ink-2);box-shadow:0 16px 38px -16px rgba(20,39,63,.5);
+  opacity:0;transition:opacity .12s;z-index:200;max-width:280px}
+.part-c .tip.on{opacity:1}
+.part-c .tip b{display:block;font-family:var(--font-head);font-size:13px;
+  color:var(--ink);margin-bottom:4px}
+.part-c .tip i{font-style:normal;color:var(--ink-3)}
+
+/* c17 — שישה ענפים כמכפילים קטנים */
+.smgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:14px}
+.smcard{border:1px solid var(--line);border-radius:10px;padding:11px 12px 6px;
+  background:var(--paper-2)}
+.smt{font-family:var(--font-head);font-size:14px;font-weight:700;color:var(--ink)}
+.sms{font-size:11.5px;line-height:1.5;color:var(--ink-3);margin:3px 0 6px}
+.smcard svg{width:100%;height:auto}
+
+
+/* קישור אל בלוק בחלק ג׳ לא ייעצר מתחת לכותרת הדביקה */
+.cblock{scroll-margin-top:96px}
 </style>
 
 <div class="page" dir="rtl" lang="he">
@@ -910,6 +988,27 @@ body.editing .insight h4:focus,body.editing .insight .ins-body:focus{outline:2px
       </div>
     </div>
   </section>
+
+  <!-- ============ מפריד מקורות · חלק ג׳ ============ -->
+  <div class="srcbreak" id="srcbreak-c">
+    <div class="wrap">
+      <div class="sb-in">
+        <div class="sb-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="sb-txt">
+          <h2 data-t="breakc.title">חלק ג׳ · הניתוח המעמיק</h2>
+          <p data-t="breakc.note"><b>מקור שלישי, ולכן ציר שלישי.</b> המקטעים שלהלן מבוססים על
+          <b>קבצי ההכנסה המנהליים של הלמ"ס</b> — לא על העיבוד המיוחד שמזין את חלק א׳ ולא על
+          לוחות הביטוח הלאומי. שני קובצי הלמ"ס מודדים אוכלוסייה כמעט זהה, אבל
+          <b>רמת השכר בהם נבדלת במקדם משתנה של 1.09 עד 1.25</b> — היסט שאינו קבוע ולכן אינו
+          ניתן לתיקון במקדם אחד. לכן ערך בשקלים מכאן ואילך <b>אינו בר-השוואה</b> לערך בשקלים
+          מחלק א׳, ואין להציב אותם על אותו ציר או באותו כרטיס. הדירוגים, השיעורים ושיעורי
+          השינוי — כן ברי-השוואה, והם עיקר מה שמוצג כאן.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="part-c" id="partc"></div>
 
   <div class="editbar" id="editbar" hidden role="region" aria-label="מצב עריכת טקסט">
     <b>מצב עריכה</b>
@@ -2109,7 +2208,9 @@ function renderInsights() {
   document.querySelectorAll("[data-drawer]").forEach(d => {
     const sec = d.getAttribute("data-drawer");
     const host = clear(document.getElementById("i-" + sec));
-    const mine = INSIGHTS.filter(x => x.section === sec);
+    /* תובנה ששויכה לגרף בחלק ג׳ מוצגת שם, ליד הגרף שלה — ולא גם כאן,
+       אחרת אותו טקסט מופיע פעמיים באותו עמוד. */
+    const mine = INSIGHTS.filter(x => x.section === sec && !x.chart);
     if (!mine.length) {
       host.appendChild(el("div", {class:"insight empty"},
         "טרם נכתבו תובנות למקטע זה. תובנות נוספות בקובץ dashboard/content.json " +
@@ -2150,9 +2251,16 @@ function applyHidden() {
   });
 }
 
+/* תמונת מצב של התובנות כפי שנטענו, כדי שנוכל לספור גם עריכה של תובנה.
+   בלעדיה המונה ספר רק את EDITED ואת HIDDEN — ועריכת כותרת או גוף של תובנה
+   נשמרה בייצוא אבל לא הראתה למשתמש שנקלטה. */
+const INS0 = JSON.stringify((DATA.insights || []).map(x => [x.title, x.body]));
+function insightsChanged() {
+  return JSON.stringify(INSIGHTS.map(x => [x.title, x.body])) !== INS0 ? 1 : 0;
+}
 function bumpCount() {
   const n = document.getElementById("editCount");
-  if (n) n.textContent = Object.keys(EDITED).length + HIDDEN.size;
+  if (n) n.textContent = Object.keys(EDITED).length + HIDDEN.size + insightsChanged();
 }
 
 /* ============================================================
@@ -3311,7 +3419,123 @@ function init() {
   applyText();
   addFigureFooters();
   wireDrawers();
+
+/* ================= חלק ג׳ · הניתוח המעמיק =================
+   שבעה-עשר גרפים שנבנו בצינור הניתוח (analysis/), כל אחד עם התובנה
+   שהוא מדגים. כל בלוק נושא את תג המקור שלו: חמישה על העיבוד המיוחד של
+   הלמ"ס (אותו מקור כמו חלק א׳) ושנים-עשר על לוחות הביטוח הלאומי (כמו
+   חלק ב׳). אין בלוק שמערבב את השניים, ולכן הכלל „ציר אחד = מקור אחד”
+   נשמר גם כאן. */
+const PARTC = [{"id": "c1", "src": "ביטוח לאומי", "title": "מדד שכר ממוצע לחודש בשנה · ארצי = 100", "sub": "כלל העובדים · ביטוח לאומי · האשכול = סכום משוקלל של רשויותיו", "note": "הקו ב־100 הוא הממוצע הארצי. תל אביב מתרחקת כלפי מעלה; האשכול והצפון נעים במקביל לארצי בלי לצמצם.", "legs": ["lg1"], "tbls": ["t1"], "svgs": ["c1"]}, {"id": "c2", "src": "ביטוח לאומי", "title": "פער אחד, שני סרגלים", "sub": "אותו פער בדיוק, נמדד פעם באחוזים ופעם בשקלים · כלל העובדים · ביטוח לאומי", "note": "שני הפאנלים מציגים את אותו פער בדיוק, בשני סרגלים. מימין — באחוזים: לאשכול חסרים כ־20% מהשכר הארצי, וזה כמעט לא זז בתשע שנים (21.0% ל־20.1%). משמאל — אותו פער בשקלים: כשהשכר בכל הארץ עולה, אותם כ־20% שווים יותר כסף, והמרחק החודשי גדל מ־2,008 ל־2,578 ש״ח. הירידה ב־2024 מ־2,666 ל־2,578 ש״ח אינה שיפור אמיתי — היא אפקט הרכב (ראו ממצא 4). מול תל אביב הפער גדל באותה תקופה מ־3,592 ל־5,671 ש״ח לחודש.", "legs": [], "tbls": ["t2"], "svgs": ["c2"]}, {"id": "c5", "src": "ביטוח לאומי", "title": "רשויות האשכול, 2024 — מדד ממוצע מול מדד חציון", "sub": "שכר לחודש עבודה · ארצי = 100 · כלל העובדים · דירוג מתוך 341 (287 יישובים + 54 מועצות אזוריות)", "note": "אורך הקו אינו מדד לשוויון. הוא מכפלה של הפיזור הפנימי ברמת השכר, ולכן שתי רשויות באותה רמת שכר יכולות להראות קווים באורך שונה לגמרי בלי שאחת מהן שוויונית יותר. למדידה נקייה של השוויון ראו ממצא 5, סעיף 7. יסוד המעלה אינה מופיעה — פחות מ־2,000 תושבים, ולכן אינה נכללת בלוחות היישוביים של ביטוח לאומי. בעיבוד הלמ״ס לשנת 2024 היא מדורגת שנייה באשכול (865 שכירים, כ־1% מתעסוקת האשכול).", "legs": ["lg5"], "tbls": ["t3"], "svgs": ["c5"]}, {"id": "c16", "src": "ביטוח לאומי", "title": "מיפוי 17 הרשויות: שכר חציוני מול יחס ממוצע/חציון", "sub": "2024 · גודל הבועה = מספר המועסקים · הנקודות החיוורות = 324 הרשויות האחרות בארץ", "note": "ארבעה טיפוסים, וכולם מיוצגים באשכול. נמוך ולא שוויוני (הרבע המוצלל): מסעדה, מג'דל שמס, בוקעתא, עין קיניה ומטולה — גם העובד הטיפוסי מרוויח מעט וגם הפער בתוך הרשות גדול. גבוה אך לא שוויוני: ראש פינה, ולצידה מבואות חרמון — שכר חציוני מעל החציון הארצי, אך עם ריכוז בפסגה. אצל ראש פינה החריגה ברורה (1.360); מבואות חרמון (1.296) וג'ש (1.290) יושבות ממש על קו החלוקה, ואין לקרוא את צד הקו שלהן כממצא. גבוה ושוויוני: גולן וגליל עליון. נמוך אך שוויוני: שמונה רשויות, ובהן צפת, קרית שמונה, חצור וטובא־זנגריה. יסוד המעלה אינה מופיעה — פחות מ־2,000 תושבים, ולכן אינה בלוחות היישוביים של ביטוח לאומי. שימו לב שהיחס כאן הוא ממוצע/חציון (גבוה = פחות שוויוני), הפוך מהיחס חציון/ממוצע שבו נעשה שימוש בשאר הדוח; המרה: 1.29 ≙ 77.5%. 14 רשויות בארץ נמצאות מחוץ לטווח הצירים ואינן מוצגות ברקע.", "legs": ["lg16"], "tbls": ["t16"], "svgs": ["c16"]}, {"id": "c10", "src": "ביטוח לאומי", "title": "האם רשות שוויונית יותר או פחות ממה שמצופה מרמת השכר שלה?", "sub": "2024 · כל 341 היישובים והמועצות האזוריות בארץ · הקו הוא הרגרסיה הארצית (R²=0.45)", "note": "איך לקרוא: ככל שרשות ימינה — השכר בה גבוה יותר. ככל שהיא גבוהה — ההתפלגות בה שוויונית יותר. הענן האפור הוא 341 הרשויות בארץ, והקו הכהה הוא הקשר הארצי: ברשויות עניות ההתפלגות שוויונית יותר, בהכרח. לכן ההשוואה הנכונה אינה לקו האופקי אלא למרחק מהקו — כמה רשות חורגת ממה שמצופה מרמת השכר שלה. הקווים המקווקווים הם סטיית תקן אחת (4.2 נקודות). האשכול כמכלול יושב בדיוק על הקו (חריגה ממוצעת ‎−1.0 נקודות, p=0.41) — אין בו ייחוד. אבל בתוכו יש חריגים אמיתיים לשני הכיוונים.", "legs": ["lg10"], "tbls": ["t5"], "svgs": ["c10"]}, {"id": "c9", "src": "ביטוח לאומי", "title": "שינוי בתעסוקה מול שינוי בשכר, 2023→2024", "sub": "כל נקודה = רשות · שכר חציוני לחודש עבודה · מתאם ‎−0.96", "note": "הקו הוא רגרסיה לינארית על 17 הרשויות. רשויות קו העימות מרוכזות בקצה השמאלי־עליון: איבדו הכי הרבה מועסקים ו\"השתפרו\" הכי הרבה בשכר.", "legs": ["lg9"], "tbls": [], "svgs": ["c9"]}, {"id": "c8", "src": "ביטוח לאומי", "title": "שינוי שנתי במספר המועסקים", "sub": "% · כלל העובדים · האשכול = 17 רשויות (16 עד 2022)", "note": "2020 היא שנת הקורונה; 2024 היא השנה הראשונה המלאה של המלחמה ופינוי יישובי הגבול. המעבר מ־16 ל־17 רשויות ב־2023 (הצטרפות מטולה) מוסיף כ־1.2% למדרגת 2023 ואינו משנה את תמונת 2024.", "legs": ["lg8"], "tbls": [], "svgs": ["c8"]}, {"id": "c6", "src": "ביטוח לאומי", "title": "משך העבודה בשנה, 2024", "sub": "% מהמועסקים לפי מספר חודשי עבודה", "note": "ההפרש מתורגם לכ־0.3 חודשי עבודה פחות בשנה לעובד.", "legs": ["lg6"], "tbls": [], "svgs": ["c6"]}, {"id": "c3", "src": "ביטוח לאומי", "title": "התפלגות קבוצות הכנסה, 2024", "sub": "% מהמועסקים לפי שכר לחודש עבודה ביחס לשכר הממוצע במשק · אשכול = 17 רשויות", "note": "הקבוצות אינן חופפות — כל אחת מתחילה היכן שקודמתה נגמרת, ולכן כל עמודה (אשכול, ארצי) מסתכמת ב־100%. \"75%–100% מהממוצע\" = מי שמרוויח יותר מ־75% מהשכר הממוצע במשק אך פחות מהממוצע עצמו. המספרים בסוגריים הם ההפרש בנקודות אחוז מול הארצי: + = באשכול יש יותר מועסקים בקבוצה הזו, − = פחות.", "legs": ["lg3"], "tbls": ["t4"], "svgs": ["c3"]}, {"id": "c7", "src": "ביטוח לאומי", "title": "שיעור המשתכרים עד שכר מינימום", "sub": "% מהמועסקים ביישוב · שכר לחודש עבודה · 2016–2022", "note": "ברמת יישוב בלבד — המועצות האזוריות אינן מפורסמות בלוח זה.", "legs": ["lg7"], "tbls": [], "svgs": ["c7"]}, {"id": "c14", "src": "ביטוח לאומי", "title": "כל רשות מול הרשויות באותו אשכול חברתי-כלכלי", "sub": "מדד שכר ממוצע לחודש עבודה, ארצי = 100 · 2024 · מסודר לפי גודל הפער", "note": "העיגול החלול הוא ממוצע ההשוואה — הרשויות בכל הארץ באותו אשכול חברתי-כלכלי. העיגול המלא הוא הרשות עצמה. ככל שהקו ארוך יותר, כך הפער גדול יותר. ארבע הרשויות החורגות ביותר — ג'ש, מטולה, מבואות חרמון וראש פינה — נמצאות דווקא באשכול 7, מהחזקים; הפער שלהן מהצפוי הוא הגדול באשכול.", "legs": ["lg14"], "tbls": ["t14"], "svgs": ["c14"]}, {"id": "c15", "src": "ביטוח לאומי", "title": "שני קצות ההתפלגות, מול הרשויות באותו אשכול חברתי-כלכלי", "sub": "נקודות אחוז הפרש · 2024 · אותו סדר שורות בשני הפאנלים · אותה סקאלה", "note": "שני הפאנלים על אותה סקאלה — עמודה באותו אורך פירושה אותו מספר נקודות אחוז בשניהם. הצבע נושא את הכיוון: אדום = גרוע מהרשויות הדומות, ירוק = טוב מהן. זה נחוץ כאן כי \"גרוע\" הוא לכיוונים הפוכים בשני המדדים — יותר משתכרי מינימום לעומת פחות משתכרים גבוהים. שימו לב שהחריגה בקצה התחתון גדולה יותר מזו שבקצה העליון: 10.4 נקודות במסעדה מול 6.3 בג'ש. הסיבה טכנית — שיעור המשתכרים הגבוהים קטן מלכתחילה (2%–14%), ולכן גם החריגות בו קטנות יותר במונחים מוחלטים.", "legs": ["lg15"], "tbls": ["t15"], "svgs": ["c15"]}, {"id": "c4", "src": "למ\"ס — עיבוד מיוחד", "title": "שמונת הענפים שגורעים הכי הרבה מהשכר, 2024", "sub": "ש״ח לחודש · שכירים · פירוק סימטרי · מקור: עיבוד מיוחד של הלמ״ס", "note": "בתכנות מחשבים רוב הנזק הוא כמות ולא מחיר: ‎−925 ש״ח מכך שאין כאן מספיק משרות כאלה, מול ‎−294 ש״ח מכך שהן משלמות פחות. במחקר ופיתוח זה הפוך — ‎−151 ש״ח משכר מול ‎−50 ש״ח מהרכב. אלה שמונת הענפים השליליים הגדולים מתוך 32. יש גם 18 ענפים שמושכים את השכר כלפי מעלה ב־1,501 ש״ח יחד — בעיקר חינוך (+417) וגידולים צמחיים (+377). הפער ‎−2,569 הוא הסכום נטו של שתי הקבוצות.", "legs": ["lg4"], "tbls": ["t_c4"], "svgs": ["c4"]}, {"id": "c11", "src": "למ\"ס — עיבוד מיוחד", "title": "חלק ענפי הידע מהשכירים מול מדד השכר, לפי רשות", "sub": "2024 · שכירים · רשויות בעלות כיסוי מספיק · הקו האנכי הוא השיעור הארצי (11.1%)", "note": "גליל עליון וקריית שמונה מגיעות לשלושה־רבעים מהשיעור הארצי של ענפי הידע; צפת לחמישית ממנו. הקו המקווקו הוא רגרסיה על תשע הרשויות.", "legs": ["lg11"], "tbls": [], "svgs": ["c11"]}, {"id": "c12", "src": "למ\"ס — עיבוד מיוחד", "title": "שכר בענף החינוך, לפי רשות", "sub": "2024 · הקו הוא השכר הארצי בענף (11,163 ₪) · המספר מעל כל עמודה = מספר השכירים", "note": "שתי הרשויות שמעסיקות הכי הרבה מורים — צפת (2,974) וגולן (1,732) — נמצאות בשני קצוות הסולם: 80.5% ו־126.7% מהשכר הארצי בענף.", "legs": ["lg12"], "tbls": [], "svgs": ["c12"]}, {"id": "c17", "src": "למ\"ס — עיבוד מיוחד", "title": "שישה ענפים נבחרים — יחס שכר הרשות לשכר הארצי בענף", "sub": "2024 · שכירים · הקו המקווקו הוא 100% = השכר הארצי באותו ענף", "note": "", "legs": [], "tbls": [], "svgs": ["c17_0", "c17_1", "c17_2", "c17_3", "c17_4", "c17_5"], "cards": [{"id": "c17_0", "t": "חינוך", "s": "המעסיק הגדול באשכול · ארצי בענף 11,163 ש״ח · 18 רשויות · 11,534 שכירים 13 מתוך 18 ברמה הארצית או מעליה"}, {"id": "c17_1", "t": "מסחר קמעונאי", "s": "ענף עממי, נוכח כמעט בכל רשות · ארצי בענף 7,653 ש״ח · 17 רשויות · 5,725 שכירים 5 מתוך 17 ברמה הארצית או מעליה"}, {"id": "c17_2", "t": "גידולים צמחיים", "s": "פי 5 מהמשקל הארצי · ארצי בענף 8,514 ש״ח · 17 רשויות · 4,555 שכירים 6 מתוך 17 ברמה הארצית או מעליה"}, {"id": "c17_3", "t": "מינהל מקומי", "s": "הרשויות עצמן כמעסיק · ארצי בענף 11,536 ש״ח · 16 רשויות · 4,523 שכירים 4 מתוך 16 ברמה הארצית או מעליה"}, {"id": "c17_4", "t": "תכנות ושירותי מחשב", "s": "התורם הגדול ביותר לפער · ארצי בענף 31,994 ש״ח · 9 רשויות · 1,507 שכירים 0 מתוך 9 ברמה הארצית או מעליה"}, {"id": "c17_5", "t": "ייצור אלקטרוניקה", "s": "הפער הפנימי החד ביותר · ארצי בענף 25,982 ש״ח · 7 רשויות · 748 שכירים 4 מתוך 7 ברמה הארצית או מעליה"}]}, {"id": "c13", "src": "למ\"ס — עיבוד מיוחד", "title": "מה הייתה שווה כל אחת משתי ה\"תרופות\", בשקלים", "sub": "2024 · שכר לחודש עבודה · רק תשע רשויות עם כיסוי ענפי ‎≥80%", "note": "כל שורה נבנית משמאל לימין ומגיעה בדיוק לתקן הארצי (הקו האנכי השחור). האפור הוא השכר שמשתלם היום; שני המקטעים שאחריו הם מה שכל תיקון היה מוסיף. בצפת: 8,195 היום; לשלם כמו הארץ באותם ענפים ‎+2,840; להחזיק את תמהיל הענפים הארצי ‎+1,228; יחד 12,263. ככל שמקטע ארוך יותר, כך התיקון שהוא מייצג שווה יותר. בגולן ובגליל עליון מקטע השכר שלילי — הן כבר משלמות מעל התקן הארצי בענפים שלהן (‎−131 ו‎−362), כלומר \"לשלם כמו הארץ\" היה מוריד להן את השכר. התקן מנורמל לענפים שאותה רשות מפרסמת, ולכן הוא שונה מעט בין השורות.", "legs": ["lg13"], "tbls": ["t7"], "svgs": ["c13"]}];
+
+/* ה-viewBox המקורי של כל גרף — נשמר כדי שהגיאומטריה שנכתבה בקוד הציור תתאים */
+const VB = {"c1": "0 0 1000 380", "c2": "0 0 1000 400", "c3": "0 0 1000 420", "c4": "0 0 1000 450", "c5": "0 0 1000 580", "c6": "0 0 1000 300", "c7": "0 0 1000 360", "c8": "0 0 1000 360", "c9": "0 0 1000 430", "c10": "0 0 1000 460", "c11": "0 0 1000 430", "c12": "0 0 1000 420", "c13": "0 0 1000 494", "c14": "0 0 1000 560", "c15": "0 0 1000 520", "c16": "0 0 1000 560"};
+
+function renderPartC() {
+  const host = document.getElementById("partc");
+  if (!host) return;
+  clear(host);
+  host.appendChild(el("div", {class:"tip", id:"ctip"}));
+
+  PARTC.forEach(spec => {
+    const sec = el("section", {class:"cblock", id:"cb-" + spec.id});
+    const wrap = el("div", {class:"wrap"});
+    sec.appendChild(wrap);
+
+    const head = el("div", {class:"c-head"});
+    head.appendChild(el("span", {class:"c-kicker"}, spec.src));
+    head.appendChild(el("h3", {}, T("c." + spec.id + ".title", spec.title)));
+    wrap.appendChild(head);
+
+    /* התובנות ששויכו לגרף הזה — הן הטקסט של הבלוק. */
+    const mine = INSIGHTS.filter(x => x.chart === spec.id);
+    if (mine.length) {
+      const box = el("div", {class:"c-text"});
+      mine.forEach(x => box.appendChild(insightCard(x)));
+      wrap.appendChild(box);
+    }
+
+    const fig = el("figure", {"data-block": "fig-" + spec.id});
+    /* אין figcaption: כותרת הגרף כבר מופיעה ככותרת הבלוק ממש מעליו,
+       ושתי הופעות של אותה מחרוזת נקראות כתקלה. נשארת שורת ההקשר בלבד. */
+    fig.appendChild(el("div", {class:"csub"}, T("c." + spec.id + ".sub", spec.sub)));
+    spec.legs.forEach(id => fig.appendChild(el("div", {class:"legend", id})));
+
+    if (spec.cards) {                     /* c17 — שישה כרטיסים קטנים */
+      const grid = el("div", {class:"smgrid"});
+      spec.cards.forEach(c => {
+        const card = el("div", {class:"smcard"});
+        card.appendChild(el("div", {class:"smt"}, c.t));
+        card.appendChild(el("div", {class:"sms"}, c.s));
+        const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        s.setAttribute("id", c.id);
+        s.setAttribute("viewBox", "0 0 340 200");
+        s.setAttribute("role", "img");
+        s.setAttribute("aria-label", c.t + " — יחס שכר הרשות לשכר הארצי בענף");
+        card.appendChild(s);
+        grid.appendChild(card);
+      });
+      fig.appendChild(grid);
+    } else {
+      const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      s.setAttribute("id", spec.id);
+      s.setAttribute("viewBox", VB[spec.id] || "0 0 1000 430");
+      s.setAttribute("role", "img");
+      s.setAttribute("aria-label", spec.title);
+      fig.appendChild(s);
+    }
+
+    if (spec.note) {
+      const n = el("div", {class:"c-src"});
+      n.innerHTML = te("c." + spec.id + ".note", spec.note);
+      fig.appendChild(n);
+    }
+
+    if (spec.tbls.length) {
+      const btn = el("button", {type:"button", class:"tgl"}, "הצגת טבלת הנתונים");
+      const wrapT = el("div", {class:"tbl"});
+      wrapT.hidden = true;
+      spec.tbls.forEach(id => wrapT.appendChild(el("div", {id})));
+      btn.setAttribute("aria-expanded", "false");
+      btn.addEventListener("click", () => {
+        wrapT.hidden = !wrapT.hidden;
+        btn.textContent = wrapT.hidden ? "הצגת טבלת הנתונים" : "הסתרת הטבלה";
+        btn.setAttribute("aria-expanded", String(!wrapT.hidden));
+      });
+      fig.appendChild(btn); fig.appendChild(wrapT);
+    }
+
+    /* הערת עורך — מרחב שמות נפרד לחלק ג׳, כמו anno.c.* בקונסולה */
+    fig.appendChild(el("div", {class:"fig-anno", "data-t":"anno.c3." + spec.id}));
+
+    const x = el("button", {type:"button", class:"blk-x", title:"הסרת הגרף"}, "✕");
+    x.addEventListener("click", () => {
+      HIDDEN.add("fig-" + spec.id); applyHidden(); bumpCount();
+    });
+    fig.appendChild(x);
+    wrap.appendChild(fig);
+    host.appendChild(sec);
+  });
+}
+
+/* מנוע הגרפים של חלק ג׳, כלשונו מ-analysis/src/charts.js.
+   הוא מגדיר el · S · clear · fmt · txt · table · NS בשמות שכבר תפוסים
+   בדשבורד — ובפרט el() שלו יוצר צומת SVG ומתעלם מארגומנט הטקסט.
+   לכן הוא סגור ב-IIFE, ומחוצה לו נחשפת רק נקודת הכניסה. */
+/* מנוע הגרפים של חלק ג׳ מוזרק כאן בזמן הבנייה מתוך analysis/src/charts.js —
+   מקור אמת אחד, כדי ששתי עותקים לא יסטו זה מזה. הוא מגדיר el · S · clear ·
+   fmt · txt · table · NS בשמות שכבר תפוסים בדשבורד (ובפרט el() שלו יוצר
+   צומת SVG ומתעלם מארגומנט הטקסט), ולכן הוא סגור ב-IIFE. */
+const drawPartC = (() => {
+"__PARTC_CHARTS__"
+  return drawAll;
+})();
+
+
+
   renderInsights();
+  renderPartC();
+  drawPartC();
   renderGuide();
   wireEditing();
   wireContextBars();
@@ -3418,16 +3642,22 @@ function wireContextBars() {
   const metric = document.querySelector(".metricbar");
   const ctx = document.getElementById("ctxbar");
   const partB = document.getElementById("srcbreak");
+  const partC = document.getElementById("srcbreak-c");
   if (!metric || !ctx || !partB) return;
-  let inB = null, queued = false;
+  let state = null, queued = false;
   const check = () => {
     queued = false;
-    /* חלק ב׳ מתחיל כשראש המפריד עולה מעל קו הסרגלים */
-    const now = partB.getBoundingClientRect().top <= 90;
-    if (now === inB) return;
-    inB = now;
-    metric.classList.toggle("off", now);
-    ctx.classList.toggle("off", !now);
+    /* חלק ב׳ מתחיל כשראש המפריד עולה מעל קו הסרגלים; חלק ג׳ באותו אופן.
+       בחלק ג׳ אין בורר בכלל — כל גרף שם הוא תצלום קבוע — ולכן שני
+       הסרגלים נעלמים. סרגל שנשאר על המסך בלי שהוא חל על מה שמתחתיו
+       מצהיר הקשר שאינו קיים, וזו בדיוק התקלה שכלל „הקשר אחד בכל רגע”
+       נועד למנוע. */
+    const inC = partC && partC.getBoundingClientRect().top <= 90;
+    const now = inC ? "c" : (partB.getBoundingClientRect().top <= 90 ? "b" : "a");
+    if (now === state) return;
+    state = now;
+    metric.classList.toggle("off", now !== "a");
+    ctx.classList.toggle("off", now !== "b");
   };
   const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
   addEventListener("scroll", onScroll, {passive:true});

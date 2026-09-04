@@ -6,7 +6,14 @@ const S = () => { const c = getComputedStyle(document.documentElement);
            ink:c.getPropertyValue('--ink').trim(), ink2:c.getPropertyValue('--ink-2').trim(),
            ink3:c.getPropertyValue('--ink-3').trim(), rule:c.getPropertyValue('--rule').trim(),
            rule2:c.getPropertyValue('--rule-2').trim(), card:c.getPropertyValue('--card').trim(),
-           accent:c.getPropertyValue('--accent').trim() }; };
+           accent:c.getPropertyValue('--accent').trim(),
+           /* זוג ערכיות (טוב/רע) + נייטרלי. חמישה גרפים כאן אינם קטגוריאליים
+              אלא מקטבים — „מעל/מתחת לצפוי” — ולכן הם משתמשים בזוג הזה ולא
+              בסדרות s1…s4. ΔE ‏CVD של הזוג נמוך, ולכן בכל אחד מהם מוצג גם
+              הערך המספרי לצד הסימון ולא רק הצבע. */
+           up:c.getPropertyValue('--s-up').trim(),
+           down:c.getPropertyValue('--s-down').trim(),
+           mid:c.getPropertyValue('--s-ref').trim() }; };
 const SHORT={'62+63':'תכנות ושירותי מחשב','64+65+66':'שירותים פיננסיים','46':'מסחר סיטוני',
  '86':'שירותי בריאות','72':'מחקר ופיתוח','26':'ייצור אלקטרוניקה ומחשבים','47':'מסחר קמעונאי',
  '50+51+52+53':'תחבורה, אחסנה ודואר','85':'חינוך','87+88':'שירותי סעד ורווחה','1':'חקלאות — גידולים צמחיים',
@@ -365,7 +372,7 @@ function chart10(){
   svg.appendChild(txt('הקו הארצי: מה שמצופה מרמת השכר',{x:X(xhi)-6,y:Y(f(xhi))-10,'text-anchor':'end',
     'font-size':11.5,'font-weight':700,fill:c.ink2}));
   R.cluster.forEach(p=>{
-    const col=p.resid>=2?c.s4:(p.resid<=-2?c.s3:c.s1);
+    const col=p.resid>=2?c.up:(p.resid<=-2?c.down:c.mid);
     const d=el('circle',{cx:X(p.idx),cy:Y(p.ratio),r:6.5,fill:col,stroke:c.card,'stroke-width':2});
     hover(d,`<b>${p.name}</b><i>מדד שכר</i> <b style="display:inline">${p.idx}</b> · `+
       `<i>חציון/ממוצע</i> <b style="display:inline">${p.ratio}%</b><br>`+
@@ -377,8 +384,8 @@ function chart10(){
    .forEach(([nm,dx,dy])=>{const p=R.cluster.find(q=>q.name===nm); if(!p)return;
      svg.appendChild(txt(nm,{x:X(p.idx)+dx,y:Y(p.ratio)+dy,'text-anchor':'middle','font-size':11.5,
        fill:c.ink,'font-weight':600,'font-family':'Assistant,sans-serif'}));});
-  legend('lg10',[['שוויונית מהמצופה (מעל +2 נק׳)',c.s4],['כמצופה',c.s1],
-                 ['פחות שוויונית מהמצופה (מתחת ‎−2 נק׳)',c.s3],['341 הרשויות בארץ',c.ink3]]);
+  legend('lg10',[['שוויונית מהמצופה (מעל +2 נק׳)',c.up],['כמצופה',c.mid],
+                 ['פחות שוויונית מהמצופה (מתחת ‎−2 נק׳)',c.down],['341 הרשויות בארץ',c.ink3]]);
   table('t5',['רשות','מועסקים','מדד שכר','חציון/ממוצע','מצופה לרמה זו','חריגה (נק׳)'],
     R.cluster.map(p=>[p.name,fmt(p.n),p.idx,p.ratio+'%',p.exp+'%',(p.resid>0?'+':'')+p.resid]));
 }
@@ -524,7 +531,7 @@ function chart14(){
   svg.appendChild(txt('ארצי',{x:x(100),y:H-10,'text-anchor':'middle','font-size':10.5,
     'font-weight':700,fill:c.ink2}));
   R.forEach((r,i)=>{
-    const y=m.t+rowH*i+rowH/2, up=r.d>0, col=up?c.s4:c.s2;
+    const y=m.t+rowH*i+rowH/2, up=r.d>0, col=up?c.up:c.down;
     svg.appendChild(el('line',{x1:x(r.idx),x2:x(r.idx_p),y1:y,y2:y,stroke:col,
       'stroke-width':3,'stroke-linecap':'round'}));
     svg.appendChild(el('circle',{cx:x(r.idx_p),cy:y,r:4.6,fill:c.card,stroke:c.ink3,'stroke-width':2}));
@@ -537,7 +544,7 @@ function chart14(){
     svg.appendChild(txt(r.name,{x:W-m.r+10,y,'text-anchor':'start','font-size':12,fill:c.ink}));
     svg.appendChild(txt('אשכול '+r.ses,{x:W-m.r+118,y,'text-anchor':'start','font-size':10.5,fill:c.ink3}));
     svg.appendChild(txt(sgn(r.d),{x:m.l-10,y,'text-anchor':'end','font-size':12,'font-weight':700,fill:col}));});
-  legend('lg14',[['הרשות — מתחת לדומות לה',c.s2],['הרשות — מעליהן',c.s4],
+  legend('lg14',[['הרשות — מתחת לדומות לה',c.down],['הרשות — מעליהן',c.up],
     ['ממוצע הרשויות באותו אשכול חברתי-כלכלי',c.ink3]]);
   table('t14',['רשות','אשכול חב״כ','רשויות השוואה','מדד השכר שלה','ממוצע ההשוואה','הפרש'],
     R.map(r=>[r.name,r.ses,r.peers,r.idx+'%',r.idx_p+'%',sgn(r.d)]));
@@ -568,7 +575,7 @@ function chart15(){
       svg.appendChild(txt(v?sgn(v).replace('.0',''):'0',{x:x(v),y:H-16,'text-anchor':'middle',
         'font-size':10,fill:c.ink3}));});
     R.forEach((r,i)=>{
-      const d=r[pn.d], y=T+rowH*i+rowH/2, col=pn.worse(d)?c.s2:c.s4;
+      const d=r[pn.d], y=T+rowH*i+rowH/2, col=pn.worse(d)?c.down:c.up;
       const x0=x(0),x1=x(d), h=12;
       const bar=el('rect',{x:Math.min(x0,x1),y:y-h/2,width:Math.max(1.5,Math.abs(x1-x0)),
         height:h,fill:col,rx:2});
@@ -583,7 +590,7 @@ function chart15(){
   R.forEach((r,i)=>svg.appendChild(txt(r.name,{x:W-10,y:T+rowH*i+rowH/2,'text-anchor':'end',
     'font-size':11.5,fill:c.ink})));
   svg.appendChild(txt('הרשות',{x:W-10,y:T-18,'text-anchor':'end','font-size':11,fill:c.ink3}));
-  legend('lg15',[['גרוע מהרשויות באותו אשכול חברתי-כלכלי',c.s2],['טוב מהן',c.s4]]);
+  legend('lg15',[['גרוע מהרשויות באותו אשכול חברתי-כלכלי',c.down],['טוב מהן',c.up]]);
   table('t15',['רשות','אשכול חב״כ','עד מינימום — היא','ההשוואה','הפרש',
                'מעל פי 2 — היא','ההשוואה','הפרש'],
     R.map(r=>[r.name,r.ses,r.minw+'%',r.minw_p+'%',sgn(r.d_minw),
@@ -602,7 +609,7 @@ function chart16(){
   const cx=SC.nat_med_auth, cy=SC.nat_ratio_auth;
   // faint tint on the quadrant that is bad on both axes
   svg.appendChild(el('rect',{x:X(xlo),y:Y(yhi),width:X(cx)-X(xlo),height:Y(cy)-Y(yhi),
-    fill:c.s2,opacity:.07}));
+    fill:c.down,opacity:.07}));
   [6000,8000,10000,12000,14000,16000].forEach(v=>{
     svg.appendChild(el('line',{x1:X(v),x2:X(v),y1:m.t,y2:H-m.b,stroke:c.rule2}));
     svg.appendChild(txt(fmt(v),{x:X(v),y:H-m.b+18,'text-anchor':'middle','font-size':10.5}));});
@@ -621,10 +628,10 @@ function chart16(){
     {x:X(cx)-8,y:m.t+12,'text-anchor':'end','font-size':10.5,'font-weight':700,fill:c.ink2}));
   svg.appendChild(txt('חציון היחס ב־341 הרשויות · '+cy.toFixed(2),
     {x:W-m.r-6,y:Y(cy)-7,'text-anchor':'end','font-size':10.5,'font-weight':700,fill:c.ink2}));
-  [['שכר חציוני נמוך · פחות שוויוני',X(xlo)+10,Y(yhi)+16,'start',c.s2],
+  [['שכר חציוני נמוך · פחות שוויוני',X(xlo)+10,Y(yhi)+16,'start',c.down],
    ['שכר חציוני גבוה · פחות שוויוני',W-m.r-10,Y(yhi)+16,'end',c.ink3],
    ['שכר חציוני נמוך · שוויוני יותר',X(xlo)+10,H-m.b-10,'start',c.ink3],
-   ['שכר חציוני גבוה · שוויוני יותר',W-m.r-10,H-m.b-10,'end',c.s4]]
+   ['שכר חציוני גבוה · שוויוני יותר',W-m.r-10,H-m.b-10,'end',c.up]]
     .forEach(([t,x,y,a,col])=>svg.appendChild(txt(t,{x,y,'text-anchor':a,'font-size':11,
       'font-weight':700,fill:col,opacity:.85})));
   const nmax=Math.max(...SC.rows.map(r=>r.n)), R=n=>7+19*Math.sqrt(n/nmax);
@@ -632,7 +639,7 @@ function chart16(){
   SC.rows.slice().sort((a,b)=>b.n-a.n).forEach(r=>{
     const px=X(r.med),py=Y(r.ratio),rr=R(r.n);
     const bad=r.med<cx&&r.ratio>cy, good=r.med>=cx&&r.ratio<=cy;
-    const col=bad?c.s2:good?c.s4:c.s1;
+    const col=bad?c.down:good?c.up:c.mid;
     const dot=el('circle',{cx:px,cy:py,r:rr,fill:col,opacity:.72,stroke:c.card,'stroke-width':1.5});
     hover(dot,`<b>${r.name}</b><i>שכר חציוני</i> <b style="display:inline">${fmt(r.med)} ש״ח</b>`+
       `<i>שכר ממוצע</i> ${fmt(r.mean)} ש״ח<i>יחס ממוצע/חציון</i> <b style="display:inline">${r.ratio}</b>`+
@@ -648,7 +655,7 @@ function chart16(){
     'font-size':11,fill:c.ink3}));
   svg.appendChild(txt('↑ יחס ממוצע/חציון — גבוה = פחות שוויוני',{x:m.l,y:m.t-26,
     'text-anchor':'start','font-size':11,fill:c.ink3}));
-  legend('lg16',[['נמוך ולא שוויוני',c.s2],['גבוה ושוויוני',c.s4],['ביניים',c.s1],
+  legend('lg16',[['נמוך ולא שוויוני',c.down],['גבוה ושוויוני',c.up],['ביניים',c.mid],
                  ['341 הרשויות בארץ',c.ink3]]);
   table('t16',['רשות','מועסקים','שכר חציוני','שכר ממוצע','ממוצע/חציון','חציון/ממוצע'],
     SC.rows.slice().sort((a,b)=>b.med-a.med).map(r=>
@@ -675,7 +682,7 @@ function chart17(){
       svg.appendChild(txt(v+'%',{x:x(v),y:H-8,'text-anchor':'middle','font-size':9.5,
         fill:v===100?c.ink2:c.ink3,'font-weight':v===100?700:400}));});
     rows.forEach((r,i)=>{
-      const y=m.t+rowH*i+rowH/2, up=r.ratio>=100, col=up?c.s4:c.s1;
+      const y=m.t+rowH*i+rowH/2, up=r.ratio>=100, col=up?c.up:c.down;
       const b=el('rect',{x:m.l,y:y-5,width:Math.max(1,x(r.ratio)-m.l),height:10,fill:col,rx:2});
       hover(b,`<b>${r.name}</b><i>${p.short}</i>`+
         `<i>שכר תושבי הרשות בענף</i> <b style="display:inline">${fmt(r.wage)} ש״ח</b>`+
