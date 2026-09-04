@@ -29,5 +29,10 @@ export class Panel {
   /** בוררים מקומיים בכותרת הפאנל (קיימים בפאנל הענפים בלבד). */
   localSelect(index = 0): Locator { return this.root.locator('select.loc').nth(index); }
   get rangeSelect(): Locator   { return this.root.getByRole('combobox', { name: 'טווח הענפים המוצג' }); }
+
+  /** לוחץ על כפתור בפאנל לפי שמו — לחיצה אמיתית, לא element.click(). */
+  root_click(name: string): Promise<void> {
+    return this.root.getByRole('button', { name, exact: true }).click();
+  }
   get clusterSelect(): Locator { return this.root.getByRole('combobox', { name: 'קיבוץ ענפים' }); }
 }

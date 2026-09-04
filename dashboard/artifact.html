@@ -1036,12 +1036,28 @@ const tipRows = (vals, extra) => METRICS
   .map(([k, v]) => `<div class="t-row t-extra"><span>${k}</span><span>${v}</span></div>`).join("");
 
 /* ---------------- פקד מקטעים ---------------- */
+/* ציור מחדש של מקטע משנה את גובהו (טבלה גבוהה מגרף, פתיח שנכתב מחדש מתארך),
+   והעמוד קופץ מתחת לאצבע. שמירת scrollY לא תעזור כאן — הגובה באמת השתנה.
+   מה שצריך להישאר יציב הוא הפקד שנלחץ: מודדים את מיקומו בחלון לפני, ומחזירים
+   אותו לאותו מיקום אחרי. פקד בסרגל דביק אינו זז ממילא, ואז זו פעולת אפס. */
+function keepInPlace(node, apply) {
+  const before = node.getBoundingClientRect().top;
+  apply();
+  const after = node.getBoundingClientRect().top;
+  const drift = after - before;
+  if (Math.abs(drift) > 1) window.scrollBy({top: drift, behavior: "instant"});
+}
+
 function segment(host, options, current, onPick) {
   clear(host);
   options.forEach(o => {
     const b = el("button", {type:"button", "aria-pressed": String(o.id === current)}, o.label);
     if (o.title) b.title = o.title;
-    b.addEventListener("click", () => { if (o.id !== current) onPick(o.id); });
+    b.addEventListener("click", () => {
+      if (o.id === current) return;
+      /* ה-host שורד את הציור מחדש; הכפתור עצמו נמחק ונבנה מחדש. */
+      keepInPlace(host, () => onPick(o.id));
+    });
     host.appendChild(b);
   });
 }

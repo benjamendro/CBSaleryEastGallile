@@ -591,7 +591,38 @@ const ST = {
   pop:"emp", view:"now", unit:"cluster", timeMode:"share",
   viewMix:"chart", viewDist:"chart", viewTrend:"chart"
 };
-const set = patch => { Object.assign(ST, patch); hideTip(); render(); };
+/* כל שינוי מצב בונה מחדש את גריד הפאנלים, וזה מוחק את צומת העוגן שהדפדפן
+   משתמש בו כדי לשמור על מיקום הגלילה (scroll anchoring). התוצאה: לחיצה על
+   כפתור בפאנל תחתון קופצת לראש העמוד. גובה המסמך אינו משתנה, ולכן די בשמירה
+   ובשחזור של המיקום. במקביל משוחזר גם הפוקוס — הכפתור שנלחץ נמחק, ומשתמש
+   מקלדת היה מאבד את מקומו. */
+function controlPath(el) {
+  if (!el || el === document.body) return null;
+  const panel = el.closest(".panel");
+  const label = (el.textContent || "").trim() || el.getAttribute("aria-label");
+  if (!label) return null;
+  return {panel: panel ? panel.id : null, tag: el.tagName, label};
+}
+function refocus(path) {
+  if (!path) return;
+  const scope = path.panel ? document.getElementById(path.panel) : document;
+  if (!scope) return;
+  const match = [...scope.querySelectorAll(path.tag)].find(n =>
+    ((n.textContent || "").trim() || n.getAttribute("aria-label")) === path.label);
+  if (match) match.focus({preventScroll: true});
+}
+
+const set = patch => {
+  Object.assign(ST, patch);
+  hideTip();
+  const y = window.scrollY;
+  const path = controlPath(document.activeElement);
+  const toTop = Object.prototype.hasOwnProperty.call(patch, "part");
+  render();
+  /* מעבר בין טאבים מחליף את כל התוכן — שם חזרה לראש היא ההתנהגות הנכונה. */
+  window.scrollTo({top: toTop ? 0 : y, behavior: "instant"});
+  if (!toTop) refocus(path);
+};
 
 const AUTHS = D.authorities.items, REGION = D.authorities.region, NAT = D.authorities.national;
 const YEARS = B.meta.years.map(String);
