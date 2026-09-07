@@ -15,7 +15,11 @@
    לכל דבר. הן דורשות מעבר מומחה לפני שיֵצאו החוצה.
 2. **הסרת הקישור „הדו״ח המלא והתובנות ←”** שבכותרת. הוא מצביע על Artifact
    פנימי; מבחוץ הוא גם שבור וגם מכריז על קיומן של התובנות.
-3. **סימון הניתוב** — `const PUBLIC = true;` — כדי שהקובץ יצהיר על עצמו.
+3. **הסרת מצב העריכה.** בקובץ המפורסם אין „עריכת טקסט”: לא הכפתור שבכותרת, לא סרגל
+   העריכה התחתון, ולא הקריאה ל-`wireEditing()`. העריכה היא כלי עבודה פנימי — מי שצופה
+   בקישור הציבורי אינו אמור לשנות את הטקסט, ואינו אמור לראות פקד שמזמין לכך.
+   (`window.__reapplyEdit` כבר מוגן בקוד המקור, ולכן ביטול החיווט אינו שובר את הציור מחדש.)
+4. **סימון הניתוב** — `const PUBLIC = true;` — כדי שהקובץ יצהיר על עצמו.
 
 הרצה: python3 dashboard/build_console.py
 """
@@ -30,6 +34,36 @@ TARGET = os.path.join(HERE, "console_public.html")
 
 REPORT_LINK = re.compile(
     r'\s*<a\b[^>]*id="reportLink"[^>]*>.*?</a>', re.S)
+EDIT_TOGGLE = re.compile(
+    r'\s*<button\b[^>]*id="editToggle"[^>]*>.*?</button>', re.S)
+EDIT_BAR = re.compile(
+    r'\s*<div\b[^>]*id="editbar"[^>]*>.*?</div>', re.S)
+EDIT_CALL = re.compile(r'\bwireEditing\(\);')
+
+
+def block_span(html, start):
+    """מאתר גוש `{...}` מאוזן החל מהתו `{` הראשון אחרי start, בדילוג על מחרוזות."""
+    brace = html.find("{", start)
+    depth, quote, escaped = 0, "", False
+    for index in range(brace, len(html)):
+        char = html[index]
+        if quote:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == quote:
+                quote = ""
+            continue
+        if char in "\"'`":
+            quote = char
+        elif char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return brace, index + 1
+    sys.exit("גוש הקוד אינו מאוזן")
 
 
 def data_span(html):
@@ -77,7 +111,17 @@ def main():
     # 2 — הסרת הקישור לדו״ח המלא ולתובנות
     html, links = REPORT_LINK.subn("", html)
 
-    # 3 — הצהרת הניתוב
+    # 3 — הסרת מצב העריכה: הכפתור, הסרגל, החיווט, והפונקציה כולה
+    html, toggles = EDIT_TOGGLE.subn("", html)
+    html, bars = EDIT_BAR.subn("", html)
+    html, calls = EDIT_CALL.subn("", html)
+    fn = html.find("function wireEditing")
+    if fn == -1:
+        sys.exit("wireEditing לא נמצאה — המקור השתנה")
+    open_brace, close_brace = block_span(html, fn)
+    html = html[:fn] + html[close_brace:]
+
+    # 4 — הצהרת הניתוב
     html = html.replace('<script>\n"use strict";',
                         '<script>\n"use strict";\nconst PUBLIC = true;', 1)
 
@@ -86,13 +130,19 @@ def main():
         sys.exit("התובנות לא רוקנו — הפלט אינו ראוי לפרסום")
     if "claude.ai/code/artifact" in html:
         sys.exit("נותר קישור ל-Artifact פנימי — הפלט אינו ראוי לפרסום")
+    if (toggles, bars, calls) != (1, 1, 1):
+        sys.exit(f"מצב העריכה לא הוסר במלואו "
+                 f"(כפתור={toggles}, סרגל={bars}, חיווט={calls}) — המקור השתנה")
+    for leftover in ('id="editToggle"', 'id="editbar"', "wireEditing()"):
+        if leftover in html:
+            sys.exit(f"נותר {leftover} — מצב העריכה עדיין נגיש")
     if "const PUBLIC = true;" not in html:
         sys.exit("הצהרת הניתוב לא נכתבה")
 
     with open(TARGET, "w", encoding="utf-8") as f:
         f.write(html)
     print(f"נכתב {TARGET}  ({os.path.getsize(TARGET):,} bytes)")
-    print(f"  הוסרו {dropped} תובנות · {links} קישורים לדו״ח הפנימי")
+    print(f"  הוסרו {dropped} תובנות · {links} קישורים לדו״ח הפנימי · מצב העריכה הוסר")
 
 
 if __name__ == "__main__":

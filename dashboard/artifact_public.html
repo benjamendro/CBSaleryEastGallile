@@ -2032,14 +2032,21 @@ function applyText(root) {
   });
 }
 
-/* גרסת ה-BI הציבורית (build.py, public=True): מסירה את כפתורי „תובנות” ואת
-   תוכנן מה-DOM לפני שהם מחווטים — לא רק מסתירה, אלא מבטלת את הגישה עצמה. */
+/* הניתוב הציבורי (build.py, public=True): מסיר מה-DOM שני דברים שאינם שייכים
+   לקובץ שמתפרסם החוצה — לא מסתיר אותם, מסיר.
+   1. כפתורי „תובנות” ותוכנן — הפרשנות דורשת מעבר מומחה.
+   2. מצב העריכה — הצופה בקישור הציבורי אינו עורך את הטקסט, ואינו אמור לראות
+      פקד שמזמין לכך. `wireEditing()` יוצאת מוקדם כשהפקדים חסרים. */
 function stripInsightsForPublic() {
   if (!PUBLIC) return;
   document.querySelectorAll("button.dbtn.ins").forEach(b => {
     const body = document.getElementById(b.dataset.open);
     if (body) body.remove();
     b.remove();
+  });
+  ["editToggle", "editbar"].forEach(id => {
+    const n = document.getElementById(id);
+    if (n) n.remove();
   });
 }
 

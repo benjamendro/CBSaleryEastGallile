@@ -143,6 +143,15 @@ def test_should_leave_no_unfilled_injection_marker_in_the_public_page(index_publ
         assert marker not in index_public_html, f"the {marker} marker was never replaced"
 
 
+def test_should_still_carry_the_edit_controls_on_the_internal_route(index_html):
+    """Editing is an internal working tool; the internal page keeps it."""
+    # Arrange / Act / Assert
+    for control in ('id="editToggle"', 'id="editbar"'):
+        assert control in index_html, (
+            f"dashboard/index.html lost {control} — editing is the internal route's tool"
+        )
+
+
 def test_should_keep_the_public_route_reachable_from_the_build(index_public_html):
     """The six data sections and their "על הנתונים" drawers survive the stripping."""
     # Arrange

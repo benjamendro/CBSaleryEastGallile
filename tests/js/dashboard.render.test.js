@@ -229,3 +229,38 @@ describe('the public route', () => {
     expect(drawn).toBe([...document.querySelectorAll('section[id] svg')].length);
   });
 });
+
+/**
+ * Editing is an internal tool, and the public route removes it.
+ *
+ * The published file is a read-only console for its readers: no control that
+ * invites them to rewrite the text, and no edit bar. The internal build keeps
+ * both, because that is where the text is actually maintained.
+ */
+describe('the public route and edit mode', () => {
+  let publicDoc;
+
+  beforeAll(async () => {
+    const dom = new JSDOM(read('dashboard', 'index_public.html'), {
+      runScripts: 'dangerously',
+      pretendToBeVisual: true,
+      url: 'https://example.org/',
+    });
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    publicDoc = dom.window.document;
+  });
+
+  it('should offer the reader no way into edit mode', () => {
+    expect(publicDoc.getElementById('editToggle')).toBeNull();
+    expect(publicDoc.getElementById('editbar')).toBeNull();
+  });
+
+  it('should leave nothing on the page editable', () => {
+    expect(publicDoc.querySelectorAll('[contenteditable]')).toHaveLength(0);
+  });
+
+  it('should keep both controls on the internal page', () => {
+    expect(document.getElementById('editToggle')).toBeTruthy();
+    expect(document.getElementById('editbar')).toBeTruthy();
+  });
+});

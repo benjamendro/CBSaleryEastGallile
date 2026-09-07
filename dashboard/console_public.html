@@ -209,7 +209,6 @@ body.editing [data-t]:focus{outline:2px solid var(--data-region);background:#fff
     <div class="sub" data-t="con.sub">18 רשויות בנפות צפת וגולן, תמיד מול הנתון הארצי</div>
   </div>
   <div class="acts no-print">
-    <button class="pill" type="button" id="editToggle" aria-pressed="false">עריכת טקסט</button>
     <button class="pill" type="button" id="exportToggle">ייצוא</button>
   </div>
 </header>
@@ -240,15 +239,6 @@ body.editing [data-t]:focus{outline:2px solid var(--data-region);background:#fff
     המוסד לביטוח לאומי, לוחות יישובים ומועצות אזוריות (2016–2024).
     <b>שני המקורות אינם ברי-השוואה ישירה בשקלים.</b></div>
 </footer>
-
-<div class="editbar no-print" id="editbar" hidden>
-  <b>מצב עריכה</b>
-  <span>נערכו <b id="editCount">0</b> טקסטים</span>
-  <span class="sp"></span>
-  <button type="button" id="editCopy">העתקת JSON</button>
-  <button type="button" id="editSave">שמירת קובץ</button>
-  <button type="button" id="editDone">סיום</button>
-</div>
 
 <script>
 "use strict";
@@ -1238,58 +1228,13 @@ function wireExportMenu() {
    מצב עריכה — אותו חוזה כמו בדו"ח: ברירת המחדל חיה בקוד,
    content.json מחזיק רק את מה שנערך בפועל.
    ============================================================ */
-function wireEditing() {
-  const bar = document.getElementById("editbar"), toggle = document.getElementById("editToggle");
-  let on = false;
-  const setMode = v => {
-    on = v;
-    document.body.classList.toggle("editing", on);
-    bar.hidden = !on;
-    toggle.setAttribute("aria-pressed", String(on));
-    document.querySelectorAll("[data-t]").forEach(n => {
-      if (on) { n.setAttribute("contenteditable", "true"); n.setAttribute("spellcheck", "false"); }
-      else n.removeAttribute("contenteditable");
-    });
-  };
-  toggle.addEventListener("click", () => setMode(!on));
-  document.getElementById("editDone").addEventListener("click", () => setMode(false));
-  document.addEventListener("input", e => {
-    const n = e.target.closest && e.target.closest("[data-t]");
-    if (!on || !n) return;
-    EDITED[n.getAttribute("data-t")] = n.innerHTML.trim();
-    document.getElementById("editCount").textContent = Object.keys(EDITED).length;
-  });
-  /* מצב עריכה חייב לשרוד ציור מחדש של הפאנלים */
-  window.__reapplyEdit = () => { if (on) setMode(true); };
 
-  const payload = () => JSON.stringify(
-    {text: Object.assign({}, TEXT, EDITED), insights: DATA.insights || []}, null, 2);
-  document.getElementById("editCopy").addEventListener("click", async () => {
-    const b = document.getElementById("editCopy");
-    try { await navigator.clipboard.writeText(payload()); b.textContent = "הועתק ✓"; }
-    catch (err) {
-      const ta = h("textarea");
-      ta.value = payload();
-      ta.style.cssText = "position:fixed;inset-block-start:5vh;inset-inline-start:5vw;" +
-        "width:90vw;height:80vh;z-index:400";
-      document.body.appendChild(ta); ta.select();
-      b.textContent = "בחרו והעתיקו";
-      ta.addEventListener("blur", () => ta.remove());
-    }
-    setTimeout(() => { b.textContent = "העתקת JSON"; }, 2600);
-  });
-  document.getElementById("editSave").addEventListener("click", () => {
-    const blob = new Blob([payload()], {type:"application/json"});
-    const a = h("a", {href:URL.createObjectURL(blob), download:"content.json"});
-    document.body.appendChild(a); a.click(); a.remove();
-  });
-}
 
 /* ---------- הפעלה ---------- */
 document.getElementById("tabA").addEventListener("click", () => set({part:"a"}));
 document.getElementById("tabB").addEventListener("click", () => set({part:"b"}));
 wireExportMenu();
-wireEditing();
+
 const _render = render;
 render = function () { _render(); if (window.__reapplyEdit) window.__reapplyEdit(); };
 render();
