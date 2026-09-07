@@ -15,15 +15,15 @@ export BTL_DIR=/tmp/btl/relevant_tables
 python3 scripts/btl_verify.py     # 27 בדיקות שלמות על לוחות הביטוח הלאומי
 python3 dashboard/build_data.py   # קובצי הלמ"ס → dashboard/data.json
 python3 dashboard/build_btl.py    # לוחות הביטוח הלאומי → dashboard/btl.json
-python3 dashboard/build.py        # שני קובצי הנתונים + template.html → index.html + artifact.html
+python3 dashboard/build.py        # שני קובצי הנתונים + template.html → 4 קבצי פלט, ראו „שני ניתובי הפרסום”
 ```
 
 אם קיים `dashboard/content.json` — `build_data.py` מזריק ממנו את הטקסטים שנערכו ואת
 התובנות. הוא אופציונלי: בלעדיו נעשה שימוש בברירות המחדל שבקוד.
 
-**אל תערוך את `dashboard/index.html` או `dashboard/artifact.html`** — הם נוצרים אוטומטית.
-העריכה נעשית ב-`dashboard/template.html` (CSS + מבנה + קוד הגרפים) וב-`dashboard/build_data.py`
-(קריאת המקורות, שמות תצוגה, קיבוצים, בדיקות).
+**אל תערכו קובץ מתוך `index.html` · `artifact.html` · `index_public.html` · `artifact_public.html`**
+— כולם נוצרים אוטומטית. העריכה נעשית ב-`dashboard/template.html` (CSS + מבנה + קוד הגרפים)
+וב-`dashboard/build_data.py` (קריאת המקורות, שמות תצוגה, קיבוצים, בדיקות).
 
 | קובץ | תפקיד |
 |---|---|
@@ -31,11 +31,37 @@ python3 dashboard/build.py        # שני קובצי הנתונים + template.
 | `dashboard/build_btl.py` | קורא את לוחות הביטוח הלאומי, מאמת, וכותב `btl.json` (חלק ב׳) |
 | `scripts/btl_read.py` · `scripts/btl_verify.py` | קורא משותף · בדיקות שלמות |
 | `dashboard/template.html` | העמוד: CSS, מבנה, מנוע הגרפים. סמנים: `"__DATA__"`, `__LOGO__` |
-| `dashboard/build.py` | מזריק נתונים + לוגו, מייצר את שני הפלטים |
+| `dashboard/build.py` | מזריק נתונים + לוגו, מייצר את **ארבעת** הפלטים — הגרסה המלאה והגרסה הציבורית, ראו למטה |
 | `dashboard/content.json` | **אופציונלי** — טקסטים שנערכו בעמוד + תובנות ידניות. נקרא ב-`build_data.py` |
-| `dashboard/index.html` | **הפלט לשימוש** — עצמאי, נפתח בכל דפדפן |
-| `dashboard/artifact.html` | אותו תוכן בלי `<html>/<head>/<body>`, לפרסום כ-Artifact |
+| `dashboard/index.html` | **הפלט המלא, לשימוש פנימי** — עצמאי, נפתח בכל דפדפן, כולל „תובנות” |
+| `dashboard/artifact.html` | אותו תוכן מלא בלי `<html>/<head>/<body>`, לפרסום כ-Artifact פנימי |
+| `dashboard/index_public.html` | **הפלט הציבורי** — אותם נתונים וגרפים, בלי „תובנות” |
+| `dashboard/artifact_public.html` | אותו תוכן ציבורי בלי `<html>/<head>/<body>`, לפרסום כ-Artifact נפרד |
 | `dashboard/README.md` | תיעוד מלא למשתמש |
+
+### שני ניתובי הפרסום
+
+`build.py` תמיד מייצר **שני זוגות** קבצים מאותם נתונים, בקריאה יחידה — אין דגל שורת-פקודה,
+כדי שהזוג הציבורי לעולם לא יישכח בבנייה:
+
+1. **הניתוב המלא** (`index.html` / `artifact.html`) — כולל את כפתורי „תובנות” בכל אחד
+   משישה המקטעים, ואת התוכן שנכתב ב-`content.json`. לשימוש **פנימי בלבד**: התובנות
+   דורשות מעבר מומחה לפני שהן ראויות לפרסום.
+2. **הניתוב הציבורי** (`index_public.html` / `artifact_public.html`) — **אותם נתונים,
+   אותם גרפים, אותם טקסטים** של „על הנתונים”, בלי הקישור והגישה לתובנות. זהו הקובץ/הקישור
+   שמפורסמים החוצה כשרוצים להציג רק את מערכת ה-BI עם הנתונים, בלי הפרשנות שעוד לא עברה
+   בדיקה.
+
+**איך זה עובד:** `build.py` מזריק ל-`template.html` שדה `data.public` (`true`/`false`).
+בגרסה הציבורית גם `data.insights` מרוקן (`[]`) לפני ההזרקה — כך שהתוכן כלל אינו קיים ב-JSON
+המוטמע בדף, לא רק מוסתר. ב-JS של התבנית, `stripInsightsForPublic()` מסירה מה-DOM את כפתורי
+`button.dbtn.ins` ואת תוכן הגוף שלהם (`i-<מקטע>`) לפני שהם מחווטים — לא הסתרה ב-CSS, אלא
+הסרה. שאר העמוד (הנתונים, הגרפים, „על הנתונים”, מורה הנבוכים, ייצוא התמונה, עריכת הטקסט)
+זהה בין שני הניתובים.
+
+**פרסום בפועל:** כשמפרסמים Artifact, `artifact_public.html` הוא זה שהופך לקישור ציבורי;
+`artifact.html` (המלא) נשאר לשימוש פנימי/מומחה — לעולם לא שניהם תחת אותו קישור, ולעולם לא
+הקובץ המלא כברירת מחדל לפרסום חיצוני.
 
 `build_data.py` **נכשל בכוונה** אם: רשות אינה משויכת לנפה · קוד ענף חסר במילון · חסר שם
 תצוגה לקבוצת ענפים · לא נמצאו שלוש ההגדרות בגיליון „מידע נילווה” · סכום השכירים ברשויות

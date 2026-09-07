@@ -2,9 +2,13 @@
 """
 מרכיב את הדשבורד מהתבנית + הנתונים + הלוגו.
 
-פלט:
-  dashboard/index.html     — קובץ HTML עצמאי אחד (נפתח בכל דפדפן, ללא תלות ברשת)
-  dashboard/artifact.html  — אותו תוכן ללא עטיפת <html>/<head>/<body>, לפרסום כ-Artifact
+שני ניתובים נפרדים, משני קהלים שונים (ראו CLAUDE.md „שני ניתובי הפרסום”):
+
+  dashboard/index.html          — הגרסה המלאה, עם „תובנות” — לשימוש פנימי/מומחה בלבד
+  dashboard/artifact.html       — אותו תוכן ללא עטיפת <html>/<head>/<body>, לפרסום כ-Artifact
+  dashboard/index_public.html   — גרסת ה-BI הציבורית: אותם נתונים וגרפים, בלי כפתורי
+                                   „תובנות” ובלי הגישה אליהן (עוד דורשות מעבר מומחה)
+  dashboard/artifact_public.html — אותו תוכן ציבורי, לפרסום כ-Artifact נפרד
 
 הרצה: python3 dashboard/build_data.py && python3 dashboard/build.py
 """
@@ -36,6 +40,16 @@ def logo_data_uri():
     return "data:image/png;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
 
 
+def render(tpl, data, logo, public):
+    """מזריק נתונים + לוגו לתבנית. public=True מפיק את גרסת ה-BI הציבורית —
+    אותם נתונים וגרפים, בלי „insights” ובלי כפתורי הגישה אליהן (ראו CLAUDE.md)."""
+    data = dict(data, public=public)
+    if public:
+        data["insights"] = []
+    page = tpl.replace('"__DATA__"', json.dumps(data, ensure_ascii=False, separators=(",", ":")))
+    return page.replace("__LOGO__", logo)
+
+
 def main():
     with open(os.path.join(HERE, "template.html"), encoding="utf-8") as f:
         tpl = f.read()
@@ -44,10 +58,17 @@ def main():
     with open(os.path.join(HERE, "btl.json"), encoding="utf-8") as f:
         data["btl2"] = json.load(f)      # חלק ב׳ — ראו build_btl.py
 
-    page = tpl.replace('"__DATA__"', json.dumps(data, ensure_ascii=False, separators=(",", ":")))
-    page = page.replace("__LOGO__", logo_data_uri())
+    logo = logo_data_uri()
+    full = render(tpl, data, logo, public=False)
+    public = render(tpl, data, logo, public=True)
 
-    for name, body in (("index.html", HEAD + page + FOOT), ("artifact.html", page)):
+    outputs = (
+        ("index.html", HEAD + full + FOOT),
+        ("artifact.html", full),
+        ("index_public.html", HEAD + public + FOOT),
+        ("artifact_public.html", public),
+    )
+    for name, body in outputs:
         p = os.path.join(HERE, name)
         with open(p, "w", encoding="utf-8") as f:
             f.write(body)
