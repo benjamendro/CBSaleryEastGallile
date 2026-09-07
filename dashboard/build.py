@@ -41,12 +41,15 @@ def logo_data_uri():
 
 
 def render(tpl, data, logo, public):
-    """מזריק נתונים + לוגו לתבנית. public=True מפיק את גרסת ה-BI הציבורית —
-    אותם נתונים וגרפים, בלי „insights” ובלי כפתורי הגישה אליהן (ראו CLAUDE.md)."""
-    data = dict(data, public=public)
+    """מזריק נתונים + לוגו לתבנית. public=True מפיק את הניתוב הציבורי —
+    אותם נתונים וגרפים, בלי „insights” ובלי כפתורי הגישה אליהן (ראו CLAUDE.md).
+
+    דגל הניתוב יושב בסמן משלו ולא בתוך DATA: המטען המוטמע בעמוד הפנימי נשאר
+    זהה בדיוק ל-data.json + btl.json, וזו התכונה שבדיקת השרשרת מאמתת."""
     if public:
-        data["insights"] = []
+        data = dict(data, insights=[])
     page = tpl.replace('"__DATA__"', json.dumps(data, ensure_ascii=False, separators=(",", ":")))
+    page = page.replace("__PUBLIC__", "true" if public else "false")
     return page.replace("__LOGO__", logo)
 
 

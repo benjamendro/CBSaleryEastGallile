@@ -6,8 +6,8 @@
 ```bash
 pip install -r tests/requirements.txt
 sudo apt-get install -y libarchive-tools     # bsdtar — לחילוץ לוחות הביטוח הלאומי
-python3 -m pytest                            # 199 בדיקות + שער כיסוי
-npm install && npx vitest run                # 18 בדיקות על העמוד המרונדר
+python3 -m pytest                            # 210 בדיקות + שער כיסוי
+npm install && npx vitest run                # 23 בדיקות על העמוד המרונדר
 ```
 
 `p7zip 16.x אינו קורא RAR5` — הוא כותב קבצים ריקים בשקט. לכן החבילה מקבלת רק `bsdtar`,
@@ -27,11 +27,12 @@ npm install && npx vitest run                # 18 בדיקות על העמוד �
 | `test_data_json_invariants.py` | חלק א׳ — 18 הרשויות, עוגן 83,774, כלל השקלול לפי אנשים, הממוצע הארצי לפי אנשים, סף ההשמטה 10 |
 | `test_btl_json_invariants.py` | חלק ב׳ — החלוקה הסגורה א׳ = ד׳ + ז׳ + ח׳, כיסוי מוצהר, אורכי סדרות |
 | `test_source_separation.py` | הכלל המחייב: אין להציב שכר ביטוח לאומי לצד שכר למ"ס |
+| `test_publish_routes.py` | **שני ניתובי הפרסום** — שהניתוב הציבורי אינו נושא תובנה גם כשבונים אותו מנתונים שיש בהם אחת, ושהוא נושא את כל השאר ללא שינוי |
 | `test_eshkol_mapping.py` | טבלת הצימודים מול `SKILL.md` ומול השמות שהעמוד מדפיס |
 | `test_eshkol_matcher.py` | `eshkol_matcher.py` — נרמול, סף fuzzy, וההצלבה הכפולה שמונעת התנגשות סמלים |
 | `test_insights_claims.py` | **14 התובנות** ב-`analysis/dashboard-insights.md` מול `analysis/output/` |
 | `test_analysis_report.py` | `analysis/report.html` נבנה מחדש מ-`report_data.json`, והצלבתו מול הפלטים |
-| `js/dashboard.render.test.js` | העמוד ב-jsdom: עמודה לכל רשות, המספרים שעל כרטיסי המדד, והבוררים |
+| `js/dashboard.render.test.js` | העמוד ב-jsdom: עמודה לכל רשות, המספרים שעל כרטיסי המדד, הבוררים, ושכפתורי „תובנות” אכן מוסרים מה-DOM בניתוב הציבורי |
 
 **אין mocks בשום מקום.** הבדיקות קוראות את קובצי המקור האמיתיים, מריצות את הצינור האמיתי
 ומרנדרות את העמוד שפורסם. אין גבול חיצוני שדורש כפיל: העמוד מצייר SVG בעצמו ואינו טוען

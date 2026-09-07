@@ -918,7 +918,7 @@ footer.foot .sig{margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,
 "use strict";
 
 const DATA = "__DATA__";
-const PUBLIC = !!DATA.public;   // גרסת ה-BI הציבורית — ללא „תובנות” וללא הגישה אליהן
+const PUBLIC = __PUBLIC__;   // הניתוב הציבורי — ללא „תובנות” וללא הגישה אליהן. ראו build.py
 const A = DATA.authorities, ANAF = DATA.anafim, METRICS = DATA.metrics;
 const M = Object.fromEntries(METRICS.map(m => [m.id, m]));
 const CLUSTER = DATA.meta.cluster;

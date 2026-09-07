@@ -67,7 +67,7 @@ def test_should_rebuild_btl_json_from_the_national_insurance_tables(sandbox, btl
 # --- link 2: processed data -> published page ---------------------------------
 
 @pytest.mark.slow
-@pytest.mark.parametrize("page", ["index.html", "artifact.html"])
+@pytest.mark.parametrize("page", paths.PUBLISHED_PAGES)
 def test_should_rebuild_the_published_page_from_the_template_and_the_data(sandbox, page):
     """The page must be exactly template.html + data.json + btl.json + the logo."""
     # Arrange
