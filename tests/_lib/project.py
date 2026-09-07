@@ -13,6 +13,11 @@ from . import paths
 
 DATA_MARKER = '"__DATA__"'
 LOGO_MARKER = "__LOGO__"
+PUBLIC_MARKER = "__PUBLIC__"
+
+# what a rendered page says about the route it belongs to
+PUBLIC_ROUTE = "const PUBLIC = true;"
+INTERNAL_ROUTE = "const PUBLIC = false;"
 
 
 def load_data():

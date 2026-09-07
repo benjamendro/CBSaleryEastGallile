@@ -42,6 +42,18 @@ def artifact_html():
 
 
 @pytest.fixture(scope="session")
+def index_public_html():
+    """The public route — the same dashboard with no access to the insights."""
+    return project.read_text(paths.INDEX_PUBLIC_HTML)
+
+
+@pytest.fixture(scope="session")
+def artifact_public_html():
+    """The public route in its Artifact wrapper-less form."""
+    return project.read_text(paths.ARTIFACT_PUBLIC_HTML)
+
+
+@pytest.fixture(scope="session")
 def template_html():
     """The page before data injection."""
     return project.read_text(paths.TEMPLATE_HTML)

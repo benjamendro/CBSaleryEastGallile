@@ -1,0 +1,72 @@
+# פרסום הדשבורד ל-GitHub Pages — קישור קבוע, שאינו תלוי בשום שירות חיצוני.
+#
+# לאתר נכנס אך ורק **הניתוב הציבורי** (dashboard/index_public.html): אותם נתונים
+# ואותם גרפים, בלי „תובנות” ובלי הגישה אליהן. הניתוב המלא (dashboard/index.html)
+# לעולם אינו מגיע לכאן — ראו CLAUDE.md, „שני ניתובי הפרסום”.
+#
+# הכתובת: https://benjamendro.github.io/CBSaleryEastGallile/
+
+name: פרסום הדשבורד הציבורי
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - dashboard/index_public.html
+      - .github/workflows/pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# פרסום אחד בכל רגע; ריצה חדשה ממתינה ואינה מבטלת פרסום שכבר יצא לדרך
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # השער: לאתר נכנס רק הניתוב הציבורי. קובץ שמצהיר על הניתוב הפנימי הוא
+      # הגרסה עם התובנות — והפרסום נעצר כאן ולא מגיע לאוויר.
+      #
+      # השער בודק את הצהרת הניתוב בלבד, ובכוונה: הוא חייב להיות דטרמיניסטי.
+      # „האם הפלט עדכני” נבדק ב-tests/test_publish_routes.py ובשרשרת המקור
+      # (test_pipeline_traceability.py) — שם, ולא כאן, כי בנייה מחדש בשרת
+      # מקודדת את הלוגו מחדש, ובגרסת Pillow אחרת התוצאה נבדלת בבתים ומכשילה
+      # פרסום תקין לחלוטין.
+      - name: אימות שהקובץ הוא הניתוב הציבורי
+        run: |
+          page=dashboard/index_public.html
+          grep -qF 'const PUBLIC = true;' "$page" || {
+            echo "::error::$page אינו מצהיר על הניתוב הציבורי — התובנות היו נשארות נגישות."
+            exit 1
+          }
+          if grep -qF 'const PUBLIC = false;' "$page"; then
+            echo "::error::$page מצהיר על הניתוב הפנימי — זו הגרסה עם התובנות, והיא אינה מתפרסמת."
+            exit 1
+          fi
+
+      - name: הרכבת האתר
+        run: |
+          mkdir -p _site
+          cp dashboard/index_public.html _site/index.html
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

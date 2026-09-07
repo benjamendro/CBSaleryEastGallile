@@ -176,3 +176,56 @@ describe('the National Insurance part', () => {
     expect(document.querySelector('#srcbreak'), 'the source divider is gone').toBeTruthy();
   });
 });
+
+/**
+ * The public route (CLAUDE.md, "שני ניתובי הפרסום").
+ *
+ * The insight drawers are taken out of the DOM at boot, not hidden with CSS, so
+ * this is the layer where the promise is actually kept: a reader of the public
+ * page — the one the GitHub Pages site serves — has no control that opens them.
+ */
+describe('the public route', () => {
+  let publicDoc;
+
+  beforeAll(async () => {
+    const dom = new JSDOM(read('dashboard', 'index_public.html'), {
+      runScripts: 'dangerously',
+      pretendToBeVisual: true,
+      url: 'https://example.org/',
+    });
+    await new Promise((resolve) => setTimeout(resolve, 600));
+    publicDoc = dom.window.document;
+  });
+
+  it('should leave the reader no control that opens an insight', () => {
+    expect(publicDoc.querySelectorAll('button.dbtn.ins')).toHaveLength(0);
+  });
+
+  it('should leave no insight body behind in the page', () => {
+    const bodies = ['auth', 'change', 'anaf', 'mix', 'dist', 'trend'].filter((section) =>
+      publicDoc.getElementById(`i-${section}`),
+    );
+    expect(bodies).toEqual([]);
+  });
+
+  it('should keep the internal page offering both drawers on every section', () => {
+    // the same query on the internal build — otherwise the test above would
+    // also pass on a page that simply lost its drawers
+    expect(document.querySelectorAll('button.dbtn.ins').length).toBe(6);
+  });
+
+  it('should still show the reader every section and its data drawer', () => {
+    const sections = [...publicDoc.querySelectorAll('section[id]')].map((s) => s.id);
+    expect(sections).toEqual([
+      'sec-guide', 'sec-auth', 'sec-change', 'sec-anaf', 'sec-mix', 'sec-dist', 'sec-trend',
+    ]);
+    for (const section of ['auth', 'change', 'anaf', 'mix', 'dist', 'trend']) {
+      expect(publicDoc.getElementById(`b-${section}`), `section ${section} lost its data drawer`).toBeTruthy();
+    }
+  });
+
+  it('should draw the same figures as the internal page', () => {
+    const drawn = [...publicDoc.querySelectorAll('section[id] svg')].length;
+    expect(drawn).toBe([...document.querySelectorAll('section[id] svg')].length);
+  });
+});
