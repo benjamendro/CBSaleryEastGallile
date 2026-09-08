@@ -245,8 +245,8 @@ body.editing [data-t]:focus{outline:2px solid var(--data-region);background:#fff
   <b>מצב עריכה</b>
   <span>נערכו <b id="editCount">0</b> טקסטים</span>
   <span class="sp"></span>
-  <button type="button" id="editShare">שמירה לכולם</button>
-  <span id="editShareNote" class="hint"></span>
+  <button type="button" id="editShare" hidden>שמירה לכולם</button>
+  <span id="editShareNote" class="hint" hidden></span>
   <button type="button" id="editCopy">העתקת JSON</button>
   <button type="button" id="editSave">שמירת קובץ</button>
   <button type="button" id="editDone">סיום</button>
@@ -1291,7 +1291,7 @@ function wireEditing() {
 
   document.getElementById("editShare").addEventListener("click", async () => {
     const b = document.getElementById("editShare");
-    if (!sharedDb) { note("שמירה משותפת אינה זמינה בתצוגה הזו — השתמשו ב„שמירת קובץ”."); return; }
+    if (!sharedDb) return;
     b.disabled = true; b.textContent = "שומר…";
     try {
       await sharedDb.doc(SHARED_DOC).set({
@@ -1309,8 +1309,10 @@ function wireEditing() {
 
   (async () => {
     const db = await (window.claude && window.claude.use ? claude.use("db") : null);
-    if (!db) { note("שמירה משותפת אינה זמינה כאן."); return; }
+    if (!db) return;          /* אין יכולת משותפת — נשארים בייצוא הידני */
     sharedDb = db;
+    document.getElementById("editShare").hidden = false;
+    document.getElementById("editShareNote").hidden = false;
     try {
       const snap = await db.doc(SHARED_DOC).get();
       if (snap.exists) applyShared(snap.data());
