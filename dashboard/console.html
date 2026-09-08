@@ -252,6 +252,8 @@ body.editing [data-t]:focus{outline:2px solid var(--data-region);background:#fff
   <b>מצב עריכה</b>
   <span>נערכו <b id="editCount">0</b> טקסטים</span>
   <span class="sp"></span>
+  <button type="button" id="editShare">שמירה לכולם</button>
+  <span id="editShareNote" class="hint"></span>
   <button type="button" id="editCopy">העתקת JSON</button>
   <button type="button" id="editSave">שמירת קובץ</button>
   <button type="button" id="editDone">סיום</button>
@@ -1268,8 +1270,62 @@ function wireEditing() {
   /* מצב עריכה חייב לשרוד ציור מחדש של הפאנלים */
   window.__reapplyEdit = () => { if (on) setMode(true); };
 
+  /* „hidden” נכלל אף שהקונסולה אינה מסתירה גרפים: בלעדיו ייצוא מהקונסולה
+     היה דורס את הגרפים שהוסתרו בדו״ח באותו content.json. */
   const payload = () => JSON.stringify(
-    {text: Object.assign({}, TEXT, EDITED), insights: DATA.insights || []}, null, 2);
+    {text: Object.assign({}, TEXT, EDITED), insights: DATA.insights || [],
+     hidden: DATA.hidden || []}, null, 2);
+
+  /* ---------- תוכן משותף בין צופים ----------
+     לכל Artifact מאגר משלו, ולכן זהו מסמך נפרד מזה של הדו״ח. הרשאה:
+     קריאה לכל מי שיכול לפתוח, כתיבה רק למי ששותף בהרשאת עריכה. */
+  const SHARED_DOC = "content/current";
+  let sharedDb = null, applying = false;
+  const note = t => { const n = document.getElementById("editShareNote");
+                      if (n) n.textContent = t; };
+
+  function applyShared(d) {
+    if (!d || applying) return;
+    applying = true;
+    try {
+      Object.keys(EDITED).forEach(k => delete EDITED[k]);
+      Object.assign(EDITED, d.text || {});
+      document.getElementById("editCount").textContent = Object.keys(EDITED).length;
+      render();
+      if (document.body.classList.contains("editing")) setMode(true);
+    } finally { applying = false; }
+  }
+
+  document.getElementById("editShare").addEventListener("click", async () => {
+    const b = document.getElementById("editShare");
+    if (!sharedDb) { note("שמירה משותפת אינה זמינה בתצוגה הזו — השתמשו ב„שמירת קובץ”."); return; }
+    b.disabled = true; b.textContent = "שומר…";
+    try {
+      await sharedDb.doc(SHARED_DOC).set({
+        text: Object.assign({}, TEXT, EDITED), insights: DATA.insights || [],
+        hidden: DATA.hidden || [], savedAt: new Date().toISOString()});
+      b.textContent = "נשמר ✓"; note("כל מי שפתוח על הקונסולה רואה את הגרסה הזו.");
+    } catch (err) {
+      b.textContent = "שמירה לכולם";
+      note(err && err.code === "invalid_argument"
+        ? "אין לכם הרשאת עריכה על העמוד — אפשר להעתיק JSON ולשלוח."
+        : "השמירה נכשלה. אפשר להעתיק JSON ולשלוח.");
+    }
+    setTimeout(() => { b.disabled = false; b.textContent = "שמירה לכולם"; }, 2600);
+  });
+
+  (async () => {
+    const db = await (window.claude && window.claude.use ? claude.use("db") : null);
+    if (!db) { note("שמירה משותפת אינה זמינה כאן."); return; }
+    sharedDb = db;
+    try {
+      const snap = await db.doc(SHARED_DOC).get();
+      if (snap.exists) applyShared(snap.data());
+    } catch (err) { /* אין עדיין מסמך, או אין הרשאת קריאה */ }
+    db.doc(SHARED_DOC).onSnapshot(
+      s => { if (s.exists) applyShared(s.data()); },
+      () => note("החיבור לגרסה המשותפת נותק. רענון יחזיר אותו."));
+  })();
   document.getElementById("editCopy").addEventListener("click", async () => {
     const b = document.getElementById("editCopy");
     try { await navigator.clipboard.writeText(payload()); b.textContent = "הועתק ✓"; }

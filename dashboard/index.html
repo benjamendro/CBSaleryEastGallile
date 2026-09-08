@@ -1030,6 +1030,8 @@ body.editing .insight.ins-notitle h4::before{content:"כותרת ריקה";
     <b>מצב עריכה</b>
   <span class="hint">הבוררים מוקפאים עד ל„סיום” — כדי שטקסט שנערך לא יישמר תחת הקשר אחר</span>
     <span><span id="editCount">0</span> שינויים</span>
+    <button type="button" id="editShare">שמירה לכולם</button>
+    <span id="editShareNote" class="hint"></span>
     <button type="button" id="editCopy">העתקת JSON</button>
     <button type="button" id="editSave">הורדה</button>
     <button type="button" id="editDone" class="go">סיום</button>
@@ -2402,6 +2404,69 @@ function wireEditing() {
 
   const payload = () => JSON.stringify(
     {text: {...TEXT, ...EDITED}, insights: INSIGHTS, hidden: [...HIDDEN]}, null, 2);
+
+  /* ---------- תוכן משותף בין צופים ----------
+     בלי זה עריכה חיה רק בדפדפן שבו נעשתה, ומי שערך צריך לשלוח קובץ.
+     עם יכולת db, אותו מטען בדיוק שנשמר ל-content.json נשמר גם כמסמך
+     אחד משותף, וכל מי שפתוח על העמוד מקבל אותו. ההרשאה נאכפת בשרת:
+     קריאה לכל מי שיכול לפתוח, כתיבה רק למי ששותף בהרשאת עריכה.
+     „מי הכותב האחרון מנצח” — אין נעילה, ולכן שני עורכים בו-זמנית
+     עלולים לדרוס זה את זה. לעבודה של שניים זה מספיק; לא ליותר. */
+  const SHARED_DOC = "content/current";
+  let sharedDb = null, applying = false;
+
+  function applyShared(d) {
+    if (!d || applying) return;
+    applying = true;
+    try {
+      Object.keys(EDITED).forEach(k => delete EDITED[k]);
+      Object.assign(EDITED, d.text || {});
+      INSIGHTS.length = 0;
+      (d.insights || []).forEach(x => INSIGHTS.push({...x}));
+      HIDDEN.clear();
+      (d.hidden || []).forEach(x => HIDDEN.add(x));
+      renderAll(); renderBtl(); applyText();
+      renderInsights(); renderPartC(); applyHidden(); drawPartC();
+      renderGuide(); addFigureFooters();
+      if (document.body.classList.contains("editing")) setMode(true);
+      bumpCount();
+    } finally { applying = false; }
+  }
+
+  const note = (t) => { const n = document.getElementById("editShareNote");
+                        if (n) n.textContent = t; };
+
+  document.getElementById("editShare").addEventListener("click", async () => {
+    const b = document.getElementById("editShare");
+    if (!sharedDb) { note("שמירה משותפת אינה זמינה בתצוגה הזו — השתמשו ב„הורדה”."); return; }
+    b.disabled = true; b.textContent = "שומר…";
+    try {
+      await sharedDb.doc(SHARED_DOC).set({
+        text: {...TEXT, ...EDITED}, insights: INSIGHTS, hidden: [...HIDDEN],
+        savedAt: new Date().toISOString()});
+      b.textContent = "נשמר ✓";
+      note("כל מי שפתוח על העמוד רואה את הגרסה הזו.");
+    } catch (err) {
+      b.textContent = "שמירה לכולם";
+      note(err && err.code === "invalid_argument"
+        ? "אין לכם הרשאת עריכה על העמוד — אפשר להוריד JSON ולשלוח."
+        : "השמירה נכשלה. אפשר להוריד JSON ולשלוח.");
+    }
+    setTimeout(() => { b.disabled = false; b.textContent = "שמירה לכולם"; }, 2600);
+  });
+
+  (async () => {
+    const db = await (window.claude && window.claude.use ? claude.use("db") : null);
+    if (!db) { note("שמירה משותפת אינה זמינה כאן."); return; }
+    sharedDb = db;
+    try {
+      const snap = await db.doc(SHARED_DOC).get();
+      if (snap.exists) applyShared(snap.data());
+    } catch (err) { /* אין מסמך עדיין, או שאין הרשאת קריאה */ }
+    db.doc(SHARED_DOC).onSnapshot(
+      s => { if (s.exists) applyShared(s.data()); },
+      () => note("החיבור לגרסה המשותפת נותק. רענון יחזיר אותו."));
+  })();
 
   document.getElementById("editCopy").addEventListener("click", async () => {
     const btn = document.getElementById("editCopy");
